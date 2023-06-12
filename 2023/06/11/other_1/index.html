@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || 杂记-前端Ajax</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>杂记-前端Ajax </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/others" style=color:#00bcd4>
+                    others
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>当使用 Java Web 技术构建后端，并使用 AJAX 进行前后端交互时，以下是一个简单的示例：</p>
+<p>###前端（使用 AJAX）：</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;AJAX 示例&lt;/title&gt;
+  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button id=&quot;getDataBtn&quot;&gt;获取数据&lt;/button&gt;
+  &lt;div id=&quot;result&quot;&gt;&lt;/div&gt;
+
+  &lt;script&gt;
+    $(document).ready(function() &#123;
+      // 当点击按钮时发送 AJAX 请求
+      $(&#39;#getDataBtn&#39;).click(function() &#123;
+        $.ajax(&#123;
+          url: &#39;backendServlet&#39;, // 后端的 Servlet 地址
+          type: &#39;GET&#39;,
+          dataType: &#39;json&#39;,
+          success: function(data) &#123;
+            // 请求成功时更新页面内容
+            $(&#39;#result&#39;).text(data.message);
+          &#125;,
+          error: function() &#123;
+            // 请求失败时显示错误信息
+            $(&#39;#result&#39;).text(&#39;请求失败&#39;);
+          &#125;
+        &#125;);
+      &#125;);
+    &#125;);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>后端（Java Servlet）：</p>
+<pre><code class="java">import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
+
+public class BackendServlet extends HttpServlet &#123;
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException &#123;
+    // 处理 GET 请求
+    JSONObject json = new JSONObject();
+    json.put(&quot;message&quot;, &quot;这是从后端返回的数据&quot;);
+
+    response.setContentType(&quot;application/json&quot;);
+    response.setCharacterEncoding(&quot;UTF-8&quot;);
+    response.getWriter().write(json.toString());
+  &#125;
+&#125;
+</code></pre>
+<p>在上面的示例中，前端页面使用 AJAX 发送 GET 请求到名为 <code>backendServlet</code> 的后端 Servlet。后端 Servlet 接收到请求后，构造一个包含 JSON 数据的响应，并将其返回给前端。前端页面接收到响应后，通过 AJAX 回调函数处理响应数据，更新页面上的内容。</p>
+<p>请注意，这只是一个简单的示例，实际应用中可能需要更复杂的处理逻辑和错误处理。另外，你需要将后端 Servlet 配置在服务器上，以便能够通过指定的 URL 访问到它。</p>
+<p>这个示例演示了如何使用 AJAX 和 Java Web 技术进行前后端交互，通过 AJAX 发送请求，后端 Servlet 接收请求并返回响应数据。</p>
+<p>JSON（JavaScript Object Notation）是一种用于数据交换的轻量级文本格式。它以易于阅读和编写的方式表示结构化数据，并且易于解析和生成。JSON数据是基于键值对的集合，其中键和值之间使用冒号（:）分隔，键值对之间使用逗号（,）分隔，整个数据使用花括号（{}）括起来。</p>
+<p>以下是一个简单的 JSON 示例：</p>
+<pre><code class="json">&#123;
+  &quot;name&quot;: &quot;John&quot;,
+  &quot;age&quot;: 30,
+  &quot;city&quot;: &quot;New York&quot;
+&#125;
+</code></pre>
+<p>在上面的示例中，JSON 表示一个包含三个键值对的对象。键是字符串，用双引号括起来，值可以是字符串、数字、布尔值、数组、嵌套的对象或null。</p>
+<p>JSON 提供了一种通用的数据格式，被广泛用于前后端之间的数据交换。在 Web 开发中，常用于前后端之间的数据传输，尤其是在使用 AJAX 进行异步通信时，常用 JSON 格式来传输数据。</p>
+<p>在前端，可以使用 JavaScript 的内置函数 <code>JSON.parse()</code> 将 JSON 字符串解析为 JavaScript 对象，以便对数据进行处理。反之，可以使用 <code>JSON.stringify()</code> 将 JavaScript 对象转换为 JSON 字符串，以便进行传输或存储。</p>
+<p>总结：JSON 是一种用于数据交换的文本格式，以易读易写的方式表示结构化数据。它广泛用于前后端之间的数据交互，并可以通过 JavaScript 的内置函数进行解析和生成。</p>
+<p>如果前端发送的是 POST 请求，你可以在前端的 AJAX 请求中指定请求方法为 “POST”，并将数据作为请求体发送给后端。在后端的 Servlet 中，你需要相应地处理 POST 请求的数据。</p>
+<p>以下是在前端使用 POST 请求发送数据给后端的示例：</p>
+<p>###前端（使用 AJAX 发送 POST 请求）：</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;AJAX POST 请求示例&lt;/title&gt;
+  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button id=&quot;sendDataBtn&quot;&gt;发送数据&lt;/button&gt;
+
+  &lt;script&gt;
+    $(document).ready(function() &#123;
+      // 当点击按钮时发送 POST 请求
+      $(&#39;#sendDataBtn&#39;).click(function() &#123;
+        var data = &#123;
+          name: &#39;John&#39;,
+          age: 30
+        &#125;;
+
+        $.ajax(&#123;
+          url: &#39;backendServlet&#39;, // 后端的 Servlet 地址
+          type: &#39;POST&#39;,
+          dataType: &#39;json&#39;,
+          data: JSON.stringify(data), // 将数据转换为 JSON 字符串发送
+          contentType: &#39;application/json&#39;,
+          success: function(response) &#123;
+            // 请求成功时处理响应
+            console.log(response.message);
+          &#125;,
+          error: function() &#123;
+            // 请求失败时显示错误信息
+            console.log(&#39;请求失败&#39;);
+          &#125;
+        &#125;);
+      &#125;);
+    &#125;);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>后端（Java Servlet 处理 POST 请求）：</p>
+<pre><code class="java">import java.io.BufferedReader;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
+
+public class BackendServlet extends HttpServlet &#123;
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException &#123;
+    // 从请求体中读取数据
+    StringBuilder requestBody = new StringBuilder();
+    BufferedReader reader = request.getReader();
+    String line;
+    while ((line = reader.readLine()) != null) &#123;
+      requestBody.append(line);
+    &#125;
+
+    // 解析请求体中的数据
+    JSONObject jsonData = new JSONObject(requestBody.toString());
+    String name = jsonData.getString(&quot;name&quot;);
+    int age = jsonData.getInt(&quot;age&quot;);
+
+    // 处理数据并生成响应
+    JSONObject jsonResponse = new JSONObject();
+    jsonResponse.put(&quot;message&quot;, &quot;接收到的数据：&quot; + name + &quot;, &quot; + age);
+
+    response.setContentType(&quot;application/json&quot;);
+    response.setCharacterEncoding(&quot;UTF-8&quot;);
+    response.getWriter().write(jsonResponse.toString());
+  &#125;
+&#125;
+</code></pre>
+<p>在上面的示例中，前端通过 AJAX 发送 POST 请求到后端的 Servlet。在前端的 AJAX 请求中，我们将请求方法设置为 “POST”，并将数据对象转换为 JSON 字符串后作为请求体发送。在后端的 Servlet 中，我们使用 <code>request.getReader()</code> 方法获取请求体中的数据，并通过 <code>JSONObject</code> 解析和处理数据。然后，我们生成一个包含响应数据的 JSON 对象，并将其作为响应返回给前端。</p>
+<p>需要注意的是，在发送 POST 请求时，要正确设置请求头的 <code>Content-Type</code> 为 <code>&#39;application/json&#39;</code>，以指示请求体的内容类型为 JSON 格式。</p>
+<p>通过以上示例，你可以在前后端之间使用 POST 请求进行数据交互，并在后端的 Servlet 中接收和处理 POST 请求的数据。</p>
+<p>###实时留言板</p>
+<p>要实现一个实时留言板，您可以使用 AJAX 技术与 JavaWeb 后端结合。以下是一个基本的实现示例：</p>
+<ol>
+<li>创建前端页面（例如 <code>index.html</code>）：</li>
+</ol>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;实时留言板&lt;/title&gt;
+  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;实时留言板&lt;/h1&gt;
+  &lt;div id=&quot;messageContainer&quot;&gt;&lt;/div&gt;
+
+  &lt;form id=&quot;messageForm&quot;&gt;
+    &lt;input type=&quot;text&quot; id=&quot;nameInput&quot; placeholder=&quot;姓名&quot;&gt;
+    &lt;textarea id=&quot;messageInput&quot; placeholder=&quot;留言&quot;&gt;&lt;/textarea&gt;
+    &lt;button type=&quot;submit&quot;&gt;提交留言&lt;/button&gt;
+  &lt;/form&gt;
+
+  &lt;script&gt;
+    // 定时更新留言
+    setInterval(loadMessages, 5000);
+
+    // 加载留言
+    function loadMessages() &#123;
+      $.ajax(&#123;
+        url: &#39;GetMessagesServlet&#39;, // 后端的 Servlet 地址
+        type: &#39;GET&#39;,
+        dataType: &#39;json&#39;,
+        success: function(data) &#123;
+          // 清空留言容器
+          $(&#39;#messageContainer&#39;).empty();
+
+          // 遍历留言列表并添加到容器中
+          $.each(data, function(index, message) &#123;
+            var messageHtml = &#39;&lt;div&gt;&lt;strong&gt;&#39; + message.name + &#39;:&lt;/strong&gt; &#39; + message.content + &#39;&lt;/div&gt;&#39;;
+            $(&#39;#messageContainer&#39;).append(messageHtml);
+          &#125;);
+        &#125;,
+        error: function() &#123;
+          console.log(&#39;请求失败&#39;);
+        &#125;
+      &#125;);
+    &#125;
+
+    // 提交留言
+    $(&#39;#messageForm&#39;).submit(function(e) &#123;
+      e.preventDefault();
+
+      var name = $(&#39;#nameInput&#39;).val();
+      var content = $(&#39;#messageInput&#39;).val();
+
+      $.ajax(&#123;
+        url: &#39;AddMessageServlet&#39;, // 后端的 Servlet 地址
+        type: &#39;POST&#39;,
+        dataType: &#39;json&#39;,
+        data: &#123; name: name, content: content &#125;,
+        success: function() &#123;
+          // 提交成功后清空输入框并刷新留言
+          $(&#39;#nameInput&#39;).val(&#39;&#39;);
+          $(&#39;#messageInput&#39;).val(&#39;&#39;);
+          loadMessages();
+        &#125;,
+        error: function() &#123;
+          console.log(&#39;提交失败&#39;);
+        &#125;
+      &#125;);
+    &#125;);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol start="2">
+<li>创建后端 Servlet（例如 <code>GetMessagesServlet</code>）用于获取留言列表：</li>
+</ol>
+<pre><code class="java">@WebServlet(&quot;/GetMessagesServlet&quot;)
+public class GetMessagesServlet extends HttpServlet &#123;
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException &#123;
+        // 模拟从数据库或其他存储中获取留言列表
+        List&lt;Message&gt; messages = new ArrayList&lt;&gt;();
+        messages.add(new Message(&quot;John&quot;, &quot;Hello&quot;));
+        messages.add(new Message(&quot;Jane&quot;, &quot;Hi there&quot;));
+        
+        // 将留言列表转换为 JSON 格式并发送给前端
+        response.setContentType(&quot;application/json&quot;);
+        response.setCharacterEncoding(&quot;UTF-8&quot;);
+        response.getWriter().write(new Gson().toJson(messages));
+    &#125;
+&#125;
+</code></pre>
+<ol start="3">
+<li>创建后端 Servlet（例如 <code>AddMessageServlet</code>）用于添加留言：</li>
+</ol>
+<pre><code class="java">@WebServlet(&quot;/AddMessageServlet&quot;)
+public class AddMessageServlet extends HttpServlet &#123;
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException &#123;
+        // 获取前端提交的留言信息
+        String name = request.getParameter(&quot;name
+
+&quot;);
+        String content = request.getParameter(&quot;content&quot;);
+        
+        // TODO: 将留言信息保存到数据库或其他存储中
+        
+        // 返回成功的状态给前端
+        response.setContentType(&quot;application/json&quot;);
+        response.setCharacterEncoding(&quot;UTF-8&quot;);
+        response.getWriter().write(&quot;&#123;\&quot;status\&quot;:\&quot;success\&quot;&#125;&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>上述示例中，前端页面使用 AJAX 定时请求 <code>GetMessagesServlet</code> 获取留言列表，并通过 <code>AddMessageServlet</code> 提交留言。后端 Servlet 根据业务逻辑获取或保存留言信息，并将留言列表或成功状态返回给前端。</p>
+<p>请注意，上述示例是一个基本的实现框架，您可以根据自己的需求进行适当修改和扩展。例如，可以在后端使用数据库存储留言信息，可以增加用户认证和权限控制等功能。</p>
+<p>###数组</p>
+<p>要在前端依次展示一个数组内的数据内容，并为每个数据应用特定的样式，您可以使用 JavaScript 和 HTML&#x2F;CSS 来实现。以下是一个简单的示例：</p>
+<p>HTML：</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;展示数组数据&lt;/title&gt;
+  &lt;style&gt;
+    /* 自定义样式 */
+    .item &#123;
+      color: blue;
+      font-weight: bold;
+    &#125;
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;container&quot;&gt;&lt;/div&gt;
+
+  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>JavaScript（script.js）：</p>
+<pre><code class="javascript">$(document).ready(function() &#123;
+  // 定义要展示的数据数组
+  var data = [&quot;Apple&quot;, &quot;Banana&quot;, &quot;Orange&quot;, &quot;Grapes&quot;];
+
+  // 获取容器元素
+  var container = $(&#39;#container&#39;);
+
+  // 遍历数据数组
+  $.each(data, function(index, item) &#123;
+    // 创建元素并添加到容器中
+    var element = $(&#39;&lt;div&gt;&#39;).addClass(&#39;item&#39;).text(item);
+    container.append(element);
+  &#125;);
+&#125;);
+</code></pre>
+<p>上述示例中，我们定义了一个数组 <code>data</code>，其中包含要展示的数据内容。通过遍历数组，并使用 jQuery 动态创建元素，为每个数据项创建一个 <code>&lt;div&gt;</code> 元素，并为其添加自定义样式。最后，将创建的元素添加到容器 <code>#container</code> 中。</p>
+<p>您可以根据自己的需求修改样式和数组数据，以及对创建的元素进行进一步的自定义和处理。</p>
+<p><code>$(&#39;&lt;div&gt;&#39;)</code> 是使用 jQuery 动态创建一个 <code>&lt;div&gt;</code> 元素的语法。<code>addClass(&#39;item&#39;)</code> 是为该元素添加一个 CSS 类名为 <code>&#39;item&#39;</code>，这样可以应用特定的样式。<code>.text(item)</code> 是设置该元素的文本内容为变量 <code>item</code> 的值。</p>
+<p>这行代码的作用是创建一个 <code>&lt;div&gt;</code> 元素，并添加 <code>&#39;item&#39;</code> 类名和 <code>item</code> 的文本内容。这样可以在 HTML 中展示该元素，并应用特定的样式。</p>
+<p><code>$.each(data, function(index, item) &#123; ... &#125;)</code> 是使用 jQuery 的 <code>$.each()</code> 函数对一个数组或对象进行迭代的语法。在这个语法中，<code>data</code> 是要迭代的数组或对象，<code>index</code> 是当前元素的索引，<code>item</code> 是当前元素的值。</p>
+<p>通过这个语法，你可以遍历数组或对象中的每个元素，并在迭代过程中执行特定的操作。你可以在函数体内部编写代码，对每个元素进行处理。</p>
+<p>例如，如果 <code>data</code> 是一个包含多个数据的数组，你可以在函数体内部使用 <code>item</code> 变量来访问每个数据，并对其进行操作，比如创建元素、设置样式、添加到页面等。这样可以实现按照特定样式展示数组中的数据内容。</p>
+<p>示例代码如下：</p>
+<pre><code class="javascript">$.each(data, function(index, item) &#123;
+  var element = $(&#39;&lt;div&gt;&#39;).addClass(&#39;item&#39;).text(item);
+  // 在这里可以对 element 进行进一步的操作，比如设置样式、添加到页面等
+  // ...
+&#125;);
+</code></pre>
+<p>在这个示例中，对于 <code>data</code> 数组中的每个元素，都会创建一个 <code>&lt;div&gt;</code> 元素，并应用 <code>&#39;item&#39;</code> 类名和元素的文本内容为当前元素的值。你可以根据需要在函数体内部对 <code>element</code> 进行进一步的操作。</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

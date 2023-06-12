@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || 环境变量</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>环境变量 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/靶场学习" style=color:#ffa2c4>
+                    靶场学习
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h1><p>参考资料：（侵删）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/haoel/article/details/1602108"><strong>警惕UNIX下的LD_PRELOAD环境变量</strong></a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/itworld123/article/details/125755603?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167117754716782390528530%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167117754716782390528530&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-125755603-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=LD_PRELOAD&spm=1018.2226.3001.4187"><strong>深入分析 LD_PRELOAD</strong></a></p>
+<p>##先了解一下LD_PRELOAD</p>
+<p>LD_PRELOAD 是 Linux&#x2F;Unix 系统的一个环境变量，它影响程序的运行时的链接（Runtime linker），&#x3D;&#x3D;它允许在程序运行前定义优先加载的动态链接库。&#x3D;&#x3D;这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，&#x3D;&#x3D;我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。&#x3D;&#x3D;</p>
+<pre><code>一般来说，程序的链接分为静态链接和动态链接，静态链接就是把所有所引用到的函数或变量全部地编译到可执行文件中。动态链接则不会把函数编译到可执行文件中，而是在程序运行时动态地载入函数库，也就是运行链接。所以，对于动态链接来说，必然需要一个动态链接库。动态链接库的好处在于，一旦动态库中的函数发生变化，对于可执行程序来说是透明的，可执行程序无需重新编译。这对于程序的发布、维护、更新起到了积极的作用。对于静态链接的程序来说，函数库中一个小小的改动需要整个程序的重新编译、发布，对于程序的维护产生了比较大的工作量。
+</code></pre>
+<p>在这里，我们细分一下程序的连接：</p>
+<pre><code>程序的链接可以分为以下三种
+
+静态链接：在程序运行之前先将各个目标模块以及所需要的库函数链接成一个完整的可执行程序，之后不再拆开。
+装入时动态链接：源程序编译后所得到的一组目标模块，在装入内存时，边装入边链接。
+运行时动态链接：原程序编译后得到的目标模块，在程序执行过程中需要用到时才对它进行链接。
+</code></pre>
+<p>&#x3D;&#x3D;<strong>动态链接库的 搜索路径搜索的先后顺序</strong>&#x3D;&#x3D;</p>
+<pre><code>编译目标代码时指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；
+* 环境变量 LD_LIBRARY_PATH 指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；
+* 配置文件 /etc/ld.so.conf 中指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；
+* 默认的动态库搜索路径 /lib；
+* 默认的动态库搜索路径 /usr/lib；
+总结：LD_PRELOAD &gt; LD_LIBRARY_PATH &gt; /etc/ld.so.cache &gt; /lib &gt; /usr/lib
+</code></pre>
+<p><strong>零散的知识点</strong></p>
+<pre><code>Linux规定动态链接库的文件名规则比如如下：
+
+libname.so.x.y.z
+
+lib：统一前缀。
+so：统一后缀。
+name：库名，如 libstdc++.so.6.0.21 的 name 就是 stdc++。
+x： 主版本号 。表示库有重大升级，不同主版本号的库之间是不兼容的。如libstdc++.so.6.0.21 的主版本号是 6。
+y： 次版本号 。表示库的增量升级，如增加一些新的接口。在主版本号相同的情况下， 高的次版本号向后兼容低的次版本号 。如 libstdc++.so.6.0.21 的次版本号是 0 。
+z： 发布版本号 。表示库的优化、bugfix等。相同的主次版本号，不同的发布版本号的库之间 完全兼容 。如 libstdc++.so.6.0.21 的发布版本号是 21。
+</code></pre>
+<pre><code>不过可以发现，这里我们要利用的环境变量 LD_PRELOAD 并没有出现在这里的搜索路径之中，反而出现了一个 LD_LIBRARY_PATH，这里关于二者之间的关系和区别在 stackoverflow 上也有大佬讨论，观点也很多，不过在这里我比较认可的是下面这个观点
+
+LD_PRELOAD (not LD_PRELOAD_PATH) 是要在任何其他库之前加载的特定库 ( files ) 的列表，无论程序是否需要。LD_LIBRARY_PATH 是在加载无论如何都会加载的库时要搜索的 目录列表。 在 linux 上，您可以阅读 man ld.so 有关这些和其他影响动态链接器的环境变量的更多信息。
+
+可见，这里 LD_PRELOAD 甚至超脱于动态链接库的搜索路径先后顺序之外，它可以指定在程序运行前优先加载的动态链接库
+</code></pre>
+<h2 id="环境变量-1"><a href="#环境变量-1" class="headerlink" title="环境变量"></a>环境变量</h2><p>参考文章：（侵删）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_56916549/article/details/127140089?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167117926216800182736496%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167117926216800182736496&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-127140089-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F&spm=1018.2226.3001.4187">环境变量</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zzoeey/article/details/77697219?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167101150516782425613659%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167101150516782425613659&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-77697219-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=linux%20env%E5%91%BD%E4%BB%A4&spm=1018.2226.3001.4187">中兴新支点命令篇-环境变量命令</a></p>
+<p>####什么是环境变量</p>
+<blockquote>
+<p>环境变量是指在操作系统中用来指定操作系统运行的一些参数：也就是说，操作系统通过环境变量来找到运行时的一些资源。例如链接的时候帮助链接器找到<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%8A%A8%E6%80%81%E5%BA%93&spm=1001.2101.3001.7020">动态库</a>（标准库）或者是执行命令的时候，帮助用户找到命令的位置。</p>
+</blockquote>
+<p>NewStart桌面操作系统中常用的环境变量有 PATH、HOME、LOGNAME等。</p>
+<blockquote>
+<p>l PATH指定命令的搜索路径；</p>
+<p>l HOME 指定的是当前用户主目录；</p>
+<p>l LOGNAME指定的是当前用户的登录名；</p>
+<p>提示：除了以上常见的环境变量，部分应用程序在安装时也需要增加环境变量才能生效，比如Java使用的环境变量：JAVA_HOME 和 CLASSPATH等。</p>
+</blockquote>
+<hr>
+<h2 id="title-环境变量命令date-2023-06-11-23-32-02tags-靶场学习"><a href="#title-环境变量命令date-2023-06-11-23-32-02tags-靶场学习" class="headerlink" title="title: 环境变量命令date: 2023-06-11 23:32:02tags: 靶场学习"></a>title: 环境变量命令<br>date: 2023-06-11 23:32:02<br>tags: 靶场学习</h2><h4 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h4><blockquote>
+<ul>
+<li><strong>env命令</strong></li>
+</ul>
+<p> 显示所有的环境变量，执行env 命令。</p>
+<ul>
+<li><strong>export命令</strong></li>
+</ul>
+<p>  export 命令用于设置或显示环境变量，在shell 中执行程序时，提供一组环境变量。export 可以新增，修改或删除环境变量，作为后续执行的程序使用。</p>
+<p>  export [-fnp][变量名称]&#x3D;[变量设置值]</p>
+<p>  命令选项：</p>
+<ul>
+<li>-f代表[变量名称]中为函数名称。 </li>
+<li>-n删除指定的变量。变量实际上并未删除，只是不会输出到后续指令的执行环境中。 </li>
+<li>-p列出所有的shell赋予程序的环境变量。</li>
+</ul>
+<p>  ​</p>
+<p>  export 环境变量名称&#x3D;$[环境变量名称]：[新添加的环境变量的内容]:</p>
+<ul>
+<li><p>如果直接赋值，将直接修改变量</p>
+</li>
+<li><p>按   export 环境变量名称&#x3D;$[环境变量名称]：[新添加的环境变量的内容]   将新值添加到末尾</p>
+<p><img src="https://gitee.com/tanin7/knowledge-point-record/raw/master/%E5%9B%BE%E7%89%87/1.png" alt="233.png"></p>
+</li>
+</ul>
+<p>  ​</p>
+</blockquote>
+<p><strong>path命令</strong></p>
+<pre><code>path 决定了 shell 将到哪些目录中寻找命令或程序，path的值是一系列目录，当用户运行一个程序时，系统会在这些目录下进行搜寻编译链接。
+
+PATH=$PATH:&lt;PATH1&gt;:&lt;PATH2&gt;:------:&lt;PATHN&gt;
+
+可以用户添加指定的路径，中间用冒号隔开。
+
+1．安装一个新的命令在 /usr/local/apache/bin 目录下。
+
+2．通过修改.bashrc文件来设置环境变量，赋予某个用户权限使用此环境变量。
+
+3．在终端界面,执行 vi 命令 在 .bashrc文件末尾加入 
+
+export PATH=$PATH:/usr/local/apache/bin 命令。
+
+4．保存并退出文件，执行 source .bashrc 命令让其环境变量生效。
+
+5．如果要让所有用户可用这个环境变量，则以上第2、3步的修改和生效文件由.bashrc改为/etc/profile。
+
+提示：如果 环 境 变 量作 为 临 时 使用 ， 还可 以 直 接 在终 端 界 面 上直 接 执 行 export PATH=$PATH:/usr/local/apache/bin 命令。
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

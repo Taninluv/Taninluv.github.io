@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || 函数劫持实验</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>函数劫持实验 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/靶场学习" style=color:#03a9f4>
+                    靶场学习
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h2 id="函数劫持实验"><a href="#函数劫持实验" class="headerlink" title="函数劫持实验"></a>函数劫持实验</h2><h3 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h3><h4 id="Linux-编译动态链接库（-so）"><a href="#Linux-编译动态链接库（-so）" class="headerlink" title="Linux 编译动态链接库（.so）"></a>Linux 编译动态链接库（.so）</h4><p>参考文章：</p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/chengyq116/article/details/100567555?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167143895816782425647499%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=167143895816782425647499&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~pc_rank_34-2-100567555-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=gcc%20-shared%20-fpic%20-o&spm=1018.2226.3001.4187">GCC 生成动态链接库 .so 文件 (-shared 和 -fPIC 选项)</a></p>
+<p><strong>gcc -shared -fpic</strong></p>
+<blockquote>
+<p><code>-fPIC</code> 选项作用于编译阶段，告诉编译器产生与位置无关代码 (Position-Independent Code),这样一来，产生的代码中就没有绝对地址了，全部使用相对地址，所以代码可以被加载器加载到内存的任意位置，都可以正确的执行。这正是共享库所要求的，共享库被加载时，在内存的位置不是固定的。</p>
+</blockquote>
+<blockquote>
+<p>如果想创建一个动态链接库，可以使用 GCC 的 -shared 选项。输入文件可以是源文件、汇编文件或者目标文件。</p>
+</blockquote>
+<p>一般的编译链接命令行为：</p>
+<p><code>gcc -fPIC -shared func.c -o libfunc.so</code></p>
+<h4 id="readelf-lt-option-s-gt-elf-file-s"><a href="#readelf-lt-option-s-gt-elf-file-s" class="headerlink" title="readelf  &lt;option(s)&gt;  elf-file(s)"></a>readelf  &lt;option(s)&gt;  elf-file(s)</h4><p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/tanrui519521/article/details/79868700?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167143780216800182759984%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167143780216800182759984&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-79868700-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=readelf&spm=1018.2226.3001.4187">Linux中的readelf命令</a></p>
+<blockquote>
+<p>关于ELF文件：</p>
+<p>ELF文件类型：</p>
+<p>a)可重定位文件:用户和其他目标文件一起创建可执行文件或者共享目标文件,例如lib*.a文件。</p>
+<p>b)可执行文件：用于生成进程映像，载入内存执行,例如编译好的可执行文件a.out。</p>
+<p>c)共享目标文件：用于和其他共享目标文件或者可重定位文件一起生成elf目标文件或者和执行文件一起创建进程映像，例如lib*.so文件。</p>
+<p>ELF文件作用：</p>
+<p>ELF文件参与程序的连接(建立一个程序)和程序的执行(运行一个程序)，所以可以从不同的角度来看待elf格式的文件：</p>
+<p>a)如果用于编译和链接（可重定位文件），则编译器和链接器将把elf文件看作是节头表描述的节的集合,程序头表可选。</p>
+<p>b)如果用于加载执行（可执行文件），则加载器则将把elf文件看作是程序头表描述的段的集合，一个段可能包含多个节，节头表可选。</p>
+<p>c)如果是共享文件，则两者都含有。</p>
+<p>ELF文件总体组成：</p>
+<p>elf文件头描述elf文件的总体信息。包括： 系统相关，类型相关，加载相关，链接相关。</p>
+</blockquote>
+<p>-s –syms              Display the symbol table</p>
+<p>-W –wide              Allow output width to exceed 80 characters</p>
+<p>通过此命令可以查看动态库中包含的函数或者函数都调用了哪些库函数</p>
+<p>###实验</p>
+<p><a target="_blank" rel="noopener" href="https://wooyun.js.org/drops/%E5%88%A9%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FLD_PRELOAD%E6%9D%A5%E7%BB%95%E8%BF%87php%20disable_function%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4.html">参考</a></p>
+<p>先编写一个c语言文件cp.c:</p>
+<blockquote>
+<pre><code>#!c
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main(int argc, char **argv)&#123;
+char passwd[] = &quot;password&quot;;
+if (argc &lt; 2) &#123;
+        printf(&quot;usage: %s &lt;password&gt;/n&quot;, argv[0]);
+        return;
+&#125;
+if (!strcmp(passwd, argv[1])) &#123;
+        printf(&quot;Correct Password!/n&quot;);
+        return;
+&#125;
+printf(&quot;Invalid Password!/n&quot;);
+&#125;
+</code></pre>
+</blockquote>
+<p>其中用到了<code>strcmp（）</code>函数</p>
+<p>我们尝试劫持<code>strcmp()</code>函数</p>
+<p>先构造一个新的<code>strcmp()</code>函数：</p>
+<p>hack.c</p>
+<blockquote>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int strcmp(const char *s1, const char *s2)&#123;
+    printf(&quot;hack function invoked. s1=&lt;%s&gt; s2=&lt;%s&gt;/n&quot;, s1, s2);
+    return 0;
+&#125;
+</code></pre>
+</blockquote>
+<p>我们将hack.c编译成动态链接库</p>
+<p><code>gcc -shared hack.c -o hack.so</code></p>
+<p>再设置LD_PRELOAD</p>
+<p><code>export LD_PRELOAD=&quot;./hack.so&quot;</code></p>
+<p>当我们再执行<code>srtcmp()</code>函数时，得到</p>
+<blockquote>
+<p>hack function invoked. ……</p>
+</blockquote>
+<p>此时函数劫持成功</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3>
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

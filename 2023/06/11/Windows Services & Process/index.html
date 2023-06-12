@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || RDP</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>RDP </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ffa2c4>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h4 id="远程桌面协议-（RDP）"><a href="#远程桌面协议-（RDP）" class="headerlink" title="远程桌面协议 （RDP）"></a>远程桌面协议 （RDP）</h4><p>RDP 使用客户端&#x2F;服务器体系结构，其中客户端应用程序用于通过启用了 RDP 访问的网络指定计算机的目标 IP 地址或主机名。启用了 RDP 远程访问的目标计算机被视为服务器。请务必注意，RDP 默认侦听逻辑端口。请记住，IP 地址用作网络上计算机的逻辑标识符，逻辑端口是分配给应用程序的标识符。简单来说，我们可以将网络子网视为城镇中的街道（公司网络），该子网中的 IP 地址分配给主机作为该街道上的房屋，逻辑端口视为可用于访问房屋的窗口&#x2F;门。<code>3389</code></p>
+<p>一旦请求（封装在数据包中）通过其 IP 地址到达目标计算机，请求将根据该请求中指定的端口（作为数据包中的标头包含在内）定向到计算机上托管的应用程序。IP 寻址和协议封装在<a target="_blank" rel="noopener" href="https://academy.hackthebox.com/module/details/34">网络简介</a>模块中有更详细的介绍。从网络的角度来看，在本模块中，我们只需要了解每台计算机都分配了一个 IP 地址以通过网络进行通信，而目标计算机上托管的应用程序会侦听特定的逻辑端口。</p>
+<p>我们可以使用RDP从运行Linux或Windows的攻击主机连接到Windows目标。如果我们从Windows主机连接到Windows目标，则可以使用名为（<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mstsc">mstsc.exe</a>）的内置RDP客户端应用程序。Remote Desktop Connection</p>
+<p>为此，必须在目标 Windows 系统上<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-allow-access">允许</a>远程访问。默认情况下，Windows 操作系统上不允许远程访问。HTB 学院团队已将我们的许多 Windows 目标配置为允许通过 VPN 连接到学院实验室后的 RDP 访问。</p>
+<p>远程桌面连接还允许我们保存连接配置文件。这是 IT 管理员的常见习惯，因为它使连接到远程系统更加方便。</p>
+<p>作为渗透测试人员，我们可以在参与时查找这些保存的远程桌面文件（）中受益。<code>.rdp</code></p>
+<p>存在许多其他远程桌面客户端应用程序，其中的一些应用程序在这篇名为<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-clients">远程桌面客户端</a>的 Microsoft 文章中列出。我们不会在本模块中介绍每个远程桌面客户端应用程序。</p>
+<h4 id="使用-xfreerdp"><a href="#使用-xfreerdp" class="headerlink" title="使用 xfreerdp"></a>使用 xfreerdp</h4><p>从基于 Linux 的攻击主机，我们可以使用名为 <a target="_blank" rel="noopener" href="https://linux.die.net/man/1/xfreerdp">xfreerdp</a> 的工具来远程访问 Windows 目标。您会注意到我们在多个模块中使用 xfreerdp，因为它易于使用、功能集、命令行实用程序和效率。</p>
+<p>使用以下命令通过远程桌面 （RDP） 进行连接：</p>
+<pre><code>Tanin@htb[/htb]$ xfreerdp /v:&lt;targetIp&gt; /u:htb-student /p:Password
+</code></pre>
+<h1 id="Windows-Services-amp-Process"><a href="#Windows-Services-amp-Process" class="headerlink" title="Windows Services &amp; Process"></a>Windows Services &amp; Process</h1><p>服务是 Windows 操作系统的主要组件。它们允许创建和管理长时间运行的进程。Windows 服务可以在系统启动时自动启动，无需用户干预。即使用户在系统上注销其帐户，这些服务也可以继续在后台运行。</p>
+<p>还可以创建应用程序以作为服务安装，例如安装在服务器上的网络监视应用程序。Windows 上的服务负责 Windows 操作系统中的许多功能，例如网络功能、执行系统诊断、管理用户凭据、控制 Windows 更新等。</p>
+<p>Windows 服务通过服务控制管理器 （SCM） 系统进行管理，可通过 MMC 加载项访问。<code>services.msc</code></p>
+<p>此外接程序提供用于与服务交互和管理服务的 GUI 界面，并显示有关每个已安装服务的信息。此信息包括服务名称、说明、状态、启动类型以及运行服务的用户。</p>
+<p>还可以使用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7">PowerShell</a> cmdlet（如 ）通过命令行查询和管理服务。<code>sc.exe``Get-Service</code></p>
+<h2 id="使用-services-msc-检查服务"><a href="#使用-services-msc-检查服务" class="headerlink" title="使用 services.msc 检查服务"></a>使用 services.msc 检查服务</h2><h2 id="使用-sc-检查服务"><a href="#使用-sc-检查服务" class="headerlink" title="使用 sc 检查服务"></a>使用 sc 检查服务</h2><h2 id="安全标识符-（SID）"><a href="#安全标识符-（SID）" class="headerlink" title="安全标识符 （SID）"></a>安全标识符 （SID）</h2><p>系统上的每个安全主体都有一个唯一的安全标识符 （SID）。系统自动生成 SID。这意味着，例如，即使我们在系统上有两个相同的用户，Windows 也可以根据其 SID 区分两者及其权限。SID 是具有不同长度的字符串值，存储在安全数据库中。这些 SID 将添加到用户的访问令牌中，以标识用户有权执行的所有操作。</p>
+<p>SID 由标识符颁发机构和相对 ID （RID） 组成。在 Active Directory （AD） 域环境中，SID 还包括域 SID。</p>
+<h5 id="备忘单"><a href="#备忘单" class="headerlink" title="备忘单"></a>备忘单</h5><p>备忘单是此模块的有用命令参考。</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>xfreerdp /v:&lt;target IP address&gt; /u:htb-student /p:&lt;password&gt;</code></td>
+<td>RDP 到实验室目标</td>
+</tr>
+<tr>
+<td><code>Get-WmiObject -Class win32_OperatingSystem</code></td>
+<td>获取有关操作系统的信息</td>
+</tr>
+<tr>
+<td><code>dir c:\ /a</code></td>
+<td>查看 c：\ 中的所有文件和目录根目录</td>
+</tr>
+<tr>
+<td><code>tree &lt;directory&gt;</code></td>
+<td>以图形方式显示路径的目录结构</td>
+</tr>
+<tr>
+<td>&#96;tree c:\ &#x2F;f</td>
+<td>more&#96;</td>
+</tr>
+<tr>
+<td><code>icacls &lt;directory&gt;</code></td>
+<td>查看在目录上设置的权限</td>
+</tr>
+<tr>
+<td><code>icacls c:\users /grant joe:f</code></td>
+<td>授予用户对目录的完全权限</td>
+</tr>
+<tr>
+<td><code>icacls c:\users /remove joe</code></td>
+<td>删除用户对目录的权限</td>
+</tr>
+<tr>
+<td><code>Get-Service</code></td>
+<td><code>PowerShell</code>用于查看正在运行的服务的 cmdlet</td>
+</tr>
+<tr>
+<td><code>help &lt;command&gt;</code></td>
+<td>显示特定命令的帮助菜单</td>
+</tr>
+<tr>
+<td><code>get-alias</code></td>
+<td>列出别名<code>PowerShell</code></td>
+</tr>
+<tr>
+<td><code>New-Alias -Name &quot;Show-Files&quot; Get-ChildItem</code></td>
+<td>创建新别名<code>PowerShell</code></td>
+</tr>
+<tr>
+<td>&#96;Get-Module</td>
+<td>select Name,ExportedCommands</td>
+</tr>
+<tr>
+<td><code>Get-ExecutionPolicy -List</code></td>
+<td>查看执行策略<code>PowerShell</code></td>
+</tr>
+<tr>
+<td><code>Set-ExecutionPolicy Bypass -Scope Process</code></td>
+<td>将当前会话的执行策略设置为绕过<code>PowerShell</code></td>
+</tr>
+<tr>
+<td><code>wmic os list brief</code></td>
+<td>获取有关操作系统的信息<code>wmic</code></td>
+</tr>
+<tr>
+<td><code>Invoke-WmiMethod</code></td>
+<td>调用对象的方法<code>WMI</code></td>
+</tr>
+<tr>
+<td><code>whoami /user</code></td>
+<td>查看当前用户的 SID</td>
+</tr>
+<tr>
+<td><code>reg query &lt;key&gt;</code></td>
+<td>查看有关注册表项的信息</td>
+</tr>
+<tr>
+<td><code>Get-MpComputerStatus</code></td>
+<td>检查启用了哪些保护设置<code>Defender</code></td>
+</tr>
+<tr>
+<td><code>sconfig</code></td>
+<td>Windows Server Core 中的“加载服务器配置”菜单</td>
+</tr>
+</tbody></table>
+<h2 id="完整性控制访问控制列表-（icacls）"><a href="#完整性控制访问控制列表-（icacls）" class="headerlink" title="完整性控制访问控制列表 （icacls）"></a>完整性控制访问控制列表 （icacls）</h2><p>Integrity Control Access Control List</p>
+<p>可以使用安全选项卡下的文件资源管理器 GUI 管理对 Windows 中文件和文件夹的 NTFS 权限。除了 GUI 之外，我们还可以使用 icacls 实用程序从命令行对 Windows 中的 NTFS 文件权限实现精细的粒度。</p>
+<p>我们可以通过从工作目录中运行或针对当前不在的目录运行来列出特定目录上的 NTFS 权限</p>
+<pre><code>C:\htb&gt; icacls c:\windows
+c:\windows NT SERVICE\TrustedInstaller:(F)
+           NT SERVICE\TrustedInstaller:(CI)(IO)(F)
+           NT AUTHORITY\SYSTEM:(M)
+           NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
+           BUILTIN\Administrators:(M)
+           BUILTIN\Administrators:(OI)(CI)(IO)(F)
+           BUILTIN\Users:(RX)
+           BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
+           CREATOR OWNER:(OI)(CI)(IO)(F)
+           APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(RX)
+           APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+           APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(RX)
+           APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+
+Successfully processed 1 files; Failed processing 0 files
+</code></pre>
+<p>资源访问级别列在输出中的每个用户之后。可能的继承设置包括：</p>
+<ul>
+<li><code>(CI)</code>：容器继承</li>
+<li><code>(OI)</code>：对象继承</li>
+<li><code>(IO)</code>：仅继承</li>
+<li><code>(NP)</code>：不传播继承</li>
+<li><code>(I)</code>：从父容器继承的权限</li>
+</ul>
+<p>在上面的示例中，该帐户具有对象继承、容器继承、仅继承和完全访问权限。这意味着此帐户可以完全控制此目录和子目录中的所有文件系统对象。<code>NT AUTHORITY\SYSTEM</code></p>
+<p>基本访问权限如下：</p>
+<ul>
+<li><code>F</code>：完全访问权限</li>
+<li><code>D</code>：删除访问权限</li>
+<li><code>N</code>：无访问权限</li>
+<li><code>M</code>：修改访问权限</li>
+<li><code>RX</code>：读取和执行访问</li>
+<li><code>R</code>：只读访问</li>
+<li><code>W</code>：只写访问</li>
+</ul>
+<p>我们可以使用 .在这里，我们在本地管理员帐户的上下文中执行，该帐户显示用户没有任何写入权限的目录。<code>icacls``icacls``C:\users``joe</code></p>
+<pre><code>C:\htb&gt; icacls c:\Users
+c:\Users NT AUTHORITY\SYSTEM:(OI)(CI)(F)
+         BUILTIN\Administrators:(OI)(CI)(F)
+         BUILTIN\Users:(RX)
+         BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
+         Everyone:(RX)
+         Everyone:(OI)(CI)(IO)(GR,GE)
+
+Successfully processed 1 files; Failed processing 0 files
+</code></pre>
+<p>使用该命令，我们可以授予 joe 用户对目录的完全控制权，但鉴于该命令中不包含该目录，joe 用户将仅对文件夹拥有权限，而对用户子目录和其中包含的文件没有权限。<code>icacls c:\users /grant joe:f``(oi)``(ci)``c:\users</code></p>
+<pre><code>C:\htb&gt; icacls c:\users /grant joe:f
+processed file: c:\users
+Successfully processed 1 files; Failed processing 0 files
+</code></pre>
+<pre><code>C:\htb&gt; &gt;icacls c:\users
+c:\users WS01\joe:(F)
+         NT AUTHORITY\SYSTEM:(OI)(CI)(F)
+         BUILTIN\Administrators:(OI)(CI)(F)
+         BUILTIN\Users:(RX)
+         BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
+         Everyone:(RX)
+         Everyone:(OI)(CI)(IO)(GR,GE)
+
+Successfully processed 1 files; Failed processing 0 files
+</code></pre>
+<p>可以使用命令撤销这些权限。<code>icacls c:\users /remove joe</code></p>
+<p><code>icacls</code>非常强大，可以在域设置中使用，以授予某些用户或组对文件或文件夹的特定权限、显式拒绝访问、启用或禁用继承权限以及更改目录&#x2F;文件所有权。</p>
+<p>可<a target="_blank" rel="noopener" href="https://ss64.com/nt/icacls.html">在此处</a>找到命令行参数和详细权限设置的完整列表。<code>icacls</code></p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

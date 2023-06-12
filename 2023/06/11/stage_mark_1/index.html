@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || 协议连接</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>协议连接 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/靶场学习" style=color:#00a596>
+                    靶场学习
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>###FTP协议：</p>
+<p>下载：<code> apt install ftp -y</code></p>
+<p>使用：<code>ftp -h</code>:</p>
+<blockquote>
+<p>ftp -h<br>Usage: { ftp | pftp }[-46pinegvtd] [ hostname]<br>-4: use IPv4 addresses only<br>-6: use IPv6，nothing else<br>-p: enable passive mode ( default for pftp)					-i: turn off prompting during mget<br>-n: inhibit auto-login<br>-e: disable readline support，if present-g: disable filename 		 globbing<br>-v: verbose mode<br>-t: enable packet tracing [nonfunctional]           				-d: enable debugging</p>
+</blockquote>
+<p>连接：<code>ftp &#123;target_ip&#125;</code></p>
+<p>​	运行FTP服务的典型错误配置允许匿名帐户像任何其他经过身份验证的用户一样访问该服务。<code>anonymous</code>户名可以在提示符出现时输入，以任何密码作为后缀，因为服务将忽略此特定帐户的密码。</p>
+<p>连接后使用<code>help</code>可以查看可用的命令，用<code>get</code>下载目标文件</p>
+<p>###SMB协议：</p>
+<blockquote>
+<p>SMB是Server Message Block的缩写，是一种用于在计算机之间共享文件、打印机和其他资源的协议。SMB协议最初是由IBM开发的，现在由微软维护。SMB协议可以运行在TCP&#x2F;IP协议上，并支持文件和打印机的共享。在计算机网络中，SMB协议通常用于在不同操作系统之间进行文件共享，如Windows、Linux和Mac OS等。</p>
+</blockquote>
+<p>下载客户端：</p>
+<p><code>apt-get install smbclient</code></p>
+<p>尝试查看可用的域名:</p>
+<p><code>[-L|--list=HOST] : Selecting the targeted host for the connection request.</code></p>
+<p>其中：</p>
+<blockquote>
+<ul>
+<li>ADMIN$ - Administrative shares are hidden network shares created by the Windows NT family of operating systems that allow system administrators to have remote access to every disk volume on a network-connected system. These shares may not be permanently deleted but may be disabled.</li>
+<li>C$ - Administrative share for the C:\ disk volume. This is where the operating system is hosted.</li>
+<li>IPC$ - The inter-process communication share. Used for inter-process communication via named pipes and is not part of the file system.</li>
+<li>WorkShares - Custom share.</li>
+</ul>
+</blockquote>
+<p>连接：</p>
+<p><code>smbclient \\\\ &#123;target_ip&#125;\\&#123;target_host&#125;</code></p>
+<blockquote>
+<p><code>smbsilent</code> 是一个工具，用于枚举 SMB 服务器共享和共享内的文件夹，其中：</p>
+<ul>
+<li><code>-N</code> 表示进行无认证的 SMB 网络浏览</li>
+<li><code>-L</code> 表示执行网络浏览（查看可用共享）</li>
+</ul>
+<p>而 <code>\\\\&#123;ip&#125;\\</code> 则是需要执行网络浏览的目标主机地址，其中 <code>ip</code> 是目标主机的 IP 地址。该命令用于枚举指定主机上的 SMB 共享。</p>
+</blockquote>
+<p>关于这些<code>\</code></p>
+<blockquote>
+<p>在Windows系统的命令行中，反斜杠 <code>\</code> 被用作转义字符，所以要在命令中输入反斜杠本身，需要使用两个反斜杠 <code>\\</code> 来转义。在这个命令中，输入的 <code>\\</code> 表示一个反斜杠字符。因此 <code>\\\\</code> 表示两个反斜杠字符，后面紧接着的 <code>&#123;ip&#125;</code> 是要替换成目标主机的 IP 地址。</p>
+</blockquote>
+<p>连接后的一些操作：</p>
+<blockquote>
+<p>ls : listing contents of the directories within the share<br>cd : changing current directories within the share<br>get : downloading the contents of the directories within the share<br>exit : exiting the smb shell</p>
+</blockquote>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis:"></a>Redis:</h3><p>​	Redis是一个开源的内存数据存储系统，也被称为数据结构服务器。它支持各种数据结构，如字符串、哈希表、列表、集合等，并提供了广泛的客户端支持，可用于多种编程语言。Redis可以用作数据库、缓存、消息代理和排行榜等应用。它以速度和灵活性著称，并具有很高的可用性和可扩展性。Redis也支持数据持久化，可以将数据写入磁盘以便于重启后恢复数据。</p>
+<p>下载 redis-cli:</p>
+<p><code>sudo apt install redis-tools</code></p>
+<p>用法：</p>
+<blockquote>
+<p>redis-cli –help<br>Usage: redis-cli [OPTIONS] [cmd [arg [arg …]]]<br> -h  Server hostname (default: 127.0.0.1).<br> -p  Server port (default: 6379).<br> -s  Server socket (overrides hostname and port).<br> -a  Password to use when connecting to the server.<br> -r  Execute specified command N times.<br> -i  When -r is used, waits  seconds per command.<br> It is possible to specify sub-second times like -i 0.1.<br> -n  Database number.<br> -x Read last argument from STDIN.<br> -d  Multi-bulk delimiter in for raw formatting (default: \n).<br> -c Enable cluster mode (follow -ASK and -MOVED redirections).<br> –raw Use raw formatting for replies (default when STDOUT is<br> not a tty).<br> –no-raw Force formatted output even when STDOUT is not a tty.<br> –csv Output in CSV format.<br> –stat Print rolling stats about server: mem, clients, …<br>In our case, we will only need to use the following switch for specifying the host that we need to connect to :<br>Let us connect to the redis server using the following command :<br>Upon a successful connection with the Redis server, we should be able to see a prompt in the terminal as<br>shown in the image above.<br>One of the basic Redis enumeration commands is info which returns information and statistics about the<br>Redis server. Since the output of this command is pretty long, I have snipped out the less-relevant<br>information :<br> –latency Enter a special mode continuously sampling latency.<br> –latency-history Like –latency but tracking latency changes over time.<br> Default time interval is 15 sec. Change it using -i.<br> –latency-dist Shows latency as a spectrum, requires xterm 256 colors.<br> Default time interval is 1 sec. Change it using -i.<br> –lru-test  Simulate a cache workload with an 80-20 distribution.<br> –slave Simulate a slave showing commands received from the master.<br> –rdb  Transfer an RDB dump from remote server to local file.<br> –pipe Transfer raw Redis protocol from stdin to server.<br> –pipe-timeout  In –pipe mode, abort with error if after sending all data.<br> no reply is received within  seconds.<br> Default timeout: 30. Use 0 to wait forever.<br> –bigkeys Sample Redis keys looking for big keys.<br> –scan List all keys using the SCAN command.<br> –pattern  Useful with –scan to specify a SCAN pattern.<br> –intrinsic-latency  Run a test to measure intrinsic system latency.<br> The test will run for the specified amount of seconds.<br> –eval  Send an EVAL command using the Lua script at .<br> –help Output this help and exit.<br> –version Output version and exit.</p>
+</blockquote>
+<p>连接：<code>redis-cli -h &#123;target_ip&#125;</code></p>
+<p>登录后的一些操作：</p>
+<p><code>info</code>:查看当前信息，在keysapce中可以看到存在的数据库及其索引</p>
+<p><code>select  &#123;index&#125;</code>:输入要选择进入的数据库索引号</p>
+<p><code>keys *</code>:列出数据库中的所有键</p>
+<p><code>get &lt;key&gt;</code> : 获取键对应的值</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || 杂记</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>杂记 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/others" style=color:#ffa2c4>
+                    others
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h1><p>学习过程中的遇到的一些工具或指令</p>
+<p>###http-enum&#x3D;&#x3D;脚本枚举</p>
+<p>nmap使用&#x3D;&#x3D;http-enum&#x3D;&#x3D;脚本枚举，该脚本可用于枚举常见的 Web 应用程序目录。</p>
+<p><code>-oA</code> 保存扫描结果到指定文件</p>
+<pre><code>Tanin@htb[/htb]$ nmap -sV --script=http-enum -oA nibbles_nmap_http_enum 10.129.42.190 
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-12-16 23:41 EST
+Nmap scan report for 10.129.42.190
+Host is up (0.11s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd &lt;REDACTED&gt; ((Ubuntu))
+|_http-server-header: Apache/&lt;REDACTED&gt; (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
+</code></pre>
+<h3 id="xmllint-美化xml文件的输出"><a href="#xmllint-美化xml文件的输出" class="headerlink" title="xmllint 美化xml文件的输出"></a>xmllint 美化xml文件的输出</h3><pre><code>Tanin@htb[/htb]$ curl -s http://10.129.42.190/nibbleblog/content/private/users.xml | xmllint  --format -
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;users&gt;
+  &lt;user username=&quot;admin&quot;&gt;
+    &lt;id type=&quot;integer&quot;&gt;0&lt;/id&gt;
+    &lt;session_fail_count type=&quot;integer&quot;&gt;2&lt;/session_fail_count&gt;
+    &lt;session_date type=&quot;integer&quot;&gt;1608182184&lt;/session_date&gt;
+  &lt;/user&gt;
+  &lt;blacklist type=&quot;string&quot; ip=&quot;10.10.10.1&quot;&gt;
+    &lt;date type=&quot;integer&quot;&gt;1512964659&lt;/date&gt;
+    &lt;fail_count type=&quot;integer&quot;&gt;1&lt;/fail_count&gt;
+  &lt;/blacklist&gt;
+  &lt;blacklist type=&quot;string&quot; ip=&quot;10.10.14.2&quot;&gt;
+    &lt;date type=&quot;integer&quot;&gt;1608182171&lt;/date&gt;
+    &lt;fail_count type=&quot;integer&quot;&gt;5&lt;/fail_count&gt;
+  &lt;/blacklist&gt;
+&lt;/users&gt;
+</code></pre>
+<p>   在<code>curl</code>命令中，选项<code>-s</code>表示”silent”（静默）或者”silent mode”（静默模式）。它告诉<code>curl</code>不要输出任何进度或错误信息，只返回请求的结果。使用<code>-s</code>选项可以在脚本或命令行中以静默方式使用<code>curl</code>，只获取结果而不打印其他信息。</p>
+<h3 id="提升shell"><a href="#提升shell" class="headerlink" title="提升shell"></a>提升shell</h3><p>python3 -c ‘import pty; pty.spawn(“&#x2F;bin&#x2F;bash”)’</p>
+<p>注：根据python版本</p>
+<ul>
+<li><code>python3</code>: 运行 Python 3 解释器。</li>
+<li><code>-c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</code>: 使用 <code>-c</code> 参数指定要在命令行中执行的 Python 代码。在这个代码块中，执行了以下操作：<ul>
+<li><code>import pty</code>: 导入 <code>pty</code> 模块，该模块提供了伪终端（pseudo-terminal）的功能。</li>
+<li><code>pty.spawn(&quot;/bin/bash&quot;)</code>: 使用 <code>pty.spawn</code> 函数将当前终端转变为一个交互式的 bash shell。它会将当前进程变成一个子进程，并将子进程的输入和输出连接到一个伪终端，以实现交互式的终端功能。</li>
+</ul>
+</li>
+</ul>
+<p>使用这个脚本，您可以在当前终端创建一个交互式的 bash shell。这对于在一些情况下（例如，当您只能访问一个非交互式 shell）需要获取一个完整的交互式终端会话时非常有用。运行脚本后，您将能够使用 bash 的功能，并与终端进行交互，包括使用命令历史记录、自动补全等。</p>
+<p>###HTML注入</p>
+<pre><code>&lt;img src=/ onerror=alert(document.cookie)&gt;
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

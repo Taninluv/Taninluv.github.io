@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || cURL</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>cURL </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ff7d73>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="cURL"><a href="#cURL" class="headerlink" title="cURL"></a>cURL</h1><p>####将内容输出到文件中： -O   -o</p>
+<p>我们看到cURL不像web浏览器那样呈现HTML&#x2F;JavaScript&#x2F;CSS代码，而是以原始格式打印它。然而，作为渗透测试人员，我们主要对请求和响应上下文感兴趣，它通常比web浏览器更快、更方便。<br>我们也可以使用cURL下载页面或文件，并使用-O标志将内容输出到文件中。如果我们想指定输出文件名，我们可以使用-o标志并指定名称。否则，我们可以使用-O，cURL将使用远程文件名，如下所示：</p>
+<pre><code>Tanin@htb[/htb]$ curl inlanefreight.com
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;
+&lt;html&gt;&lt;head&gt;
+...SNIP...
+</code></pre>
+<pre><code>Tanin@htb[/htb]$ curl -O inlanefreight.com/index.html
+Tanin@htb[/htb]$ ls
+index.html
+</code></pre>
+<h4 id="跳过cURL的证书检查：-k"><a href="#跳过cURL的证书检查：-k" class="headerlink" title="跳过cURL的证书检查：-k"></a>跳过cURL的证书检查：-k</h4><p>现代网络浏览器也会这样做，警告用户不要访问具有无效SSL证书的网站。<br>我们在测试本地web应用程序或使用托管用于实践目的的web应用程序时可能会面临这样的问题，因为此类web应用程序可能尚未实现有效的SSL证书。要跳过cURL的证书检查，我们可以使用-k标志：</p>
+<pre><code>Tanin@htb[/htb]$ curl -k https://inlanefreight.com
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;
+&lt;html&gt;&lt;head&gt;
+...SNIP...
+</code></pre>
+<h4 id="查看完整的HTTP请求和响应：-v"><a href="#查看完整的HTTP请求和响应：-v" class="headerlink" title="查看完整的HTTP请求和响应：-v"></a>查看完整的HTTP请求和响应：-v</h4><p>在我们前面的cURL示例中，我们只指定了URL，并得到了返回的响应体。然而，cURL还允许我们预览完整的HTTP请求和完整的HTTP响应，这在执行web渗透测试或编写漏洞时会变得非常方便。要查看完整的HTTP请求和响应，我们可以简单地在前面的命令中添加-v verbose标志，它应该同时打印请求和响应：</p>
+<pre><code>Tanin@htb[/htb]$ curl inlanefreight.com -v
+
+*   Trying SERVER_IP:80...
+* TCP_NODELAY set
+* Connected to inlanefreight.com (SERVER_IP) port 80 (#0)
+&gt; GET / HTTP/1.1
+&gt; Host: inlanefreight.com
+&gt; User-Agent: curl/7.65.3
+&gt; Accept: */*
+&gt; Connection: close
+&gt; 
+* Mark bundle as not supporting multiuse
+&lt; HTTP/1.1 401 Unauthorized
+&lt; Date: Tue, 21 Jul 2020 05:20:15 GMT
+&lt; Server: Apache/X.Y.ZZ (Ubuntu)
+&lt; WWW-Authenticate: Basic realm=&quot;Restricted Content&quot;
+&lt; Content-Length: 464
+&lt; Content-Type: text/html; charset=iso-8859-1
+&lt; 
+&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;
+&lt;html&gt;&lt;head&gt;
+
+...SNIP...
+</code></pre>
+<p>-vvv标志显示了一个更加详细的输出。</p>
+<h4 id="只显示响应标头：-i"><a href="#只显示响应标头：-i" class="headerlink" title="只显示响应标头：-i"></a>只显示响应标头：-i</h4><p>我们看到了将-v标志与cURL一起使用如何向我们显示HTTP请求和响应的全部细节。如果我们只对查看响应标头感兴趣，那么我们可以使用-I标志发送HEAD请求，并且只显示响应标头。此外，我们可以使用-i标志来显示标题和响应主体（例如HTML代码）。两者的区别在于，-I发送一个HEAD请求（将在下一节中看到），而-I发送我们指定的任何请求并打印头。<br>以下命令显示了使用-I标志的示例输出：</p>
+<pre><code>curl -I https://www.inlanefreight.com
+
+Host: www.inlanefreight.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/605.1.15 (KHTML, like Gecko)
+Cookie: cookie1=298zf09hf012fh2; cookie2=u32t4o3tb3gg4
+Accept: text/plain
+Referer: https://www.inlanefreight.com/
+Authorization: BASIC cGFzc3dvcmQK
+
+Date: Sun, 06 Aug 2020 08:49:37 GMT
+Connection: keep-alive
+Content-Length: 26012
+Content-Type: text/html; charset=ISO-8859-4
+Content-Encoding: gzip
+Server: Apache/2.2.14 (Win32)
+Set-Cookie: name1=value1,name2=value2; Expires=Wed, 09 Jun 2021 10:18:14 GMT
+WWW-Authenticate: BASIC realm=&quot;localhost&quot;
+Content-Security-Policy: script-src &#39;self&#39;
+Strict-Transport-Security: max-age=31536000
+Referrer-Policy: origin
+</code></pre>
+<h4 id="设置请求标头：-H"><a href="#设置请求标头：-H" class="headerlink" title="设置请求标头：-H"></a>设置请求标头：-H</h4><p>除了查看标头之外，cURL还允许我们使用-H标志设置请求标头，这将在后面的部分中看到。有些标头，如用户代理或Cookie标头，有自己的标志。例如，我们可以使用-A来设置我们的用户代理，如下所示：</p>
+<pre><code>Tanin@htb[/htb]$ curl https://www.inlanefreight.com -A &#39;Mozilla/5.0&#39;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;
+&lt;html&gt;&lt;head&gt;
+...SNIP...
+</code></pre>
+<p>当我们使用基本的HTTP auth时，我们看到我们的HTTP请求将Authorization头设置为basic YWRtaW46YWRtaW4&#x3D;，这是admin:admin的base64编码值。如果我们使用现代的身份验证方法（例如JWT），则授权类型为Bearer，并且将包含更长的加密令牌。<br>让我们尝试在不提供凭据的情况下手动设置授权，看看它是否允许我们访问该页面。我们可以使用-H标志设置头，并将使用上面HTTP请求中的相同值。我们可以多次添加-H标志来指定多样（ multiple ？）标头：</p>
+<pre><code>Tanin@htb[/htb]$ curl -H &#39;Authorization: Basic YWRtaW46YWRtaW4=&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/
+
+&lt;!DOCTYPE html
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+...SNIP...
+</code></pre>
+<h4 id="HTTP-Basic-Auth：-u"><a href="#HTTP-Basic-Auth：-u" class="headerlink" title="HTTP Basic Auth：-u"></a>HTTP Basic Auth：-u</h4><p>当我们访问本节末尾的练习时，它会提示我们输入用户名和密码。与使用HTTP参数来验证用户凭据（例如POST请求）的常见登录表单不同，这种类型的身份验证使用基本的HTTP身份验证，由web服务器直接处理，以保护特定的页面&#x2F;目录，而无需直接与web应用程序交互。<br>要访问该页面，我们必须输入一对有效的凭据，在这种情况下为admin:admin：</p>
+<pre><code>Tanin@htb[/htb]$ curl -u admin:admin http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+...SNIP...
+</code></pre>
+<p>这一次我们确实得到了响应中的页面。还有另一种方法，我们可以提供基本的HTTP身份验证凭据，它直接通过URL作为（username:password@URL)，正如我们在第一节中所讨论的。如果我们对cURL或浏览器进行同样的尝试，我们也可以访问该页面：</p>
+<pre><code>Tanin@htb[/htb]$ curl http://admin:admin@&lt;SERVER_IP&gt;:&lt;PORT&gt;/
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+...SNIP...
+</code></pre>
+<h4 id="用户代理：-A"><a href="#用户代理：-A" class="headerlink" title="用户代理：-A"></a>用户代理：-A</h4><p>浏览器通常会在请求头中发送用户代理信息，以告诉服务器使用的是哪个浏览器及其版本。而 <code>curl</code> 命令默认情况下发送的请求没有用户代理信息，可能会导致服务器返回不同的结果或者是基于用户代理的动态网页内容。</p>
+<p>您可以尝试使用 <code>-A</code> 或 <code>--user-agent</code> 参数在 <code>curl</code> 命令中设置一个用户代理，以模拟特定的浏览器行为，例如：</p>
+<pre><code>curl -A &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36&quot; &lt;URL&gt;
+</code></pre>
+<h4 id="Cookie：-b-–cookie"><a href="#Cookie：-b-–cookie" class="headerlink" title="Cookie：-b  –cookie"></a>Cookie：-b  –cookie</h4><p>浏览器通常会在请求头中发送与该网站相关的 Cookie 信息，以便服务器可以识别用户并提供相应的内容。而 <code>curl</code> 命令默认情况下不会自动发送 Cookie。</p>
+<p>如果该网站依赖于 Cookie 来提供特定的内容或功能，您可以使用 <code>-b</code> 或 <code>--cookie</code> 参数在 <code>curl</code> 命令中设置一个或多个 Cookie 值，以模拟浏览器发送的 Cookie 信息。</p>
+<pre><code>curl -b &quot;cookie1=value1; cookie2=value2&quot; &lt;URL&gt;
+</code></pre>
+<h4 id="重定向：-L-–location"><a href="#重定向：-L-–location" class="headerlink" title="重定向：-L   –location"></a>重定向：-L   –location</h4><p>浏览器通常会自动处理服务器返回的重定向（例如，HTTP 3xx 状态码），并在必要时自动跳转到新的 URL。而 <code>curl</code> 命令默认情况下不会自动处理重定向。</p>
+<p>如果服务器返回了重定向响应，您可以使用 <code>-L</code> 或 <code>--location</code> 参数来让 <code>curl</code> 命令自动跟随重定向，并获取最终的内容。</p>
+<pre><code>curl -L &lt;URL&gt;
+</code></pre>
+<p>####请求方式：-X</p>
+<pre><code>Tanin@htb[/htb]$ curl -X POST -d &#39;username=admin&amp;password=admin&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/
+
+...SNIP...
+        &lt;em&gt;Type a city name and hit &lt;strong&gt;Enter&lt;/strong&gt;&lt;/em&gt;
+...SNIP...
+</code></pre>
+<pre><code>Tip: Many login forms would redirect us to a different page once authenticated (e.g. /dashboard.php). If we want to follow the redirection with cURL, we can use the -L flag.
+</code></pre>
+<h5 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h5><p>​	我们将使用-X POST标志来发送POST请求。然后，为了添加POST数据，我们可以使用-d标志并在其后面添加上述数据，如下所示：</p>
+<pre><code>Tanin@htb[/htb]$ curl -X POST -d &#39;username=admin&amp;password=admin&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/
+
+...SNIP...
+        &lt;em&gt;Type a city name and hit &lt;strong&gt;Enter&lt;/strong&gt;&lt;/em&gt;
+...SNIP...
+</code></pre>
+<p>有了经过身份验证的cookie，我们现在应该能够与web应用程序交互，而无需每次都提供凭据。为了测试这一点，我们可以在cURL中设置带有-b标志的上述cookie，如下所示：</p>
+<pre><code>Tanin@htb[/htb]$ curl -b &#39;PHPSESSID=c1nsa6op7vtk7kdis7bcnbadf1&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/
+
+...SNIP...
+        &lt;em&gt;Type a city name and hit &lt;strong&gt;Enter&lt;/strong&gt;&lt;/em&gt;
+...SNIP...
+</code></pre>
+<p>正如我们所看到的，我们确实通过了身份验证并进入了搜索功能。也可以将cookie指定为标头，如下所示：</p>
+<pre><code>curl -H &#39;Cookie: PHPSESSID=c1nsa6op7vtk7kdis7bcnbadf1&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/
+</code></pre>
+<h4 id="格式化json-：-jq"><a href="#格式化json-：-jq" class="headerlink" title="格式化json ：| jq"></a>格式化json ：| jq</h4><p>我们看到结果是以JSON字符串的形式发送的。为了将其正确格式化为JSON格式，我们可以将输出通过管道传输到jq实用程序，后者将正确格式化它。我们还将使用-s静音任何不需要的cURL输出，如下所示：</p>
+<pre><code>Tanin@htb[/htb]$ curl http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/api.php/city/london
+
+[&#123;&quot;city_name&quot;:&quot;London&quot;,&quot;country_name&quot;:&quot;(UK)&quot;&#125;]
+</code></pre>
+<pre><code>Tanin@htb[/htb]$ curl -s http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/api.php/city/london | jq
+
+[
+  &#123;
+    &quot;city_name&quot;: &quot;London&quot;,
+    &quot;country_name&quot;: &quot;(UK)&quot;
+  &#125;
+]
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || encode</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>encode </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#03a9f4>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h4 id="Base64-Encode"><a href="#Base64-Encode" class="headerlink" title="Base64 Encode"></a>Base64 Encode</h4><p>To encode any text into <code>base64</code> in Linux, we can echo it and pipe it with ‘<code>|</code>‘ to <code>base64</code>:</p>
+<p>  Base64 Encode</p>
+<pre><code>Tanin@htb[/htb]$ echo https://www.hackthebox.eu/ | base64
+
+aHR0cHM6Ly93d3cuaGFja3RoZWJveC5ldS8K
+</code></pre>
+<h4 id="Base64-Decode"><a href="#Base64-Decode" class="headerlink" title="Base64 Decode"></a>Base64 Decode</h4><p>If we want to decode any <code>base64</code> encoded string, we can use <code>base64 -d</code>, as follows:</p>
+<p>  Base64 Decode</p>
+<pre><code>Tanin@htb[/htb]$ echo aHR0cHM6Ly93d3cuaGFja3RoZWJveC5ldS8K | base64 -d
+
+https://www.hackthebox.eu/
+</code></pre>
+<h4 id="Hex-Encode"><a href="#Hex-Encode" class="headerlink" title="Hex Encode"></a>Hex Encode</h4><p>To encode any string into <code>hex</code> in Linux, we can use the <code>xxd -p</code> command:</p>
+<p>  Hex Encode</p>
+<pre><code>Tanin@htb[/htb]$ echo https://www.hackthebox.eu/ | xxd -p
+
+68747470733a2f2f7777772e6861636b746865626f782e65752f0a
+</code></pre>
+<h4 id="Hex-Decode"><a href="#Hex-Decode" class="headerlink" title="Hex Decode"></a>Hex Decode</h4><p>To decode a <code>hex</code> encoded string, we can use the <code>xxd -p -r</code> command:</p>
+<p>  Hex Decode</p>
+<pre><code>Tanin@htb[/htb]$ echo 68747470733a2f2f7777772e6861636b746865626f782e65752f0a | xxd -p -r
+
+https://www.hackthebox.eu/
+</code></pre>
+<p>在命令行中，<code>xxd -p -r</code> 是一个常见的命令，用于进行十六进制转换和恢复。</p>
+<ul>
+<li><code>p</code> 代表 “plain”，表示以纯文本（plain text）形式进行转换。在这种情况下，<code>xxd</code> 命令将会以十六进制表示的字节流转换为对应的纯文本数据。</li>
+<li><code>r</code> 代表 “reverse”，表示进行逆向操作，即从十六进制数据恢复为原始的二进制数据。</li>
+</ul>
+<p>因此，<code>xxd -p -r</code> 的完整含义是将以十六进制表示的字节流转换为对应的纯文本数据，或将十六进制数据恢复为原始的二进制数据。</p>
+<p><code>xxd</code> 是一个实用工具，用于在命令行中进行十六进制转换和操作。它的全称是 “hexdump”，表示以十六进制形式进行转储（hexadecimal dump）。它可以用于查看、创建和修改二进制文件的十六进制表示形式。</p>
+<h4 id="Rot13-Encode"><a href="#Rot13-Encode" class="headerlink" title="Rot13 Encode"></a>Rot13 Encode</h4><p>There isn’t a specific command in Linux to do <code>rot13</code> encoding. However, it is fairly easy to create our own command to do the character shifting:</p>
+<p>  Rot13 Encode</p>
+<pre><code>Tanin@htb[/htb]$ echo https://www.hackthebox.eu/ | tr &#39;A-Za-z&#39; &#39;N-ZA-Mn-za-m&#39;
+
+uggcf://jjj.unpxgurobk.rh/
+</code></pre>
+<h4 id="Rot13-Decode"><a href="#Rot13-Decode" class="headerlink" title="Rot13 Decode"></a>Rot13 Decode</h4><p>We can use the same previous command to decode rot13 as well:</p>
+<p>  Rot13 Decode</p>
+<pre><code>Tanin@htb[/htb]$ echo uggcf://jjj.unpxgurobk.rh/ | tr &#39;A-Za-z&#39; &#39;N-ZA-Mn-za-m&#39;
+
+https://www.hackthebox.eu/
+</code></pre>
+<ul>
+<li><code>echo https://www.hackthebox.eu/</code>：输出字符串 “<a target="_blank" rel="noopener" href="https://www.hackthebox.eu/">https://www.hackthebox.eu/</a>“</li>
+<li><code>tr &#39;A-Za-z&#39; &#39;N-ZA-Mn-za-m&#39;</code>：使用 <code>tr</code> 命令进行字符替换。该命令将字母进行凯撒密码的置换，将字母 A-Z 和 a-z 分别替换为 N-ZA-M 和 n-za-m。</li>
+</ul>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

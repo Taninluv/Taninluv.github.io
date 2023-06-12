@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || PHP_FPM</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://en.korilin.com">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://en.korilin.com">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>PHP_FPM </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/靶场学习" style=color:#03a9f4>
+                    靶场学习
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>##PHP_FPM</p>
+<ul>
+<li><h3 id="关于FPM"><a href="#关于FPM" class="headerlink" title="关于FPM"></a>关于FPM</h3><p>参考文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903471976546311">Nginx+Php-fpm 运行原理详解</a></p>
+<ul>
+<li><p>正向代理与反向代理：</p>
+<blockquote>
+<p>vpn对于“我们”来说，是可以感知到的（我们连接vpn）<br>vpn对于”google服务器”来说，是不可感知的(google只知道有http请求过来)。<br><strong>对于人来说可以感知到，但服务器感知不到的服务器，我们叫他正向代理服务器。</strong></p>
+</blockquote>
+<blockquote>
+<h4 id="反向代理：通过反向代理实现负载均衡"><a href="#反向代理：通过反向代理实现负载均衡" class="headerlink" title="反向代理：通过反向代理实现负载均衡"></a>反向代理：通过反向代理实现负载均衡</h4><p>此代理服务器,对于“我们”来说是不可感知的(我们只能感知到访问的是百度的服务器，不知道中间还有代理服务器来做负载均衡)。<br>此代理服务器，对于”server1 server2 server3”是可感知的(代理服务器负载均衡路由到不同的server)<br><strong>对于人来说不可感知，但对于服务器来说是可以感知的，我们叫他反向代理服务器</strong></p>
+</blockquote>
+</li>
+<li><h4 id="Nginx是什么"><a href="#Nginx是什么" class="headerlink" title="Nginx是什么"></a>Nginx是什么</h4><blockquote>
+<p>Nginx (“engine x”) 是一个高性能的HTTP和反向代理服务器，也是一个IMAP&#x2F;POP3&#x2F;SMTP服务器。</p>
+</blockquote>
+</li>
+<li><h5 id="cgi、fast-cgi协议"><a href="#cgi、fast-cgi协议" class="headerlink" title="cgi、fast-cgi协议"></a>cgi、fast-cgi协议</h5><blockquote>
+<h6 id="cgi的历史"><a href="#cgi的历史" class="headerlink" title="cgi的历史"></a>cgi的历史</h6><p>早期的webserver只处理html等静态文件，但是随着技术的发展，出现了像php等动态语言。<br>webserver处理不了了，怎么办呢？那就交给php解释器来处理吧！<br>交给php解释器处理很好，但是，php解释器如何与webserver进行通信呢？<br>&#x3D;&#x3D;为了解决不同的语言解释器(如php、python解释器)与webserver的通信，于是出现了cgi协议。&#x3D;&#x3D;只要你按照cgi协议去编写程序，就能实现语言解释器与webwerver的通信。如php-cgi程序。</p>
+</blockquote>
+<blockquote>
+<h6 id="fast-cgi的改进"><a href="#fast-cgi的改进" class="headerlink" title="fast-cgi的改进"></a>fast-cgi的改进</h6><p>有了cgi协议，解决了php解释器与webserver通信的问题，webserver终于可以处理动态语言了。但是，webserver每收到一个请求，都会去fork一个cgi进程，请求结束再kill掉这个进程。这样有10000个请求，就需要fork、kill php-cgi进程10000次。</p>
+<p>有没有发现很浪费资源？</p>
+<p>于是，出现了cgi的改良版本，fast-cgi。fast-cgi每次处理完请求后，不会kill掉这个进程，而是保留这个进程，使这个进程可以一次处理多个请求。这样每次就不用重新fork一个进程了，大大提高了效率。</p>
+</blockquote>
+</li>
+<li><h5 id="php-fpm是什么"><a href="#php-fpm是什么" class="headerlink" title="php-fpm是什么"></a>php-fpm是什么</h5><blockquote>
+<p>php-fpm即php-Fastcgi Process Manager.</p>
+<p>php-fpm是 FastCGI 的实现，并提供了进程管理的功能。<br>进程包含 master 进程和 worker 进程两种进程。<br>master 进程只有一个，负责监听端口，接收来自 Web Server 的请求，而 worker 进程则一般有多个(具体数量根据实际需要配置)，每个进程内部都嵌入了一个 PHP 解释器，是 PHP 代码真正执行的地方。</p>
+</blockquote>
+</li>
+</ul>
+<pre><code>www.example.com/index.php
+        |
+        |
+      nginx
+        |
+        |
+加载nginx的fast-cgi模块
+        |
+        |
+fast-cgi对根据fast-cgi协议请求包进行封装，然后将封装好的包发给php-fpm
+        |
+        |
+php-fpm 据fast-cgi协议将TCP流解析成真正的数据,调用php文件
+        |
+        |
+php-fpm处理完请求，返回给nginx
+        |
+        |
+nginx将结果通过http返回给浏览器
+</code></pre>
+</li>
+<li><h3 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h3><p>基本原理就是模仿nginx的fast-cgi，直接与php-fpm进行通信。在通信之前，我们首先需要了解一下其通信包的构成。</p>
+<ul>
+<li><p>Fastcgi协议由多个record组成，record也有header和body一说，但是和HTTP头不同，record的头固定8个字节，body是由头中的contentLength指定，其结构如下：</p>
+<pre><code>typedef struct &#123;
+  /* Header */
+  unsigned char version; // 版本
+  unsigned char type; // 请求包的类型
+  unsigned char requestIdB1; // 请求包id高8位
+  unsigned char requestIdB0; // 请求包id低8位
+  unsigned char contentLengthB1; // body长度高8位
+  unsigned char contentLengthB0; // body长度低8位
+  unsigned char paddingLength; // 结尾填充长度
+  unsigned char reserved;   // 保留字节
+
+  /* Body */
+  unsigned char contentData[contentLength];
+  unsigned char paddingData[paddingLength];
+&#125; FCGI_Record;
+</code></pre>
+<p>可以看出一个请求头为8个字节。其参数解释如下： - version:用来表示版本信息，如果是web服务器给php-fpm发送的消息，请求头中只需要将其置0就可以 - type:此字段用来说明每次所发送消息的类型，其具体值可以为如下:</p>
+<p><img src="/" alt="CGI"></p>
+<p>-requestId:占俩个字节，一个唯一的标志id，以避免同时处理多个请求时的影响。 - contentLength:占2个字节，表示body的长度。语言端解析了fastcgi头以后，拿到contentLength，然后再在TCP流里读取大小等于contentLength的数据，这就是body体。 - paddingLength:填充长度的值，为了提高处理消息的能力，我们的每个消息大小都必须为8的倍数，此长度标示，我们在消息的尾部填充的长度 - reserved:保留字段</p>
+</li>
+<li><h2 id="fastcgi客户端脚本分析"><a href="#fastcgi客户端脚本分析" class="headerlink" title="fastcgi客户端脚本分析"></a>fastcgi客户端脚本分析</h2><p>协议的内容大致了解了，接下来就是写代码，封装一下请求包。已经有前辈做了这件事情–&gt;<a href="https://link.zhihu.com/?target=https://github.com/wuyunfeng/Python-FastCGI-Client">https://github.com/wuyunfeng/Python-FastCGI-Client</a>，我们来尝试分析一下代码。</p>
+<pre><code>#!/usr/bin/python
+
+import socket
+import random
+</code></pre>
+<p>class FastCGIClient:<br>“””A Fast-CGI Client for Python”””<br><br># 版本号，不重要<br>__FCGI_VERSION &#x3D; 1<br><br># FastCGI服务器角色及其设置<br>__FCGI_ROLE_RESPONDER &#x3D; 1<br>__FCGI_ROLE_AUTHORIZER &#x3D; 2<br>__FCGI_ROLE_FILTER &#x3D; 3<br><br># # type 记录类型1-11<br>__FCGI_TYPE_BEGIN &#x3D; 1<br>__FCGI_TYPE_ABORT &#x3D; 2<br>__FCGI_TYPE_END &#x3D; 3<br>__FCGI_TYPE_PARAMS &#x3D; 4<br>__FCGI_TYPE_STDIN &#x3D; 5<br>__FCGI_TYPE_STDOUT &#x3D; 6<br>__FCGI_TYPE_STDERR &#x3D; 7<br>__FCGI_TYPE_DATA &#x3D; 8<br>__FCGI_TYPE_GETVALUES &#x3D; 9<br>__FCGI_TYPE_GETVALUES_RESULT &#x3D; 10<br>__FCGI_TYPE_UNKOWNTYPE &#x3D; 11<br><br># 头部长度，默认为8<br>__FCGI_HEADER_SIZE &#x3D; 8<br><br># 自定义请求状态<br>FCGI_STATE_SEND &#x3D; 1<br>FCGI_STATE_ERROR &#x3D; 2<br>FCGI_STATE_SUCCESS &#x3D; 3<br><br>def <strong>init</strong>(self, host, port, timeout, keepalive):<br>    self.host &#x3D; host<br>    self.port &#x3D; port<br>    self.timeout &#x3D; timeout<br>    if keepalive:<br>        self.keepalive &#x3D; 1<br>    else:<br>        self.keepalive &#x3D; 0<br>    self.sock &#x3D; None<br>    self.requests &#x3D; dict()<br><br>def __connect(self):<br>    # 此函数创建了一个socket，并且去连接(self.host, self.port)<br>    self.sock &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>    self.sock.settimeout(self.timeout)<br>    self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)<br>    try:<br>        self.sock.connect((self.host, int(self.port)))<br>    except socket.error as msg:<br>        self.sock.close()<br>        self.sock &#x3D; None<br>        print(repr(msg))<br>        return False<br>    return True<br><br>def __encodeFastCGIRecord(self, fcgi_type, content, requestid):<br>    # 此函数根据fcgi_type对content进行封装<br>    length &#x3D; len(content)<br>    return chr(FastCGIClient.__FCGI_VERSION) <br>           + chr(fcgi_type) <br>           + chr((requestid &gt;&gt; 8) &amp; 0xFF) <br>           + chr(requestid &amp; 0xFF) <br>           + chr((length &gt;&gt; 8) &amp; 0xFF) <br>           + chr(length &amp; 0xFF) <br>           + chr(0) <br>           + chr(0) <br>           + content<br><br>def __encodeNameValueParams(self, name, value):<br>    # 此函数对body进行编码<br>    nLen &#x3D; len(str(name))<br>    vLen &#x3D; len(str(value))<br>    record &#x3D; ‘’<br>    if nLen &lt; 128:<br>        record +&#x3D; chr(nLen)<br>    else:<br>        record +&#x3D; chr((nLen &gt;&gt; 24) | 0x80) <br>                  + chr((nLen &gt;&gt; 16) &amp; 0xFF) <br>                  + chr((nLen &gt;&gt; 8) &amp; 0xFF) <br>                  + chr(nLen &amp; 0xFF)<br>    if vLen &lt; 128:<br>        record +&#x3D; chr(vLen)<br>    else:<br>        record +&#x3D; chr((vLen &gt;&gt; 24) | 0x80) <br>                  + chr((vLen &gt;&gt; 16) &amp; 0xFF) <br>                  + chr((vLen &gt;&gt; 8) &amp; 0xFF) <br>                  + chr(vLen &amp; 0xFF)<br>    return record + str(name) + str(value)<br><br>def __decodeFastCGIHeader(self, stream):<br>    # 此函数对header进行解码<br>    # 被用于__decodeFastCGIRecord函数的一部分<br>    header &#x3D; dict()<br>    header[‘version’] &#x3D; ord(stream[0])<br>    header[‘type’] &#x3D; ord(stream[1])<br>    header[‘requestId’] &#x3D; (ord(stream[2]) &lt;&lt; 8) + ord(stream[3])<br>    header[‘contentLength’] &#x3D; (ord(stream[4]) &lt;&lt; 8) + ord(stream[5])<br>    header[‘paddingLength’] &#x3D; ord(stream[6])<br>    header[‘reserved’] &#x3D; ord(stream[7])<br>    return header<br><br>def __decodeFastCGIRecord(self):<br>    # 此函数对record进行解码<br>    header &#x3D; self.sock.recv(int(FastCGIClient.__FCGI_HEADER_SIZE))<br>    if not header:<br>        return False<br>    else:<br>        record &#x3D; self.__decodeFastCGIHeader(header)<br>        record[‘content’] &#x3D; ‘’<br>        if ‘contentLength’ in record.keys():<br>            contentLength &#x3D; int(record[‘contentLength’])<br>            buffer &#x3D; self.sock.recv(contentLength)<br>            while contentLength and buffer:<br>                contentLength -&#x3D; len(buffer)<br>                record[‘content’] +&#x3D; buffer<br>        if ‘paddingLength’ in record.keys():<br>            skiped &#x3D; self.sock.recv(int(record[‘paddingLength’]))<br>        return record<br><br>def request(self, nameValuePairs&#x3D;{}, post&#x3D;’’):<br>    if not self.__connect():<br>        print(‘connect failure! please check your fasctcgi-server !!’)<br>        return<br>    # 区分多段Record.requestId作为同一次请求的标志<br>    requestId &#x3D; random.randint(1, (1 &lt;&lt; 16) - 1)<br>    self.requests[requestId] &#x3D; dict()<br>    request &#x3D; “”<br>    # 构造header<br>    beginFCGIRecordContent &#x3D; chr(0) <br>                             + chr(FastCGIClient.__FCGI_ROLE_RESPONDER) <br>                             + chr(self.keepalive) <br>                             + chr(0) * 5<br>    request +&#x3D; self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_BEGIN,<br>                                          beginFCGIRecordContent, requestId)<br><br>    # 构造body<br>    paramsRecord &#x3D; ‘’<br>    if nameValuePairs:<br>        for (name, value) in nameValuePairs.iteritems():<br>            # paramsRecord &#x3D; self.__encodeNameValueParams(name, value)<br>            # request +&#x3D; self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_PARAMS, paramsRecord, requestId)<br>            paramsRecord +&#x3D; self.__encodeNameValueParams(name, value)<br><br>    if paramsRecord:<br>        request +&#x3D; self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_PARAMS, paramsRecord, requestId)<br>    request +&#x3D; self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_PARAMS, ‘’, requestId)<br><br>    if post:<br>        request +&#x3D; self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_STDIN, post, requestId)<br>    request +&#x3D; self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_STDIN, ‘’, requestId)<br>    # 发送fast-cgi格式的包<br>    self.sock.send(request)<br>    self.requests[requestId][‘state’] &#x3D; FastCGIClient.FCGI_STATE_SEND<br>    self.requests[requestId][‘response’] &#x3D; ‘’<br>    # 接受返回包<br>    return self.__waitForResponse(requestId)<br><br>def __waitForResponse(self, requestId):<br>    # 接受返回包<br>    while True:<br>        response &#x3D; self.__decodeFastCGIRecord()<br>        if not response:<br>            break<br>        if response[‘type’] &#x3D;&#x3D; FastCGIClient.__FCGI_TYPE_STDOUT <br>                or response[‘type’] &#x3D;&#x3D; FastCGIClient.__FCGI_TYPE_STDERR:<br>            if response[‘type’] &#x3D;&#x3D; FastCGIClient.__FCGI_TYPE_STDERR:<br>                self.requests[‘state’] &#x3D; FastCGIClient.FCGI_STATE_ERROR<br>            if requestId &#x3D;&#x3D; int(response[‘requestId’]):<br>                self.requests[requestId][‘response’] +&#x3D; response[‘content’]<br>        if response[‘type’] &#x3D;&#x3D; FastCGIClient.FCGI_STATE_SUCCESS:<br>            self.requests[requestId]<br>    return self.requests[requestId][‘response’]<br><br>def <strong>repr</strong>(self):<br>    return “fastcgi connect host:{} port:{}”.format(self.host, self.port)<br>​&#96;&#96;&#96;</p>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
