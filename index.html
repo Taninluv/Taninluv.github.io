@@ -197,6 +197,97 @@
 
 <div class="post">
 
+    <a href="/2023/06/12/bash/">
+        <h2>
+            bash
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/12
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h2 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h2><p>###参数变量:</p>
+<table>
+<thead>
+<tr>
+<th><code>$#</code></th>
+<th>此变量保存传递给脚本的参数数。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$@</code></td>
+<td>此变量可用于检索命令行参数列表。</td>
+</tr>
+<tr>
+<td><code>$n</code></td>
+<td>可以使用其位置有选择地检索每个命令行参数。例如，第一个参数位于 。<code>$1</code></td>
+</tr>
+<tr>
+<td><code>$$</code></td>
+<td>当前正在执行的进程的进程 ID。</td>
+</tr>
+<tr>
+<td><code>$?</code></td>
+<td>脚本的退出状态。此变量可用于确定命令是否成功。值 0 表示成功执行，而值 1 表示失败的结果。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><code>$#</code></th>
+<th>在这种情况下，我们只需要一个需要分配给该变量的变量。此变量用于指定我们要使用的目标。如果我们只提供一个 FQDN 作为参数，则该变量的值为 .<code>domain``$#``1</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$0</code></td>
+<td>此特殊变量被分配执行脚本的名称，然后在 “” 示例中显示。<code>Usage:</code></td>
+</tr>
+<tr>
+<td><code>$1</code></td>
+<td>用空格分隔，第一个参数分配给该特殊变量。</td>
+</tr>
+</tbody></table>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/base" style=color:#ff7d73>
+                base
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/12/bash/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/11/Apache Mod CGI/">
         <h2>
             Apache Mod CGI
@@ -292,7 +383,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00a596>
+            <a href="/tags/base" style=color:#ff7d73>
                 base
             </a>
         </span>
@@ -363,7 +454,7 @@
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#ffa2c4>
+            <a href="/tags/others" style=color:#00bcd4>
                 others
             </a>
         </span>
@@ -424,7 +515,7 @@
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#00bcd4>
+            <a href="/tags/靶场学习" style=color:#ff7d73>
                 靶场学习
             </a>
         </span>
@@ -477,7 +568,7 @@
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#00a596>
+            <a href="/tags/靶场学习" style=color:#ff7d73>
                 靶场学习
             </a>
         </span>
@@ -528,7 +619,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#03a9f4>
+            <a href="/tags/base" style=color:#00bcd4>
                 base
             </a>
         </span>
@@ -665,7 +756,7 @@ index.html
         
         <span class="tag">
             
-            <a href="/tags/other" style=color:#ffa2c4>
+            <a href="/tags/other" style=color:#00bcd4>
                 other
             </a>
         </span>
@@ -729,124 +820,6 @@ aHR0cHM6Ly93d3cuaGFja3RoZWJveC5ldS8K
     </div>
 
     <a href="/2023/06/11/encode/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/chat_sheet/">
-        <h2>
-            备忘录
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h1><h2 id="cURL"><a href="#cURL" class="headerlink" title="cURL"></a>cURL</h2><table>
-<thead>
-<tr>
-<th><strong>Command</strong></th>
-<th><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>curl -h</code></td>
-<td>cURL help menu</td>
-</tr>
-<tr>
-<td><code>curl inlanefreight.com</code></td>
-<td>Basic GET request</td>
-</tr>
-<tr>
-<td><code>curl -s -O inlanefreight.com/index.html</code></td>
-<td>Download file</td>
-</tr>
-<tr>
-<td><code>curl -k https://inlanefreight.com</code></td>
-<td>Skip HTTPS (SSL) certificate validation</td>
-</tr>
-<tr>
-<td><code>curl inlanefreight.com -v</code></td>
-<td>Print full HTTP request&#x2F;response details</td>
-</tr>
-<tr>
-<td><code>curl -I https://www.inlanefreight.com</code></td>
-<td>Send HEAD request (only prints response headers)</td>
-</tr>
-<tr>
-<td><code>curl -i https://www.inlanefreight.com</code></td>
-<td>Print response headers and response body</td>
-</tr>
-<tr>
-<td><code>curl https://www.inlanefreight.com -A &#39;Mozilla/5.0&#39;</code></td>
-<td>Set User-Agent header</td>
-</tr>
-<tr>
-<td><code>curl -u admin:admin http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
-<td>Set HTTP basic authorization credentials</td>
-</tr>
-<tr>
-<td><code>curl http://admin:admin@&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
-<td>Pass HTTP basic authorization credentials in the URL</td>
-</tr>
-<tr>
-<td><code>curl -H &#39;Authorization: Basic YWRtaW46YWRtaW4=&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
-<td>Set request header</td>
-</tr>
-<tr>
-<td><code>curl &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/search.php?search=le&#39;</code></td>
-<td>Pass GET parameters</td>
-</tr>
-<tr>
-<td><code>curl -X POST -d &#39;username=admin&amp;password=admin&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
-<td>Send POST request with POST data</td>
-</tr>
-<tr>
-<td><code>curl -b &#39;PHPSESSID=c1nsa6op7vtk7kdis7bcnbadf1&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</code></td>
-<td>Set request cookies</td>
-</tr>
-<tr>
-<td><code>curl -X POST -d &#39;&#123;&quot;search&quot;:&quot;london&quot;&#125;&#39; -H &#39;Content-Type: application/json&#39; http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/search.php</code></td>
-<td>Send POST request with JSON data</td>
-</tr>
-</tbody></table>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/备忘录" style=color:#00a596>
-                备忘录
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/chat_sheet/ " class="go-post">
         阅读全文
     </a>
 </div>
