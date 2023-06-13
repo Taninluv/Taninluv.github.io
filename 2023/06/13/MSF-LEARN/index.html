@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || </title>
+    <title>Salve || MSF_LEARN_1</title>
     <meta name="author" content="TiAmo">
     <meta name="description" content="Buona notte ">
     <meta name="keywords" content=" ">
@@ -165,48 +165,13 @@
                 </div>
 
                 <div id="main">
-                    <div id="home-head" style=background-image:url('home.jpg')>
-    <script>
-        var menu = document.getElementById("menu")
-        menu.className += " menu-color"
-    </script>
-     
-    <div id="home-info" class="home-info" @click="home_click">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>Salve</h1>
-                <h3></h3>
-                <h5>Buona notte</h5>
-            </div>
-        </span>
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>MSF_LEARN_1 </h1>
     </div>
-     
-</div>
-
-
-
-<div id="home-posts-wrap" class=>
-    <div id="home-posts">
-
-        <div id="posts">
-            
-
-<div class="post">
-
-    <a href="/2023/06/13/MSF-LEARN/">
-        <h2>
-            MSF_LEARN_1
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
+    <div class="info">
         <span class="date">
             <span class="icon">
                 <a-icon type="calendar" theme="filled" />
@@ -214,13 +179,28 @@
             2023/6/13
         </span>
 
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base,-practice, hackthebox" style=color:#ff7d73>
+                    base, practice, hackthebox
+                </a>
+            </span>
+            
+        </span>
+        
     </div>
 
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            
-            <h4 id="MSF-转储哈希"><a href="#MSF-转储哈希" class="headerlink" title="MSF - 转储哈希"></a>MSF - 转储哈希</h4><p>  MSF - 转储哈希</p>
+    <div class="content" v-pre>
+        <h4 id="MSF-转储哈希"><a href="#MSF-转储哈希" class="headerlink" title="MSF - 转储哈希"></a>MSF - 转储哈希</h4><p>  MSF - 转储哈希</p>
 <pre><code>meterpreter &gt; hashdump
 
 Administrator:500:c74761604a24f0dfd0a9ba2c30e462cf:d6908f022af0373e9e21b8a241c86dca:::
@@ -564,712 +544,13 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
 <p>然后hashdump即可</p>
 <h5 id="aad3b435b51404eeaad3b435b51404ee"><a href="#aad3b435b51404eeaad3b435b51404ee" class="headerlink" title="aad3b435b51404eeaad3b435b51404ee"></a>aad3b435b51404eeaad3b435b51404ee</h5><p>这是一串空值的LM-hash</p>
 
-            
-        </div>
     </div>
 
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base,-practice, hackthebox" style=color:#ff7d73>
-                base, practice, hackthebox
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/13/MSF-LEARN/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/12/bash/">
-        <h2>
-            bash
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/12
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h2 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h2><h3 id="参数变量"><a href="#参数变量" class="headerlink" title="参数变量:"></a>参数变量:</h3><table>
-<thead>
-<tr>
-<th><code>$#</code></th>
-<th>此变量保存传递给脚本的参数数。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>$@</code></td>
-<td>此变量可用于检索命令行参数列表。</td>
-</tr>
-<tr>
-<td><code>$n</code></td>
-<td>可以使用其位置有选择地检索每个命令行参数。例如，第一个参数位于 。<code>$1</code></td>
-</tr>
-<tr>
-<td><code>$$</code></td>
-<td>当前正在执行的进程的进程 ID。</td>
-</tr>
-<tr>
-<td><code>$?</code></td>
-<td>脚本的退出状态。此变量可用于确定命令是否成功。值 0 表示成功执行，而值 1 表示失败的结果。</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th><code>$#</code></th>
-<th>在这种情况下，我们只需要一个需要分配给该变量的变量。此变量用于指定我们要使用的目标。如果我们只提供一个 FQDN 作为参数，则该变量的值为 .<code>domain``$#``1</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>$0</code></td>
-<td>此特殊变量被分配执行脚本的名称，然后在 “” 示例中显示。<code>Usage:</code></td>
-</tr>
-<tr>
-<td><code>$1</code></td>
-<td>用空格分隔，第一个参数分配给该特殊变量。</td>
-</tr>
-</tbody></table>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#00bcd4>
-                base
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/12/bash/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/Apache Mod CGI/">
-        <h2>
-            Apache Mod CGI
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="Apache-Mod-CGI"><a href="#Apache-Mod-CGI" class="headerlink" title="Apache Mod CGI"></a>Apache Mod CGI</h1><h4 id="知识储备："><a href="#知识储备：" class="headerlink" title="知识储备："></a>知识储备：</h4><p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62078839/article/details/125691017?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167152297616800182178110%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167152297616800182178110&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-125691017-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=%20Apache%20Mod%20CGI&spm=1018.2226.3001.4187">CTFHUB-Apache Mod CGI(PHP学习)</a></p>
-<p><strong>原理简述</strong></p>
-<blockquote>
-<p>早期的Web服务器，只能响应浏览器发来的HTTP静态资源的请求，并将存储在服务器中的静态资源返回给浏览器。随着Web技术的发展，逐渐出现了动态技术，但是Web服务器并不能够直接运行动态脚本，为了解决Web服务器与外部应用程序（CGI程序）之间数据互通，于是出现了CGI（Common Gateway Interface）通用网关接口。简单理解，可以认为CGI是Web服务器和运行其上的应用程序进行“交流”的一种约定。</p>
-<p>当遇到动态脚本请求时，Web服务器主进程就会<code>Fork</code>创建出一个新的进程来启动CGI程序，运行外部C程序或Perl、PHP脚本等，也就是将动态脚本交给CGI程序来处理。这样，每次用户请求动态脚本，Web服务器都要重新Fork创建一个新进程去启动CGI程序，由CGI程序来处理动态脚本，处理完成后进程随之关闭，其效率是非常低下的。</p>
-<p>而对于Mod CGI，Web服务器可以内置Perl解释器或PHP解释器。也就是说将这些解释器做成模块的方式，Web服务器会在启动的时候就启动这些解释器。当有新的动态请求进来时，Web服务器就是&#x3D;&#x3D;自己解析这些动态脚本&#x3D;&#x3D;，省得重新Fork一个进程，效率提高了。<br>​	</p>
-</blockquote>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/靶场学习" style=color:#03a9f4>
-                靶场学习
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/Apache Mod CGI/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/FILE TRANSFERS/">
-        <h2>
-            FILE TRANSFERS
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="FILE-TRANSFERS"><a href="#FILE-TRANSFERS" class="headerlink" title="FILE TRANSFERS"></a>FILE TRANSFERS</h1><p>##WINDOWS</p>
-<p>PowerShell Base64编码和解码<br>根据我们想要传输的文件大小，我们可以使用不需要网络通信的不同方法。如果我们可以访问终端，我们可以将文件编码为base64字符串，从终端复制其内容并执行反向操作，解码原始内容中的文件。让我们看看如何使用PowerShell实现这一点。<br>使用此方法的一个重要步骤是确保编码和解码的文件是正确的。我们可以使用md5sum，一个计算和验证128位MD5校验和的程序。MD5散列的作用是文件的紧凑数字指纹，这意味着一个文件在任何地方都应该有相同的MD5散列。让我们尝试传输一个示例ssh密钥。它可以是其他任何东西，从我们的Pwnbox到Windows目标。</p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#ff7d73>
-                base
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/FILE TRANSFERS/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/Regular_operations/">
-        <h2>
-            正则运算
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="正则运算"><a href="#正则运算" class="headerlink" title="正则运算"></a>正则运算</h1><h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>修饰符用于执行区分大小写和全局匹配:</p>
-<table>
-<thead>
-<tr>
-<th>修饰符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://www.runoob.com/js/jsref-regexp-i.html">i</a></td>
-<td>执行对大小写不敏感的匹配。</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.runoob.com/js/jsref-regexp-g.html">g</a></td>
-<td>执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。</td>
-</tr>
-<tr>
-<td>m</td>
-<td>执行多行匹配。</td>
-</tr>
-</tbody></table>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/others" style=color:#ff7d73>
-                others
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/Regular_operations/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/Function_hijacking_experiments/">
-        <h2>
-            函数劫持实验
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h2 id="函数劫持实验"><a href="#函数劫持实验" class="headerlink" title="函数劫持实验"></a>函数劫持实验</h2><h3 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h3><h4 id="Linux-编译动态链接库（-so）"><a href="#Linux-编译动态链接库（-so）" class="headerlink" title="Linux 编译动态链接库（.so）"></a>Linux 编译动态链接库（.so）</h4><p>参考文章：</p>
-<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/chengyq116/article/details/100567555?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167143895816782425647499%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=167143895816782425647499&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~pc_rank_34-2-100567555-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=gcc%20-shared%20-fpic%20-o&spm=1018.2226.3001.4187">GCC 生成动态链接库 .so 文件 (-shared 和 -fPIC 选项)</a></p>
-<p><strong>gcc -shared -fpic</strong></p>
-<blockquote>
-<p><code>-fPIC</code> 选项作用于编译阶段，告诉编译器产生与位置无关代码 (Position-Independent Code),这样一来，产生的代码中就没有绝对地址了，全部使用相对地址，所以代码可以被加载器加载到内存的任意位置，都可以正确的执行。这正是共享库所要求的，共享库被加载时，在内存的位置不是固定的。</p>
-</blockquote>
-<blockquote>
-<p>如果想创建一个动态链接库，可以使用 GCC 的 -shared 选项。输入文件可以是源文件、汇编文件或者目标文件。</p>
-</blockquote>
-<p>一般的编译链接命令行为：</p>
-<p><code>gcc -fPIC -shared func.c -o libfunc.so</code></p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/靶场学习" style=color:#03a9f4>
-                靶场学习
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/Function_hijacking_experiments/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/PHP_FPM/">
-        <h2>
-            PHP_FPM
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>##PHP_FPM</p>
-<ul>
-<li><h3 id="关于FPM"><a href="#关于FPM" class="headerlink" title="关于FPM"></a>关于FPM</h3><p>参考文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903471976546311">Nginx+Php-fpm 运行原理详解</a></p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/靶场学习" style=color:#ff7d73>
-                靶场学习
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/PHP_FPM/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/Windows Services & Process/">
-        <h2>
-            RDP
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h4 id="远程桌面协议-（RDP）"><a href="#远程桌面协议-（RDP）" class="headerlink" title="远程桌面协议 （RDP）"></a>远程桌面协议 （RDP）</h4><p>RDP 使用客户端&#x2F;服务器体系结构，其中客户端应用程序用于通过启用了 RDP 访问的网络指定计算机的目标 IP 地址或主机名。启用了 RDP 远程访问的目标计算机被视为服务器。请务必注意，RDP 默认侦听逻辑端口。请记住，IP 地址用作网络上计算机的逻辑标识符，逻辑端口是分配给应用程序的标识符。简单来说，我们可以将网络子网视为城镇中的街道（公司网络），该子网中的 IP 地址分配给主机作为该街道上的房屋，逻辑端口视为可用于访问房屋的窗口&#x2F;门。<code>3389</code></p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#ff7d73>
-                base
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/Windows Services & Process/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/cURL/">
-        <h2>
-            cURL
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="cURL"><a href="#cURL" class="headerlink" title="cURL"></a>cURL</h1><p>####将内容输出到文件中： -O   -o</p>
-<p>我们看到cURL不像web浏览器那样呈现HTML&#x2F;JavaScript&#x2F;CSS代码，而是以原始格式打印它。然而，作为渗透测试人员，我们主要对请求和响应上下文感兴趣，它通常比web浏览器更快、更方便。<br>我们也可以使用cURL下载页面或文件，并使用-O标志将内容输出到文件中。如果我们想指定输出文件名，我们可以使用-o标志并指定名称。否则，我们可以使用-O，cURL将使用远程文件名，如下所示：</p>
-<pre><code>Tanin@htb[/htb]$ curl inlanefreight.com
-
-&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;
-&lt;html&gt;&lt;head&gt;
-...SNIP...
-</code></pre>
-<pre><code>Tanin@htb[/htb]$ curl -O inlanefreight.com/index.html
-Tanin@htb[/htb]$ ls
-index.html
-</code></pre>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#ffa2c4>
-                base
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/cURL/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/YouTube Channels/">
-        <h2>
-            YouTube Channels
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h4 id="YouTube-Channels"><a href="#YouTube-Channels" class="headerlink" title="YouTube Channels"></a>YouTube Channels</h4><p>There are many YouTube channels out there that showcase penetration testing&#x2F;hacking techniques. A few worth bookmarking are:</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCa6eh7gCkpPo5XXUDfygQQA">IppSec</a></td>
-<td>Provides an extremely in-depth walkthrough of every retired HTB box packed full of insight from his own experience, as well as videos on various techniques.</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCpoyhjwNIWZmsiKNKpsMAQQ">VbScrub</a></td>
-<td>Provides HTB videos as well as videos on techniques, primarily focusing on Active Directory exploitation.</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCQN2DsjnYH60SFBIA6IkNwg">STÖK</a></td>
-<td>Provides videos on various infosec related topics, mainly focusing on bug bounties and web application penetration testing.</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UClcE-kVhqyiHCcjYwcpfj9w">LiveOverflow</a></td>
-<td>Provides videos on a wide variety of technical infosec topics.</td>
-</tr>
-</tbody></table>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/other" style=color:#03a9f4>
-                other
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/YouTube Channels/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-
-             
-<div class="page-current">
-
-    <div class="prev">
-        
-    </div>
-
-    <div class="page-index">
-
-        
-
-        <span class="current">
-            1
-        </span>
-
-        
-        <span>
-            <a href="/page/2/">
-                <span class="page-num">
-                    2
-                </span>
-            </a>
-            
-            <a href="/page/3">
-                <span class="page-num">
-                    3
-                </span>
-            </a>
-            
-
-            
-
-        </span>
-        
-
-    </div>
-
-    <div class="next">
-        
-        <a href="/page/2/ ">
-            <span class="page-num">
-                <a-icon type="caret-right" theme="filled" />
-            </span>
-        </a>
-        
-    </div>
-
-</div>
-
-        </div>
-    </div>
     
-    <div id="home-card">
-        <a-affix :offset-top="card_top">
-    <a-card class="card-style" style="width: 300px">
-        <div class="avatar">
-            <img src="avatar.png " alt="头像">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
         </div>
-        <div class="name">
-            TiAmo
-        </div>
-        <div class="descriptions">
-            
-            <div class="description">
-                鲍鱼兰芷，不同箧而藏。
-            </div>
-            
-        </div>
-        <div class="icon-links">
-            
-            <span class="icon-link">
-                <a target="_blank" rel="noopener" href="https://github.com/Taninluv">
-
-                    
-                    <a-icon type="github"
-                        theme="filled" />
-                    
-                </a>
-            </span>
-            
-            <span class="icon-link">
-                <a href="">
-
-                    
-                    <a-icon type="twitter"
-                        theme="" />
-                    
-                </a>
-            </span>
-            
-        </div>
-        <div class="friend-links">
-            
-            <div class="friend-link">
-                <a href="">
-                    英文技术博客
-                </a>
-            </div>
-            
-            <div class="friend-link">
-                <a href="">
-                    日语记录博客
-                </a>
-            </div>
-            
-        </div>
-    </a-card>
-</a-affix>
     </div>
     
 </div>
@@ -1335,6 +616,21 @@ index.html
             }
         }
     })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
 </script>
 
 </body>

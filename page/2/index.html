@@ -197,6 +197,62 @@
 
 <div class="post">
 
+    <a href="/2023/06/11/encode/">
+        <h2>
+            encode
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h4 id="Base64-Encode"><a href="#Base64-Encode" class="headerlink" title="Base64 Encode"></a>Base64 Encode</h4><p>To encode any text into <code>base64</code> in Linux, we can echo it and pipe it with ‘<code>|</code>‘ to <code>base64</code>:</p>
+<p>  Base64 Encode</p>
+<pre><code>Tanin@htb[/htb]$ echo https://www.hackthebox.eu/ | base64
+
+aHR0cHM6Ly93d3cuaGFja3RoZWJveC5ldS8K
+</code></pre>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/base" style=color:#ffa2c4>
+                base
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/encode/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/11/chat_sheet/">
         <h2>
             备忘录
@@ -301,7 +357,7 @@
         
         <span class="tag">
             
-            <a href="/tags/备忘录" style=color:#00bcd4>
+            <a href="/tags/备忘录" style=color:#ffa2c4>
                 备忘录
             </a>
         </span>
@@ -358,7 +414,7 @@
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#03a9f4>
+            <a href="/tags/靶场学习" style=color:#ff7d73>
                 靶场学习
             </a>
         </span>
@@ -432,7 +488,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ffa2c4>
+            <a href="/tags/base" style=color:#00bcd4>
                 base
             </a>
         </span>
@@ -615,7 +671,7 @@ Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#00a596>
+            <a href="/tags/others" style=color:#00bcd4>
                 others
             </a>
         </span>
@@ -713,7 +769,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#03a9f4>
+            <a href="/tags/base" style=color:#00a596>
                 base
             </a>
         </span>
@@ -855,7 +911,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#ff7d73>
+            <a href="/tags/others" style=color:#ffa2c4>
                 others
             </a>
         </span>
@@ -1029,7 +1085,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#00a596>
+            <a href="/tags/tool" style=color:#03a9f4>
                 tool
             </a>
         </span>
@@ -1037,73 +1093,6 @@ listening on [any] 1234 ...
     </div>
 
     <a href="/2023/06/11/tools/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/shellshock/">
-        <h2>
-            shellshock
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="shellshock"><a href="#shellshock" class="headerlink" title="shellshock"></a>shellshock</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35579956">什么是shellshock攻击：</a></p>
-<p>​	背景：环境变量和bash</p>
-<p>​	</p>
-<p>​	触发：</p>
-<ol>
-<li>产生新的bash</li>
-<li>通过环境变量传递</li>
-<li>环境变量以<code>() &#123;&#125;</code>这样的形式</li>
-</ol>
-<pre><code>env x=&#39;() &#123; :;&#125;; echo vulnerable&#39; bash -c &quot;echo this is a test&quot;
-
-vulnerable
-this is a test
-</code></pre>
-<p><code>env</code>可以创建临时环境变量.</p>
-<p><code>bash -c</code>可以运行一个shell命令.</p>
-<p>当shell返回“vulnerable”时说明函数申明后的echo函数被执行（漏洞是因为Bash初始化时调用了<code>builtins/evalstring.c</code>里的<code>parse_and_execute//类似于eval</code>函数。）</p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/靶场学习" style=color:#03a9f4>
-                靶场学习
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/shellshock/ " class="go-post">
         阅读全文
     </a>
 </div>
@@ -1143,10 +1132,28 @@ this is a test
         </span>
 
         
+        <span>
+            <a href="/page/3/">
+                <span class="page-num">
+                    3
+                </span>
+            </a>
+            
+
+            
+
+        </span>
+        
 
     </div>
 
     <div class="next">
+        
+        <a href="/page/3/ ">
+            <span class="page-num">
+                <a-icon type="caret-right" theme="filled" />
+            </span>
+        </a>
         
     </div>
 

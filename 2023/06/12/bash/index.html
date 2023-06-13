@@ -200,8 +200,7 @@
     </div>
 
     <div class="content" v-pre>
-        <h2 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h2><p>###参数变量:</p>
-<table>
+        <h2 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h2><h3 id="参数变量"><a href="#参数变量" class="headerlink" title="参数变量:"></a>参数变量:</h3><table>
 <thead>
 <tr>
 <th><code>$#</code></th>
@@ -243,8 +242,7 @@
 </tbody></table>
 <span id="more"></span>
 
-<p>###引号的区别:</p>
-<p>在Bash中，<code>&quot;&quot;</code>（双引号）和 <code>&#39;&#39;</code>（单引号）是用于引用字符串的两种不同方式，它们有以下区别：</p>
+<h3 id="引号的区别"><a href="#引号的区别" class="headerlink" title="引号的区别:"></a>引号的区别:</h3><p>在Bash中，<code>&quot;&quot;</code>（双引号）和 <code>&#39;&#39;</code>（单引号）是用于引用字符串的两种不同方式，它们有以下区别：</p>
 <ol>
 <li>处理变量和命令替换：<ul>
 <li><code>&quot;&quot;</code>：双引号允许变量展开（即替换为变量的值）和命令替换（即替换为命令的输出结果）。例如，<code>&quot;$var&quot;</code>将展开为变量<code>var</code>的值。</li>
@@ -277,8 +275,7 @@ echo &#39;Quotes: &quot;\&#39;\&#39;&#39;&quot; # 输出：Quotes: &quot;\&#39;&
 </code></pre>
 <p>&#x3D;&#x3D;分配变量时，名称和值之间不得有空格。&#x3D;&#x3D;</p>
 <p>需要注意的是，单引号 （…） 和双引号 （ … ） 可防止数组中各个值之间的空格分隔。这意味着&#x3D;&#x3D;单引号和双引号之间的所有空格都将被忽略&#x3D;&#x3D;，并作为分配给数组的单个值进行处理。</p>
-<p>###数组：</p>
-<p>示例代码 <code>domains=(www.inlanefreight.com ftp.inlanefreight.com vpn.inlanefreight.com www2.inlanefreight.com)</code> 是一种有效的方式来创建名为 <code>domains</code> 的数组，并将指定的字符串元素分配给数组的各个索引位置。</p>
+<h3 id="数组："><a href="#数组：" class="headerlink" title="数组："></a>数组：</h3><p>示例代码 <code>domains=(www.inlanefreight.com ftp.inlanefreight.com vpn.inlanefreight.com www2.inlanefreight.com)</code> 是一种有效的方式来创建名为 <code>domains</code> 的数组，并将指定的字符串元素分配给数组的各个索引位置。</p>
 <p>在这个例子中，<code>domains</code> 数组包含了四个元素，分别是 <code>&quot;www.inlanefreight.com&quot;</code>, <code>&quot;ftp.inlanefreight.com&quot;</code>, <code>&quot;vpn.inlanefreight.com&quot;</code>, 和 <code>&quot;www2.inlanefreight.com&quot;</code>。</p>
 <p>你可以通过使用索引来访问和操作数组的元素。例如：</p>
 <pre><code>echo $&#123;domains[0]&#125;  # 输出：www.inlanefreight.com
@@ -360,8 +357,7 @@ fi
 </code></pre>
 <p>需要注意的是，单括号 <code>[]</code> 是一种命令结构，它将条件表达式作为命令的参数。在条件判断中，变量应该使用双引号引起来，以防止由于变量为空或包含空格等特殊字符而引发错误。</p>
 <p>另外，与双括号 <code>(( ))</code> 不同，单括号 <code>[]</code> 不支持算术运算，它主要用于条件判断和文件测试。</p>
-<h5 id="htb-可以统计字符串字数"><a href="#htb-可以统计字符串字数" class="headerlink" title="${ #htb}可以统计字符串字数"></a>${ #htb}可以统计字符串字数</h5><p>###文件运算符：</p>
-<table>
+<h5 id="htb-可以统计字符串字数"><a href="#htb-可以统计字符串字数" class="headerlink" title="${ #htb}可以统计字符串字数"></a>${ #htb}可以统计字符串字数</h5><h3 id="文件运算符："><a href="#文件运算符：" class="headerlink" title="文件运算符："></a>文件运算符：</h3><table>
 <thead>
 <tr>
 <th><code>-e</code></th>
