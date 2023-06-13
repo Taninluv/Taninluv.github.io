@@ -190,21 +190,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#ff7d73>
+                <a href="/tags/base" style=color:#ffa2c4>
                     base
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/practice" style=color:#ff7d73>
+                <a href="/tags/practice" style=color:#00bcd4>
                     practice
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/hackthebox" style=color:#ffa2c4>
+                <a href="/tags/hackthebox" style=color:#ff7d73>
                     hackthebox
                 </a>
             </span>
@@ -398,7 +398,7 @@ Host script results:
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 40.94 seconds
 </code></pre>
-<p>发现5000端口的IIS服务有潜在风险，搜索一下发先Microsoft-IIS&#x2F;10.0存在一个<a href="%5B(146%E6%9D%A1%E6%B6%88%E6%81%AF">短文件漏洞</a> IIS短文件漏洞_microsoft-iis&#x2F;10.0_cacheyu的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/Amdy_amdy/article/details/108864220))%E3%80%82">https://blog.csdn.net/Amdy_amdy/article/details/108864220))。</a></p>
+<p>发现5000端口的IIS服务有潜在风险，搜索一下发先Microsoft-IIS&#x2F;10.0存在一个<a target="_blank" rel="noopener" href="https://blog.csdn.net/Amdy_amdy/article/details/108864220">短文件漏洞</a> </p>
 <p>msf 搜索一下，确实可以使用但是没办法返回一个shell，所以找找其他的漏洞。</p>
 <p>我们尝试访问一下这个5000端口，但是身份验证失败，说明确实有一个网页，从扫描结果来看网站名为<code>FortiLogger</code> 一般而言这应该是网页搭建的框架之类的东西，查找一下：</p>
 <h5 id="什么是-FortiLogger？"><a href="#什么是-FortiLogger？" class="headerlink" title="什么是 FortiLogger？"></a>什么是 FortiLogger？</h5><p>FortiLogger 是一款基于 Web 的日志记录和报告软件，运行在专为 FortiGate 防火墙准备的 Windows 操作系统上。它具有即时状态监控，日志记录，搜索&#x2F;过滤，报告和热点等功能。</p>
