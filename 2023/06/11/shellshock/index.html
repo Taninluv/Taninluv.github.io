@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/靶场学习" style=color:#ff7d73>
+                <a href="/tags/靶场学习" style=color:#03a9f4>
                     靶场学习
                 </a>
             </span>
@@ -217,6 +217,8 @@ this is a test
 <p><code>env</code>可以创建临时环境变量.</p>
 <p><code>bash -c</code>可以运行一个shell命令.</p>
 <p>当shell返回“vulnerable”时说明函数申明后的echo函数被执行（漏洞是因为Bash初始化时调用了<code>builtins/evalstring.c</code>里的<code>parse_and_execute//类似于eval</code>函数。）</p>
+<span id="more"></span>
+
 <p>原理:</p>
 <p>Shellshock的原理是利用了Bash在导入环境变量函数时候的漏洞,&#x3D;&#x3D;启动Bash的时候，它不但会导入这个函数，而且也会把函数定义后面的命令执行。&#x3D;&#x3D;</p>
 <p>在有些CGI脚本的设计中，数据是通过环境变量来传递的，这样就给了数据提供者利用Shellshock漏洞的机会。</p>

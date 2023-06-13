@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00bcd4>
+                <a href="/tags/base" style=color:#ff7d73>
                     base
                 </a>
             </span>
@@ -202,6 +202,8 @@
     <div class="content" v-pre>
         <h1 id="FILE-TRANSFERS"><a href="#FILE-TRANSFERS" class="headerlink" title="FILE TRANSFERS"></a>FILE TRANSFERS</h1><p>##WINDOWS</p>
 <p>PowerShell Base64编码和解码<br>根据我们想要传输的文件大小，我们可以使用不需要网络通信的不同方法。如果我们可以访问终端，我们可以将文件编码为base64字符串，从终端复制其内容并执行反向操作，解码原始内容中的文件。让我们看看如何使用PowerShell实现这一点。<br>使用此方法的一个重要步骤是确保编码和解码的文件是正确的。我们可以使用md5sum，一个计算和验证128位MD5校验和的程序。MD5散列的作用是文件的紧凑数字指纹，这意味着一个文件在任何地方都应该有相同的MD5散列。让我们尝试传输一个示例ssh密钥。它可以是其他任何东西，从我们的Pwnbox到Windows目标。</p>
+<span id="more"></span>
+
 <pre><code>Tanin@htb[/htb]$ md5sum id_rsa
 
 4e301756a07ded0a2dd6953abf015278  id_rsa

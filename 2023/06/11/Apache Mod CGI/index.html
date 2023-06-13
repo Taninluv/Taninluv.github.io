@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/靶场学习" style=color:#ff7d73>
+                <a href="/tags/靶场学习" style=color:#ffa2c4>
                     靶场学习
                 </a>
             </span>
@@ -207,6 +207,8 @@
 <p>当遇到动态脚本请求时，Web服务器主进程就会<code>Fork</code>创建出一个新的进程来启动CGI程序，运行外部C程序或Perl、PHP脚本等，也就是将动态脚本交给CGI程序来处理。这样，每次用户请求动态脚本，Web服务器都要重新Fork创建一个新进程去启动CGI程序，由CGI程序来处理动态脚本，处理完成后进程随之关闭，其效率是非常低下的。</p>
 <p>而对于Mod CGI，Web服务器可以内置Perl解释器或PHP解释器。也就是说将这些解释器做成模块的方式，Web服务器会在启动的时候就启动这些解释器。当有新的动态请求进来时，Web服务器就是&#x3D;&#x3D;自己解析这些动态脚本&#x3D;&#x3D;，省得重新Fork一个进程，效率提高了。<br>​	</p>
 </blockquote>
+<span id="more"></span>
+
 <p><strong>使用条件：</strong></p>
 <blockquote>
 <ul>

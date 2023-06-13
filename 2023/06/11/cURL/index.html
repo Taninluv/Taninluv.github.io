@@ -212,6 +212,8 @@
 Tanin@htb[/htb]$ ls
 index.html
 </code></pre>
+<span id="more"></span>
+
 <h4 id="跳过cURL的证书检查：-k"><a href="#跳过cURL的证书检查：-k" class="headerlink" title="跳过cURL的证书检查：-k"></a>跳过cURL的证书检查：-k</h4><p>现代网络浏览器也会这样做，警告用户不要访问具有无效SSL证书的网站。<br>我们在测试本地web应用程序或使用托管用于实践目的的web应用程序时可能会面临这样的问题，因为此类web应用程序可能尚未实现有效的SSL证书。要跳过cURL的证书检查，我们可以使用-k标志：</p>
 <pre><code>Tanin@htb[/htb]$ curl -k https://inlanefreight.com
 
