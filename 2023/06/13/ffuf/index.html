@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || ffuf</title>
+    <title>Salve || ffuf:Basic Fuzzing</title>
     <meta name="author" content="TiAmo">
     <meta name="description" content="Buona notte ">
     <meta name="keywords" content=" ">
@@ -169,7 +169,7 @@
 <link rel="stylesheet" href="/css/post-body.css">
 <div class="article">
     <div>
-        <h1>ffuf </h1>
+        <h1>ffuf:Basic Fuzzing </h1>
     </div>
     <div class="info">
         <span class="date">
@@ -190,22 +190,29 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00bcd4>
+                <a href="/tags/base" style=color:#ff7d73>
                     base
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/tool" style=color:#ffa2c4>
+                <a href="/tags/tool" style=color:#03a9f4>
                     tool
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/hackthebox" style=color:#00bcd4>
+                <a href="/tags/hackthebox" style=color:#ff7d73>
                     hackthebox
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/ffuf" style=color:#ffa2c4>
+                    ffuf
                 </a>
             </span>
             
@@ -290,30 +297,7 @@ ip：143.110.174.175:32434
 试着用你在这一节学到的东西来模糊&#39;/blog&#39;目录并找到所有页面。其中一个应该包含flag。flag是什么？
 </code></pre>
 <p>kali:</p>
-<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://143.110.174.175:32434/flag/indexFUZZ    
-
-        /&#39;___\  /&#39;___\           /&#39;___\       
-       /\ \__/ /\ \__/  __  __  /\ \__/       
-       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
-        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
-         \ \_\   \ \_\  \ \____/  \ \_\       
-          \/_/    \/_/   \/___/    \/_/       
-
-       v1.3.1 Kali Exclusive &lt;3
-________________________________________________
-
- :: Method           : GET
- :: URL              : http://143.110.174.175:32434/flag/indexFUZZ
- :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/web-extensions.txt
- :: Follow redirects : false
- :: Calibration      : false
- :: Timeout          : 10
- :: Threads          : 40
- :: Matcher          : Response status: 200,204,301,302,307,401,403,405
-________________________________________________
-
-:: Progress: [40/40] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors: 0 :: Progress: [40/40] :: Job [1/1] :: 11 req/sec :: Duration: [0:00:05] :: Errors: 0 ::
-                                                                                   
+<pre><code>                    
 ┌──(root💀kali)-[/usr/share/seclists]
 └─# ffuf -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://143.110.174.175:32434/blog/indexFUZZ -ic
 
@@ -372,6 +356,212 @@ ________________________________________________
 <p>发现一个home.php</p>
 <p>访问<a target="_blank" rel="noopener" href="http://143.110.174.175:32434/blog/home.php%E5%BE%97%E5%88%B0flag%E3%80%82">http://143.110.174.175:32434/blog/home.php得到flag。</a></p>
 <hr>
+<h3 id="递归模糊-Recursive-Fuzzing"><a href="#递归模糊-Recursive-Fuzzing" class="headerlink" title="递归模糊(Recursive Fuzzing)"></a>递归模糊(Recursive Fuzzing)</h3><p>​	到目前为止，我们一直在对目录进行模糊处理，然后进入这些目录，然后对文件进行模糊处理。然而，如果我们有几十个目录，每个目录都有自己的子目录和文件，这将需要很长时间才能完成。为了能够自动化这一点，我们将使用所谓的递归模糊。</p>
+<h4 id="递归标志"><a href="#递归标志" class="headerlink" title="递归标志"></a>递归标志</h4><p>当我们递归扫描时，它会自动在页面上任何新识别的目录下开始另一次扫描，直到它模糊了主网站及其所有子目录。<br>一些网站可能有一棵大树的子目录，比如&#x2F;login&#x2F;user&#x2F;content&#x2F;uploads&#x2F;。。。等等，并且这将扩展扫描树并且可能需要很长时间来扫描它们。这就是为什么我们总是建议为递归扫描指定一个深度，这样它就不会扫描比该深度更深的目录。一旦我们模糊了第一个目录，我们就可以选择最感兴趣的目录，并运行另一个扫描来更好地指导我们的扫描。<br>在ffuf中，我们可以使用-recursion标志启用递归扫描，并且可以使用-递归深度标志指定深度。如果我们指定-recursion depth 1，它将只模糊主目录及其直接子目录。如果标识了任何子目录（如&#x2F;login&#x2F;user，则不会对页面进行模糊处理）。当在ffuf中使用递归时，我们可以用-e.php指定我们的扩展</p>
+<p>最后，我们还将添加标志-v来输出完整的URL。否则，可能很难判断哪个.php文件位于哪个目录下。</p>
+<h4 id="递归扫描"><a href="#递归扫描" class="headerlink" title="递归扫描"></a>递归扫描</h4><p>让我们重复我们使用的第一个命令，在指定.php作为扩展名的同时向其添加递归标志</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ -recursion -recursion-depth 1 -e .php -v
+</code></pre>
+<h4 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h4><p>Target: 143.110.174.175:32434</p>
+<p>Q：试着重复你到目前为止学到的内容，以找到更多的文件&#x2F;目录。其中一个应该给你flag。flag的内容是什么？</p>
+<p>kali：</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://165.232.46.252:32335/FUZZ -recursion -recursion-depth 1 -e .php -v -t 60
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://165.232.46.252:32335/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt
+ :: Extensions       : .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 60
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+[Status: 200, Size: 986, Words: 423, Lines: 56]
+| URL | http://165.232.46.252:32335/# directory-list-2.3-small.txt
+    * FUZZ: # directory-list-2.3-small.txt
+
+[Status: 200, Size: 986, Words: 423, Lines: 56]
+| URL | http://165.232.46.252:32335/# on at least 3 different hosts.php
+    * FUZZ: # on at least 3 different hosts.php
+
+[Status: 200, Size: 986, Words: 423, Lines: 56]
+| URL | http://165.232.46.252:32335/# Attribution-Share Alike 3.0 License. To view a copy of this.php
+    * FUZZ: # Attribution-Share Alike 3.0 License. To view a copy of this.php
+
+[Status: 301, Size: 324, Words: 20, Lines: 10]
+| URL | http://165.232.46.252:32335/blog
+| --&gt; | http://165.232.46.252:32335/blog/
+    * FUZZ: blog
+
+[INFO] Adding a new job to the queue: http://165.232.46.252:32335/blog/FUZZ
+
+[Status: 403, Size: 282, Words: 20, Lines: 10]
+| URL | http://165.232.46.252:32335/.php
+    * FUZZ: .php
+
+[Status: 301, Size: 325, Words: 20, Lines: 10]
+| URL | http://165.232.46.252:32335/forum
+| --&gt; | http://165.232.46.252:32335/forum/
+    * FUZZ: forum
+</code></pre>
+<p>扫出了很多目录，这里不多赘述和展现，直接结果上走——扫描这个forum目录：</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://165.232.46.252:32335/forum/FUZZ -recursion -recursion-depth 1 -e .php -v -t 60
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://165.232.46.252:32335/forum/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt
+ :: Extensions       : .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 60
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# This work is licensed under the Creative Commons
+    * FUZZ: # This work is licensed under the Creative Commons
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/#.php
+    * FUZZ: #.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# directory-list-2.3-small.txt
+    * FUZZ: # directory-list-2.3-small.txt
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/#.php
+    * FUZZ: #.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/#
+    * FUZZ: #
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# Attribution-Share Alike 3.0 License. To view a copy of this
+    * FUZZ: # Attribution-Share Alike 3.0 License. To view a copy of this
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# Priority-ordered case-sensitive list, where entries were found
+    * FUZZ: # Priority-ordered case-sensitive list, where entries were found
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/
+    * FUZZ: 
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# on at least 3 different hosts
+    * FUZZ: # on at least 3 different hosts
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# This work is licensed under the Creative Commons.php
+    * FUZZ: # This work is licensed under the Creative Commons.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# on at least 3 different hosts.php
+    * FUZZ: # on at least 3 different hosts.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# Suite 300, San Francisco, California, 94105, USA..php
+    * FUZZ: # Suite 300, San Francisco, California, 94105, USA..php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# Suite 300, San Francisco, California, 94105, USA.
+    * FUZZ: # Suite 300, San Francisco, California, 94105, USA.
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/#
+    * FUZZ: #
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# Copyright 2007 James Fisher
+    * FUZZ: # Copyright 2007 James Fisher
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# license, visit http://creativecommons.org/licenses/by-sa/3.0/.php
+    * FUZZ: # license, visit http://creativecommons.org/licenses/by-sa/3.0/.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/index.php
+    * FUZZ: index.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# directory-list-2.3-small.txt.php
+    * FUZZ: # directory-list-2.3-small.txt.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# Priority-ordered case-sensitive list, where entries were found.php
+    * FUZZ: # Priority-ordered case-sensitive list, where entries were found.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# Copyright 2007 James Fisher.php
+    * FUZZ: # Copyright 2007 James Fisher.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# or send a letter to Creative Commons, 171 Second Street,.php
+    * FUZZ: # or send a letter to Creative Commons, 171 Second Street,.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/#.php
+    * FUZZ: #.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# license, visit http://creativecommons.org/licenses/by-sa/3.0/
+    * FUZZ: # license, visit http://creativecommons.org/licenses/by-sa/3.0/
+
+[Status: 403, Size: 282, Words: 20, Lines: 10]
+| URL | http://165.232.46.252:32335/forum/.php
+    * FUZZ: .php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# or send a letter to Creative Commons, 171 Second Street,
+    * FUZZ: # or send a letter to Creative Commons, 171 Second Street,
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/#
+    * FUZZ: #
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/#
+    * FUZZ: #
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/# Attribution-Share Alike 3.0 License. To view a copy of this.php
+    * FUZZ: # Attribution-Share Alike 3.0 License. To view a copy of this.php
+
+[Status: 200, Size: 0, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/#.php
+    * FUZZ: #.php
+
+[Status: 200, Size: 21, Words: 1, Lines: 1]
+| URL | http://165.232.46.252:32335/forum/flag.php
+    * FUZZ: flag.php
+</code></pre>
+<p>很明显，就在这个flag里面了</p>
+<p>至此，basic fuzz先告一段落.</p>
 <h3 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h3><h4 id="Ffuf-1"><a href="#Ffuf-1" class="headerlink" title="Ffuf"></a>Ffuf</h4><table>
 <thead>
 <tr>
