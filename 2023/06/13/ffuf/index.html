@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || ffuf</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>ffuf </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/13
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#00bcd4>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tool" style=color:#ffa2c4>
+                    tool
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/hackthebox" style=color:#00bcd4>
+                    hackthebox
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h4 id="模糊-Fuzzing"><a href="#模糊-Fuzzing" class="headerlink" title="模糊(Fuzzing)"></a>模糊(Fuzzing)</h4><p>​	术语模糊化是指一种测试技术，它将各种类型的用户输入发送到某个接口，以研究其反应。如果我们对SQL注入漏洞进行模糊处理，我们将发送随机的特殊字符，并查看服务器的反应。如果我们对缓冲区溢出进行模糊处理，我们将发送长字符串并增加它们的长度，以查看二进制文件是否以及何时会中断。<br>​	我们通常会为每种类型的网络模糊测试使用预定义的常用术语词汇表，看看网络服务器是否会接受它们。这样做是因为web服务器通常不会提供所有可用链接和域的目录（除非进行了严格的配置），因此我们必须检查各种链接，并查看哪些链接返回页面。</p>
+<p>一些最常用的单词列表可以在GitHub  <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists">SecLists</a> 存储库中找到，该存储库将单词列表分类为各种类型的模糊，甚至包括常用的密码，这些密码稍后将用于密码强制。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="Ffuf"><a href="#Ffuf" class="headerlink" title="Ffuf"></a>Ffuf</h2><h3 id="usage"><a href="#usage" class="headerlink" title="usage"></a>usage</h3><pre><code>ffuf -h
+
+HTTP OPTIONS:
+  -H               Header `&quot;Name: Value&quot;`, separated by colon. Multiple -H flags are accepted.
+  -X               HTTP method to use (default: GET)
+  -b               Cookie data `&quot;NAME1=VALUE1; NAME2=VALUE2&quot;` for copy as curl functionality.
+  -d               POST data
+  -recursion       Scan recursively. Only FUZZ keyword is supported, and URL (-u) has to end in it. (default: false)
+  -recursion-depth Maximum recursion depth. (default: 0)
+  -u               Target URL
+...SNIP...
+
+MATCHER OPTIONS:
+  -mc              Match HTTP status codes, or &quot;all&quot; for everything. (default: 200,204,301,302,307,401,403)
+  -ms              Match HTTP response size
+...SNIP...
+
+FILTER OPTIONS:
+  -fc              Filter HTTP status codes from response. Comma separated list of codes and ranges
+  -fs              Filter HTTP response size. Comma separated list of sizes and ranges
+...SNIP...
+
+INPUT OPTIONS:
+...SNIP...
+  -w               Wordlist file path and (optional) keyword separated by colon. eg. &#39;/path/to/wordlist:KEYWORD&#39;
+
+OUTPUT OPTIONS:
+  -o               Write output to file
+...SNIP...
+
+EXAMPLE USAGE:
+  Fuzz file paths from wordlist.txt, match all responses but filter out those with content-size 42.
+  Colored, verbose output.
+    ffuf -w wordlist.txt -u https://example.org/FUZZ -mc all -fs 42 -c -v
+...SNIP...
+</code></pre>
+<hr>
+<h3 id="目录模糊化（Directory-Fuzzing）"><a href="#目录模糊化（Directory-Fuzzing）" class="headerlink" title="目录模糊化（Directory Fuzzing）"></a>目录模糊化（Directory Fuzzing）</h3><p>​	正如我们从上面的例子中看到的，主要的两个选项是-w表示单词列表，-u表示URL。我们可以将一个关键字分配给一个单词列表，以便在我们想要模糊的地方引用它。例如，我们可以选择我们的单词列表，并通过在其后面添加<code>：FUZZ</code>来为其分配关键字FUZZ：</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ
+</code></pre>
+<p>接下来，由于我们想对web目录进行模糊处理，我们可以将FUZZ关键字放置在URL中目录所在的位置，其中：</p>
+<pre><code> ffuf -w &lt;SNIP&gt; -u http://SERVER_IP:PORT/FUZZ
+</code></pre>
+<p>现在，让我们从下面的问题中开始我们的目标，并对其运行我们的最终命令：</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ
+</code></pre>
+<p>如果我们很着急，我们甚至可以通过将线程数量增加到200来加快速度，例如使用<code>-t 200</code>，但不建议这样做，尤其是在远程网站上使用时，因为这可能会中断它，导致拒绝服务，或者在严重情况下导致您的互联网连接中断。</p>
+<p><a href="http://">^tips</a>: 我们得到一个空页面，表明目录没有专用页面，但也表明我们没有访问它的权限，因为我们没有得到HTTP代码404 not Found或403 access Denied。在下一节中，我们将在该目录下查找页面，看看它是否真的是空的，或者是否有隐藏的文件和页面。</p>
+<h4 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h4><pre><code>target:
+ip：143.110.174.175:32434
+除了我们在上面找到的目录之外，还可以找到另一个目录。它是什么？
+</code></pre>
+<p>kali: </p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://143.110.174.175:32434/FUZZ
+
+</code></pre>
+<hr>
+<h3 id="页面模糊（Page-Fuzzing）"><a href="#页面模糊（Page-Fuzzing）" class="headerlink" title="页面模糊（Page Fuzzing）"></a>页面模糊（Page Fuzzing）</h3><p>我们现在通过使用单词表和关键字来了解ffuf的基本用法。接下来，我们将学习如何定位页面。</p>
+<h4 id="扩展名模糊（Extension-Fuzzing）"><a href="#扩展名模糊（Extension-Fuzzing）" class="headerlink" title="扩展名模糊（Extension Fuzzing）"></a>扩展名模糊（Extension Fuzzing）</h4><p>在上一节中，我们发现我们可以访问&#x2F;blog，但目录返回了一个空页面，我们无法手动定位任何链接或页面。因此，我们将再次利用web模糊来查看目录是否包含任何隐藏页面。然而，在我们开始之前，我们必须了解网站使用的页面类型，如.html、.aspx、.php或其他类型。<br>一种常见的识别方法是通过HTTP响应头查找服务器类型并猜测扩展名。例如，如果服务器是apache，那么它可能是.php，或者如果是IIS，那么它可以是.asp或.aspx，等等。不过，这种方法不是很实用。因此，我们将再次使用ffuf来模糊扩展，类似于我们对目录的模糊处理。我们不把FUZZ关键字放在目录名所在的位置，而是把它放在扩展名所在的地方<code>.FUZZ</code>，并为常见的扩展名使用单词列表。我们可以使用SecLists中的以下单词列表进行扩展：</p>
+<pre><code> ffuf -w /opt/useful/SecLists/Discovery/Web-Content/web-extensions.txt:FUZZ &lt;SNIP&gt;
+</code></pre>
+<p>在我们开始模糊化之前，我们必须指定扩展名将位于哪个文件的末尾！我们总是可以使用两个单词列表，每个单词列表都有一个唯一的关键字，然后对这两个单词都进行FUZZ_1.FUZZ_2模糊处理。然而，在大多数网站上，我们总能找到一个文件，那就是index.*，所以我们会用它作为我们的文件，并对其进行模糊扩展。</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://SERVER_IP:PORT/blog/indexFUZZ
+</code></pre>
+<h3 id="页面模糊-Page-Fuzzing"><a href="#页面模糊-Page-Fuzzing" class="headerlink" title="页面模糊(Page Fuzzing)"></a>页面模糊(Page Fuzzing)</h3><p>现在，我们将使用与ffuf相同的关键字概念，使用.php作为扩展名，将FUZZ关键字放在文件名所在的位置，并使用与模糊目录相同的单词列表：</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://SERVER_IP:PORT/blog/FUZZ.php
+</code></pre>
+<h4 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h4><pre><code>target:143.110.174.175:32434
+试着用你在这一节学到的东西来模糊&#39;/blog&#39;目录并找到所有页面。其中一个应该包含flag。flag是什么？
+</code></pre>
+<p>kali:</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://143.110.174.175:32434/flag/indexFUZZ    
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://143.110.174.175:32434/flag/indexFUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/web-extensions.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+:: Progress: [40/40] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors: 0 :: Progress: [40/40] :: Job [1/1] :: 11 req/sec :: Duration: [0:00:05] :: Errors: 0 ::
+                                                                                   
+┌──(root💀kali)-[/usr/share/seclists]
+└─# ffuf -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://143.110.174.175:32434/blog/indexFUZZ -ic
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://143.110.174.175:32434/blog/indexFUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/web-extensions.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+:: Progress: [40/40] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors: 0 .php                    [Status: 200, Size: 0, Words: 1, Lines: 1]
+:: Progress: [40/40] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors: 0 .phps                   [Status: 403, Size: 283, Words: 20, Lines: 10]
+:: Progress: [40/40] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors: 0 :: Progress: [40/40] :: Job [1/1] :: 21 req/sec :: Duration: [0:00:04] :: Errors: 0 ::
+</code></pre>
+<p>​         </p>
+<p>发现.php 和 .phpx后缀可用</p>
+<p>先查看php后缀：</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://143.110.174.175:32434/blog/FUZZ.php -ic
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://143.110.174.175:32434/blog/FUZZ.php
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+:: Progress: [40/87651] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors::: Progress: [40/87651] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors::: Progress: [40/87651] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors::: Progress: [40/87651] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors::: Progress: [40/87651] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors:                        [Status: 403, Size: 283, Words: 20, Lines: 10]
+:: Progress: [52/87651] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors:home                    [Status: 200, Size: 1046, Words: 438, Lines: 58]
+</code></pre>
+<p>发现一个home.php</p>
+<p>访问<a target="_blank" rel="noopener" href="http://143.110.174.175:32434/blog/home.php%E5%BE%97%E5%88%B0flag%E3%80%82">http://143.110.174.175:32434/blog/home.php得到flag。</a></p>
+<hr>
+<h3 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h3><h4 id="Ffuf-1"><a href="#Ffuf-1" class="headerlink" title="Ffuf"></a>Ffuf</h4><table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ffuf -h</code></td>
+<td>ffuf help</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ</code></td>
+<td>Directory Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/indexFUZZ</code></td>
+<td>Extension Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/blog/FUZZ.php</code></td>
+<td>Page Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ -recursion -recursion-depth 1 -e .php -v</code></td>
+<td>Recursive Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u https://FUZZ.hackthebox.eu/</code></td>
+<td>Sub-domain Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://academy.htb:PORT/ -H &#39;Host: FUZZ.academy.htb&#39; -fs xxx</code></td>
+<td>VHost Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php?FUZZ=key -fs xxx</code></td>
+<td>Parameter Fuzzing - GET</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;FUZZ=key&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39; -fs xxx</code></td>
+<td>Parameter Fuzzing - POST</td>
+</tr>
+<tr>
+<td><code>ffuf -w ids.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;id=FUZZ&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39; -fs xxx</code></td>
+<td>Value Fuzzing</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="Wordlists"><a href="#Wordlists" class="headerlink" title="Wordlists"></a>Wordlists</h4><table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt</code></td>
+<td>Directory&#x2F;Page Wordlist</td>
+</tr>
+<tr>
+<td><code>/opt/useful/SecLists/Discovery/Web-Content/web-extensions.txt</code></td>
+<td>Extensions Wordlist</td>
+</tr>
+<tr>
+<td><code>/opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt</code></td>
+<td>Domain Wordlist</td>
+</tr>
+<tr>
+<td><code>/opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt</code></td>
+<td>Parameters Wordlist</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h4><table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sudo sh -c &#39;echo &quot;SERVER_IP academy.htb&quot; &gt;&gt; /etc/hosts&#39;</code></td>
+<td>Add DNS entry</td>
+</tr>
+<tr>
+<td><code>for i in $(seq 1 1000); do echo $i &gt;&gt; ids.txt; done</code></td>
+<td>Create Sequence Wordlist</td>
+</tr>
+<tr>
+<td><code>curl http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;id=key&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39;</code></td>
+<td>curl w&#x2F; POST</td>
+</tr>
+</tbody></table>
+<p>[^注意]: </p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

