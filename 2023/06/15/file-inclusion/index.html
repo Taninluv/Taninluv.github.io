@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || linux</title>
+    <title>Salve || file inclusion</title>
     <meta name="author" content="TiAmo">
     <meta name="description" content="Buona notte ">
     <meta name="keywords" content=" ">
@@ -169,14 +169,14 @@
 <link rel="stylesheet" href="/css/post-body.css">
 <div class="article">
     <div>
-        <h1>linux </h1>
+        <h1>file inclusion </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <a-icon type="calendar" theme="filled" />
             </span>
-            2023/6/11
+            2023/6/15
         </span>
 
         
@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00a596>
+                <a href="/tags/base" style=color:#ff7d73>
                     base
                 </a>
             </span>
@@ -200,85 +200,8 @@
     </div>
 
     <div class="content" v-pre>
-        <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><table>
-<thead>
-<tr>
-<th><code>/</code></th>
-<th>顶级目录是根文件系统，包含在挂载其他文件系统之前引导操作系统所需的所有文件，以及引导其他文件系统所需的文件。引导后，所有其他文件系统都作为根目录挂载在标准挂载点。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/bin</code></td>
-<td>包含基本的命令二进制文件。</td>
-</tr>
-<tr>
-<td><code>/boot</code></td>
-<td>由静态引导加载程序、内核可执行文件和引导 Linux 操作系统所需的文件组成。</td>
-</tr>
-<tr>
-<td><code>/dev</code></td>
-<td>包含设备文件，以便于访问连接到系统的每个硬件设备。</td>
-</tr>
-<tr>
-<td><code>/etc</code></td>
-<td>本地系统配置文件。已安装应用程序的配置文件也可以保存在此处。</td>
-</tr>
-<tr>
-<td><code>/home</code></td>
-<td>系统上的每个用户都有一个用于存储的子目录。</td>
-</tr>
-<tr>
-<td><code>/lib</code></td>
-<td>系统引导所需的共享库文件。</td>
-</tr>
-<tr>
-<td><code>/media</code></td>
-<td>外部可移动媒体设备（如 USB 驱动器）安装在此处。</td>
-</tr>
-<tr>
-<td><code>/mnt</code></td>
-<td>常规文件系统的临时挂载点。</td>
-</tr>
-<tr>
-<td><code>/opt</code></td>
-<td>可选文件（如第三方工具）可以保存在此处。</td>
-</tr>
-<tr>
-<td><code>/root</code></td>
-<td>根用户的主目录。</td>
-</tr>
-<tr>
-<td><code>/sbin</code></td>
-<td>此目录包含用于系统管理的可执行文件（二进制系统文件）。</td>
-</tr>
-<tr>
-<td><code>/tmp</code></td>
-<td>操作系统和许多程序使用此目录来存储临时文件。此目录通常在系统启动时清除，其他时间可能会删除，没有任何警告。</td>
-</tr>
-<tr>
-<td><code>/usr</code></td>
-<td>包含可执行文件、库、man 文件等。</td>
-</tr>
-<tr>
-<td><code>/var</code></td>
-<td>此目录包含可变数据文件，例如日志文件、电子邮件收件箱、Web 应用程序相关文件、cron 文件等。</td>
-</tr>
-</tbody></table>
+        <p>​	让我们看一些易受文件包含攻击的代码示例，以了解此类漏洞是如何发生的。如前所述，文件包含漏洞可能出现在许多最流行的web服务器和开发框架中，如PHP、NodeJS、Java、.Net等。它们中的每一个都有一种稍微不同的方法来包含本地文件，但它们都有一个共同点：从指定的路径加载文件。<br>这样的文件可以是动态头或基于用户指定语言的不同内容。例如，页面可能有一个？language GET参数，如果用户从下拉菜单中更改语言，则会返回相同的页面，但使用不同的语言参数（例如？language&#x3D;es）。在这种情况下，更改语言可能会更改web应用程序加载页面的目录（例如&#x2F;en&#x2F;或&#x2F;es&#x2F;）。如果我们能够控制正在加载的路径，那么我们可能能够利用此漏洞读取其他文件，并可能实现远程代码执行。</p>
 <span id="more"></span>
-
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><table>
-<thead>
-<tr>
-<th><code>\d</code></th>
-<th>日期（6月&lt;&gt;日星期一）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#96;\D</td>
-<td></td>
-</tr>
-</tbody></table>
-
     </div>
 
     

@@ -197,6 +197,148 @@
 
 <div class="post">
 
+    <a href="/2023/06/11/stage_mark_1/">
+        <h2>
+            协议连接
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <p>###FTP协议：</p>
+<p>下载：<code> apt install ftp -y</code></p>
+<p>使用：<code>ftp -h</code>:</p>
+<blockquote>
+<p>ftp -h<br>Usage: { ftp | pftp }[-46pinegvtd] [ hostname]<br>-4: use IPv4 addresses only<br>-6: use IPv6，nothing else<br>-p: enable passive mode ( default for pftp)					-i: turn off prompting during mget<br>-n: inhibit auto-login<br>-e: disable readline support，if present-g: disable filename 		 globbing<br>-v: verbose mode<br>-t: enable packet tracing [nonfunctional]           				-d: enable debugging</p>
+</blockquote>
+<p>连接：<code>ftp &#123;target_ip&#125;</code></p>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/靶场学习" style=color:#00a596>
+                靶场学习
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/stage_mark_1/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
+    <a href="/2023/06/11/other_1/">
+        <h2>
+            杂记-前端Ajax
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <p>当使用 Java Web 技术构建后端，并使用 AJAX 进行前后端交互时，以下是一个简单的示例：</p>
+<p>###前端（使用 AJAX）：</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;AJAX 示例&lt;/title&gt;
+  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button id=&quot;getDataBtn&quot;&gt;获取数据&lt;/button&gt;
+  &lt;div id=&quot;result&quot;&gt;&lt;/div&gt;
+
+  &lt;script&gt;
+    $(document).ready(function() &#123;
+      // 当点击按钮时发送 AJAX 请求
+      $(&#39;#getDataBtn&#39;).click(function() &#123;
+        $.ajax(&#123;
+          url: &#39;backendServlet&#39;, // 后端的 Servlet 地址
+          type: &#39;GET&#39;,
+          dataType: &#39;json&#39;,
+          success: function(data) &#123;
+            // 请求成功时更新页面内容
+            $(&#39;#result&#39;).text(data.message);
+          &#125;,
+          error: function() &#123;
+            // 请求失败时显示错误信息
+            $(&#39;#result&#39;).text(&#39;请求失败&#39;);
+          &#125;
+        &#125;);
+      &#125;);
+    &#125;);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/others" style=color:#00a596>
+                others
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/other_1/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/11/tools/">
         <h2>
             tools

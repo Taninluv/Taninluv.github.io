@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Fuzzing</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Fuzzing </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/14
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#03a9f4>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tool" style=color:#ffa2c4>
+                    tool
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/hackthebox" style=color:#03a9f4>
+                    hackthebox
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/ffuf" style=color:#ffa2c4>
+                    ffuf
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h3 id="子域模糊-Sub-domain-Fuzzing"><a href="#子域模糊-Sub-domain-Fuzzing" class="headerlink" title="子域模糊 (Sub-domain Fuzzing)"></a>子域模糊 (Sub-domain Fuzzing)</h3><pre><code>target: HackTheBox有一个在线Swag商店。试着在“hacktebox.eu”上运行子域模糊测试来找到它。它的完整域是什么？
+</code></pre>
+<span id="more"></span>
+
+<p>kali跑一下：</p>
+<pre><code> ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u https://FUZZ.hackthebox.eu/ 
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : https://FUZZ.hackthebox.eu/
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+www                     [Status: 301, Size: 0, Words: 1, Lines: 1]
+forum                   [Status: 301, Size: 0, Words: 1, Lines: 1]
+dev                     [Status: 302, Size: 0, Words: 1, Lines: 1]
+store                   [Status: 301, Size: 0, Words: 1, Lines: 1]
+forums                  [Status: 301, Size: 0, Words: 1, Lines: 1]
+app                     [Status: 301, Size: 0, Words: 1, Lines: 1]
+help                    [Status: 301, Size: 0, Words: 1, Lines: 1]
+dev2                    [Status: 302, Size: 0, Words: 1, Lines: 1]
+billing                 [Status: 302, Size: 101, Words: 5, Lines: 1]
+</code></pre>
+<p>答案应该是这个store很难跑了：<code>https://store.hackthebox.eu</code></p>
+<h4 id="Vhost-Fuzzing"><a href="#Vhost-Fuzzing" class="headerlink" title="Vhost Fuzzing"></a>Vhost Fuzzing</h4><p>​	我们能够使用公共DNS记录模糊公共子域。然而，当涉及到模糊没有公共DNS记录的子域或非公共网站下的子域时，我们不能使用相同的方法。在本节中，我们将学习如何使用Vhost Fuzzing来做到这一点。</p>
+<h5 id="Vhosts-vs-Sub-domains"><a href="#Vhosts-vs-Sub-domains" class="headerlink" title="Vhosts vs. Sub-domains"></a>Vhosts vs. Sub-domains</h5><p>​	VHosts和子域之间的关键区别在于，VHost基本上是在同一服务器上服务的“子域”，并且具有相同的IP，因此单个IP可以服务于两个或多个不同的网站。<br>VHosts可能有也可能没有公共DNS记录。<br>​	在许多情况下，许多网站实际上会有非公共的子域，并且不会在公共DNS记录中发布它们，因此，如果我们在浏览器中访问它们，我们将无法连接，因为公共DNS不会知道它们的IP。再一次，如果我们使用子域模糊，我们将只能识别公共子域，但无法识别任何非公共子域。<br>​	这就是我们在现有IP上使用VHosts Fuzzing的地方。我们将在同一IP上运行扫描和测试扫描，然后我们将能够识别公共和非公共子域以及VHosts。</p>
+<p>要扫描VHosts，而无需手动将整个单词列表添加到&#x2F;etc&#x2F;hosts，我们将模糊HTTP标头，特别是Host:header。为此，我们可以使用-H标志来指定一个标头，并在其中使用FUZZ关键字，如下所示：</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://academy.htb:PORT/ -H &#39;Host: FUZZ.academy.htb&#39;
+</code></pre>
+<h5 id="筛选结果"><a href="#筛选结果" class="headerlink" title="筛选结果"></a>筛选结果</h5><pre><code>ffuf -h
+...SNIP...
+MATCHER OPTIONS:
+  -mc              Match HTTP status codes, or &quot;all&quot; for everything. (default: 200,204,301,302,307,401,403)
+  -ml              Match amount of lines in response
+  -mr              Match regexp
+  -ms              Match HTTP response size
+  -mw              Match amount of words in response
+
+FILTER OPTIONS:
+  -fc              Filter HTTP status codes from response. Comma separated list of codes and ranges
+  -fl              Filter by amount of lines in response. Comma separated list of line counts and ranges
+  -fr              Filter regexp
+  -fs              Filter HTTP response size. Comma separated list of sizes and ranges
+  -fw              Filter by amount of words in response. Comma separated list of word counts and ranges
+</code></pre>
+<p>​	我们知道错误结果的响应大小，从上面的测试中可以看出，是900，我们可以用-fs 900过滤掉它。</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://academy.htb:PORT/ -H &#39;Host: FUZZ.academy.htb&#39; -fs 900
+</code></pre>
+<h5 id="prectice"><a href="#prectice" class="headerlink" title="prectice"></a>prectice</h5><pre><code>target:165.232.46.252:32335
+试着在“academy.htb”上运行VHost模糊扫描，看看你还能得到什么其他VHost。你还得到了哪些VHosts？
+hint:请确保过滤正确！把答案写成“*.academy.htb”。
+</code></pre>
+<p>kali:</p>
+<p>先把域名映射放到hosts文件：</p>
+<pre><code>echo http://165.232.46.252 academy.htb &gt;&gt; /etc/hosts
+</code></pre>
+<p>扫描：发现结果很多，过滤一下，这里我们发现绝大多数的响应大小是986，过滤掉</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://academy.htb:32335 -H &#39;Host: FUZZ.academy.htb&#39; -fs 986
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://academy.htb:32335
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+ :: Header           : Host: FUZZ.academy.htb
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response size: 986
+________________________________________________
+
+admin                   [Status: 200, Size: 0, Words: 1, Lines: 1]
+test                    [Status: 200, Size: 0, Words: 1, Lines: 1]
+:: Progress: [4989/4989] :: Job [1/1] :: 125 req/sec :: Duration: [0:00:44] :: Errors: 0 ::
+</code></pre>
+<p>此时只有两个结果，分别try一try，发现都是<code>Secure Connection Failed</code></p>
+<p>很烦，只能都提交试试了，答案是test，很烦。。。</p>
+<h3 id="参数模糊（Parameter-Fuzzing）"><a href="#参数模糊（Parameter-Fuzzing）" class="headerlink" title="参数模糊（Parameter Fuzzing）"></a>参数模糊（Parameter Fuzzing）</h3><h4 id="GET请求模糊"><a href="#GET请求模糊" class="headerlink" title="GET请求模糊"></a>GET请求模糊</h4><p>类似于我们如何模糊网站的各个部分，我们将使用ffuf来枚举参数。让我们首先从GET请求的模糊处理开始，这些请求通常在URL之后传递，并带有？符号，例如：<br><a href="http://admin.academy.htb:PORT/admin/admin.php?param1=key">http://admin.academy.htb:PORT/admin/admin.php?param1=key</a>.<br>所以，我们所要做的就是用FUZZ替换上面例子中的param1，然后重新运行我们的扫描。然而，在我们开始之前，我们必须选择一个合适的单词表。再一次，SecLists在&#x2F;opt&#x2F;helper&#x2F;SecLists&#x2F;Discovery&#x2F;Web-Content&#x2F;burp-parameter-names.txt中有这个。有了它，我们可以运行扫描。</p>
+<h5 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h5><pre><code>target:139.59.185.174:32533
+使用您在本节中学到的知识，在此页面上运行参数模糊扫描。这个网页接受的参数是多少？
+</code></pre>
+<p>kali:</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:32533/admin/admin.php?FUZZ=key -fs 798
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://admin.academy.htb:32533/admin/admin.php?FUZZ=key
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response size: 798
+________________________________________________
+
+user                    [Status: 200, Size: 783, Words: 221, Lines: 54]
+:: Progress: [6453/6453] :: Job [1/1] :: 127 req/sec :: Duration: [0:00:56] :: Errors: 0 ::
+</code></pre>
+<p>user。</p>
+<h4 id="POST请求模糊"><a href="#POST请求模糊" class="headerlink" title="POST请求模糊"></a>POST请求模糊</h4><p>​	要用ffuf模糊数据字段，我们可以使用-d标志，正如我们之前在ffuf-h的输出中看到的那样。我们还必须添加-X POST来发送POST请求。</p>
+<p>提示：在PHP中，“POST”数据“内容类型”只能接受“application&#x2F;x-www-form-urlencoded”。因此，我们可以在“ffuf”中用“-H’内容类型：application&#x2F;x-www-form-urlencoded”来设置它。</p>
+<pre><code> ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;FUZZ=key&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39; -fs xxx
+
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.1.0-git
+________________________________________________
+
+ :: Method           : POST
+ :: URL              : http://admin.academy.htb:PORT/admin/admin.php
+ :: Wordlist         : FUZZ: /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt
+ :: Header           : Content-Type: application/x-www-form-urlencoded
+ :: Data             : FUZZ=key
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403
+ :: Filter           : Response size: xxx
+________________________________________________
+
+id                      [Status: xxx, Size: xxx, Words: xxx, Lines: xxx]
+&lt;...SNIP...&gt;
+</code></pre>
+<p>让我们看看如果我们发送带有id参数的POST请求会得到什么。</p>
+<pre><code>curl http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;id=key&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39;
+
+&lt;div class=&#39;center&#39;&gt;&lt;p&gt;Invalid id!&lt;/p&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="值模糊（Value-Fuzzing）"><a href="#值模糊（Value-Fuzzing）" class="headerlink" title="值模糊（Value Fuzzing）"></a>值模糊（Value Fuzzing）</h3><p>这里需要自己判断和创建爆破列表(例：ids.txt)</p>
+<p>usage：</p>
+<pre><code>ffuf -w ids.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d &#39;id=FUZZ&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39; -fs xxx
+</code></pre>
+<h4 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h4><pre><code>target：139.59.185.174:32533
+尝试创建“ids.txt”单词列表，用模糊扫描识别接受的值，然后在带有“curl”的“POST”请求中使用它来收集标志。旗帜的内容是什么？
+</code></pre>
+<p>kali:</p>
+<pre><code>ffuf -w ids.txt:FUZZ -u http://admin.academy.htb:32533/admin/admin.php -X POST -d &#39;id=FUZZ&#39; -H &quot;Content-Type: application/x-www-form-urlencoded&quot; -fs 768
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : POST
+ :: URL              : http://admin.academy.htb:32533/admin/admin.php
+ :: Wordlist         : FUZZ: ids.txt
+ :: Header           : Content-Type: application/x-www-form-urlencoded
+ :: Data             : id=FUZZ
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response size: 768
+________________________________________________
+
+73                      [Status: 200, Size: 787, Words: 218, Lines: 54]
+:: Progress: [1000/1000] :: Job [1/1] :: 124 req/sec :: Duration: [0:00:10] :: Errors: 0 ::
+</code></pre>
+<p>得到73，try一下：</p>
+<pre><code>curl http://admin.academy.htb:32533/admin/admin.php -X POST -d &#39;id=73&#39; -H &quot;Content-Type: application/x-www-form-urlencoded&quot; -i  
+HTTP/1.1 200 OK
+Date: Wed, 14 Jun 2023 11:00:25 GMT
+Server: Apache/2.4.41 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 787
+Content-Type: text/html; charset=UTF-8
+
+&lt;div class=&#39;center&#39;&gt;&lt;p&gt;HTB&#123;p4r4m373r_fuzz1n6_15_k3y!&#125;&lt;/p&gt;&lt;/div&gt;
+</code></pre>
+<p>ok。</p>
+<h3 id="Skills-Assessment-Web-Fuzzing"><a href="#Skills-Assessment-Web-Fuzzing" class="headerlink" title="Skills Assessment - Web Fuzzing"></a>Skills Assessment - Web Fuzzing</h3><pre><code>target:165.232.33.45:32589
+</code></pre>
+<ul>
+<li>在“*.academy.htb”上运行子域&#x2F;虚拟主域模糊测试扫描，以查找上面显示的 IP。您可以识别哪些子域？（只写子域名）</li>
+<li>在运行页面模糊测试扫描之前，应首先运行扩展模糊测试扫描。域接受哪些不同的扩展名？</li>
+<li>您将识别的页面之一应显示“您无权访问！什么是整页网址？</li>
+<li>在上一个问题的页面中，您应该能够找到页面接受的多个参数。它们是什么？</li>
+<li>尝试模糊您为工作值确定的参数。其中一个应该归还一面旗帜。旗帜的内容是什么？</li>
+</ul>
+<p>kali：</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://165.232.33.45:32589/ -H &#39;Host: FUZZ.academy.htb&#39; -fs 985
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://165.232.33.45:32589/
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+ :: Header           : Host: FUZZ.academy.htb
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response size: 985
+________________________________________________
+
+archive                 [Status: 200, Size: 0, Words: 1, Lines: 1]
+test                    [Status: 200, Size: 0, Words: 1, Lines: 1]
+faculty                 [Status: 200, Size: 0, Words: 1, Lines: 1]
+:: Progress: [4989/4989] :: Job [1/1] :: 128 req/sec :: Duration: [0:00:44] :: Errors: 0 ::
+</code></pre>
+<p>ok,看看第二个问题，要对三个子域一块扫描，最终在faculty中多扫出了一个php7：</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://faculty.academy.htb:32589/indexFUZZ
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://faculty.academy.htb:32589/indexFUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/web-extensions.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+.php                    [Status: 200, Size: 0, Words: 1, Lines: 1]
+.phps                   [Status: 403, Size: 287, Words: 20, Lines: 10]
+.php7                   [Status: 200, Size: 0, Words: 1, Lines: 1]
+:: Progress: [40/40] :: Job [1/1] :: 35 req/sec :: Duration: [0:00:04] :: Errors: 0 ::
+</code></pre>
+<p>提交三个答案，看第三题，直觉上还是这个faculty和php7有很大嫌疑，因为之前的扫描里只有它的结果比较不一样。来回扫了几个子域，扫的头疼还是没找到，可能是中止得太早了，调用递归让他自己扫，看看比赛~</p>
+<p>果然，就是在这个faculty和php7上扫出来了，一共17w个记录扫到了第二轮大概5w多才扫到，也就是22w多条，大概二十分钟不到的样子。乌鱼子，搞个靶场没必要这么折磨呜……只不过查看记录在扫出course目录的时候有提醒扫描这个目录，只不过我在看比赛，提前改目标的话应该能快不少。</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://faculty.academy.htb:32589/FUZZ -e .php7 -recursion -recursion-depth 1 -v -fs 287 -t 80
+
+...
+
+[Status: 200, Size: 774, Words: 223, Lines: 53]
+| URL | http://faculty.academy.htb:32589/courses/linux-security.php7
+    * FUZZ: linux-security.php7
+...
+</code></pre>
+<p>第四题：</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://faculty.academy.htb:32589/courses/linux-security.php7?FUZZ=key -fs 774 -t 80
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://faculty.academy.htb:32589/courses/linux-security.php7?FUZZ=key
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 80
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response size: 774
+________________________________________________
+
+user                    [Status: 200, Size: 780, Words: 223, Lines: 53]
+:: Progress: [6453/6453] :: Job [1/1] :: 229 req/sec :: Duration: [0:00:29] :: Errors: 0 ::
+</code></pre>
+<p>在get方法中的到 <code>user</code> ，看看post，第一遍没扫描出来，php要添加标头<code>&#39;Content-Type: application/x-www-form-urlencoded&#39;</code></p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://faculty.academy.htb:32589/courses/linux-security.php7 -X POST -d &quot;FUZZ=key&quot; -fs 774 -t 80 -H &#39;Content-Type: application/x-www-form-urlencoded&#39;
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : POST
+ :: URL              : http://faculty.academy.htb:32589/courses/linux-security.php7
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt
+ :: Header           : Content-Type: application/x-www-form-urlencoded
+ :: Data             : FUZZ=key
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 80
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response size: 774
+________________________________________________
+
+user                    [Status: 200, Size: 780, Words: 223, Lines: 53]
+username                [Status: 200, Size: 781, Words: 223, Lines: 53]
+:: Progress: [6453/6453] :: Job [1/1] :: 237 req/sec :: Duration: [0:00:35] :: Errors: 0 ::
+</code></pre>
+<p>多出了一个<code>username</code>，根据做题经验，下一题的答案应该也就是从这个后面多出来的<code>username</code>入手，正好<code>seclists</code>里有一个<code>Usernames</code>文件,try一下：</p>
+<p>扫到一个harry，post发送一下得到flag</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
