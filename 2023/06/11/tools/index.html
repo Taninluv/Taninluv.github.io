@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/tool" style=color:#00a596>
+                <a href="/tags/tool" style=color:#ff7d73>
                     tool
                 </a>
             </span>
@@ -645,6 +645,25 @@ OpenSSHd 7.2p2 - Username Enumeration                                           
 <li>hashcat</li>
 <li>CeWL</li>
 </ul>
+<h1 id="amp-amp-amp-；-："><a href="#amp-amp-amp-；-：" class="headerlink" title="&amp;&amp; &amp; ； ："></a><code>&amp;&amp;</code> <code>&amp;</code> <code>；</code> ：</h1><p>这些符号在命令行中具有不同的作用：</p>
+<ol>
+<li><p><code>&amp;&amp;</code>：逻辑与运算符。在命令之间使用 <code>&amp;&amp;</code> 可以实现条件执行，即只有前一个命令成功执行（返回状态码为 0），才会执行后续的命令。例如：</p>
+<pre><code>command1 &amp;&amp; command2
+</code></pre>
+<p>如果 <code>command1</code> 成功执行，则会执行 <code>command2</code>。如果 <code>command1</code> 执行失败（返回状态码非零），则 <code>command2</code> 将不会执行。</p>
+</li>
+<li><p><code>&amp;</code>：后台运行。在命令的末尾使用 <code>&amp;</code> 可以将命令置于后台运行，即命令在后台继续执行，而不会阻塞终端。例如：</p>
+<pre><code>command &amp;
+</code></pre>
+<p>使用 <code>&amp;</code> 启动的命令将在后台运行，同时你可以继续在终端中输入其他命令。可以使用 <code>jobs</code> 命令查看后台运行的任务，并使用 <code>fg</code> 或 <code>bg</code> 命令将任务切换到前台或后台。</p>
+</li>
+<li><p><code>；</code>：命令分隔符。在命令之间使用 <code>；</code> 可以将多个命令依次执行，不管前一个命令是否成功执行。例如：</p>
+<pre><code>command1 ; command2 ; command3
+</code></pre>
+<p>每个命令将按顺序执行，不管前一个命令是否成功。无论前一个命令的返回状态码是什么，都会继续执行下一个命令。</p>
+</li>
+</ol>
+<p>这些符号在命令行中有不同的作用，你可以根据需要选择适当的符号来控制命令的执行顺序和方式。</p>
 
     </div>
 
