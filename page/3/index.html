@@ -197,6 +197,75 @@
 
 <div class="post">
 
+    <a href="/2023/06/11/other_2/">
+        <h2>
+            杂记
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h1 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h1><p>学习过程中的遇到的一些工具或指令</p>
+<p>###http-enum&#x3D;&#x3D;脚本枚举</p>
+<p>nmap使用&#x3D;&#x3D;http-enum&#x3D;&#x3D;脚本枚举，该脚本可用于枚举常见的 Web 应用程序目录。</p>
+<p><code>-oA</code> 保存扫描结果到指定文件</p>
+<pre><code>Tanin@htb[/htb]$ nmap -sV --script=http-enum -oA nibbles_nmap_http_enum 10.129.42.190 
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-12-16 23:41 EST
+Nmap scan report for 10.129.42.190
+Host is up (0.11s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd &lt;REDACTED&gt; ((Ubuntu))
+|_http-server-header: Apache/&lt;REDACTED&gt; (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
+</code></pre>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/others" style=color:#ffa2c4>
+                others
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/other_2/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/11/reverse_shell/">
         <h2>
             Reverse Shell
@@ -279,7 +348,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#00a596>
                 base
             </a>
         </span>
@@ -336,7 +405,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#ff7d73>
+            <a href="/tags/靶场学习" style=color:#00bcd4>
                 靶场学习
             </a>
         </span>
@@ -595,7 +664,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#00a596>
+            <a href="/tags/tool" style=color:#ff7d73>
                 tool
             </a>
         </span>
