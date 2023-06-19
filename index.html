@@ -197,6 +197,64 @@
 
 <div class="post">
 
+    <a href="/2023/06/18/Buffer-Overflows-part-1/">
+        <h2>
+            Buffer Overflows:part-1
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/18
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p>简而言之，缓冲区溢出是由不正确的程序代码引起的，CPU无法正确处理过多的数据，因此可能会操纵CPU的处理。例如，假设有太多数据被写入到不受限制的保留内存缓冲区或堆栈中。在这种情况下，特定的寄存器将被覆盖，这可能允许代码被执行。<br>缓冲区溢出可能导致程序崩溃、损坏数据或损坏程序运行时的数据结构。最后一种可以用任意数据覆盖特定程序的返回地址，使攻击者能够以易受缓冲区溢出影响的进程的权限执行命令，从而通过传递任意机器代码。此代码通常旨在让我们更方便地访问系统，以便将其用于自己的目的。这种缓冲区在普通服务器中溢出，互联网蠕虫也会利用客户端软件。<br>Unix系统上一个特别流行的目标是root访问，它赋予我们所有人访问系统的权限。然而，正如人们经常误解的那样，这并不意味着“仅”导致标准用户权限的缓冲区溢出是无害的。如果您已经拥有用户权限，那么获得令人垂涎的root访问权限通常会容易得多。<br>缓冲区溢出，除了编程疏忽之外，主要是由基于冯·诺依曼体系结构的计算机系统造成的。<br>缓冲区溢出的最重要原因是使用的编程语言不会自动监控内存缓冲区或堆栈的限制，以防止（基于堆栈的）缓冲区溢出。其中包括C和C++语言，它们强调性能，不需要监控。<br>由于这个原因，开发人员被迫在编程代码中自己定义这些区域，这会多次增加漏洞。出于测试目的或由于疏忽，这些区域通常未定义。即使它们用于测试目的，在开发过程结束时也可能被忽略。<br>但是，并不是每个应用程序环境都可能出现缓冲区溢出的情况。例如，由于Java处理内存管理的方式，独立的Java应用程序与其他应用程序相比不太可能。Java使用“垃圾收集”技术来管理内存，这有助于防止缓冲区溢出的情况。</p>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/base" style=color:#00bcd4>
+                base
+            </a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/hackthebox" style=color:#03a9f4>
+                hackthebox
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/18/Buffer-Overflows-part-1/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/17/File-inclusion-Automation-and-Prevention/">
         <h2>
             File_inclusion:Automation and Prevention
@@ -241,7 +299,7 @@
         
         <span class="tag">
             
-            <a href="/tags/practice" style=color:#ffa2c4>
+            <a href="/tags/practice" style=color:#03a9f4>
                 practice
             </a>
         </span>
@@ -306,7 +364,7 @@
         
         <span class="tag">
             
-            <a href="/tags/practice" style=color:#00bcd4>
+            <a href="/tags/practice" style=color:#ffa2c4>
                 practice
             </a>
         </span>
@@ -364,7 +422,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#03a9f4>
+            <a href="/tags/base" style=color:#00a596>
                 base
             </a>
         </span>
@@ -378,7 +436,7 @@
         
         <span class="tag">
             
-            <a href="/tags/hackthebox" style=color:#ffa2c4>
+            <a href="/tags/hackthebox" style=color:#00a596>
                 hackthebox
             </a>
         </span>
@@ -430,28 +488,28 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#03a9f4>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#03a9f4>
+            <a href="/tags/tool" style=color:#00bcd4>
                 tool
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/hackthebox" style=color:#00a596>
+            <a href="/tags/hackthebox" style=color:#03a9f4>
                 hackthebox
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/ffuf" style=color:#00bcd4>
+            <a href="/tags/ffuf" style=color:#ff7d73>
                 ffuf
             </a>
         </span>
@@ -503,28 +561,28 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#ff7d73>
+            <a href="/tags/tool" style=color:#00bcd4>
                 tool
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/hackthebox" style=color:#00bcd4>
+            <a href="/tags/hackthebox" style=color:#ff7d73>
                 hackthebox
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/ffuf" style=color:#00bcd4>
+            <a href="/tags/ffuf" style=color:#00a596>
                 ffuf
             </a>
         </span>
@@ -628,21 +686,21 @@ User : Lakis
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#03a9f4>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/practice" style=color:#ff7d73>
+            <a href="/tags/practice" style=color:#ffa2c4>
                 practice
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/hackthebox" style=color:#ffa2c4>
+            <a href="/tags/hackthebox" style=color:#00a596>
                 hackthebox
             </a>
         </span>
@@ -732,7 +790,7 @@ User : Lakis
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ffa2c4>
+            <a href="/tags/base" style=color:#ff7d73>
                 base
             </a>
         </span>
@@ -789,7 +847,7 @@ User : Lakis
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#ff7d73>
+            <a href="/tags/靶场学习" style=color:#03a9f4>
                 靶场学习
             </a>
         </span>
@@ -849,77 +907,6 @@ User : Lakis
     </div>
 
     <a href="/2023/06/11/FILE TRANSFERS/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/Regular_operations/">
-        <h2>
-            正则运算
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="正则运算"><a href="#正则运算" class="headerlink" title="正则运算"></a>正则运算</h1><h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>修饰符用于执行区分大小写和全局匹配:</p>
-<table>
-<thead>
-<tr>
-<th>修饰符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://www.runoob.com/js/jsref-regexp-i.html">i</a></td>
-<td>执行对大小写不敏感的匹配。</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.runoob.com/js/jsref-regexp-g.html">g</a></td>
-<td>执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。</td>
-</tr>
-<tr>
-<td>m</td>
-<td>执行多行匹配。</td>
-</tr>
-</tbody></table>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/others" style=color:#ff7d73>
-                others
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/Regular_operations/ " class="go-post">
         阅读全文
     </a>
 </div>

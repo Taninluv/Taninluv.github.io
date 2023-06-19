@@ -197,6 +197,77 @@
 
 <div class="post">
 
+    <a href="/2023/06/11/Regular_operations/">
+        <h2>
+            正则运算
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h1 id="正则运算"><a href="#正则运算" class="headerlink" title="正则运算"></a>正则运算</h1><h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>修饰符用于执行区分大小写和全局匹配:</p>
+<table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/js/jsref-regexp-i.html">i</a></td>
+<td>执行对大小写不敏感的匹配。</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/js/jsref-regexp-g.html">g</a></td>
+<td>执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。</td>
+</tr>
+<tr>
+<td>m</td>
+<td>执行多行匹配。</td>
+</tr>
+</tbody></table>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/others" style=color:#ffa2c4>
+                others
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/Regular_operations/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/11/Function_hijacking_experiments/">
         <h2>
             函数劫持实验
@@ -244,7 +315,7 @@
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#00bcd4>
+            <a href="/tags/靶场学习" style=color:#ff7d73>
                 靶场学习
             </a>
         </span>
@@ -297,7 +368,7 @@
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#00a596>
+            <a href="/tags/靶场学习" style=color:#00bcd4>
                 靶场学习
             </a>
         </span>
@@ -348,7 +419,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
@@ -410,7 +481,7 @@ index.html
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
@@ -485,7 +556,7 @@ index.html
         
         <span class="tag">
             
-            <a href="/tags/other" style=color:#ff7d73>
+            <a href="/tags/other" style=color:#00a596>
                 other
             </a>
         </span>
@@ -541,7 +612,7 @@ aHR0cHM6Ly93d3cuaGFja3RoZWJveC5ldS8K
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#03a9f4>
+            <a href="/tags/base" style=color:#00a596>
                 base
             </a>
         </span>
@@ -659,7 +730,7 @@ aHR0cHM6Ly93d3cuaGFja3RoZWJveC5ldS8K
         
         <span class="tag">
             
-            <a href="/tags/备忘录" style=color:#ff7d73>
+            <a href="/tags/备忘录" style=color:#00bcd4>
                 备忘录
             </a>
         </span>
@@ -798,120 +869,6 @@ aHR0cHM6Ly93d3cuaGFja3RoZWJveC5ldS8K
     </div>
 
     <a href="/2023/06/11/msf_plugins/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/linux/">
-        <h2>
-            linux
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><table>
-<thead>
-<tr>
-<th><code>/</code></th>
-<th>顶级目录是根文件系统，包含在挂载其他文件系统之前引导操作系统所需的所有文件，以及引导其他文件系统所需的文件。引导后，所有其他文件系统都作为根目录挂载在标准挂载点。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/bin</code></td>
-<td>包含基本的命令二进制文件。</td>
-</tr>
-<tr>
-<td><code>/boot</code></td>
-<td>由静态引导加载程序、内核可执行文件和引导 Linux 操作系统所需的文件组成。</td>
-</tr>
-<tr>
-<td><code>/dev</code></td>
-<td>包含设备文件，以便于访问连接到系统的每个硬件设备。</td>
-</tr>
-<tr>
-<td><code>/etc</code></td>
-<td>本地系统配置文件。已安装应用程序的配置文件也可以保存在此处。</td>
-</tr>
-<tr>
-<td><code>/home</code></td>
-<td>系统上的每个用户都有一个用于存储的子目录。</td>
-</tr>
-<tr>
-<td><code>/lib</code></td>
-<td>系统引导所需的共享库文件。</td>
-</tr>
-<tr>
-<td><code>/media</code></td>
-<td>外部可移动媒体设备（如 USB 驱动器）安装在此处。</td>
-</tr>
-<tr>
-<td><code>/mnt</code></td>
-<td>常规文件系统的临时挂载点。</td>
-</tr>
-<tr>
-<td><code>/opt</code></td>
-<td>可选文件（如第三方工具）可以保存在此处。</td>
-</tr>
-<tr>
-<td><code>/root</code></td>
-<td>根用户的主目录。</td>
-</tr>
-<tr>
-<td><code>/sbin</code></td>
-<td>此目录包含用于系统管理的可执行文件（二进制系统文件）。</td>
-</tr>
-<tr>
-<td><code>/tmp</code></td>
-<td>操作系统和许多程序使用此目录来存储临时文件。此目录通常在系统启动时清除，其他时间可能会删除，没有任何警告。</td>
-</tr>
-<tr>
-<td><code>/usr</code></td>
-<td>包含可执行文件、库、man 文件等。</td>
-</tr>
-<tr>
-<td><code>/var</code></td>
-<td>此目录包含可变数据文件，例如日志文件、电子邮件收件箱、Web 应用程序相关文件、cron 文件等。</td>
-</tr>
-</tbody></table>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#03a9f4>
-                base
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/linux/ " class="go-post">
         阅读全文
     </a>
 </div>
