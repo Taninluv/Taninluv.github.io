@@ -190,14 +190,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#03a9f4>
+                <a href="/tags/base" style=color:#ff7d73>
                     base
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/hackthebox" style=color:#00a596>
+                <a href="/tags/hackthebox" style=color:#03a9f4>
                     hackthebox
                 </a>
             </span>
@@ -210,6 +210,128 @@
         <h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p>简而言之，缓冲区溢出是由不正确的程序代码引起的，CPU无法正确处理过多的数据，因此可能会操纵CPU的处理。例如，假设有太多数据被写入到不受限制的保留内存缓冲区或堆栈中。在这种情况下，特定的寄存器将被覆盖，这可能允许代码被执行。<br>缓冲区溢出可能导致程序崩溃、损坏数据或损坏程序运行时的数据结构。最后一种可以用任意数据覆盖特定程序的返回地址，使攻击者能够以易受缓冲区溢出影响的进程的权限执行命令，从而通过传递任意机器代码。此代码通常旨在让我们更方便地访问系统，以便将其用于自己的目的。这种缓冲区在普通服务器中溢出，互联网蠕虫也会利用客户端软件。<br>Unix系统上一个特别流行的目标是root访问，它赋予我们所有人访问系统的权限。然而，正如人们经常误解的那样，这并不意味着“仅”导致标准用户权限的缓冲区溢出是无害的。如果您已经拥有用户权限，那么获得令人垂涎的root访问权限通常会容易得多。<br>缓冲区溢出，除了编程疏忽之外，主要是由基于冯·诺依曼体系结构的计算机系统造成的。<br>缓冲区溢出的最重要原因是使用的编程语言不会自动监控内存缓冲区或堆栈的限制，以防止（基于堆栈的）缓冲区溢出。其中包括C和C++语言，它们强调性能，不需要监控。<br>由于这个原因，开发人员被迫在编程代码中自己定义这些区域，这会多次增加漏洞。出于测试目的或由于疏忽，这些区域通常未定义。即使它们用于测试目的，在开发过程结束时也可能被忽略。<br>但是，并不是每个应用程序环境都可能出现缓冲区溢出的情况。例如，由于Java处理内存管理的方式，独立的Java应用程序与其他应用程序相比不太可能。Java使用“垃圾收集”技术来管理内存，这有助于防止缓冲区溢出的情况。</p>
 <span id="more"></span>
 
+<h1 id="Stack-Based-Buffer-Overflow"><a href="#Stack-Based-Buffer-Overflow" class="headerlink" title="Stack-Based Buffer Overflow"></a>Stack-Based Buffer Overflow</h1><p>内存异常是操作系统对现有软件中的错误或在执行这些软件时的反应。这是过去十年中程序流中大多数安全漏洞的原因。使用C或C++等低抽象语言编程时，由于疏忽，经常会发生编程错误，导致缓冲区溢出。 这些语言几乎直接编译成机器代码，与Java或Python等高度抽象的语言不同，它们运行的操作系统几乎没有控制结构。缓冲区溢出是指允许数据过大而无法放入操作系统内存中不够大的缓冲区，从而溢出该缓冲区的错误。由于这种错误处理，被执行程序的其他函数的内存被覆盖，可能会产生安全漏洞。 这样的程序（二进制文件）是存储在数据存储介质上的通用可执行文件。这种可执行二进制文件有几种不同的文件格式。例如，可移植可执行文件格式（PE）在Microsoft平台上使用。 可执行文件的另一种格式是可执行文件和链接格式（ELF），几乎所有现代UNIX变体都支持它。如果链接器加载这样一个可执行的二进制文件，并且程序将被执行，则相应的程序代码将被加载到主存储器中，然后由CPU执行。 程序在初始化和执行期间将数据和指令存储在内存中。这些是显示在执行的软件中或由用户输入的数据。特别是对于预期的用户输入，必须通过保存输入预先创建缓冲区。 这些指令用于对程序流进行建模。除其他外，返回地址存储在存储器中，该存储器引用其他存储器地址，从而定义程序的控制流。如果使用缓冲区溢出故意覆盖此类返回地址，则攻击者可以通过使返回地址引用另一个函数或子例程来操纵程序流。此外，还可以跳回到先前由用户输入引入的代码。</p>
+<p>当程序被调用时，部分被映射到进程中的段，并且段被加载到内存中，如ELF文件所述。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/buffer_overflow_1.png" alt="image"></p>
+<p>. text:	部分包含程序的实际汇编指令。此区域可以是只读的，以防止进程意外修改其指令。任何写入该区域的尝试都将不可避免地导致分段错误。 </p>
+<p>.data:	部分包含由程序显式初始化的全局变量和静态变量。</p>
+<p> .bss:	 一些编译器和链接器使用.bss部分作为数据段的一部分，该数据段包含完全由0位表示的静态分配变量。</p>
+<p>堆栈内存是一种后进先出的数据结构，其中存储了返回地址、参数以及帧指针，具体取决于编译器选项。C&#x2F;C++局部变量存储在这里，您甚至可以将代码复制到堆栈中。堆栈是RAM中定义的区域。链接器保留这个区域，通常将堆栈放在全局变量和静态变量上方RAM的较低区域。内容通过堆栈指针访问，该指针在初始化期间设置为堆栈的上端。在执行过程中，堆栈中分配的部分向下扩展到较低的内存地址。 现代内存保护（DEP&#x2F;ASLR）可以防止缓冲区溢出造成的损坏。DEP（数据执行保护），将内存区域标记为“只读”。只读内存区域是存储一些用户输入的地方（例如：堆栈），因此DEP背后的想法是防止用户将外壳代码上传到内存，然后将指令指针设置为外壳代码。黑客开始利用ROP（Return-Oriented Programming）来绕过这一点，因为它允许他们将外壳代码上传到可执行空间，并使用现有的调用来执行它。使用ROP，攻击者需要知道存储东西的内存地址，因此，针对它的防御措施是实现ASLR（地址空间布局随机化），它将所有东西存储在哪里随机化，从而使ROP更加困难。 用户可以通过泄露内存地址绕过ASLR，但这会降低漏洞利用的可靠性，有时甚至不可能。例如，“Freefloat FTP服务器”在Windows XP（DEP&#x2F;ASLR之前）上很难利用。然而，如果应用程序在现代Windows操作系统上运行，则存在缓冲区溢出，但由于DEP&#x2F;ASLR，目前利用缓冲区溢出并不容易，因为没有已知的方法泄漏内存地址。</p>
+<h2 id="Vulnerable-Program"><a href="#Vulnerable-Program" class="headerlink" title="Vulnerable Program"></a>Vulnerable Program</h2><p>我们现在编写一个名为bow.C的简单C程序，该程序带有一个称为strcpy（）的易受攻击的函数。</p>
+<pre><code class="c">#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int bowfunc(char *string) &#123;
+
+    char buffer[1024];
+    strcpy(buffer, string);
+    return 1;
+&#125;
+
+int main(int argc, char *argv[]) &#123;
+
+    bowfunc(argv[1]);
+    printf(&quot;Done.\n&quot;);
+    return 1;
+&#125;
+</code></pre>
+<p>现代操作系统具有针对此类漏洞的内置保护，如地址空间布局随机化（ASLR）。为了学习缓冲区溢出利用的基本知识，我们将禁用以下内存保护功能：</p>
+<pre><code class="shell-session">student@nix-bow:~$ sudo su
+root@nix-bow:/home/student# echo 0 &gt; /proc/sys/kernel/randomize_va_space
+root@nix-bow:/home/student# cat /proc/sys/kernel/randomize_va_space
+</code></pre>
+<pre><code class="shell-session">student@nix-bow:~$ gcc bow.c -o bow32 -fno-stack-protector -z execstack -m32
+student@nix-bow:~$ file bow32 | tr &quot;,&quot; &quot;\n&quot;
+
+bow: ELF 32-bit LSB shared object
+ Intel 80386
+ version 1 (SYSV)
+ dynamically linked
+ interpreter /lib/ld-linux.so.2
+ for GNU/Linux 3.2.0
+ BuildID[sha1]=93dda6b77131deecaadf9d207fdd2e70f47e1071
+ not stripped
+</code></pre>
+<h2 id="Vulnerable-C-Functions"><a href="#Vulnerable-C-Functions" class="headerlink" title="Vulnerable C Functions"></a>Vulnerable C Functions</h2><ul>
+<li><code>strcpy</code></li>
+<li><code>gets</code></li>
+<li><code>sprintf</code></li>
+<li><code>scanf</code></li>
+<li><code>strcat</code></li>
+<li>…</li>
+</ul>
+<h2 id="GDB-Introductions"><a href="#GDB-Introductions" class="headerlink" title="GDB Introductions"></a>GDB Introductions</h2><p>或称GNU调试器，是GNU项目开发的Linux系统的标准调试器。它已经移植到许多系统，并支持编程语言C、C++、Objective-C、FORTRAN、Java等。 GDB为我们提供了常见的可跟踪特性，如断点或堆栈跟踪输出，并允许我们干预程序的执行。例如，它还允许我们操作应用程序的变量，或者独立于程序的正常执行来调用函数。 我们使用GNU调试器（GDB）在汇编程序级别查看创建的二进制文件。一旦我们用GDB执行了二进制程序，我们就可以反汇编程序的主要功能。</p>
+<h4 id="GDB-AT-amp-T-Syntax"><a href="#GDB-AT-amp-T-Syntax" class="headerlink" title="GDB - AT&amp;T Syntax"></a>GDB - AT&amp;T Syntax</h4><pre><code class="shell-session">student@nix-bow:~$ gdb -q bow32
+
+Reading symbols from bow...(no debugging symbols found)...done.
+(gdb) disassemble main
+
+Dump of assembler code for function main:
+   0x00000582 &lt;+0&gt;: 	lea    0x4(%esp),%ecx
+   0x00000586 &lt;+4&gt;: 	and    $0xfffffff0,%esp
+   0x00000589 &lt;+7&gt;: 	pushl  -0x4(%ecx)
+   0x0000058c &lt;+10&gt;:	push   %ebp
+   0x0000058d &lt;+11&gt;:	mov    %esp,%ebp
+   0x0000058f &lt;+13&gt;:	push   %ebx
+   0x00000590 &lt;+14&gt;:	push   %ecx
+   0x00000591 &lt;+15&gt;:	call   0x450 &lt;__x86.get_pc_thunk.bx&gt;
+   0x00000596 &lt;+20&gt;:	add    $0x1a3e,%ebx
+   0x0000059c &lt;+26&gt;:	mov    %ecx,%eax
+   0x0000059e &lt;+28&gt;:	mov    0x4(%eax),%eax
+   0x000005a1 &lt;+31&gt;:	add    $0x4,%eax
+   0x000005a4 &lt;+34&gt;:	mov    (%eax),%eax
+   0x000005a6 &lt;+36&gt;:	sub    $0xc,%esp
+   0x000005a9 &lt;+39&gt;:	push   %eax
+   0x000005aa &lt;+40&gt;:	call   0x54d &lt;bowfunc&gt;
+   0x000005af &lt;+45&gt;:	add    $0x10,%esp
+   0x000005b2 &lt;+48&gt;:	sub    $0xc,%esp
+   0x000005b5 &lt;+51&gt;:	lea    -0x1974(%ebx),%eax
+   0x000005bb &lt;+57&gt;:	push   %eax
+   0x000005bc &lt;+58&gt;:	call   0x3e0 &lt;puts@plt&gt;
+   0x000005c1 &lt;+63&gt;:	add    $0x10,%esp
+   0x000005c4 &lt;+66&gt;:	mov    $0x1,%eax
+   0x000005c9 &lt;+71&gt;:	lea    -0x8(%ebp),%esp
+   0x000005cc &lt;+74&gt;:	pop    %ecx
+   0x000005cd &lt;+75&gt;:	pop    %ebx
+   0x000005ce &lt;+76&gt;:	pop    %ebp
+   0x000005cf &lt;+77&gt;:	lea    -0x4(%ecx),%esp
+   0x000005d2 &lt;+80&gt;:	ret    
+End of assembler dump.
+</code></pre>
+<p>AT&amp;T和Intel语法之间的区别不仅在于指令及其符号的表示方式，还在于指令执行和读取的顺序和方向。 让我们以以下说明为例：</p>
+<pre><code class="shell-session">  0x0000058d &lt;+11&gt;:	mov    ebp,esp
+</code></pre>
+<p>对于英特尔语法，我们对示例中的指令有以下顺序：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Instruction</strong></th>
+<th><strong><code>Destination</code></strong></th>
+<th><strong>Source</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mov</td>
+<td><code>ebp</code></td>
+<td>esp</td>
+</tr>
+</tbody></table>
+<p>AT&amp;T语法</p>
+<table>
+<thead>
+<tr>
+<th><strong>Instruction</strong></th>
+<th><strong>Source</strong></th>
+<th><strong><code>Destination</code></strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mov</td>
+<td>%esp</td>
+<td><code>%ebp</code></td>
+</tr>
+</tbody></table>
 
     </div>
 
