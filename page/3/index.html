@@ -197,6 +197,63 @@
 
 <div class="post">
 
+    <a href="/2023/06/11/environment_variable/">
+        <h2>
+            环境变量
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h1><p>参考资料：（侵删）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/haoel/article/details/1602108"><strong>警惕UNIX下的LD_PRELOAD环境变量</strong></a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/itworld123/article/details/125755603?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167117754716782390528530%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167117754716782390528530&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-125755603-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=LD_PRELOAD&spm=1018.2226.3001.4187"><strong>深入分析 LD_PRELOAD</strong></a></p>
+<p>##先了解一下LD_PRELOAD</p>
+<p>LD_PRELOAD 是 Linux&#x2F;Unix 系统的一个环境变量，它影响程序的运行时的链接（Runtime linker），&#x3D;&#x3D;它允许在程序运行前定义优先加载的动态链接库。&#x3D;&#x3D;这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，&#x3D;&#x3D;我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。&#x3D;&#x3D;</p>
+<pre><code>一般来说，程序的链接分为静态链接和动态链接，静态链接就是把所有所引用到的函数或变量全部地编译到可执行文件中。动态链接则不会把函数编译到可执行文件中，而是在程序运行时动态地载入函数库，也就是运行链接。所以，对于动态链接来说，必然需要一个动态链接库。动态链接库的好处在于，一旦动态库中的函数发生变化，对于可执行程序来说是透明的，可执行程序无需重新编译。这对于程序的发布、维护、更新起到了积极的作用。对于静态链接的程序来说，函数库中一个小小的改动需要整个程序的重新编译、发布，对于程序的维护产生了比较大的工作量。
+</code></pre>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/靶场学习" style=color:#00a596>
+                靶场学习
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/environment_variable/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/11/msf_plugins/">
         <h2>
             msf插件
@@ -371,7 +428,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
@@ -440,7 +497,7 @@ Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#ffa2c4>
+            <a href="/tags/others" style=color:#ff7d73>
                 others
             </a>
         </span>
@@ -536,7 +593,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00bcd4>
+            <a href="/tags/base" style=color:#ff7d73>
                 base
             </a>
         </span>
@@ -593,7 +650,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#03a9f4>
+            <a href="/tags/靶场学习" style=color:#ff7d73>
                 靶场学习
             </a>
         </span>
@@ -678,7 +735,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#ff7d73>
+            <a href="/tags/others" style=color:#03a9f4>
                 others
             </a>
         </span>
@@ -919,7 +976,7 @@ this is a test
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#ff7d73>
+            <a href="/tags/靶场学习" style=color:#03a9f4>
                 靶场学习
             </a>
         </span>

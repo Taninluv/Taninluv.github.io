@@ -197,6 +197,63 @@
 
 <div class="post">
 
+    <a href="/2023/06/11/Apache Mod CGI/">
+        <h2>
+            Apache Mod CGI
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h1 id="Apache-Mod-CGI"><a href="#Apache-Mod-CGI" class="headerlink" title="Apache Mod CGI"></a>Apache Mod CGI</h1><h4 id="知识储备："><a href="#知识储备：" class="headerlink" title="知识储备："></a>知识储备：</h4><p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62078839/article/details/125691017?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167152297616800182178110%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167152297616800182178110&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-125691017-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=%20Apache%20Mod%20CGI&spm=1018.2226.3001.4187">CTFHUB-Apache Mod CGI(PHP学习)</a></p>
+<p><strong>原理简述</strong></p>
+<blockquote>
+<p>早期的Web服务器，只能响应浏览器发来的HTTP静态资源的请求，并将存储在服务器中的静态资源返回给浏览器。随着Web技术的发展，逐渐出现了动态技术，但是Web服务器并不能够直接运行动态脚本，为了解决Web服务器与外部应用程序（CGI程序）之间数据互通，于是出现了CGI（Common Gateway Interface）通用网关接口。简单理解，可以认为CGI是Web服务器和运行其上的应用程序进行“交流”的一种约定。</p>
+<p>当遇到动态脚本请求时，Web服务器主进程就会<code>Fork</code>创建出一个新的进程来启动CGI程序，运行外部C程序或Perl、PHP脚本等，也就是将动态脚本交给CGI程序来处理。这样，每次用户请求动态脚本，Web服务器都要重新Fork创建一个新进程去启动CGI程序，由CGI程序来处理动态脚本，处理完成后进程随之关闭，其效率是非常低下的。</p>
+<p>而对于Mod CGI，Web服务器可以内置Perl解释器或PHP解释器。也就是说将这些解释器做成模块的方式，Web服务器会在启动的时候就启动这些解释器。当有新的动态请求进来时，Web服务器就是&#x3D;&#x3D;自己解析这些动态脚本&#x3D;&#x3D;，省得重新Fork一个进程，效率提高了。<br>​	</p>
+</blockquote>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/靶场学习" style=color:#00bcd4>
+                靶场学习
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/Apache Mod CGI/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/11/FILE TRANSFERS/">
         <h2>
             FILE TRANSFERS
@@ -235,7 +292,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#03a9f4>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
@@ -367,7 +424,7 @@
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#00bcd4>
+            <a href="/tags/靶场学习" style=color:#ffa2c4>
                 靶场学习
             </a>
         </span>
@@ -420,7 +477,7 @@
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#00bcd4>
+            <a href="/tags/靶场学习" style=color:#03a9f4>
                 靶场学习
             </a>
         </span>
@@ -471,7 +528,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ffa2c4>
+            <a href="/tags/base" style=color:#03a9f4>
                 base
             </a>
         </span>
@@ -533,7 +590,7 @@ index.html
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00bcd4>
+            <a href="/tags/base" style=color:#03a9f4>
                 base
             </a>
         </span>
@@ -608,7 +665,7 @@ index.html
         
         <span class="tag">
             
-            <a href="/tags/other" style=color:#ff7d73>
+            <a href="/tags/other" style=color:#00a596>
                 other
             </a>
         </span>
@@ -790,63 +847,6 @@ aHR0cHM6Ly93d3cuaGFja3RoZWJveC5ldS8K
     </div>
 
     <a href="/2023/06/11/chat_sheet/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/environment_variable/">
-        <h2>
-            环境变量
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h1><p>参考资料：（侵删）</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/haoel/article/details/1602108"><strong>警惕UNIX下的LD_PRELOAD环境变量</strong></a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/itworld123/article/details/125755603?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167117754716782390528530%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167117754716782390528530&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-125755603-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=LD_PRELOAD&spm=1018.2226.3001.4187"><strong>深入分析 LD_PRELOAD</strong></a></p>
-<p>##先了解一下LD_PRELOAD</p>
-<p>LD_PRELOAD 是 Linux&#x2F;Unix 系统的一个环境变量，它影响程序的运行时的链接（Runtime linker），&#x3D;&#x3D;它允许在程序运行前定义优先加载的动态链接库。&#x3D;&#x3D;这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，&#x3D;&#x3D;我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。&#x3D;&#x3D;</p>
-<pre><code>一般来说，程序的链接分为静态链接和动态链接，静态链接就是把所有所引用到的函数或变量全部地编译到可执行文件中。动态链接则不会把函数编译到可执行文件中，而是在程序运行时动态地载入函数库，也就是运行链接。所以，对于动态链接来说，必然需要一个动态链接库。动态链接库的好处在于，一旦动态库中的函数发生变化，对于可执行程序来说是透明的，可执行程序无需重新编译。这对于程序的发布、维护、更新起到了积极的作用。对于静态链接的程序来说，函数库中一个小小的改动需要整个程序的重新编译、发布，对于程序的维护产生了比较大的工作量。
-</code></pre>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/靶场学习" style=color:#00bcd4>
-                靶场学习
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/environment_variable/ " class="go-post">
         阅读全文
     </a>
 </div>

