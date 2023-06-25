@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || linux</title>
+    <title>Salve || Penetration-Matrix_1</title>
     <meta name="author" content="TiAmo">
     <meta name="description" content="Buona notte ">
     <meta name="keywords" content=" ">
@@ -169,14 +169,14 @@
 <link rel="stylesheet" href="/css/post-body.css">
 <div class="article">
     <div>
-        <h1>linux </h1>
+        <h1>Penetration-Matrix_1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <a-icon type="calendar" theme="filled" />
             </span>
-            2023/6/11
+            2023/6/25
         </span>
 
         
@@ -190,8 +190,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#03a9f4>
-                    base
+                <a href="/tags/vulnhub" style=color:#00a596>
+                    vulnhub
                 </a>
             </span>
             
@@ -200,84 +200,92 @@
     </div>
 
     <div class="content" v-pre>
-        <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><table>
-<thead>
-<tr>
-<th><code>/</code></th>
-<th>顶级目录是根文件系统，包含在挂载其他文件系统之前引导操作系统所需的所有文件，以及引导其他文件系统所需的文件。引导后，所有其他文件系统都作为根目录挂载在标准挂载点。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/bin</code></td>
-<td>包含基本的命令二进制文件。</td>
-</tr>
-<tr>
-<td><code>/boot</code></td>
-<td>由静态引导加载程序、内核可执行文件和引导 Linux 操作系统所需的文件组成。</td>
-</tr>
-<tr>
-<td><code>/dev</code></td>
-<td>包含设备文件，以便于访问连接到系统的每个硬件设备。</td>
-</tr>
-<tr>
-<td><code>/etc</code></td>
-<td>本地系统配置文件。已安装应用程序的配置文件也可以保存在此处。</td>
-</tr>
-<tr>
-<td><code>/home</code></td>
-<td>系统上的每个用户都有一个用于存储的子目录。</td>
-</tr>
-<tr>
-<td><code>/lib</code></td>
-<td>系统引导所需的共享库文件。</td>
-</tr>
-<tr>
-<td><code>/media</code></td>
-<td>外部可移动媒体设备（如 USB 驱动器）安装在此处。</td>
-</tr>
-<tr>
-<td><code>/mnt</code></td>
-<td>常规文件系统的临时挂载点。</td>
-</tr>
-<tr>
-<td><code>/opt</code></td>
-<td>可选文件（如第三方工具）可以保存在此处。</td>
-</tr>
-<tr>
-<td><code>/root</code></td>
-<td>根用户的主目录。</td>
-</tr>
-<tr>
-<td><code>/sbin</code></td>
-<td>此目录包含用于系统管理的可执行文件（二进制系统文件）。</td>
-</tr>
-<tr>
-<td><code>/tmp</code></td>
-<td>操作系统和许多程序使用此目录来存储临时文件。此目录通常在系统启动时清除，其他时间可能会删除，没有任何警告。</td>
-</tr>
-<tr>
-<td><code>/usr</code></td>
-<td>包含可执行文件、库、man 文件等。</td>
-</tr>
-<tr>
-<td><code>/var</code></td>
-<td>此目录包含可变数据文件，例如日志文件、电子邮件收件箱、Web 应用程序相关文件、cron 文件等。</td>
-</tr>
-</tbody></table>
+        <p>Penetration-Matrix_1 打靶记录</p>
 <span id="more"></span>
 
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><table>
-<thead>
-<tr>
-<th><code>\d</code></th>
-<th>日期（6月&lt;&gt;日星期一）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#96;\D</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625152327098.png" alt="image-20230625152327098"></p>
+<p>确认靶机地址为192.168.91.134</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625152629574.png" alt="image-20230625152629574"></p>
+<p>看看这两个主页先</p>
+<p>在31337端口源码中发现一串base64加密后的代码</p>
+<pre><code>&lt;div class=&quot;service&quot;&gt;
+                                    &lt;!--p class=&quot;service__text&quot;&gt;ZWNobyAiVGhlbiB5b3UnbGwgc2VlLCB0aGF0IGl0IGlzIG5vdCB0aGUgc3Bvb24gdGhhdCBiZW5kcywgaXQgaXMgb25seSB5b3Vyc2VsZi4gIiA+IEN5cGhlci5tYXRyaXg=&lt;/p--&gt;
+                                &lt;/div&gt;&lt;!-- End / service --&gt;
+</code></pre>
+<p>解码一下看看：</p>
+<pre><code>echo ZWNobyAiVGhlbiB5b3UnbGwgc2VlLCB0aGF0IGl0IGlzIG5vdCB0aGUgc3Bvb24gdGhhdCBiZW5kcywgaXQgaXMgb25seSB5b3Vyc2VsZi4gIiA+IEN5cGhlci5tYXRyaXg= | base64 -d
+echo &quot;Then you&#39;ll see, that it is not the spoon that bends, it is only yourself. &quot; &gt; Cypher.matrix      
+</code></pre>
+<p>Cypher.matrix   ?  他把这句话输入了这个文件，看看能不能打开这个文件</p>
+<p>打开是这样的：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625154131404.png" alt="image-20230625154131404"></p>
+<p>这应该是代码混淆后的内容，解码一下：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625154819519.png" alt="image-20230625154819519"></p>
+<p>这人好离谱，无语子。。</p>
+<p>扫描一下目录看看有没有什么信息：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625153422509.png" alt="image-20230625153422509"></p>
+<p>东西很少，上去看了一下没啥能用的，只发现了一个.gitkeep文件：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625153516226.png" alt="image-20230625153516226"></p>
+<p>扫扫另一个：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625153625021.png" alt="image-20230625153625021"></p>
+<p>没啥区别</p>
+<p>看来只能爆破一下这个密码先了：</p>
+<p>先生成一个字典：</p>
+<p><code>crunch 8 8 -f /usr/share/crunch/charset.lst lalpha-numeric -t k1ll0r@@ &gt; pass.dic</code></p>
+<p>爆破一下：</p>
+<p><code>hydra -l guest -P pass.dic ssh://192.168.91.134 -f -vV -o hydra.ssh</code></p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625161441522.png" alt="image-20230625161441522"></p>
+<p>得到密码：<code>k1ll0r7n</code></p>
+<p>登录到主机后发现在rbash模式</p>
+<h4 id="rbash"><a href="#rbash" class="headerlink" title="rbash"></a>rbash</h4><pre><code>`rbash`（restricted bash）是一种限制性的 Unix shell，它是 Bash shell 的一种变体。`rbash` 提供了一种受限的环境，用于限制用户在系统上执行的操作和访问的资源。
+
+当用户被配置为使用 `rbash` 作为其默认 shell 时，它会强制执行一些安全限制，包括以下内容：
+
+1. 限制命令搜索路径：`rbash` 会忽略用户的 `PATH` 环境变量，只使用内部定义的路径来搜索可执行命令。这样可以防止用户执行系统上的某些命令。
+
+2. 禁用命令别名：`rbash` 不允许用户定义自己的命令别名。
+
+3. 禁用 Shell 函数：`rbash` 禁止用户定义和执行自己的 Shell 函数。
+
+4. 限制修改 Shell 变量：`rbash` 限制用户对特定 Shell 变量进行修改，例如 `SHELLOPTS`、`BASH_ENV`、`ENV` 等。这样可以防止用户通过修改这些变量来绕过限制。
+
+5. 禁用 `cd` 到斜杠：`rbash` 禁止用户使用 `cd` 命令切换到根目录 (`/`)。
+
+通过应用这些限制，`rbash` 提供了一种更加安全和受控的 Shell 环境，适用于那些需要限制用户访问权限和操作能力的场景，例如共享计算机、受限账户等。
+
+要将用户配置为使用 `rbash`，可以将其登录 shell 更改为 `/bin/rbash`，或者通过修改用户的 `/etc/passwd` 文件中的 shell 配置来实现。
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43168364/article/details/111830233">(146条消息) 【渗透测试】— rbash逃逸方法简述_rbash 命令_通地塔的博客-CSDN博客</a></p>
+<p>这里vi命令可以使用，在末行模式下输入<code>:!/bin/bash</code>进入bash</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625160702938.png" alt="image-20230625160702938"></p>
+<p>但是还有一些命令无法使用</p>
+<hr>
+<p>这里查一下gpt：</p>
+<p>如果在 Bash shell 中执行 <code>id</code> 命令时出现 “bash: id: command not found” 错误，这可能是由于系统的环境变量配置问题导致 Bash 无法找到 <code>id</code> 命令。</p>
+<p><code>id</code> 命令通常位于 <code>/usr/bin</code> 目录下，这个目录通常包含在系统的 <code>PATH</code> 环境变量中。<code>PATH</code> 环境变量定义了用于查找可执行文件的路径列表。</p>
+<p>以下是一些可能导致 <code>id</code> 命令无法被找到的原因和解决方法：</p>
+<ol>
+<li><p>检查 <code>PATH</code> 环境变量：运行 <code>echo $PATH</code> 命令来查看当前的 <code>PATH</code> 环境变量设置。确保 <code>/usr/bin</code> 或包含 <code>id</code> 命令的路径被正确地包含在 <code>PATH</code> 中。如果缺少 <code>/usr/bin</code>，你可以使用 <code>export</code> 命令来添加它：</p>
+<pre><code>export PATH=$PATH:/usr/bin
+</code></pre>
+</li>
+<li><p>检查命令是否存在：确认 <code>/usr/bin</code> 目录中是否存在 <code>id</code> 命令。你可以运行 <code>ls /usr/bin/id</code> 来验证它是否存在。如果不存在，可能是由于系统配置或软件包问题导致命令缺失。</p>
+</li>
+<li><p>检查文件权限：确保 <code>/usr/bin/id</code> 文件的权限设置正确，使其可执行。你可以运行 <code>ls -l /usr/bin/id</code> 命令来查看文件的权限设置。如果权限不正确，可以使用 <code>chmod</code> 命令进行更改：</p>
+<pre><code>sudo chmod +x /usr/bin/id
+</code></pre>
+</li>
+<li><p>系统路径配置问题：如果你的系统存在其他路径配置问题，可能需要对系统的环境进行进一步检查和修复。这可能涉及到检查 <code>/etc/profile</code>、<code>~/.bash_profile</code>、<code>~/.bashrc</code> 等文件中的配置，以确保正确设置了 <code>PATH</code> 环境变量。</p>
+</li>
+</ol>
+<p>如果以上方法仍然无法解决问题，可能需要进一步检查系统配置或与系统管理员联系以获取支持。</p>
+<hr>
+<p>ok,设置一下环境变量：</p>
+<p><code>export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</code></p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625161454791.png" alt="image-20230625161454791"></p>
+<p>现在可以直接用密码进入root用户，但是我们看到&#x2F;bin&#x2F;cp是有sudo权限的，学习一下怎么提权：</p>
+<p>[(146条消息) Linux提权之SUID提权_安全<del>小菜鸡的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51692662/article/details/126464004#">https://blog.csdn.net/weixin_51692662/article/details/126464004#</a>:</del>:text&#x3D;根据上面的话理解，那么我们理解cp在有suid权限使用时具有root权限，那我们可以用此命令 提权,，大致步骤查看cp有没有suid权限——&gt;将 %2Fetc%2Fpasswd文件cp到本目录——&gt;使用命令生成新的root用户和密码——&gt;vim添加此用户并wq！ 强制保存——&gt;将本目录cp到%2Fetc%2Fpasswd。)</p>
+<p>后来发现没有权限，g</p>
 
     </div>
 

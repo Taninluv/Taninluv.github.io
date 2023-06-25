@@ -190,14 +190,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00bcd4>
+                <a href="/tags/base" style=color:#03a9f4>
                     base
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/hackthebox" style=color:#00bcd4>
+                <a href="/tags/hackthebox" style=color:#00a596>
                     hackthebox
                 </a>
             </span>
@@ -299,6 +299,94 @@ Dump of assembler code for function main:
    0x000005d2 &lt;+80&gt;:	ret    
 End of assembler dump.
 </code></pre>
+<p>在第一列中，十六进制数字表示内存地址。带加号（+）的数字以字节为单位显示内存中的地址跳跃，用于相应的指令。接下来，我们可以看到带有寄存器及其操作后缀的汇编指令（助记符）。当前的语法是AT&amp;T，我们可以通过%和$字符来识别它。</p>
+<table>
+<thead>
+<tr>
+<th><strong>Memory Address</strong></th>
+<th><strong>Address Jumps</strong></th>
+<th><strong>Assembler Instruction</strong></th>
+<th><strong>Operation Suffixes</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x00000582</td>
+<td>&lt;+0&gt;:</td>
+<td>lea</td>
+<td>0x4(%esp),%ecx</td>
+</tr>
+<tr>
+<td>0x00000586</td>
+<td>&lt;+4&gt;:</td>
+<td>and</td>
+<td>$0xfffffff0,%esp</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p>Intel语法使分解后的表示更易于阅读，我们可以通过在GDB中输入以下命令来更改语法：</p>
+<h4 id="GDB-Change-the-Syntax-to-Intel"><a href="#GDB-Change-the-Syntax-to-Intel" class="headerlink" title="GDB - Change the Syntax to Intel"></a>GDB - Change the Syntax to Intel</h4><pre><code class="shell-session">(gdb) set disassembly-flavor intel
+(gdb) disassemble main
+
+Dump of assembler code for function main:
+   0x00000582 &lt;+0&gt;:	    lea    ecx,[esp+0x4]
+   0x00000586 &lt;+4&gt;:	    and    esp,0xfffffff0
+   0x00000589 &lt;+7&gt;:	    push   DWORD PTR [ecx-0x4]
+   0x0000058c &lt;+10&gt;:	push   ebp
+   0x0000058d &lt;+11&gt;:	mov    ebp,esp
+   0x0000058f &lt;+13&gt;:	push   ebx
+   0x00000590 &lt;+14&gt;:	push   ecx
+   0x00000591 &lt;+15&gt;:	call   0x450 &lt;__x86.get_pc_thunk.bx&gt;
+   0x00000596 &lt;+20&gt;:	add    ebx,0x1a3e
+   0x0000059c &lt;+26&gt;:	mov    eax,ecx
+   0x0000059e &lt;+28&gt;:	mov    eax,DWORD PTR [eax+0x4]
+&lt;SNIP&gt;
+</code></pre>
+<p>我们不必不断地手动更改显示模式。我们还可以使用以下命令将其设置为默认语法。</p>
+<h4 id="Change-GDB-Syntax"><a href="#Change-GDB-Syntax" class="headerlink" title="Change GDB Syntax"></a>Change GDB Syntax</h4><pre><code class="shell-session">student@nix-bow:~$ echo &#39;set disassembly-flavor intel&#39; &gt; ~/.gdbinit
+</code></pre>
+<h4 id="GDB-Intel-Syntax"><a href="#GDB-Intel-Syntax" class="headerlink" title="GDB - Intel Syntax"></a>GDB - Intel Syntax</h4><p>如果我们现在重新运行GDB并反汇编主函数，我们会看到Intel语法。</p>
+<pre><code class="shell-session">student@nix-bow:~$ gdb ./bow32 -q
+
+Reading symbols from bow...(no debugging symbols found)...done.
+(gdb) disassemble main
+
+Dump of assembler code for function main:
+   0x00000582 &lt;+0&gt;: 	lea    ecx,[esp+0x4]
+   0x00000586 &lt;+4&gt;: 	and    esp,0xfffffff0
+   0x00000589 &lt;+7&gt;: 	push   DWORD PTR [ecx-0x4]
+   0x0000058c &lt;+10&gt;:	push   ebp
+   0x0000058d &lt;+11&gt;:	mov    ebp,esp
+   0x0000058f &lt;+13&gt;:	push   ebx
+   0x00000590 &lt;+14&gt;:	push   ecx
+   0x00000591 &lt;+15&gt;:	call   0x450 &lt;__x86.get_pc_thunk.bx&gt;
+   0x00000596 &lt;+20&gt;:	add    ebx,0x1a3e
+   0x0000059c &lt;+26&gt;:	mov    eax,ecx
+   0x0000059e &lt;+28&gt;:	mov    eax,DWORD PTR [eax+0x4]
+   0x000005a1 &lt;+31&gt;:	add    eax,0x4
+   0x000005a4 &lt;+34&gt;:	mov    eax,DWORD PTR [eax]
+   0x000005a6 &lt;+36&gt;:	sub    esp,0xc
+   0x000005a9 &lt;+39&gt;:	push   eax
+   0x000005aa &lt;+40&gt;:	call   0x54d &lt;bowfunc&gt;
+   0x000005af &lt;+45&gt;:	add    esp,0x10
+   0x000005b2 &lt;+48&gt;:	sub    esp,0xc
+   0x000005b5 &lt;+51&gt;:	lea    eax,[ebx-0x1974]
+   0x000005bb &lt;+57&gt;:	push   eax
+   0x000005bc &lt;+58&gt;:	call   0x3e0 &lt;puts@plt&gt;
+   0x000005c1 &lt;+63&gt;:	add    esp,0x10
+   0x000005c4 &lt;+66&gt;:	mov    eax,0x1
+   0x000005c9 &lt;+71&gt;:	lea    esp,[ebp-0x8]
+   0x000005cc &lt;+74&gt;:	pop    ecx
+   0x000005cd &lt;+75&gt;:	pop    ebx
+   0x000005ce &lt;+76&gt;:	pop    ebp
+   0x000005cf &lt;+77&gt;:	lea    esp,[ecx-0x4]
+   0x000005d2 &lt;+80&gt;:	ret    
+End of assembler dump.
+</code></pre>
 <p>AT&amp;T和Intel语法之间的区别不仅在于指令及其符号的表示方式，还在于指令执行和读取的顺序和方向。 让我们以以下说明为例：</p>
 <pre><code class="shell-session">  0x0000058d &lt;+11&gt;:	mov    ebp,esp
 </code></pre>
@@ -332,6 +420,233 @@ End of assembler dump.
 <td><code>%ebp</code></td>
 </tr>
 </tbody></table>
+<h4 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h4><pre><code>target：10.129.42.190
+“bowfunc”函数在“main”函数的哪个地址被调用？
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306242126805.png" alt="image-20230624212632094"></p>
+<h1 id="CPU-Registers"><a href="#CPU-Registers" class="headerlink" title="CPU Registers"></a>CPU Registers</h1><p>寄存器是CPU的重要组成部分。几乎所有寄存器都提供了少量的存储空间，可以临时存储数据。然而，它们中的一些具有特定的功能。 这些寄存器将分为通用寄存器、控制寄存器和段寄存器。我们需要的最重要的寄存器是通用寄存器。在这些寄存器中，进一步细分为数据寄存器、指针寄存器和索引寄存器。</p>
+<h4 id="Data-registers"><a href="#Data-registers" class="headerlink" title="Data registers"></a>Data registers</h4><table>
+<thead>
+<tr>
+<th><strong>32-bit Register</strong></th>
+<th><strong>64-bit Register</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>EAX</code></td>
+<td><code>RAX</code></td>
+<td>Accumulator is used in input&#x2F;output and for arithmetic operations 累加器用于输入&#x2F;输出和算术运算</td>
+</tr>
+<tr>
+<td><code>EBX</code></td>
+<td><code>RBX</code></td>
+<td>Base is used in indexed addressing基址用于索引寻址</td>
+</tr>
+<tr>
+<td><code>ECX</code></td>
+<td><code>RCX</code></td>
+<td>Counter is used to rotate instructions and count loops计数器用于旋转指令和计数循环</td>
+</tr>
+<tr>
+<td><code>EDX</code></td>
+<td><code>RDX</code></td>
+<td>Data is used for I&#x2F;O and in arithmetic operations for multiply and divide operations involving large values数据用于I&#x2F;O和涉及大值的乘除运算的算术运算</td>
+</tr>
+</tbody></table>
+<h4 id="Pointer-registers"><a href="#Pointer-registers" class="headerlink" title="Pointer registers"></a>Pointer registers</h4><table>
+<thead>
+<tr>
+<th><strong>32-bit Register</strong></th>
+<th><strong>64-bit Register</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>EIP</code></td>
+<td><code>RIP</code></td>
+<td>Instruction Pointer stores the offset address of the next instruction to be executed指令指针存储要执行的下一条指令的偏移地址</td>
+</tr>
+<tr>
+<td><code>ESP</code></td>
+<td><code>RSP</code></td>
+<td>Stack Pointer points to the top of the stack堆栈指针指向堆栈顶部</td>
+</tr>
+<tr>
+<td><code>EBP</code></td>
+<td><code>RBP</code></td>
+<td>Base Pointer is also known as <code>Stack Base Pointer</code> or <code>Frame Pointer</code> thats points to the base of the stack基址指针也称为堆栈基址指针或帧指针，指向堆栈的基址</td>
+</tr>
+</tbody></table>
+<h2 id="Stack-Frames"><a href="#Stack-Frames" class="headerlink" title="Stack Frames"></a>Stack Frames</h2><p>由于堆栈从高地址开始，并随着值的添加而向下扩展到低内存地址，因此与指向堆栈顶部的堆栈指针相比，“基指针”指向堆栈的开头（基）。 随着堆栈的增长，它在逻辑上被划分为称为堆栈帧的区域，这些区域为相应的函数分配堆栈中所需的内存。堆栈帧定义了一个具有开始（EBP）和结束（ESP）的数据帧，当调用函数时，该帧被推送到堆栈上。 由于堆栈内存建立在后进先出（LIFO）数据结构上，因此第一步是存储堆栈上的上一个EBP位置，该位置可以在函数完成后恢复。如果我们现在来看bowfunc函数，它在GDB中看起来如下：</p>
+<pre><code class="shell-session">(gdb) disas bowfunc 
+
+Dump of assembler code for function bowfunc:
+   0x0000054d &lt;+0&gt;:	    push   ebp       # &lt;---- 1. Stores previous EBP
+   0x0000054e &lt;+1&gt;:	    mov    ebp,esp
+   0x00000550 &lt;+3&gt;:	    push   ebx
+   0x00000551 &lt;+4&gt;:	    sub    esp,0x404
+   &lt;...SNIP...&gt;
+   0x00000580 &lt;+51&gt;:	leave  
+   0x00000581 &lt;+52&gt;:	ret    
+</code></pre>
+<p>堆栈帧中的EBP是在调用函数时首先设置的，并且包含前一堆栈帧的EBP。接下来，ESP的值被复制到EBP，从而创建一个新的堆栈帧。</p>
+<pre><code class="shell-session">(gdb) disas bowfunc 
+
+Dump of assembler code for function bowfunc:
+   0x0000054d &lt;+0&gt;:	    push   ebp       # &lt;---- 1. Stores previous EBP
+   0x0000054e &lt;+1&gt;:	    mov    ebp,esp   # &lt;---- 2. Creates new Stack Frame
+   0x00000550 &lt;+3&gt;:	    push   ebx
+   0x00000551 &lt;+4&gt;:	    sub    esp,0x404 
+   &lt;...SNIP...&gt;
+   0x00000580 &lt;+51&gt;:	leave  
+   0x00000581 &lt;+52&gt;:	ret    
+</code></pre>
+<p>然后在堆栈中创建一些空间，将ESP移动到顶部，用于所需和处理的操作和变量。</p>
+<pre><code class="shell-session">(gdb) disas bowfunc 
+
+Dump of assembler code for function bowfunc:
+   0x0000054d &lt;+0&gt;:	    push   ebp       # &lt;---- 1. Stores previous EBP
+   0x0000054e &lt;+1&gt;:	    mov    ebp,esp   # &lt;---- 2. Creates new Stack Frame
+   0x00000550 &lt;+3&gt;:	    push   ebx
+   0x00000551 &lt;+4&gt;:	    sub    esp,0x404 # &lt;---- 3. Moves ESP to the top
+   &lt;...SNIP...&gt;
+   0x00000580 &lt;+51&gt;:	leave  
+   0x00000581 &lt;+52&gt;:	ret    
+</code></pre>
+<p>这三条指令代表了所谓的序言。 为了摆脱堆栈框架，相反的做法是结束语。在结束语中，ESP被当前EBP替换，其值被重置为之前在序言中的值。结语相对较短，除了执行它的其他可能性外，在我们的示例中，它使用两个指令执行：</p>
+<pre><code class="shell-session">(gdb) disas bowfunc 
+
+Dump of assembler code for function bowfunc:
+   0x0000054d &lt;+0&gt;:	    push   ebp       
+   0x0000054e &lt;+1&gt;:	    mov    ebp,esp   
+   0x00000550 &lt;+3&gt;:	    push   ebx
+   0x00000551 &lt;+4&gt;:	    sub    esp,0x404 
+   &lt;...SNIP...&gt;
+   0x00000580 &lt;+51&gt;:	leave  # &lt;----------------------
+   0x00000581 &lt;+52&gt;:	ret    # &lt;--- Leave stack frame
+</code></pre>
+<h4 id="Index-registers"><a href="#Index-registers" class="headerlink" title="Index registers"></a>Index registers</h4><table>
+<thead>
+<tr>
+<th><strong>Register 32-bit</strong></th>
+<th><strong>Register 64-bit</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ESI</code></td>
+<td><code>RSI</code></td>
+<td>Source Index is used as a pointer from a source for string operations 源索引用作字符串操作的源的指针</td>
+</tr>
+<tr>
+<td><code>EDI</code></td>
+<td><code>RDI</code></td>
+<td>Destination is used as a pointer to a destination for string operations Destination用作指向字符串操作的目标的指针</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>关于汇编程序表示的另一个重要点是寄存器的命名。这取决于二进制文件的编译格式。我们已经使用GCC以32位格式编译了bow.c代码。现在，让我们将相同的代码编译成64位格式。</p>
+<pre><code class="shell-session">student@nix-bow:~$ gcc bow.c -o bow64 -fno-stack-protector -z execstack -m64
+student@nix-bow:~$ file bow64 | tr &quot;,&quot; &quot;\n&quot;
+
+bow64: ELF 64-bit LSB shared object
+ x86-64
+ version 1 (SYSV)
+ dynamically linked
+ interpreter /lib64/ld-linux-x86-64.so.2
+ for GNU/Linux 3.2.0
+ BuildID[sha1]=9503477016e8604e808215b4babb250ed25a7b99
+ not stripped
+</code></pre>
+<p>因此，如果我们现在查看汇编代码，我们会发现地址是32位编译二进制的两倍大，并且我们拥有几乎一半的指令。</p>
+<pre><code class="shell-session">student@nix-bow:~$ gdb -q bow64
+
+Reading symbols from bow64...(no debugging symbols found)...done.
+(gdb) disas main
+
+Dump of assembler code for function main:
+   0x00000000000006bc &lt;+0&gt;: 	push   rbp
+   0x00000000000006bd &lt;+1&gt;: 	mov    rbp,rsp
+   0x00000000000006c0 &lt;+4&gt;: 	sub    rsp,0x10
+   0x00000000000006c4 &lt;+8&gt;:  	mov    DWORD PTR [rbp-0x4],edi
+   0x00000000000006c7 &lt;+11&gt;:	mov    QWORD PTR [rbp-0x10],rsi
+   0x00000000000006cb &lt;+15&gt;:	mov    rax,QWORD PTR [rbp-0x10]
+   0x00000000000006cf &lt;+19&gt;:	add    rax,0x8
+   0x00000000000006d3 &lt;+23&gt;:	mov    rax,QWORD PTR [rax]
+   0x00000000000006d6 &lt;+26&gt;:	mov    rdi,rax
+   0x00000000000006d9 &lt;+29&gt;:	call   0x68a &lt;bowfunc&gt;
+   0x00000000000006de &lt;+34&gt;:	lea    rdi,[rip+0x9f]
+   0x00000000000006e5 &lt;+41&gt;:	call   0x560 &lt;puts@plt&gt;
+   0x00000000000006ea &lt;+46&gt;:	mov    eax,0x1
+   0x00000000000006ef &lt;+51&gt;:	leave  
+   0x00000000000006f0 &lt;+52&gt;:	ret    
+End of assembler dump.
+</code></pre>
+<p>然而，我们将首先看一下易受攻击的二进制文件的32位版本。现在对我们来说最重要的指令是调用指令。调用指令用于调用函数并执行两个操作：</p>
+<ol>
+<li>它将返回地址推送到堆栈上，使得程序的执行可以在函数成功实现其目标之后继续，</li>
+<li>它将指令指针（EIP）更改为调用目的地并在那里开始执行。</li>
+</ol>
+<h4 id="GDB-Intel-Syntax-1"><a href="#GDB-Intel-Syntax-1" class="headerlink" title="GDB - Intel Syntax"></a>GDB - Intel Syntax</h4><pre><code class="shell-session">student@nix-bow:~$ gdb ./bow32 -q
+
+Reading symbols from bow...(no debugging symbols found)...done.
+(gdb) disassemble main
+
+Dump of assembler code for function main:
+   0x00000582 &lt;+0&gt;: 	lea    ecx,[esp+0x4]
+   0x00000586 &lt;+4&gt;: 	and    esp,0xfffffff0
+   0x00000589 &lt;+7&gt;: 	push   DWORD PTR [ecx-0x4]
+   0x0000058c &lt;+10&gt;:	push   ebp
+   0x0000058d &lt;+11&gt;:	mov    ebp,esp
+   0x0000058f &lt;+13&gt;:	push   ebx
+   0x00000590 &lt;+14&gt;:	push   ecx
+   0x00000591 &lt;+15&gt;:	call   0x450 &lt;__x86.get_pc_thunk.bx&gt;
+   0x00000596 &lt;+20&gt;:	add    ebx,0x1a3e
+   0x0000059c &lt;+26&gt;:	mov    eax,ecx
+   0x0000059e &lt;+28&gt;:	mov    eax,DWORD PTR [eax+0x4]
+   0x000005a1 &lt;+31&gt;:	add    eax,0x4
+   0x000005a4 &lt;+34&gt;:	mov    eax,DWORD PTR [eax]
+   0x000005a6 &lt;+36&gt;:	sub    esp,0xc
+   0x000005a9 &lt;+39&gt;:	push   eax
+   0x000005aa &lt;+40&gt;:	call   0x54d &lt;bowfunc&gt;		# &lt;--- CALL function
+&lt;SNIP&gt;
+</code></pre>
+<h2 id="Endianness"><a href="#Endianness" class="headerlink" title="Endianness"></a>Endianness</h2><p>在寄存器和存储器中的加载和保存操作期间，字节以不同的顺序读取。这种字节顺序称为字节序。端性是区分小端格式和大端格式的。 大端序和小端序是关于价的顺序。在大端序中，具有最高化合价的数字最初是。在小端序中，具有最低化合价的数字位于开头。大型机处理器使用big-endian格式，一些RISC体系结构，小型计算机，在TCP&#x2F;IP网络中，字节顺序也是big-endia格式。 现在，让我们来看一个具有以下值的示例：</p>
+<ul>
+<li>Address: <code>0xffff0000</code></li>
+<li>Word: <code>\xAA\xBB\xCC\xDD</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Memory Address</strong></th>
+<th><strong>0xffff0000</strong></th>
+<th><strong>0xffff0001</strong></th>
+<th><strong>0xffff0002</strong></th>
+<th><strong>0xffff0003</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Big-Endian</td>
+<td>AA</td>
+<td>BB</td>
+<td>CC</td>
+<td>DD</td>
+</tr>
+<tr>
+<td>Little-Endian</td>
+<td>DD</td>
+<td>CC</td>
+<td>BB</td>
+<td>AA</td>
+</tr>
+</tbody></table>
+<p>当我们必须告诉CPU它应该指向哪个地址时，这对我们以后以正确的顺序输入代码非常重要。</p>
 
     </div>
 

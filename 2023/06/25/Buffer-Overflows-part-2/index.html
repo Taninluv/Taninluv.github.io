@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || vulnhub</title>
+    <title>Salve || Buffer-Overflows-part-2</title>
     <meta name="author" content="TiAmo">
     <meta name="description" content="Buona notte ">
     <meta name="keywords" content=" ">
@@ -166,219 +166,111 @@
 
                 <div id="main">
                      
-<div class="categories-tags">
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Buffer-Overflows-part-2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/25
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ffa2c4>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/hackthebox" style=color:#ff7d73>
+                    hackthebox
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="Take-Control-of-EIP"><a href="#Take-Control-of-EIP" class="headerlink" title="Take Control of EIP"></a>Take Control of EIP</h1><p>基于堆栈的缓冲区溢出最重要的一个方面是控制指令指针（EIP），这样我们就可以告诉它应该跳转到哪个地址。这将使EIP指向外壳代码开始的地址，并使CPU执行它。 我们可以使用Python在GDB中执行命令，Python直接作为输入。</p>
+<span id="more"></span>
+
+<h4 id="Segmentation-Fault"><a href="#Segmentation-Fault" class="headerlink" title="Segmentation Fault"></a>Segmentation Fault</h4><pre><code class="shell-session">student@nix-bow:~$ gdb -q bow32
+
+(gdb) run $(python -c &quot;print &#39;\x55&#39; * 1200&quot;)
+Starting program: /home/student/bow/bow32 $(python -c &quot;print &#39;\x55&#39; * 1200&quot;)
+
+Program received signal SIGSEGV, Segmentation fault.
+0x55555555 in ?? ()
+</code></pre>
+<p>如果我们插入1200“U”（十六进制“55”）作为输入，我们可以从寄存器信息中看到我们已经覆盖了EIP。据我们所知，EIP指向下一个要执行的指令。</p>
+<pre><code class="shell-session">(gdb) info registers 
+
+eax            0x1	1
+ecx            0xffffd6c0	-10560
+edx            0xffffd06f	-12177
+ebx            0x55555555	1431655765
+esp            0xffffcfd0	0xffffcfd0
+ebp            0x55555555	0x55555555		# &lt;---- EBP overwritten
+esi            0xf7fb5000	-134524928
+edi            0x0	0
+eip            0x55555555	0x55555555		# &lt;---- EIP overwritten
+eflags         0x10286	[ PF SF IF RF ]
+cs             0x23	35
+ss             0x2b	43
+ds             0x2b	43
+es             0x2b	43
+fs             0x0	0
+gs             0x63	99
+</code></pre>
+<p>如果我们想直观地想象这个过程，那么这个过程看起来是这样的。</p>
+<h4 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h4><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306251053659.png" alt="image"></p>
+<p>这意味着我们必须写入对EIP的访问权限。这反过来又允许指定EIP应该跳转到哪个内存地址。然而，为了操作寄存器，我们需要一个精确数量的U，直到EIP，这样下面的4个字节就可以用我们想要的内存地址覆盖。</p>
+<h2 id="Determine-The-Offset"><a href="#Determine-The-Offset" class="headerlink" title="Determine The Offset"></a>Determine The Offset</h2><p>偏移量用于确定覆盖缓冲区需要多少字节，以及外壳代码周围有多少空间。 Shellcode是一种程序代码，其中包含我们希望CPU执行的操作的指令。shell代码的手动创建将在其他模块中进行更详细的讨论。但为了节省一些时间，我们首先使用Metasploit框架（MSF），它提供了一个名为“pattern_create”的Ruby脚本，可以帮助我们确定到达EIP的确切字节数。它根据指定的字节长度创建一个唯一的字符串，以帮助确定偏移量。</p>
+<h4 id="Create-Pattern"><a href="#Create-Pattern" class="headerlink" title="Create Pattern"></a>Create Pattern</h4><pre><code class="shell-session">Tanin@htb[/htb]$ /usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 1200 &gt; pattern.txt
+Tanin@htb[/htb]$ cat pattern.txt
+
+Aa0Aa1Aa2Aa3Aa4Aa5...&lt;SNIP&gt;...Bn6Bn7Bn8Bn9
+</code></pre>
+<p>现在，我们用生成的模式替换我们的1200个“U”，并再次将注意力集中在EIP上。</p>
+<h4 id="GDB-Using-Generated-Pattern"><a href="#GDB-Using-Generated-Pattern" class="headerlink" title="GDB - Using Generated Pattern"></a>GDB - Using Generated Pattern</h4><pre><code class="shell-session">(gdb) run $(python -c &quot;print &#39;Aa0Aa1Aa2Aa3Aa4Aa5...&lt;SNIP&gt;...Bn6Bn7Bn8Bn9&#39;&quot;) 
+
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /home/student/bow/bow32 $(python -c &quot;print &#39;Aa0Aa1Aa2Aa3Aa4Aa5...&lt;SNIP&gt;...Bn6Bn7Bn8Bn9&#39;&quot;)
+Program received signal SIGSEGV, Segmentation fault.
+0x69423569 in ?? ()
+</code></pre>
+<h4 id="GDB-EIP"><a href="#GDB-EIP" class="headerlink" title="GDB - EIP"></a>GDB - EIP</h4><pre><code class="shell-session">(gdb) info registers eip
+
+eip            0x69423569	0x69423569
+</code></pre>
+
+    </div>
+
     
-    <div class="all-s">
-        
-        
-        <span>
-            <a href="/tags/靶场学习/" style=background:#00a596>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                靶场学习
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/base/" style=background:#00bcd4>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                base
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/others/" style=background:#ffa2c4>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                others
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/other/" style=background:#03a9f4>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                other
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/备忘录/" style=background:#ffa2c4>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                备忘录
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/tool/" style=background:#00bcd4>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                tool
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/practice/" style=background:#ffa2c4>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                practice
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/hackthebox/" style=background:#ff7d73>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                hackthebox
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/ffuf/" style=background:#ff7d73>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                ffuf
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/vulnhub/" style='background:linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)'>
-                <span class="icon">
-                    <a-icon type="tag" theme="filled" />
-                </span>
-                vulnhub
-            </a>
-        </span>
-        
-        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
     </div>
-    <div id="archives">
-        
-        <a-timeline>
-            <a-timeline-item color="#a5c2f5">
-                <a-card hoverable>
-                    <div class="item-time">2023/6/22</div>
-                    <a href="/2023/06/22/Penetration-aaa/">
-                        <h3>Penetration_CH4INRULZ_v1.0.1</h3>
-                    </a>
-                    <div class="info">
-                        
-
-                        
-                        <span class="tags">
-                            <span class="icon">
-                                <a-icon type="tags" theme="filled" />
-                            </span>
-                            
-                            <span class="tag">
-                                
-                                <a href="/tags/vulnhub" style=color:#03a9f4>
-                                    vulnhub
-                                </a>
-                            </span>
-                            
-                        </span>
-                        
-                    </div>
-                </a-card>
-            </a-timeline-item>
-        </a-timeline>
-        
-        <a-timeline>
-            <a-timeline-item color="#a5c2f5">
-                <a-card hoverable>
-                    <div class="item-time">2023/6/23</div>
-                    <a href="/2023/06/23/Penetration-bbb/">
-                        <h3>Penetration-Raven2</h3>
-                    </a>
-                    <div class="info">
-                        
-
-                        
-                        <span class="tags">
-                            <span class="icon">
-                                <a-icon type="tags" theme="filled" />
-                            </span>
-                            
-                            <span class="tag">
-                                
-                                <a href="/tags/vulnhub" style=color:#ff7d73>
-                                    vulnhub
-                                </a>
-                            </span>
-                            
-                        </span>
-                        
-                    </div>
-                </a-card>
-            </a-timeline-item>
-        </a-timeline>
-        
-        <a-timeline>
-            <a-timeline-item color="#a5c2f5">
-                <a-card hoverable>
-                    <div class="item-time">2023/6/25</div>
-                    <a href="/2023/06/25/Penetration-ggg/">
-                        <h3>Penetration-Matrix_1</h3>
-                    </a>
-                    <div class="info">
-                        
-
-                        
-                        <span class="tags">
-                            <span class="icon">
-                                <a-icon type="tags" theme="filled" />
-                            </span>
-                            
-                            <span class="tag">
-                                
-                                <a href="/tags/vulnhub" style=color:#ff7d73>
-                                    vulnhub
-                                </a>
-                            </span>
-                            
-                        </span>
-                        
-                    </div>
-                </a-card>
-            </a-timeline-item>
-        </a-timeline>
-        
-    </div>
-    <script>
-        new Vue({
-            el: '#archives'
-        })
-    </script>
+    
 </div>
                      
 <footer id="footer">
@@ -442,6 +334,21 @@
             }
         }
     })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
 </script>
 
 </body>
