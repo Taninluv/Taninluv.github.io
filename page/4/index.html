@@ -197,6 +197,194 @@
 
 <div class="post">
 
+    <a href="/2023/06/11/msf_plugins/">
+        <h2>
+            msf插件
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h2 id="msf插件"><a href="#msf插件" class="headerlink" title="msf插件"></a>msf插件</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://nmap.org/">nMap (pre-installed)</a></td>
+<td><a target="_blank" rel="noopener" href="https://sectools.org/tool/nexpose/">NexPose (pre-installed)</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.tenable.com/products/nessus">Nessus (pre-installed)</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://blog.gentilkiwi.com/mimikatz">Mimikatz (pre-installed V.1)</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.rubydoc.info/github/rapid7/metasploit-framework/Rex/Post/Meterpreter/Extensions/Stdapi/Stdapi">Stdapi (pre-installed)</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/rapid7/metasploit-framework/wiki/How-to-use-Railgun-for-Windows-post-exploitation">Railgun</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/rapid7/metasploit-framework/blob/master/lib/rex/post/meterpreter/extensions/priv/priv.rb">Priv</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.offensive-security.com/metasploit-unleashed/fun-incognito/">Incognito (pre-installed)</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/darkoperator/Metasploit-Plugins">Darkoperator’s</a></td>
+</tr>
+</tbody></table>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/base" style=color:#ff7d73>
+                base
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/msf_plugins/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
+    <a href="/2023/06/11/linux/">
+        <h2>
+            linux
+        </h2>
+    </a>
+
+    <div class="category-and-date">
+
+        
+
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/6/11
+        </span>
+
+    </div>
+
+    <div class="excerpt">
+        <div class="content" v-pre>
+            
+            <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><table>
+<thead>
+<tr>
+<th><code>/</code></th>
+<th>顶级目录是根文件系统，包含在挂载其他文件系统之前引导操作系统所需的所有文件，以及引导其他文件系统所需的文件。引导后，所有其他文件系统都作为根目录挂载在标准挂载点。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/bin</code></td>
+<td>包含基本的命令二进制文件。</td>
+</tr>
+<tr>
+<td><code>/boot</code></td>
+<td>由静态引导加载程序、内核可执行文件和引导 Linux 操作系统所需的文件组成。</td>
+</tr>
+<tr>
+<td><code>/dev</code></td>
+<td>包含设备文件，以便于访问连接到系统的每个硬件设备。</td>
+</tr>
+<tr>
+<td><code>/etc</code></td>
+<td>本地系统配置文件。已安装应用程序的配置文件也可以保存在此处。</td>
+</tr>
+<tr>
+<td><code>/home</code></td>
+<td>系统上的每个用户都有一个用于存储的子目录。</td>
+</tr>
+<tr>
+<td><code>/lib</code></td>
+<td>系统引导所需的共享库文件。</td>
+</tr>
+<tr>
+<td><code>/media</code></td>
+<td>外部可移动媒体设备（如 USB 驱动器）安装在此处。</td>
+</tr>
+<tr>
+<td><code>/mnt</code></td>
+<td>常规文件系统的临时挂载点。</td>
+</tr>
+<tr>
+<td><code>/opt</code></td>
+<td>可选文件（如第三方工具）可以保存在此处。</td>
+</tr>
+<tr>
+<td><code>/root</code></td>
+<td>根用户的主目录。</td>
+</tr>
+<tr>
+<td><code>/sbin</code></td>
+<td>此目录包含用于系统管理的可执行文件（二进制系统文件）。</td>
+</tr>
+<tr>
+<td><code>/tmp</code></td>
+<td>操作系统和许多程序使用此目录来存储临时文件。此目录通常在系统启动时清除，其他时间可能会删除，没有任何警告。</td>
+</tr>
+<tr>
+<td><code>/usr</code></td>
+<td>包含可执行文件、库、man 文件等。</td>
+</tr>
+<tr>
+<td><code>/var</code></td>
+<td>此目录包含可变数据文件，例如日志文件、电子邮件收件箱、Web 应用程序相关文件、cron 文件等。</td>
+</tr>
+</tbody></table>
+            
+            
+        </div>
+    </div>
+
+    <div class="post-tags">
+        
+        <span class="icon">
+            <a-icon type="tags" theme="filled" />
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/base" style=color:#ff7d73>
+                base
+            </a>
+        </span>
+        
+    </div>
+
+    <a href="/2023/06/11/linux/ " class="go-post">
+        阅读全文
+    </a>
+</div>
+
+<div class="post">
+
     <a href="/2023/06/11/other_2/">
         <h2>
             杂记
@@ -252,7 +440,7 @@ Nmap done: 1 IP address (1 host up) scanned in 19.23 seconds
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#03a9f4>
+            <a href="/tags/others" style=color:#ffa2c4>
                 others
             </a>
         </span>
@@ -348,7 +536,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#03a9f4>
+            <a href="/tags/base" style=color:#00a596>
                 base
             </a>
         </span>
@@ -405,7 +593,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#ff7d73>
+            <a href="/tags/靶场学习" style=color:#00a596>
                 靶场学习
             </a>
         </span>
@@ -490,7 +678,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/others" style=color:#00bcd4>
+            <a href="/tags/others" style=color:#ff7d73>
                 others
             </a>
         </span>
@@ -664,7 +852,7 @@ listening on [any] 1234 ...
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#03a9f4>
+            <a href="/tags/tool" style=color:#00a596>
                 tool
             </a>
         </span>
@@ -731,7 +919,7 @@ this is a test
         
         <span class="tag">
             
-            <a href="/tags/靶场学习" style=color:#00bcd4>
+            <a href="/tags/靶场学习" style=color:#ffa2c4>
                 靶场学习
             </a>
         </span>

@@ -1,0 +1,1096 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || CRACKING PASSWORDS WITH HASHCAT</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>CRACKING PASSWORDS WITH HASHCAT </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/12
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ffa2c4>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tool" style=color:#03a9f4>
+                    tool
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>哈希是将某些文本转换为字符串的过程，该字符串对于特定文本是唯一的。通常，散列函数总是返回具有相同长度的散列，而与数据的类型、长度或大小无关。哈希是一个单向过程，这意味着无法从哈希中重建原始明文。</p>
+<span id="more"></span>
+
+<h5 id="备忘单"><a href="#备忘单" class="headerlink" title="备忘单"></a>备忘单</h5><p>备忘单是此模块的有用命令参考。</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pip install hashid</code></td>
+<td>安装该工具<code>hashid</code></td>
+</tr>
+<tr>
+<td><code>hashid &lt;hash&gt;</code>或<code>hashid &lt;hashes.txt&gt;</code></td>
+<td>使用该工具识别哈希<code>hashid</code></td>
+</tr>
+<tr>
+<td><code>hashcat --example-hashes</code></td>
+<td>查看哈希模式和示例哈希的列表<code>Hashcat</code></td>
+</tr>
+<tr>
+<td><code>hashcat -b -m &lt;hash mode&gt;</code></td>
+<td>执行特定哈希模式的基准测试<code>Hashcat</code></td>
+</tr>
+<tr>
+<td><code>hashcat -b</code></td>
+<td>执行所有哈希模式的基准测试</td>
+</tr>
+<tr>
+<td><code>hashcat -O</code></td>
+<td>优化：提高速度，但限制潜在的密码长度</td>
+</tr>
+<tr>
+<td><code>hashcat -w 3</code></td>
+<td>优化：当 Hashcat 是唯一正在运行的东西时使用，如果在桌面上运行 hashcat，则使用 1。默认值为 2</td>
+</tr>
+<tr>
+<td><code>hashcat -a 0 -m &lt;hash type&gt; &lt;hash file&gt; &lt;wordlist&gt;</code></td>
+<td>字典攻击</td>
+</tr>
+<tr>
+<td><code>hashcat -a 1 -m &lt;hash type&gt; &lt;hash file&gt; &lt;wordlist1&gt; &lt;wordlist2&gt;</code></td>
+<td>组合攻击</td>
+</tr>
+<tr>
+<td><code>hashcat -a 3 -m 0 &lt;hash file&gt; -1 01 &#39;ILFREIGHT?l?l?l?l?l20?1?d&#39;</code></td>
+<td>样本掩码攻击</td>
+</tr>
+<tr>
+<td><code>hashcat -a 7 -m 0 &lt;hash file&gt; -1=01 &#39;20?1?d&#39; rockyou.txt</code></td>
+<td>混合攻击示例</td>
+</tr>
+<tr>
+<td><code>crunch &lt;minimum length&gt; &lt;maximum length&gt; &lt;charset&gt; -t &lt;pattern&gt; -o &lt;output file&gt;</code></td>
+<td>制作单词列表<code>Crunch</code></td>
+</tr>
+<tr>
+<td><code>python3 cupp.py -i</code></td>
+<td>使用交互模式<code>CUPP</code></td>
+</tr>
+<tr>
+<td><code>kwp -s 1 basechars/full.base keymaps/en-us.keymap routes/2-to-10-max-3-direction-changes.route</code></td>
+<td><code>Kwprocessor</code>例</td>
+</tr>
+<tr>
+<td><code>cewl -d &lt;depth to spider&gt; -m &lt;minimum word length&gt; -w &lt;output wordlist&gt; &lt;url of website&gt;</code></td>
+<td>示例命令<code>CeWL</code></td>
+</tr>
+<tr>
+<td><code>hashcat -a 0 -m 100 hash rockyou.txt -r rule.txt</code></td>
+<td>示例规则语法<code>Hashcat</code></td>
+</tr>
+<tr>
+<td><code>./cap2hccapx.bin input.cap output.hccapx</code></td>
+<td><code>cap2hccapx</code>语法</td>
+</tr>
+<tr>
+<td><code>hcxpcaptool -z pmkidhash_corp cracking_pmkid.cap</code></td>
+<td><code>hcxpcaptool</code>语法</td>
+</tr>
+</tbody></table>
+<p>有时，散列以特定的格式存储。例如，&#x3D;&#x3D;hash:salt&#x3D;&#x3D;或&#x3D;&#x3D;$id$salt$hash&#x3D;&#x3D;。 哈希2fc5a684737ce1bf7b3b239df432416e0dd07357:2014是一个2014年的SHA1哈希。 散列</p>
+<p>$6$vb1tLY1qiY$M.1ZCqKtJBxBtZm1gRi8Bkn39KU0YJW1cuMFzTRANcNKFKR4RmAQVk4rqQQCkaJT6wXqjUkFca&#x2F;qNxLyqW.U&#x2F;</p>
+<p>包含三个由$分隔的字段，其中第一个字段是id，即6。这用于识别用于哈希的算法的类型。以下列表包含一些ID及其相应的算法。</p>
+<pre><code class="shell-session">$1$  : MD5
+$2a$ : Blowfish
+$2y$ : Blowfish, with correct handling of 8 bit characters
+$5$  : SHA256
+$6$  : SHA512
+</code></pre>
+<h2 id="Hashid"><a href="#Hashid" class="headerlink" title="Hashid"></a>Hashid</h2><p>Hashid是一个Python工具，可以用来检测各种哈希。在撰写本文时，哈希可以用于识别200多种独特的哈希类型，对于其他类型，它将尽最大努力进行猜测，这仍然需要一些额外的工作来缩小范围。支持的哈希的完整列表可以在这里找到。它可以使用pip进行安装。</p>
+<p>哈希可以作为命令行参数或使用文件提供。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashid &#39;$apr1$71850310$gh9m4xcAn3MGxogwX/ztb.&#39;
+
+Analyzing &#39;$apr1$71850310$gh9m4xcAn3MGxogwX/ztb.&#39;
+[+] MD5(APR) 
+[+] Apache MD5
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashid hashes.txt 
+
+--File &#39;hashes.txt&#39;--
+Analyzing &#39;2fc5a684737ce1bf7b3b239df432416e0dd07357:2014&#39;
+[+] SHA-1 
+[+] Double SHA-1 
+[+] RIPEMD-160 
+[+] Haval-160 
+[+] Tiger-160 
+[+] HAS-160 
+[+] LinkedIn 
+[+] Skein-256(160) 
+[+] Skein-512(160) 
+[+] Redmine Project Management Web App 
+[+] SMF ≥ v1.1 
+Analyzing &#39;$P$984478476IagS59wHZvyQMArzfx58u.&#39;
+[+] Wordpress ≥ v2.6.2 
+[+] Joomla ≥ v2.5.18 
+[+] PHPass&#39; Portable Hash 
+--End of file &#39;hashes.txt&#39;--
+</code></pre>
+<p>如果已知，hashid还可以为相应的Hashcat哈希模式提供-m标志，前提是它能够确定哈希类型。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashid &#39;$DCC2$10240#tom#e4e938d12fe5974dc42a90120bd9c90f&#39; -m
+Analyzing &#39;$DCC2$10240#tom#e4e938d12fe5974dc42a90120bd9c90f&#39;
+[+] Domain Cached Credentials 2 [Hashcat Mode: 2100
+</code></pre>
+<p>&#x3D;&#x3D;&gt;Hashcat Mode: 2100</p>
+<h2 id="Context-is-Important"><a href="#Context-is-Important" class="headerlink" title="Context is Important"></a>Context is Important</h2><p>并不总是能够基于所获得的散列来识别算法。根据软件的不同，明文可能会经历多次加密和盐析转换，从而使其更难恢复。 需要注意的是，hashid使用regex来尽最大努力确定所提供的哈希类型。通常，哈希会为给定的哈希提供许多可能性，而我们仍然会留下一定数量的猜测来识别给定的哈希。这可能发生在CTF期间，但我们通常有一些关于在渗透测试期间要识别的哈希类型的上下文。它是通过Active Directory攻击还是从Windows主机获得的？它是通过成功利用SQL注入漏洞获得的吗？了解哈希的来源将极大地帮助我们缩小哈希类型的范围，从而缩小尝试破解它所需的Hashcat哈希模式。Hashcat提供了一个很好的参考，它将哈希模式映射到示例哈希。在渗透测试期间，这个参考是非常宝贵的，以确定我们正在处理的哈希类型以及将其传递给Hashcat所需的相关哈希模式。 例如，传递散列a2d1f7b7a1862d0d4a52644e72d59df5:500：<a href="mailto:&#x6c;&#112;&#x40;&#x74;&#114;&#x61;&#115;&#x68;&#45;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#109;">&#x6c;&#112;&#x40;&#x74;&#114;&#x61;&#115;&#x68;&#45;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#109;</a>哈希将给我们带来各种可能性：</p>
+<h2 id="Hashcat"><a href="#Hashcat" class="headerlink" title="Hashcat"></a>Hashcat</h2><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -h
+
+hashcat (v6.1.1) starting...
+
+Usage: hashcat [options]... hash|hashfile|hccapxfile [dictionary|mask|directory]...
+
+- [ Options ] -
+
+ Options Short / Long           | Type | Description                                          | Example
+================================+======+======================================================+=======================
+ -m, --hash-type                | Num  | Hash-type, see references below                      | -m 1000
+ -a, --attack-mode              | Num  | Attack-mode, see references below                    | -a 3
+ -V, --version                  |      | Print version                                        |
+ -h, --help                     |      | Print help                                           |
+     --quiet                    |      | Suppress output                                      |
+     --hex-charset              |      | Assume charset is given in hex                       |
+     --hex-salt                 |      | Assume salt is given in hex                          |
+     --hex-wordlist             |      | Assume words in wordlist are given in hex            |
+     --force                    |      | Ignore warnings                                      |
+     --status                   |      | Enable automatic update of the status screen         |
+     --status-json              |      | Enable JSON format for status output                 |
+     --status-timer             | Num  | Sets seconds between status screen updates to X      | --status-timer=1
+     --stdin-timeout-abort      | Num  | Abort if there is no input from stdin for X seconds  | --stdin-timeout-abort=300
+     --machine-readable         |      | Display the status view in a machine-readable format |
+
+&lt;SNIP&gt;
+</code></pre>
+<p>-a和-m参数用于指定攻击模式的类型和哈希类型。Hashcat支持以下攻击模式：</p>
+<table>
+<thead>
+<tr>
+<th><strong>#</strong></th>
+<th><strong>Mode</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>Straight</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Combination</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Brute-force</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Hybrid Wordlist + Mask</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Hybrid Mask + Wordlist</td>
+</tr>
+</tbody></table>
+<p>哈希类型值基于要破解的哈希的算法。这里可以找到哈希类型的完整列表及其相应的示例。该表有助于快速识别给定哈希类型的数字。您还可以使用以下命令通过命令行查看示例哈希列表：</p>
+<h4 id="Hashcat-Example-Hashes"><a href="#Hashcat-Example-Hashes" class="headerlink" title="Hashcat - Example Hashes"></a>Hashcat - Example Hashes</h4><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat --example-hashes | less
+
+hashcat (v6.1.1) starting...
+
+MODE: 0
+TYPE: MD5
+HASH: 8743b52063cd84097a65d1633f5c74f5
+PASS: hashcat
+
+MODE: 10
+TYPE: md5($pass.$salt)
+HASH: 3d83c8e717ff0e7ecfe187f088d69954:343141
+PASS: hashcat
+
+MODE: 11
+TYPE: Joomla &lt; 2.5.18
+HASH: b78f863f2c67410c41e617f724e22f34:89384528665349271307465505333378
+PASS: hashcat
+
+MODE: 12
+TYPE: PostgreSQL
+HASH: 93a8cf6a7d43e3b5bcd2dc6abb3e02c6:27032153220030464358344758762807
+PASS: hashcat
+
+MODE: 20
+TYPE: md5($salt.$pass)
+HASH: 57ab8499d08c59a7211c77f557bf9425:4247
+PASS: hashcat
+
+&lt;SNIP&gt;
+</code></pre>
+<p>您可以滚动浏览列表，然后按q退出。 可以使用-b标志来执行特定哈希类型的基准测试（或性能测试）。</p>
+<h4 id="Hashcat-Benchmark"><a href="#Hashcat-Benchmark" class="headerlink" title="Hashcat - Benchmark"></a>Hashcat - Benchmark</h4><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -b -m 0
+hashcat (v6.1.1) starting in benchmark mode...
+
+Benchmarking uses hand-optimized kernel code by default.
+You can use it in your cracking session by setting the -O option.
+Note: Using optimized kernel code limits the maximum supported password length.
+To disable the optimized kernel code in benchmark mode, use the -w option.
+
+OpenCL API (OpenCL 1.2 pocl 1.5, None+Asserts, LLVM 9.0.1, RELOC, SLEEF, DISTRO, POCL_DEBUG) - Platform #1 [The pocl project]
+=============================================================================================================================
+* Device #1: pthread-Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz, 4377/4441 MB (2048 MB allocatable), 6MCU
+
+Benchmark relevant options:
+===========================
+* --optimized-kernel-enable
+
+Hashmode: 0 - MD5
+
+
+Speed.#1.........:   449.4 MH/s (12.84ms) @ Accel:1024 Loops:1024 Thr:1 Vec:8
+
+Started: Fri Aug 28 21:52:35 2020
+Stopped: Fri Aug 28 21:53:25 2020
+</code></pre>
+<h4 id="Hashcat-Optimizations"><a href="#Hashcat-Optimizations" class="headerlink" title="Hashcat - Optimizations"></a>Hashcat - Optimizations</h4><p>Hashcat有两种优化速度的主要方法：</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Optimized Kernels</td>
+<td>This is the <code>-O</code> flag, which according to the documentation, means <code>Enable optimized kernels (limits password length)</code>. The magical password length number is generally 32, with most wordlists won’t even hit that number. This can take the estimated time from days to hours, so it is always recommended to run with <code>-O</code> first and then rerun after without the <code>-O</code> if your GPU is idle.</td>
+</tr>
+<tr>
+<td>Workload</td>
+<td>This is the <code>-w</code> flag, which, according to the documentation, means <code>Enable a specific workload profile</code>. The default number is <code>2</code>, but if you want to use your computer while Hashcat is running, set this to <code>1</code>. If you plan on the computer only running Hashcat, this can be set to <code>3</code>.</td>
+</tr>
+</tbody></table>
+<h2 id="Straight-or-Dictionary-Attack"><a href="#Straight-or-Dictionary-Attack" class="headerlink" title="Straight or Dictionary Attack"></a>Straight or Dictionary Attack</h2><p>顾名思义，这种攻击从单词列表中读取，并试图破解提供的哈希。如果你知道目标组织使用弱密码，或者只是想很快完成一些破解尝试，那么字典攻击是有用的。这种攻击通常比本模块后面讨论的更复杂的攻击完成得更快。它的基本语法是：</p>
+<h2 id="Straight-or-Dictionary-Attack-1"><a href="#Straight-or-Dictionary-Attack-1" class="headerlink" title="Straight or Dictionary Attack"></a>Straight or Dictionary Attack</h2><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -a 0 -m &lt;hash type&gt; &lt;hash file&gt; &lt;wordlist&gt;
+</code></pre>
+<p>例如，以下命令将使用rockyou.txt单词列表破解SHA256哈希。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ echo -n &#39;!academy&#39; | sha256sum | cut -f1 -d&#39; &#39; &gt; sha256_hash_example
+Tanin@htb[/htb]$ hashcat -a 0 -m 1400 sha256_hash_example /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+
+hashcat (v6.1.1) starting...
+</code></pre>
+<p>在上面的例子中，散列在4秒内被破解。破解速度因底层硬件、哈希类型和密码的复杂性而异。 让我们来看一个更复杂的散列，例如Bcrypt，它是一种基于Blowfish密码的密码散列。它利用salt来保护它免受彩虹表攻击，并且可以应用多轮算法，使哈希即使使用大型密码破解设备也能抵抗暴力攻击。 例如，以相同密码“！academy”的bcrypt哈希为例，该哈希为<code>$2a$05$ZdEkj8cup/JycBRn2CX.B.nIceCYR8GbPbCCg6RlD7uvuREexEbVy</code>，并应用了5轮Blowfish算法。在具有相同单词列表的相同硬件上运行此哈希需要相当长的时间才能破解。 在破解过程中的任何时候，你都可以点击“s”键来获得破解作业的状态，这表明尝试rockyou.txt单词列表中的每个密码需要1.5个多小时。应用更多轮的算法将成倍地增加破解时间。在使用bcrypt等哈希的情况下，通常最好使用更小、更有针对性的单词列表。</p>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>Crack the following hash using the rockyou.txt wordlist: <code>0c352d5b2f45217c57bef9f8452ce376</code></p>
+</blockquote>
+<p>先用hashid分析一下类型：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307121635544.png" alt="image-20230712163503479"></p>
+<p>这里得到很多种结果，好像只能依次测试一下：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307121705997.png" alt="image-20230712170530904"></p>
+<p>第一次就成功了hh</p>
+<h1 id="Combination-Attack"><a href="#Combination-Attack" class="headerlink" title="Combination Attack"></a>Combination Attack</h1><p>组合攻击模式采用两个单词列表作为输入，并从中创建组合。这种攻击很有用，因为用户将两个或多个单词连接在一起并不罕见，他们认为这会创建一个更强的密码，即welcomehome或hotelcalifornia。 </p>
+<p>要演示此攻击，请考虑以下单词列表：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat wordlist1
+
+super
+world
+secret
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat wordlist1
+
+super
+world
+secret
+</code></pre>
+<p>如果给定这两个单词列表，Hashcat将恰好产生3 x 2&#x3D;6个单词，例如：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ awk &#39;(NR==FNR) &#123; a[NR]=$0 &#125; (NR != FNR) &#123; for (i in a) &#123; print $0 a[i] &#125; &#125;&#39; file2 file1
+
+superhello
+superpassword
+worldhello
+wordpassword
+secrethello
+secretpassword
+</code></pre>
+<p>这也可以通过Hashcat使用–stdout标志来完成，这对于调试和查看工具是如何处理事情非常有帮助。 在下面的例子中，我们可以看到给定相同的两个文件，Hashcat将产生什么：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -a 1 --stdout file1 file2
+superhello
+superpassword
+worldhello
+worldpassword
+secrethello
+secretpassword
+</code></pre>
+<h4 id="Hashcat-Syntax"><a href="#Hashcat-Syntax" class="headerlink" title="Hashcat - Syntax"></a>Hashcat - Syntax</h4><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -a 1 -m &lt;hash type&gt; &lt;hash file&gt; &lt;wordlist1&gt; &lt;wordlist2&gt;
+</code></pre>
+<p>这种攻击在使用单词列表时提供了更多的灵活性和自定义功能。</p>
+<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>使用Hashcat组合攻击查找以下md5哈希的明文密码：19672a3f042ae1b592289f8333bf76c5。使用本节末尾显示的补充单词表。</p>
+</blockquote>
+<pre><code>hashid 19672a3f042ae1b592289f8333bf76c5 -m
+Analyzing &#39;19672a3f042ae1b592289f8333bf76c5&#39;
+[+] MD2 
+[+] MD5 [Hashcat Mode: 0]
+[+] MD4 [Hashcat Mode: 900]
+[+] Double MD5 [Hashcat Mode: 2600]
+[+] LM [Hashcat Mode: 3000]
+[+] RIPEMD-128 
+[+] Haval-128 
+[+] Tiger-128 
+[+] Skein-256(128) 
+[+] Skein-512(128) 
+[+] Lotus Notes/Domino 5 [Hashcat Mode: 8600]
+[+] Skype [Hashcat Mode: 23]
+[+] Snefru-128 
+[+] NTLM [Hashcat Mode: 1000]
+[+] Domain Cached Credentials [Hashcat Mode: 1100]
+[+] Domain Cached Credentials 2 [Hashcat Mode: 2100]
+[+] DNSSEC(NSEC3) [Hashcat Mode: 8300]
+[+] RAdmin v2.x [Hashcat Mode: 9900]
+</code></pre>
+<pre><code>hashcat -a 1 -m 0 19672a3f042ae1b592289f8333bf76c5 file1.txt file2.txt 
+hashcat (v6.2.6) starting
+    &lt;--snip--&gt;
+    19672a3f042ae1b592289f8333bf76c5:frozenapple  
+</code></pre>
+<h1 id="Mask-Attack"><a href="#Mask-Attack" class="headerlink" title="Mask Attack"></a>Mask Attack</h1><p>掩码攻击用于生成与特定模式匹配的单词。当密码长度或格式已知时，这种类型的攻击尤其有用。可以使用静态字符、字符范围（例如[A-z]或[A-z-9]）或占位符创建掩码。以下列表显示了一些重要的占位符：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Placeholder</strong></th>
+<th><strong>Meaning</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>?l</td>
+<td>lower-case ASCII letters (a-z)</td>
+</tr>
+<tr>
+<td>?u</td>
+<td>upper-case ASCII letters (A-Z)</td>
+</tr>
+<tr>
+<td>?d</td>
+<td>digits (0-9)</td>
+</tr>
+<tr>
+<td>?h</td>
+<td>0123456789abcdef</td>
+</tr>
+<tr>
+<td>?H</td>
+<td>0123456789ABCDEF</td>
+</tr>
+<tr>
+<td>?s</td>
+<td>special characters («space»!”#$%&amp;’()*+,-.&#x2F;:;&lt;&#x3D;&gt;?@[]^_&#96;{</td>
+</tr>
+<tr>
+<td>?a</td>
+<td>?l?u?d?s</td>
+</tr>
+<tr>
+<td>?b</td>
+<td>0x00 - 0xff</td>
+</tr>
+</tbody></table>
+<p>以上占位符可以与选项“-1”到“-4”组合使用，这些选项可用于自定义占位符。请参阅此处的 <a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=mask_attack">here</a>“自定义字符集”部分，以获取可用于配置四个自定义字符集的这四个命令行参数中每一个的详细细分。 以Inlane Freight公司为例，该公司这次的密码为“ILFREIGHT<userid><year>”，其中userid长5个字符。掩码“ILFREIGHT？l？l？1？l？l20[0-1]？d”可用于以指定模式破解密码，其中“？l”是一个字母，“20[0-1]”将包括2000年至2019年的所有年份。 让我们尝试创建一个散列并使用这个掩码来破解它。</p>
+<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>Crack the following MD5 hash using a mask attack: <code>50a742905949102c961929823a2e8ca0</code>. Use the following mask: -1 02 ‘HASHCAT?l?l?l?l?l20?1?d’</p>
+</blockquote>
+<pre><code>hashcat -a 3 -m 0 50a742905949102c961929823a2e8ca0 -1 02 &#39;HASHCAT?l?l?l?l?l20?1?d&#39;
+hashcat (v6.2.6) starting
+&lt;snip&gt;
+50a742905949102c961929823a2e8ca0:HASHCATqrstu2020 
+</code></pre>
+<p>这里的-1 02是自定义字符集</p>
+<h1 id="Hybrid-Mode"><a href="#Hybrid-Mode" class="headerlink" title="Hybrid Mode"></a>Hybrid Mode</h1><p>混合模式是组合子攻击的一种变体，其中多个模式可以一起用于微调的单词列表创建。此模式可用于通过创建非常自定义的单词列表来执行非常有针对性的攻击。当您知道或大致了解组织的密码策略或通用密码语法时，它尤其有用。混合攻击的攻击模式为“6”。</p>
+<p>让我们考虑一个密码，例如“football1$”。下面的示例显示了如何将单词列表与掩码结合使用。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ echo -n &#39;football1$&#39; | md5sum | tr -d &quot; -&quot; &gt; hybrid_hash
+</code></pre>
+<p>Hashcat从单词列表中读取单词，并根据提供的掩码附加一个唯一的字符串。在这种情况下，掩码“？d？s”告诉hashcat在rockyou.txt单词表中的每个单词的末尾附加一个数字和一个特殊字符。</p>
+<h4 id="Hashcat-Hybrid-Attack-using-Wordlists"><a href="#Hashcat-Hybrid-Attack-using-Wordlists" class="headerlink" title="Hashcat - Hybrid Attack using Wordlists"></a>Hashcat - Hybrid Attack using Wordlists</h4><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -a 6 -m 0 hybrid_hash /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt &#39;?d?s&#39;
+</code></pre>
+<p>攻击模式“7”可以用于使用给定的掩码在单词前添加字符。以下示例显示了一个掩码，该掩码使用自定义字符集为rockyou.txt单词列表中的每个单词添加前缀。自定义字符掩码“20？1？d”和自定义字符集“-1 01”将为单词表中的每个单词（即2010、2011、2012..）加上不同的年份。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -a 7 -m 0 hybrid_hash_prefix -1 01 &#39;20?1?d&#39; /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+</code></pre>
+<h2 id="practice-3"><a href="#practice-3" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>Crack the following hash: <code>978078e7845f2fb2e20399d9e80475bc1c275e06</code> using the mask ?d?s.</p>
+</blockquote>
+<pre><code>hashcat -a 6 -m 100 978078e7845f2fb2e20399d9e80475bc1c275e06 /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt &#39;?d?s&#39; 
+</code></pre>
+<p>这里需要先判断一下hash类型</p>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>978078e7845f2fb2e20399d9e80475bc1c275e06:hybridmaster9$  
+</code></pre>
+<h1 id="Creating-Custom-Wordlists"><a href="#Creating-Custom-Wordlists" class="headerlink" title="Creating Custom Wordlists"></a>Creating Custom Wordlists</h1><p>在评估过程中，我们可能会检索到一个或多个对参与成功至关重要的密码哈希。尽管我们尽了最大努力，但使用前面章节中介绍的字典、组合、掩码或混合攻击，这些哈希无法通过常见单词列表破解。在这些情况下，可能有必要创建一个自定义的、有针对性的单词列表来实现我们的目标。 有必要花时间细化单词列表，因为成功率在很大程度上取决于它。单词列表可以从各种来源获得，并根据目标进行定制，然后使用规则进行进一步微调。可以找到密码、用户名、文件名、有效载荷和许多其他数据类型的单词列表。SecLists存储库还包含许多用于用户名枚举密码标识的单词列表。</p>
+<h2 id="Creating-Wordlists"><a href="#Creating-Wordlists" class="headerlink" title="Creating Wordlists"></a>Creating Wordlists</h2><p>许多开源工具有助于根据我们的要求创建定制的密码单词表。</p>
+<h2 id="Crunch"><a href="#Crunch" class="headerlink" title="Crunch"></a>Crunch</h2><p>Crunch可以根据特定长度的单词、有限的字符集或特定模式等参数创建单词列表。它可以生成排列和组合。 它默认安装在Parrot操作系统上，可以在这里找到。crunch的一般语法如下：</p>
+<h4 id="Crunch-Syntax"><a href="#Crunch-Syntax" class="headerlink" title="Crunch - Syntax"></a>Crunch - Syntax</h4><pre><code class="shell-session">Tanin@htb[/htb]$ crunch &lt;minimum length&gt; &lt;maximum length&gt; &lt;charset&gt; -t &lt;pattern&gt; -o &lt;output file&gt;
+</code></pre>
+<p>“-t”选项用于指定生成密码的模式。该模式可以包含“@”，表示小写字符，“，”（逗号）将插入大写字符，“%”将插入数字，“^”将插入符号。</p>
+<h4 id="Crunch-Generate-Word-List"><a href="#Crunch-Generate-Word-List" class="headerlink" title="Crunch - Generate Word List"></a>Crunch - Generate Word List</h4><pre><code class="shell-session">Tanin@htb[/htb]$ crunch 4 8 -o wordlist
+</code></pre>
+<p>上面的命令使用默认字符集创建一个由长度为4到8个字符的单词组成的单词列表。 假设Inlane Freight用户密码的格式为“ILFREIGHTYYYXXXX”，其中“XXXX”是包含字母的员工ID，“YYYY”是年份。我们可以使用crunch创建一个这样的密码列表。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ crunch 17 17 -t ILFREIGHT201%@@@@ -o wordlist
+</code></pre>
+<p>如果我们知道用户的出生日期是1998年3月10日（通过社交媒体等），我们可以将其包含在他们的密码中，然后加上一串字母。Crunch可以用来创建这样的单词的单词列表。“-d”选项用于指定重复次数。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ crunch 12 12 -t 10031998@@@@ -d 1 -o wordlist
+</code></pre>
+<h2 id="CUPP"><a href="#CUPP" class="headerlink" title="CUPP"></a>CUPP</h2><p>CUPP代表通用用户密码档案器，用于根据从社会工程和OSINT获得的信息创建高度针对性和定制的单词列表。人们在创建密码时往往会使用个人信息，如电话号码、宠物名称、出生日期等。CUPP会接收这些信息并从中创建密码。这些单词列表主要用于访问社交媒体帐户。CUPP默认安装在Parrot操作系统上，可在此处找到 <a target="_blank" rel="noopener" href="https://github.com/Mebus/cupp">here</a>。“-i”选项用于在交互模式下运行，提示CUPP向我们询问有关目标的信息。</p>
+<p>“Leet”模式，该模式使用常用单词中的字母和数字组合。CUPP还可以使用“-l”选项从各种在线数据库中获取通用名称。</p>
+<h2 id="KWPROCESSOR"><a href="#KWPROCESSOR" class="headerlink" title="KWPROCESSOR"></a>KWPROCESSOR</h2><p>Kwprocessor是一个通过键盘漫游创建单词列表的工具。另一种常见的密码生成技术是遵循键盘上的模式。这些密码被称为键盘行走，因为它们看起来像是沿着按键行走。例如，字符串“qwertyasdfg”是通过使用键盘前两行中的前五个字符创建的。这对正常人来说似乎很复杂，但很容易预测。Kwprocessor使用各种算法来猜测这样的模式。 该工具可以在此处找到 <a target="_blank" rel="noopener" href="https://github.com/hashcat/kwprocessor">here</a>，必须手动安装。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/hashcat/kwprocessor
+Tanin@htb[/htb]$ cd kwprocessor
+Tanin@htb[/htb]$ make
+</code></pre>
+<p>帮助菜单显示了kwp支持的各种选项。该模式基于用户可以在键盘上选择的地理方向。例如，“–keywalk west”选项用于指定从基本角色向西移动。该程序将基本字符作为参数，这是模式开始时的字符集。接下来，它需要一个键映射，它映射特定语言键盘布局上键的位置。最后一个选项用于指定要使用的路线。路由是一种由密码遵循的模式。它定义了密码的形成方式，从基本字符开始。例如，路线222可以表示从基本字符开始的路径2<em>EAST+2</em>SOUTH+2*WEST。如果基本字符被认为是“T”，那么路由生成的密码将是美国密钥映射上的“TYUJNBV”。有关更多信息，请参阅kwprocessor的自述文件 <a target="_blank" rel="noopener" href="https://github.com/hashcat/kwprocessor#routes">README</a> 。</p>
+<h4 id="Kwprocessor-Example"><a href="#Kwprocessor-Example" class="headerlink" title="Kwprocessor - Example"></a>Kwprocessor - Example</h4><pre><code class="shell-session">Tanin@htb[/htb]$ kwp -s 1 basechars/full.base keymaps/en-us.keymap  routes/2-to-10-max-3-direction-changes.route
+</code></pre>
+<p>上面的命令生成字符可到达的单词，同时按住shift（-s），使用全基、标准en-us键映射和3个方向更改路线。</p>
+<h2 id="CeWL"><a href="#CeWL" class="headerlink" title="CeWL"></a>CeWL</h2><p><a target="_blank" rel="noopener" href="https://github.com/digininja/CeWL">CeWL</a>是另一个可用于创建自定义单词列表的工具。它抓取一个网站，并创建一个现有单词列表。这种单词列表是有效的，因为人们倾向于使用与他们所写或操作的内容相关的密码。例如，一个写关于自然、野生动物等博客的博主可能有一个与这些主题相关联的密码。这是由于人性使然，因为这样的密码也很容易记住。组织通常有与其品牌和行业特定词汇相关的密码。例如，网络公司的用户可能拥有由路由器、交换机、服务器等单词组成的密码。这些单词可以在他们的网站上的博客、推荐信和产品描述中找到。</p>
+<h4 id="CeWL-Syntax"><a href="#CeWL-Syntax" class="headerlink" title="CeWL - Syntax"></a>CeWL - Syntax</h4><pre><code class="shell-session">Tanin@htb[/htb]$ cewl -d &lt;depth to spider&gt; -m &lt;minimum word length&gt; -w &lt;output wordlist&gt; &lt;url of website&gt;
+</code></pre>
+<p>CeWL可以抓取给定网站上的多个页面。输出单词的长度可以使用“-m”参数更改，具体取决于密码要求（即，一些网站的密码长度最小）。 CeWL还支持使用“-e”选项从网站中提取电子邮件。在以后进行网络钓鱼、密码喷洒或暴力强制密码时，获取这些信息很有帮助。</p>
+<p>CeWL - Example</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cewl -d 5 -m 8 -e http://inlanefreight.com/blog -w wordlist.txt
+</code></pre>
+<p>上面的命令从“<a target="_blank" rel="noopener" href="http://inlanefreight.com/blog%E2%80%9D%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%BB%85%E5%8C%85%E6%8B%AC%E9%95%BF%E5%BA%A6%E5%A4%A7%E4%BA%8E8%E7%9A%84%E5%8D%95%E8%AF%8D%E3%80%82">http://inlanefreight.com/blog”，并且仅包括长度大于8的单词。</a></p>
+<h2 id="Hashcat-utils"><a href="#Hashcat-utils" class="headerlink" title="Hashcat-utils"></a>Hashcat-utils</h2><p>Hashcat utils  <a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat-utils">repo</a>包含许多实用程序，这些实用程序可用于更高级的密码破解。例如，<a target="_blank" rel="noopener" href="https://github.com/hashcat/maskprocessor">maskprocessor</a>工具可以用于使用给定的掩码创建单词列表。此工具的详细用法可在此处<a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=maskprocessor">here</a>找到。 例如，maskprocessor可以用于将所有特殊字符附加到单词的末尾：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ /mp64.bin Welcome?s
+Welcome 
+Welcome!
+Welcome&quot;
+Welcome#
+Welcome$
+Welcome%
+Welcome&amp;
+Welcome&#39;
+Welcome(
+Welcome)
+Welcome*
+Welcome+
+
+&lt;SNIP&gt;
+</code></pre>
+<h1 id="Working-with-Rules"><a href="#Working-with-Rules" class="headerlink" title="Working with Rules"></a>Working with Rules</h1><p>基于规则的攻击是最先进、最复杂的密码破解模式。规则有助于对输入单词列表执行各种操作，如前缀、后缀、大小写切换、剪切、反转等等。规则将基于面具的攻击提升到另一个级别，并提供更高的破解率。此外，规则的使用节省了磁盘空间和由于较大的单词列表而产生的处理时间。 可以使用函数创建规则，这些函数将单词作为输入并输出其修改后的版本。下表描述了一些与JtR以及Hashcat兼容的函数。</p>
+<table>
+<thead>
+<tr>
+<th><strong>Function</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Input</strong></th>
+<th><strong>Output</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>l</td>
+<td>Convert all letters to lowercase</td>
+<td>InlaneFreight2020</td>
+<td>inlanefreight2020</td>
+</tr>
+<tr>
+<td>u</td>
+<td>Convert all letters to uppercase</td>
+<td>InlaneFreight2020</td>
+<td>INLANEFREIGHT2020</td>
+</tr>
+<tr>
+<td>c &#x2F; C</td>
+<td>capitalize &#x2F; lowercase first letter and invert the rest</td>
+<td>inlaneFreight2020 &#x2F; Inlanefreight2020</td>
+<td>Inlanefreight2020 &#x2F; iNLANEFREIGHT2020</td>
+</tr>
+<tr>
+<td>t &#x2F; TN</td>
+<td>Toggle case : whole word &#x2F; at position N</td>
+<td>InlaneFreight2020</td>
+<td>iNLANEfREIGHT2020</td>
+</tr>
+<tr>
+<td>d &#x2F; q &#x2F; zN &#x2F; ZN</td>
+<td>Duplicate word &#x2F; all characters &#x2F; first character &#x2F; last character</td>
+<td>InlaneFreight2020</td>
+<td>InlaneFreight2020InlaneFreight2020 &#x2F; IInnllaanneeFFrreeiigghhtt22002200 &#x2F; IInlaneFreight2020 &#x2F; InlaneFreight20200</td>
+</tr>
+<tr>
+<td>{ &#x2F; }</td>
+<td>Rotate word left &#x2F; right</td>
+<td>InlaneFreight2020</td>
+<td>nlaneFreight2020I &#x2F; 0InlaneFreight202</td>
+</tr>
+<tr>
+<td>^X &#x2F; $X</td>
+<td>Prepend &#x2F; Append character X</td>
+<td>InlaneFreight2020 (^! &#x2F; $! )</td>
+<td>!InlaneFreight2020 &#x2F; InlaneFreight2020!</td>
+</tr>
+<tr>
+<td>r</td>
+<td>Reverse</td>
+<td>InlaneFreight2020</td>
+<td>0202thgierFenalnI</td>
+</tr>
+</tbody></table>
+<p>函数的完整列表可以在这里找到 <a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=rule_based_attack#implemented_compatible_functions">here</a>。有时，输入单词列表包含与我们的目标规范不匹配的单词。例如，公司的密码策略可能不允许用户设置长度小于7个字符的密码。在这种情况下，可以使用拒绝规则来阻止对此类单词的处理。 长度小于N的单词可以用&gt;N拒绝，而长度大于N的单词则可以用&lt;N拒绝。拒绝规则的列表可以在这里找到<a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=rule_based_attack#rules_used_to_reject_plains">here</a>。</p>
+<blockquote>
+<p> 注意：拒绝规则只适用于hashcat遗留版本，或者在hashcat中使用-j或-k时使用。它们将不能作为常规规则（在规则文件中）与Hashcat一起工作。</p>
+</blockquote>
+<p>通常的用户行为表明，他们倾向于用类似的数字替换字母，比如“o”可以用“0”替换，或者“i”可以用”1“替换。这通常被称为L33语音，非常有效。公司密码通常以年份为前缀或附加年份。让我们创建一个规则来生成这样的单词。</p>
+<h4 id="Create-a-Rule-File"><a href="#Create-a-Rule-File" class="headerlink" title="Create a Rule File"></a>Create a Rule File</h4><pre><code class="shell-session">Tanin@htb[/htb]$ echo &#39;c so0 si1 se3 ss5 sa@ $2 $0 $1 $9&#39; &gt; rule.txt
+</code></pre>
+<p>第一个字母的单词用c函数大写。然后规则使用替换函数s将o替换为0，将i替换为1，将e替换为3，将a替换为@。最后，2019年被附加到它后面。将规则复制到一个文件中，以便我们可以调试它。</p>
+<p>可以使用“-r”标志来指定规则，然后使用单词列表来调试规则。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -r rule.txt test.txt --stdout
+
+P@55w0rd_1lfr31ght2019
+</code></pre>
+<p>我们能够用我们的自定义规则和rockyou.txt破解哈希。Hashcat支持重复使用-r标志来使用多规则。默认情况下，Hashcat使用各种规则进行。它们可以在规则文件夹中找到。</p>
+<h4 id="Hashcat-Default-Rules"><a href="#Hashcat-Default-Rules" class="headerlink" title="Hashcat - Default Rules"></a>Hashcat - Default Rules</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ls -l /usr/share/hashcat/rules/
+
+total 2576
+-rw-r--r-- 1 root root    933 Jun 19 06:20 best64.rule
+-rw-r--r-- 1 root root    633 Jun 19 06:20 combinator.rule
+-rw-r--r-- 1 root root 200188 Jun 19 06:20 d3ad0ne.rule
+-rw-r--r-- 1 root root 788063 Jun 19 06:20 dive.rule
+-rw-r--r-- 1 root root 483425 Jun 19 06:20 generated2.rule
+-rw-r--r-- 1 root root  78068 Jun 19 06:20 generated.rule
+drwxr-xr-x 1 root root   2804 Jul  9 21:01 hybrid
+-rw-r--r-- 1 root root 309439 Jun 19 06:20 Incisive-leetspeak.rule
+-rw-r--r-- 1 root root  35280 Jun 19 06:20 InsidePro-HashManager.rule
+-rw-r--r-- 1 root root  19478 Jun 19 06:20 InsidePro-PasswordsPro.rule
+-rw-r--r-- 1 root root    298 Jun 19 06:20 leetspeak.rule
+-rw-r--r-- 1 root root   1280 Jun 19 06:20 oscommerce.rule
+-rw-r--r-- 1 root root 301161 Jun 19 06:20 rockyou-30000.rule
+-rw-r--r-- 1 root root   1563 Jun 19 06:20 specific.rule
+-rw-r--r-- 1 root root  64068 Jun 19 06:20 T0XlC-insert_00-99_1950-2050_toprules_0_F.rule
+-rw-r--r-- 1 root root   2027 Jun 19 06:20 T0XlC-insert_space_and_special_0_F.rule
+-rw-r--r-- 1 root root  34437 Jun 19 06:20 T0XlC-insert_top_100_passwords_1_G.rule
+-rw-r--r-- 1 root root  34813 Jun 19 06:20 T0XlC.rule
+-rw-r--r-- 1 root root 104203 Jun 19 06:20 T0XlCv1.rule
+-rw-r--r-- 1 root root     45 Jun 19 06:20 toggles1.rule
+-rw-r--r-- 1 root root    570 Jun 19 06:20 toggles2.rule
+-rw-r--r-- 1 root root   3755 Jun 19 06:20 toggles3.rule
+-rw-r--r-- 1 root root  16040 Jun 19 06:20 toggles4.rule
+-rw-r--r-- 1 root root  49073 Jun 19 06:20 toggles5.rule
+-rw-r--r-- 1 root root  55346 Jun 19 06:20 unix-ninja-leetspeak.rule
+</code></pre>
+<p>还有各种公开的规则，如<a target="_blank" rel="noopener" href="https://github.com/NSAKEY/nsa-rules">nsa-rules</a>、 <a target="_blank" rel="noopener" href="https://github.com/praetorian-code/Hob0Rules">Hob0Rules</a>和《 <a target="_blank" rel="noopener" href="https://www.hacklikeapornstar.com/new-release-hack-like-legend/">How to Hack Like a Legend</a>》一书中的 <a target="_blank" rel="noopener" href="https://github.com/sparcflow/HackLikeALegend/blob/master/old/chap3/corporate.rule">corporate.rule</a>。这些是精心策划的规则集，通常针对常见的公司Windows密码策略，或者基于统计数据和可能的行业密码模式。</p>
+<h2 id="practice-4"><a href="#practice-4" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>使用生成自定义规则所教的技术破解以下SHA1哈希：46244749d1e8fb99c37ad4f14fccb601ed4ae283。修改本节开头的示例规则，将2020附加到每次密码尝试的末尾。</p>
+</blockquote>
+<pre><code>┌──(root㉿Tanin)-[/home/tanin/test]
+└─# echo &#39;c so0 si1 se3 ss5 sa@ $2 $0 $2 $0&#39; &gt; rule.txt
+                                                                                                         
+┌──(root㉿Tanin)-[/home/tanin/test]
+└─# hashcat -a 0 -m 100 46244749d1e8fb99c37ad4f14fccb601ed4ae283 /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt -r  rule.txt     
+
+&lt;snip&gt;
+46244749d1e8fb99c37ad4f14fccb601ed4ae283:R@c3c@r2020  
+</code></pre>
+<h1 id="Cracking-Common-Hashes"><a href="#Cracking-Common-Hashes" class="headerlink" title="Cracking Common Hashes"></a>Cracking Common Hashes</h1><h2 id="Example-1-Database-Dumps"><a href="#Example-1-Database-Dumps" class="headerlink" title="Example 1 - Database Dumps"></a>Example 1 - Database Dumps</h2><p>MD5、SHA1和bcrypt散列经常出现在数据库转储中。这些散列可以在成功的SQL注入攻击后检索，也可以在公开的密码数据泄露数据库转储中找到。MD5和SHA1通常比bcrypt更容易破解，bcrypt可能应用了许多轮Blowfish算法。 让我们破解一些SHA1散列。请选择以下列表：</p>
+<h4 id="SHA1-Hashes-List"><a href="#SHA1-Hashes-List" class="headerlink" title="SHA1 Hashes List"></a>SHA1 Hashes List</h4><pre><code class="shell-session">winter!
+baseball1
+waterslide
+summertime
+baconandeggs
+beach1234
+sunshine1
+welcome1
+password123
+</code></pre>
+<p>我们可以快速创建每个单词的SHA1：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ for i in $(cat words); do echo -n $i | sha1sum | tr -d &#39; -&#39;;done
+
+fa3c9ecfc251824df74026b4f40e4b373fd4fc46
+e6852777c0260493de41fb43918ab07bbb3a659c
+0c3feaa16f73493f998970e22b2a02cb9b546768
+b863c49eada14e3a8816220a7ab7054c28693664
+b0feedd70a346f7f75086026169825996d7196f9
+f47f832cba913ec305b07958b41babe2e0ad0437
+08b314f0e1e2c41ec92c3735910658e5a82c6ba7
+e35bece6c5e6e0e86ca51d0440e92282a9d6ac8a
+cbfdac6008f9cab4083784cbd1874f76618d2a97
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -m 100 SHA1_hashes /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+</code></pre>
+<h2 id="Example-2-Linux-Shadow-File"><a href="#Example-2-Linux-Shadow-File" class="headerlink" title="Example 2 - Linux Shadow File"></a>Example 2 - Linux Shadow File</h2><p>Sha512crypt散列通常出现在Linux系统上的&#x2F;etc&#x2F;shadow文件中。该文件包含所有帐户的密码哈希，并为其分配了登录外壳。在渗透测试期间，我们可能会通过web应用程序攻击或成功利用易受攻击的服务来访问Linux系统。我们可能会利用已经在最高特权根帐户的上下文中运行的服务进行攻击，并成功执行权限提升攻击并访问&#x2F;etc&#x2F;shadow文件。密码重复使用现象普遍。破解的密码可能会让我们访问其他服务器、网络设备，甚至被用作目标Active Directory环境的立足点。 让我们来看看标准Ubuntu安装的散列。以下哈希对应的明文为“password123”。 Ubuntu Linux中的根密码</p>
+<h4 id="Root-Password-in-Ubuntu-Linux"><a href="#Root-Password-in-Ubuntu-Linux" class="headerlink" title="Root Password in Ubuntu Linux"></a>Root Password in Ubuntu Linux</h4><pre><code class="shell-session">root:$6$tOA0cyybhb/Hr7DN$htr2vffCWiPGnyFOicJiXJVMbk1muPORR.eRGYfBYUnNPUjWABGPFiphjIjJC5xPfFUASIbVKDAHS3vTW1qU.1:18285:0:99999:7:::
+</code></pre>
+<p>哈希包含九个用冒号分隔的字段。前两个字段包含用户名及其加密的哈希。其余字段包含各种属性，如密码创建时间、上次更改时间和到期时间。 谈到散列，我们已经知道它包含三个由“$”分隔的字段。值“6”代表SHA-512散列算法；接下来的16个字符表示salt，而其余的是实际的hash。 让我们使用Hashcat破解这个散列。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -m 1800 nix_hash /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+
+hashcat (v6.1.1) starting...
+&lt;SNIP&gt;
+
+$6$tOA0cyybhb/Hr7DN$htr2vffCWiPGnyFOicJiXJVMbk1muPORR.eRGYfBYUnNPUjWABGPFiphjIjJC5xPfFUASIbVKDAHS3vTW1qU.1:password123
+ 
+</code></pre>
+<h2 id="Example-3-Common-Active-Directory-Password-Hash-Types"><a href="#Example-3-Common-Active-Directory-Password-Hash-Types" class="headerlink" title="Example 3 - Common Active Directory Password Hash Types"></a>Example 3 - Common Active Directory Password Hash Types</h2><p>凭据盗窃和密码重复使用是针对使用Active Directory管理其环境的组织进行评估时普遍采用的策略。通过传递哈希或SMB中继攻击，通常可以获得明文中的凭据或重复使用密码哈希来进一步访问。尽管如此，一些技术还是会导致密码哈希，必须离线破解才能进一步访问。一些示例包括通过中间人（MITM）攻击获得的NetNTLMv1或NetNTLMv2，通过Kerberoasting攻击获得的Kerberos 5 TGS-REP哈希，或通过使用Mimikatz工具从内存转储凭据或从Windows机器的本地SAM数据库获得的NTLM哈希。</p>
+<h4 id="NTLM"><a href="#NTLM" class="headerlink" title="NTLM"></a>NTLM</h4><p>一个示例是为具有服务器远程桌面（RDP）访问权限但不是本地管理员的用户检索NTLM密码哈希，因此NTLM哈希不能用于通过哈希攻击来获得访问权限。在这种情况下，明文密码对于通过RDP连接到服务器并在网络中执行进一步枚举或寻找本地权限提升向量来进一步访问是必要的。 让我们走过一个例子。我们可以使用3行Python快速生成密码“Password01”的NTLM哈希：</p>
+<h4 id="Python3-Hashlib"><a href="#Python3-Hashlib" class="headerlink" title="Python3 - Hashlib"></a>Python3 - Hashlib</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python3
+
+Python 3.8.3 (default, May 14 2020, 11:03:12) 
+[GCC 9.3.0] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+
+&gt;&gt;&gt; import hashlib,binascii
+&gt;&gt;&gt; hash = hashlib.new(&#39;md4&#39;, &quot;Password01&quot;.encode(&#39;utf-16le&#39;)).digest()
+&gt;&gt;&gt; print (binascii.hexlify(hash))
+
+b&#39;7100a909c7ff05b266af3c42ec058c33&#39;
+</code></pre>
+<h4 id="Hashcat-Cracking-NTLM-Hashes"><a href="#Hashcat-Cracking-NTLM-Hashes" class="headerlink" title="Hashcat - Cracking NTLM Hashes"></a>Hashcat - Cracking NTLM Hashes</h4><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -a 0 -m 1000 ntlm_example /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+</code></pre>
+<h4 id="NetNTLMv2"><a href="#NetNTLMv2" class="headerlink" title="NetNTLMv2"></a>NetNTLMv2</h4><p>在渗透测试期间，通常会运行<a target="_blank" rel="noopener" href="https://github.com/lgandx/Responder">Responder</a> 等工具来执行MITM攻击，试图“窃取”凭据。其他模块将深入介绍这些类型的攻击。在繁忙的公司网络中，使用此方法检索许多NetNTLMv2密码哈希是很常见的。这些通常可以被破解和利用，以在Active Directory环境中建立立足点，有时甚至可以获得对许多或所有系统的完全管理访问权限，这取决于授予与密码哈希相关联的用户帐户的权限。请考虑以下在评估开始时使用响应程序检索的密码哈希：</p>
+<h4 id="Responder-NTLMv2"><a href="#Responder-NTLMv2" class="headerlink" title="Responder - NTLMv2"></a>Responder - NTLMv2</h4><pre><code class="shell-session">sqladmin::INLANEFREIGHT:f54d6f198a7a47d4:7FECABAE13101DAAA20F1B09F7F7A4EA:0101000000000000C0653150DE09D20126F3F71DF13C1FD8000000000200080053004D004200330001001E00570049004E002D00500052004800340039003200520051004100460056000400140053004D00420033002E006C006F00630061006C0003003400570049004E002D00500052004800340039003200520051004100460056002E0053004D00420033002E006C006F00630061006C000500140053004D00420033002E006C006F00630061006C0007000800C0653150DE09D201060004000200000008003000300000000000000000000000003000001A67637962F2B7BF297745E6074934196D5F4371B6BA3E796F2997306FD4C1C00A001000000000000000000000000000000000000900280063006900660073002F003100390032002E003100360038002E003100390035002E00310037003000000000000000000000000000
+</code></pre>
+<pre><code class="shell-session">hashcat -a 0 -m 5600 inlanefreight_ntlmv2 /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+</code></pre>
+<h1 id="Cracking-Miscellaneous-Files-amp-Hashes"><a href="#Cracking-Miscellaneous-Files-amp-Hashes" class="headerlink" title="Cracking Miscellaneous Files &amp; Hashes"></a>Cracking Miscellaneous Files &amp; Hashes</h1><p>在渗透测试和其他评估过程中，通常会遇到受密码保护的文档，如Microsoft Word和Excel文档、OneNote笔记本、KeePass数据库文件、SSH私钥密码、PDF文件、zip（和其他存档格式）文件等。这些散列中的大多数可以通过Hashcat运行，以尝试破解散列。</p>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><p>有各种工具可以帮助我们以Hashcat可以理解的格式从这些文件中提取密码哈希。密码破解工具JohnTheRipper附带了许多用C编写的工具，这些工具在安装JohnTherippler或从其源代码编译时可用。它们可以在这里 <a target="_blank" rel="noopener" href="https://github.com/magnumripper/JohnTheRipper/tree/bleeding-jumbo/src">here</a>查看。要使用这些工具，我们需要对它们进行编译。</p>
+<h4 id="JohnTheRipper-Installation"><a href="#JohnTheRipper-Installation" class="headerlink" title="JohnTheRipper - Installation"></a>JohnTheRipper - Installation</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo git clone https://github.com/magnumripper/JohnTheRipper.git
+Tanin@htb[/htb]$ cd JohnTheRipper/src
+Tanin@htb[/htb]$ sudo ./configure &amp;&amp; make
+</code></pre>
+<h2 id="Example-1-Cracking-Password-Protected-Microsoft-Office-Documents"><a href="#Example-1-Cracking-Password-Protected-Microsoft-Office-Documents" class="headerlink" title="Example 1 - Cracking Password Protected Microsoft Office Documents"></a>Example 1 - Cracking Password Protected Microsoft Office Documents</h2><p>Hashcat可用于尝试使用office2john.py工具破解从某些Microsoft Office文档中提取的密码哈希。 Hashcat为Microsoft Office文档支持以下哈希模式：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Mode</strong></th>
+<th><strong>Target</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>9400</code></td>
+<td>MS Office 2007</td>
+</tr>
+<tr>
+<td><code>9500</code></td>
+<td>MS Office 2010</td>
+</tr>
+<tr>
+<td><code>9600</code></td>
+<td>MS Office 2013</td>
+</tr>
+</tbody></table>
+<p>对于2003年以前的MS Office文档，还有几种“$oldoffice$”哈希模式。让我们取一个受密码“pa55word”保护的Word文档。我们可以首先使用office2john.py从文档中提取哈希。</p>
+<h4 id="Extract-Hash"><a href="#Extract-Hash" class="headerlink" title="Extract Hash"></a>Extract Hash</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python office2john.py hashcat_Word_example.docx 
+
+hashcat_Word_example.docx:$office$*2013*100000*256*16*6e059661c3ed733f5730eaabb41da13a*aa38e007ee01c07e4fe95495934cf68f*2f1e2e9bf1f0b320172cd667e02ad6be1718585b6594691907b58191a6
+</code></pre>
+<p>然后，我们可以使用9600模式通过Hashcat运行哈希，并使用rockyou.txt单词列表对其进行简短的处理。</p>
+<h4 id="Hashcat-Cracking-MS-Office-Passwords"><a href="#Hashcat-Cracking-MS-Office-Passwords" class="headerlink" title="Hashcat - Cracking MS Office Passwords"></a>Hashcat - Cracking MS Office Passwords</h4><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -m 9600 office_hash /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+</code></pre>
+<h2 id="Example-2-Cracking-Password-Protected-Zip-Files"><a href="#Example-2-Cracking-Password-Protected-Zip-Files" class="headerlink" title="Example 2 - Cracking Password Protected Zip Files"></a>Example 2 - Cracking Password Protected Zip Files</h2><p>在评估过程中，我们可能会发现一个有趣的zip文件，但它是受密码保护的！我们可以使用zip2john工具的编译版本来提取这些散列。Hashcat支持多种压缩文件格式，例如：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Mode</strong></th>
+<th><strong>Target</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>11600</code></td>
+<td>7-Zip</td>
+</tr>
+<tr>
+<td><code>13600</code></td>
+<td>WinZip</td>
+</tr>
+<tr>
+<td><code>17200</code></td>
+<td>PKZIP (Compressed)</td>
+</tr>
+<tr>
+<td><code>17210</code></td>
+<td>PKZIP (Uncompressed)</td>
+</tr>
+<tr>
+<td><code>17220</code></td>
+<td>PKZIP (Compressed Multi-File)</td>
+</tr>
+<tr>
+<td><code>17225</code></td>
+<td>PKZIP (Mixed Multi-File)</td>
+</tr>
+<tr>
+<td><code>17230</code></td>
+<td>PKZIP (Compressed Multi-File Checksum-Only)</td>
+</tr>
+<tr>
+<td><code>23001</code></td>
+<td>SecureZIP AES-128</td>
+</tr>
+<tr>
+<td><code>23002</code></td>
+<td>SecureZIP AES-192</td>
+</tr>
+<tr>
+<td><code>23003</code></td>
+<td>SecureZIP AES-256</td>
+</tr>
+</tbody></table>
+<h4 id="Set-Password-for-a-ZIP-File"><a href="#Set-Password-for-a-ZIP-File" class="headerlink" title="Set Password for a ZIP File"></a>Set Password for a ZIP File</h4><pre><code class="shell-session">Tanin@htb[/htb]$ zip --password zippyzippy blueprints.zip dummy.pdf 
+
+adding: dummy.pdf (deflated 7%)
+</code></pre>
+<p>然后，我们可以使用zip2john的编译版本以可以通过Hashcat运行的格式提取哈希。</p>
+<h4 id="Extract-Hash-1"><a href="#Extract-Hash-1" class="headerlink" title="Extract Hash"></a>Extract Hash</h4><pre><code class="shell-session">Tanin@htb[/htb]$ zip2john ~/Desktop/HTB/Academy/Cracking\ with\ Hashcat/blueprints.zip 
+</code></pre>
+<p>我们可以从该散列中看出，这是模式17200-PKZIP（压缩）。要通过Hashcat运行此操作，我们需要从$pkzip2$1开始并以&#x2F;pkzip2$结束的整个哈希。有了散列，让我们使用直接字典攻击的Hashcat来运行它。</p>
+<h4 id="Hashcat-Cracking-ZIP-Files"><a href="#Hashcat-Cracking-ZIP-Files" class="headerlink" title="Hashcat - Cracking ZIP Files"></a>Hashcat - Cracking ZIP Files</h4><pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -a 0 -m 17200 pdf_hash_to_crack /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+</code></pre>
+<h2 id="Example-4-Cracking-Protected-PDF-Files"><a href="#Example-4-Cracking-Protected-PDF-Files" class="headerlink" title="Example 4 - Cracking Protected PDF Files"></a>Example 4 - Cracking Protected PDF Files</h2><p>本节的最后一个示例主要介绍受密码保护的PDF文档。与其他文件类型一样，如果我们获得访问权限，我们经常会在工作站、文件共享甚至用户的电子邮件收件箱中遇到受密码保护的PDF（仔细阅读用户的电子邮件以获取敏感信息属于您的参与范围）。 我们可以使用pdf2john.py提取密码短语的哈希。下面的命令将把哈希提取成Hashcat可以使用的格式。</p>
+<table>
+<thead>
+<tr>
+<th><strong>Mode</strong></th>
+<th><strong>Target</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>10400</code></td>
+<td>PDF 1.1 - 1.3 (Acrobat 2 - 4)</td>
+</tr>
+<tr>
+<td><code>10410</code></td>
+<td>PDF 1.1 - 1.3 (Acrobat 2 - 4), collider #1</td>
+</tr>
+<tr>
+<td><code>10420</code></td>
+<td>PDF 1.1 - 1.3 (Acrobat 2 - 4), collider #2</td>
+</tr>
+<tr>
+<td><code>10500</code></td>
+<td>PDF 1.4 - 1.6 (Acrobat 5 - 8)</td>
+</tr>
+<tr>
+<td><code>10600</code></td>
+<td>PDF 1.7 Level 3 (Acrobat 9)</td>
+</tr>
+<tr>
+<td><code>10700</code></td>
+<td>PDF 1.7 Level 8 (Acrobat 10 - 11)</td>
+</tr>
+</tbody></table>
+<h1 id="Cracking-Wireless-WPA-x2F-WPA2-Handshakes-with-Hashcat"><a href="#Cracking-Wireless-WPA-x2F-WPA2-Handshakes-with-Hashcat" class="headerlink" title="Cracking Wireless (WPA&#x2F;WPA2) Handshakes with Hashcat"></a>Cracking Wireless (WPA&#x2F;WPA2) Handshakes with Hashcat</h1><p>另一个例子是无线安全评估。客户经常要求进行无线评估，作为内部渗透测试参与的一部分。虽然无线并不总是最令人兴奋的，但如果您能够捕获WPA&#x2F;WPA2握手，它可能会变得有趣。无线网络通常没有与公司的公司网络适当地划分，并且对无线网络的成功认证可能会授予对内部公司网络的完全访问。 Hashcat可用于成功破解MIC（4次握手）和PMKID（第一次数据包&#x2F;握手）。</p>
+<h2 id="Cracking-MIC"><a href="#Cracking-MIC" class="headerlink" title="Cracking MIC"></a>Cracking MIC</h2><p>当连接到无线网络的客户端和无线接入点（AP）进行通信时，它们必须确保它们都具有&#x2F;知道无线网络密钥，但没有在网络上传输密钥。密钥由AP进行加密和验证。 要执行这种类型的离线破解攻击，我们需要通过发送去身份验证帧来捕获有效的4路握手，以迫使客户端（用户）与AP断开连接。当客户端重新进行身份验证（通常是自动的）时，攻击者可以在不知情的情况下尝试探查WPA 4路握手。此握手是在客户端和相关联的AP之间的身份验证过程中交换的密钥的集合。注意：无线攻击超出了本模块的范围，但将在其他模块中涵盖。 这些密钥用于生成一个称为消息完整性检查（MIC）的公共密钥，AP使用该密钥来验证每个数据包是否未被泄露并以其原始状态接收。 下图显示了4次握手：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307131112254.png" alt="image"></p>
+<p>一旦我们使用 <a target="_blank" rel="noopener" href="https://www.aircrack-ng.org/doku.php?id=airodump-ng">airodump-ng</a>等工具成功捕获了4次握手，我们就需要将其转换为可以提供给Hashcat进行破解的格式。所需的格式是hccapx，Hashcat托管一个在线服务以转换为这种格式（不建议用于实际的客户端数据，但适用于实验室&#x2F;实践练习）：<a target="_blank" rel="noopener" href="https://hashcat.net/cap2hashcat">cap2hashcat online</a>。为了离线执行转换，我们需要来自GitHub的hashcat utils repo。 我们可以克隆repo并编译该工具，如下所示：</p>
+<h4 id="Hashcat-Utils-Installation"><a href="#Hashcat-Utils-Installation" class="headerlink" title="Hashcat-Utils - Installation"></a>Hashcat-Utils - Installation</h4><pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/hashcat/hashcat-utils.git
+Tanin@htb[/htb]$ cd hashcat-utils/src
+Tanin@htb[/htb]$ make
+</code></pre>
+<h4 id="Cap2hccapx-Syntax"><a href="#Cap2hccapx-Syntax" class="headerlink" title="Cap2hccapx - Syntax"></a>Cap2hccapx - Syntax</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ./cap2hccapx.bin 
+</code></pre>
+<h4 id="Cap2hccapx-Convert-To-Crackable-File"><a href="#Cap2hccapx-Convert-To-Crackable-File" class="headerlink" title="Cap2hccapx - Convert To Crackable File"></a>Cap2hccapx - Convert To Crackable File</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ./cap2hccapx.bin corp_capture1-01.cap mic_to_crack.hccapx
+</code></pre>
+<p>有了这个文件，我们就可以使用本模块前面讨论的一种或多种技术进行破解。对于这个例子，我们将执行一个直接的字典攻击来破解WPA握手。为了尝试破解这个散列，我们将使用模式22000，因为之前的模式2500已经被弃用。我们破解这个散列的命令看起来像<code>hashcat-a 0-m 22000 mic_to_rack.hcapx/opt/utille/SecLists/Passwords/Leaked Databases/rockyo.txt</code>。</p>
+<h2 id="Cracking-PMKID"><a href="#Cracking-PMKID" class="headerlink" title="Cracking PMKID"></a>Cracking PMKID</h2><p>这种攻击可以针对使用WPA&#x2F;WPA2-PSK（预共享密钥）的无线网络执行，并允许我们通过直接攻击AP来获得目标无线网络正在使用的PSK。该攻击不需要对目标AP的任何用户进行身份验证（deauth）。PMK与MIC（4路握手）攻击中的相同，但通常可以更快地获得，并且不会中断任何用户。 成对主密钥标识符（PMKID）是AP的唯一标识符，用于跟踪客户端使用的成对主密钥（PMK）。PMKID位于4次握手的第一个分组中，并且由于它不需要捕获整个4次握手，因此可以更容易地获得。PMKID是用HMAC-SHA1计算的，PMK（无线网络密码）用作密钥，字符串“PMK名称”，接入点的MAC地址和站点的MAC地址。以下是PMKID计算的可视化表示：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307131115060.png" alt="image"></p>
+<p>要执行PMKID破解，我们需要获得PMKID哈希。第一步是使用诸如hcxtools中的hcxpcaptol之类的工具从capture（.cap）文件中提取它。我们可以使用apt:sudo-apt-install-hcxtools在Parrot上安装hcxtools。</p>
+<p>注意：该工具已被hcxpcapngtool取代，我们可以直接从 <a target="_blank" rel="noopener" href="https://github.com/ZerBea/hcxtools">hcxtools GitHub repo</a>编译和安装该工具。</p>
+<h4 id="Extract-PMKID-Using-Hcxpcaptool"><a href="#Extract-PMKID-Using-Hcxpcaptool" class="headerlink" title="Extract PMKID - Using Hcxpcaptool"></a>Extract PMKID - Using Hcxpcaptool</h4><pre><code class="shell-session">Tanin@htb[/htb]$ hcxpcaptool -z pmkidhash_corp cracking_pmkid.cap 
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hcxpcaptool -z pmkidhash_corp cracking_pmkid.cap 
+</code></pre>
+<p>我们将再次执行直接字典攻击，试图破解WPA握手。为了尝试破解此哈希，我们将再次使用模式22000，因为之前的模式16800也已被取消创建。在这里，我们的命令的格式是<code>hashcat-a 0-m 22000 pmkidhash_corp/opt/helper/SecLists/Passwords/Leaked Databases/rockyou.txt</code>。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashcat -a 0 -m 22000 pmkidhash_corp /opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt
+</code></pre>
+<p>或者，我们可以将hcxtools repo克隆到我们自己的VM中，编译和安装，然后使用工具hcxpcapngtool执行类似的步骤。</p>
+<h4 id="Hcxtools-Installation"><a href="#Hcxtools-Installation" class="headerlink" title="Hcxtools - Installation"></a>Hcxtools - Installation</h4><pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/ZerBea/hcxtools.git
+Tanin@htb[/htb]$ cd hcxtools
+Tanin@htb[/htb]$ make &amp;&amp; make install
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hcxpcapngtool cracking_pmkid.cap -o pmkidhash_corp2
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
