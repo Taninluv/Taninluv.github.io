@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00bcd4>
+                <a href="/tags/base" style=color:#ffa2c4>
                     base
                 </a>
             </span>
@@ -201,6 +201,8 @@
 
     <div class="content" v-pre>
         <h1 id="Path-Abuse"><a href="#Path-Abuse" class="headerlink" title="Path Abuse"></a>Path Abuse</h1><p>如果我们可以修改用户的路径，我们可以用恶意脚本（如反向shell）替换常见的二进制文件（如ls）。如果我们加上。通过发出命令path&#x3D;.：$PATH，然后导出PATH，我们将能够通过键入文件名来运行位于当前工作目录中的二进制文件（即，仅键入ls将调用当前工作目录下名为ls的恶意脚本，而不是位于&#x2F;bin&#x2F;ls的二进制文件）。</p>
+<span id="more"></span>
+
 <pre><code class="shell-session">htb_student@NIX02:~$ PATH=.:$&#123;PATH&#125;
 htb_student@NIX02:~$ export PATH
 htb_student@NIX02:~$ echo $PATH
