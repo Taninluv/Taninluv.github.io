@@ -1,0 +1,830 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Linux_Privilege_Escalation-Information Gathering</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Linux_Privilege_Escalation-Information Gathering </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/15
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ffa2c4>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="Environment-Enumeration"><a href="#Environment-Enumeration" class="headerlink" title="Environment Enumeration"></a>Environment Enumeration</h1><p>Linux系统上的根帐户提供对操作系统的完全管理级别访问。在评估过程中，您可能会在Linux主机上获得一个低特权shell，并且需要向根帐户执行权限提升。完全损害主机将使我们能够捕获流量并访问敏感文件，这些文件可能用于在环境中进一步访问。此外，如果Linux计算机已加入域，我们可以获得NTLM哈希并开始枚举和攻击Active Directory。</p>
+<span id="more"></span>
+
+<p>枚举：<a target="_blank" rel="noopener" href="https://github.com/rebootuser/LinEnum">LinEnum</a></p>
+<p>​		 <a target="_blank" rel="noopener" href="https://github.com/carlospolop/PEASS-ng/tree/master/linPEAS">LinPEAS</a></p>
+<h4 id="List-Current-Processes"><a href="#List-Current-Processes" class="headerlink" title="List Current Processes"></a>List Current Processes</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ps aux | grep root
+root         1  1.3  0.1  37656  5664 ?        Ss   23:26   0:01 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    23:26   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    23:26   0:00 [ksoftirqd/0]
+root         4  0.0  0.0      0     0 ?        S    23:26   0:00 [kworker/0:0]
+root         5  0.0  0.0      0     0 ?        S&lt;   23:26   0:00 [kworker/0:0H]
+root         6  0.0  0.0      0     0 ?        S    23:26   0:00 [kworker/u8:0]
+root         7  0.0  0.0      0     0 ?        S    23:26   0:00 [rcu_sched]
+root         8  0.0  0.0      0     0 ?        S    23:26   0:00 [rcu_bh]
+root         9  0.0  0.0      0     0 ?        S    23:26   0:00 [migration/0]
+
+&lt;SNIP&gt;
+</code></pre>
+<p>已安装的软件包和版本：与运行的服务一样，重要的是要检查是否有任何过期或易受攻击的软件包，这些软件包可能很容易用于权限提升。一个例子是Screen，它是一个常见的终端多路复用器（类似于tmux）。它允许您启动一个会话并打开许多窗口或虚拟终端，而不是打开多个终端会话。版本4.05.00存在权限提升漏洞，可轻松利用该漏洞提升权限。 </p>
+<p>已登录用户：了解哪些其他用户已登录系统以及他们正在做什么，可以更深入地了解可能的本地横向移动和权限提升路径。 列出当前进程</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ps au
+
+USER       		PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root      		1256  0.0  0.1  65832  3364 tty1     Ss   23:26   0:00 /bin/login --
+cliff.moore     1322  0.0  0.1  22600  5160 tty1     S    23:26   0:00 -bash
+shared     		1367  0.0  0.1  22568  5116 pts/0    Ss   23:27   0:00 -bash
+root      		1384  0.0  0.1  52700  3812 tty1     S    23:29   0:00 sudo su
+root      		1385  0.0  0.1  52284  3448 tty1     S    23:29   0:00 su
+root      		1386  0.0  0.1  21224  3764 tty1     S+   23:29   0:00 bash
+shared     		1397  0.0  0.1  37364  3428 pts/0    R+   23:30   0:00 ps au
+</code></pre>
+<h4 id="Home-Directory-Contents"><a href="#Home-Directory-Contents" class="headerlink" title="Home Directory Contents"></a>Home Directory Contents</h4><h4 id="Home-Directory-Contents-1"><a href="#Home-Directory-Contents-1" class="headerlink" title="Home Directory Contents"></a>Home Directory Contents</h4><p>我们可以检查各个用户目录，检查诸如.bash_history文件之类的文件是否可读并包含任何有趣的命令，查找配置文件，并检查是否可以获得用户SSH密钥的副本。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ls -la /home/stacey.jenkins/
+
+total 32
+drwxr-xr-x 3 stacey.jenkins stacey.jenkins 4096 Aug 30 23:37 .
+drwxr-xr-x 9 root           root           4096 Aug 30 23:33 ..
+-rw------- 1 stacey.jenkins stacey.jenkins   41 Aug 30 23:35 .bash_history
+-rw-r--r-- 1 stacey.jenkins stacey.jenkins  220 Sep  1  2015 .bash_logout
+-rw-r--r-- 1 stacey.jenkins stacey.jenkins 3771 Sep  1  2015 .bashrc
+-rw-r--r-- 1 stacey.jenkins stacey.jenkins   97 Aug 30 23:37 config.json
+-rw-r--r-- 1 stacey.jenkins stacey.jenkins  655 May 16  2017 .profile
+drwx------ 2 stacey.jenkins stacey.jenkins 4096 Aug 30 23:35 .ssh
+</code></pre>
+<p>如果找到当前用户的SSH密钥，则可以使用该密钥在主机上打开SSH会话（如果SSH在外部公开），并获得稳定且完全交互的会话。SSH密钥也可以用来访问网络中的其他系统。至少，检查ARP缓存以查看正在访问的其他主机，并将这些主机与任何可用的SSH私钥进行交叉引用。</p>
+<h4 id="Bash-History"><a href="#Bash-History" class="headerlink" title="Bash History"></a>Bash History</h4><pre><code class="shell-session">Tanin@htb[/htb]$ history
+
+    1  id
+    2  cd /home/cliff.moore
+    3  exit
+    4  touch backup.sh
+    5  tail /var/log/apache2/error.log
+    6  ssh ec2-user@dmz02.inlanefreight.local
+    7  history
+</code></pre>
+<p>Sudo特权：用户可以以其他用户或root用户的身份运行任何命令吗？如果您没有用户的凭据，则可能无法利用sudo权限。然而，sudoer条目通常包括NOPASSWD，这意味着用户可以在不提示输入密码的情况下运行指定的命令。并非所有命令，即使我们可以以root身份运行，也会导致权限提升。以拥有完全sudo权限的用户身份获得访问权限并不罕见，这意味着他们可以以root用户身份运行任何命令。发出一个简单的sudo-su命令将立即为您提供一个根会话。</p>
+<h4 id="Sudo-List-User’s-Privileges"><a href="#Sudo-List-User’s-Privileges" class="headerlink" title="Sudo - List User’s Privileges"></a>Sudo - List User’s Privileges</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo -l
+
+Matching Defaults entries for sysadm on NIX02:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User sysadm may run the following commands on NIX02:
+    (root) NOPASSWD: /usr/sbin/tcpdump
+</code></pre>
+<p>配置文件：配置文件可以保存丰富的信息。值得在所有以.conf和.config等扩展名结尾的文件中搜索用户名、密码和其他机密。 </p>
+<p>Shadow File：如果Shadow File是可读的，您将能够为所有设置了密码的用户收集密码哈希。虽然这不能保证进一步的访问，但这些哈希可能会受到离线暴力攻击，以恢复明文密码。</p>
+<p> &#x2F;etc&#x2F;passwd中的密码哈希：偶尔，您会直接在&#x2F;etc&#x2F;passwd文件中看到密码哈希。该文件对所有用户都是可读的，与Shadow File中的哈希一样，这些用户可能会受到离线密码破解攻击。这种配置虽然不常见，但有时可以在嵌入式设备和路由器上看到。</p>
+<p>Cron Jobs：Linux系统上的Cron作业类似于Windows计划任务。它们通常用于执行维护和备份任务。结合其他错误配置（如相对路径或弱权限），它们可以在计划的cron作业运行时利用这些错误配置来提升权限。</p>
+<h4 id="Cron-Jobs"><a href="#Cron-Jobs" class="headerlink" title="Cron Jobs"></a>Cron Jobs</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ls -la /etc/cron.daily/
+
+total 60
+drwxr-xr-x  2 root root 4096 Aug 30 23:49 .
+drwxr-xr-x 93 root root 4096 Aug 30 23:47 ..
+-rwxr-xr-x  1 root root  376 Mar 31  2016 apport
+-rwxr-xr-x  1 root root 1474 Sep 26  2017 apt-compat
+-rwx--x--x  1 root root  379 Aug 30 23:49 backup
+-rwxr-xr-x  1 root root  355 May 22  2012 bsdmainutils
+-rwxr-xr-x  1 root root 1597 Nov 27  2015 dpkg
+-rwxr-xr-x  1 root root  372 May  6  2015 logrotate
+-rwxr-xr-x  1 root root 1293 Nov  6  2015 man-db
+-rwxr-xr-x  1 root root  539 Jul 16  2014 mdadm
+-rwxr-xr-x  1 root root  435 Nov 18  2014 mlocate
+-rwxr-xr-x  1 root root  249 Nov 12  2015 passwd
+-rw-r--r--  1 root root  102 Apr  5  2016 .placeholder
+-rwxr-xr-x  1 root root 3449 Feb 26  2016 popularity-contest
+-rwxr-xr-x  1 root root  214 May 24  2016 update-notifier-common
+</code></pre>
+<h4 id="File-Systems-amp-Additional-Drives"><a href="#File-Systems-amp-Additional-Drives" class="headerlink" title="File Systems &amp; Additional Drives"></a>File Systems &amp; Additional Drives</h4><pre><code class="shell-session">Tanin@htb[/htb]$ lsblk
+
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   30G  0 disk 
+├─sda1   8:1    0   29G  0 part /
+├─sda2   8:2    0    1K  0 part 
+└─sda5   8:5    0  975M  0 part [SWAP]
+sr0     11:0    1  848M  0 rom  
+</code></pre>
+<p>SETUID和SETGID权限：二进制文件设置有这些权限，允许用户以root身份运行命令，而无需向用户授予root级别的访问权限。许多二进制文件包含可以用来获取根shell的功能。 </p>
+<p>可写目录：如果您需要将工具下载到系统中，那么发现哪些目录是可写的非常重要。您可能会发现cron jobs放置文件的可写目录，该目录提供了cron作业运行频率的概念，如果cron jobs所运行的脚本也是可写的，则可用于提升权限。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ find / -path /proc -prune -o -type d -perm -o+w 2&gt;/dev/null
+
+/dmz-backups
+/tmp
+/tmp/VMwareDnD
+/tmp/.XIM-unix
+/tmp/.Test-unix
+/tmp/.X11-unix
+/tmp/systemd-private-8a2c51fcbad240d09578916b47b0bb17-systemd-timesyncd.service-TIecv0/tmp
+/tmp/.font-unix
+/tmp/.ICE-unix
+/proc
+/dev/mqueue
+/dev/shm
+/var/tmp
+/var/tmp/systemd-private-8a2c51fcbad240d09578916b47b0bb17-systemd-timesyncd.service-hm6Qdl/tmp
+/var/crash
+/run/lock
+</code></pre>
+<blockquote>
+<p>该命令用于在Linux系统中查找具有写权限的目录。下面是对该命令的解释：</p>
+<ul>
+<li><p><code>find</code>：查找命令。</p>
+</li>
+<li><p><code>/</code>：指定要在根目录下开始查找。</p>
+</li>
+<li><p><code>-path /proc -prune</code>：排除路径为<code>/proc</code>的目录。</p>
+</li>
+<li><p><code>-o</code>：逻辑运算符，表示或者。</p>
+</li>
+<li><p><code>-type d</code>：指定查找的对象类型为目录。</p>
+</li>
+<li><p><code>-perm -o+w</code>：指定查找的目录具有其他用户写权限。</p>
+</li>
+<li><p><code>2&gt;/dev/null</code>：将错误输出重定向到<code>/dev/null</code>，以忽略任何权限错误信息。</p>
+</li>
+<li><p>在查找具有写权限的目录时，可以使用 <code>-perm -o+w</code> 来指定条件。该选项的含义是：</p>
+<ul>
+<li><code>-perm</code>：用于指定文件和目录权限的匹配条件。</li>
+<li><code>-o</code>：表示其他用户权限组。</li>
+<li><code>+w</code>：表示具有写权限。</li>
+</ul>
+<p>因此，<code>-perm -o+w</code> 表示查找具有其他用户组可写权限的文件和目录。</p>
+</li>
+</ul>
+</blockquote>
+<p>可写文件：任何脚本或配置文件都是可写的吗？虽然更改配置文件可能具有极大的破坏性，但在某些情况下，轻微的修改可能会打开进一步的访问权限。此外，任何使用cron jobs以root身份运行的脚本都可以稍作修改以附加命令。</p>
+<h4 id="Find-Writable-Files"><a href="#Find-Writable-Files" class="headerlink" title="Find Writable Files"></a>Find Writable Files</h4><pre><code class="shell-session">Tanin@htb[/htb]$ find / -path /proc -prune -o -type f -perm -o+w 2&gt;/dev/null
+
+/etc/cron.daily/backup
+/dmz-backups/backup.sh
+/proc
+/sys/fs/cgroup/memory/init.scope/cgroup.event_control
+
+&lt;SNIP&gt;
+
+/home/backupsvc/backup.sh
+
+&lt;SNIP&gt;
+</code></pre>
+<h2 id="Gaining-Situational-Awareness"><a href="#Gaining-Situational-Awareness" class="headerlink" title="Gaining Situational Awareness"></a>Gaining Situational Awareness</h2><p>通常，我们需要运行一些基本命令来确定自己的方向：</p>
+<ul>
+<li><code>whoami</code> - what user are we running as</li>
+<li><code>id</code> - what groups does our user belong to?</li>
+<li><code>hostname</code> - what is the server named. can we gather anything from the naming convention?</li>
+<li><code>ifconfig</code> or <code>ip -a</code> - what subnet did we land in, does the host have additional NICs in other subnets?</li>
+<li><code>sudo -l</code> - can our user run anything with sudo (as another user as root) without needing a password? This can sometimes be the easiest win and we can do something like <code>sudo su</code> and drop right into a root shell.</li>
+<li>&#x2F;etc&#x2F;os-release</li>
+</ul>
+<p>接下来，我们将检查当前用户的PATH，每当为任何可执行文件执行命令以匹配我们键入的名称时，Linux系统都会在其中查找，即，该系统上位于&#x2F;usr&#x2F;bin&#x2F;id的id。正如我们稍后在本模块中看到的，如果目标用户的PATH变量配置错误，我们可能可以利用它来提升权限。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ echo $PATH
+
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+</code></pre>
+<p>我们还可以检查为当前用户设置的所有环境变量，我们可能会幸运地在其中找到一些敏感的东西，例如密码。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ env
+
+SHELL=/bin/bash
+PWD=/home/htb-student
+LOGNAME=htb-student
+XDG_SESSION_TYPE=tty
+MOTD_SHOWN=pam
+HOME=/home/htb-student
+LANG=en_US.UTF-8
+
+&lt;SNIP&gt;
+</code></pre>
+<p>接下来让我们记下内核版本。我们可以进行一些搜索，看看目标是否正在运行一个易受攻击的内核（我们稍后将在模块中利用它），该内核具有一些已知的公共漏洞PoC。我们可以用几种方法来实现，另一种方法是&#x3D;&#x3D;cat&#x2F;proc&#x2F;version&#x3D;&#x3D;，但我们将使用uname-a命令。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ uname -a
+
+Linux nixlpe02 5.4.0-122-generic #138-Ubuntu SMP Wed Jun 22 15:00:31 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+</code></pre>
+<p>接下来，我们可以收集一些关于主机本身的附加信息，例如CPU类型&#x2F;版本：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ lscpu 
+
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   43 bits physical, 48 bits virtual
+CPU(s):                          2
+On-line CPU(s) list:             0,1
+Thread(s) per core:              1
+Core(s) per socket:              2
+Socket(s):                       1
+NUMA node(s):                    1
+Vendor ID:                       AuthenticAMD
+CPU family:                      23
+Model:                           49
+Model name:                      AMD EPYC 7302P 16-Core Processor
+Stepping:                        0
+CPU MHz:                         2994.375
+BogoMIPS:                        5988.75
+Hypervisor vendor:               VMware
+
+&lt;SNIP&gt;
+</code></pre>
+<p>服务器上存在哪些登录shell？记下这些，并强调Tmux和Screen对我们都可用。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat /etc/shells
+
+# /etc/shells: valid login shells
+/bin/sh
+/bin/bash
+/usr/bin/bash
+/bin/rbash
+/usr/bin/rbash
+/bin/dash
+/usr/bin/dash
+/usr/bin/tmux
+/usr/bin/screen
+</code></pre>
+<p>我们还应该检查是否有任何防御措施，我们可以列举有关它们的任何信息。需要查找的内容包括：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Exec_Shield">Exec Shield</a></li>
+<li><a target="_blank" rel="noopener" href="https://linux.die.net/man/8/iptables">iptables</a></li>
+<li><a target="_blank" rel="noopener" href="https://apparmor.net/">AppArmor</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/topics/linux/what-is-selinux">SELinux</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fail2ban/fail2ban">Fail2ban</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.snort.org/faq/what-is-snort">Snort</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.ubuntu.com/UncomplicatedFirewall">Uncomplicated Firewall (ufw)</a></li>
+</ul>
+<p>通常情况下，我们没有特权列举这些保护的配置，但知道哪些配置（如果有的话）可以帮助我们避免在某些任务上浪费时间。 接下来，我们可以查看系统上的驱动器和任何共享。首先，我们可以使用lsblk命令枚举系统上块设备（硬盘、USB驱动器、光盘驱动器等）的信息。如果我们发现并可以装载额外的驱动器或未装载的文件系统，我们可能会发现可以用来提升特权的敏感文件、密码或备份。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ lsblk
+
+NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                       7:0    0   55M  1 loop /snap/core18/1705
+loop1                       7:1    0   69M  1 loop /snap/lxd/14804
+loop2                       7:2    0   47M  1 loop /snap/snapd/16292
+loop3                       7:3    0  103M  1 loop /snap/lxd/23339
+loop4                       7:4    0   62M  1 loop /snap/core20/1587
+loop5                       7:5    0 55.6M  1 loop /snap/core18/2538
+sda                         8:0    0   20G  0 disk 
+├─sda1                      8:1    0    1M  0 part 
+├─sda2                      8:2    0    1G  0 part /boot
+└─sda3                      8:3    0   19G  0 part 
+  └─ubuntu--vg-ubuntu--lv 253:0    0   18G  0 lvm  /
+sr0                        11:0    1  908M  0 rom 
+</code></pre>
+<p>命令lpstat可用于查找有关连接到系统的任何打印机的信息。如果有活动或排队的打印作业，我们是否可以访问某种敏感信息？<br>我们还应该检查已安装的驱动器和未安装的驱动器。我们可以安装一个死驱动器并访问敏感数据吗？通过在&#x2F;etc&#x2F;fstab中查找密码、用户名、凭据等常用词，我们能在fstab中为已安装的驱动器找到任何类型的凭据吗？</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat /etc/fstab
+
+# /etc/fstab: static file system information.
+#
+# Use &#39;blkid&#39; to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
+# / was on /dev/ubuntu-vg/ubuntu-lv during curtin installation
+/dev/disk/by-id/dm-uuid-LVM-BdLsBLE4CvzJUgtkugkof4S0dZG7gWR8HCNOlRdLWoXVOba2tYUMzHfFQAP9ajul / ext4 defaults 0 0
+# /boot was on /dev/sda2 during curtin installation
+/dev/disk/by-uuid/20b1770d-a233-4780-900e-7c99bc974346 /boot ext4 defaults 0 0
+</code></pre>
+<p>键入route或netstat-rn查看路由表。在这里，我们可以看到通过哪个接口可以使用哪些其他网络。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ route
+
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         _gateway        0.0.0.0         UG    0      0        0 ens192
+10.129.0.0      0.0.0.0         255.255.0.0     U     0      0        0 ens192
+</code></pre>
+<p>在域环境中，如果主机配置为使用内部DNS，我们肯定要检查&#x2F;etc&#x2F;resolv.conf。我们可以将其作为查询Active Directory环境的起点。 我们还想检查arp表，看看目标一直在与哪些其他主机通信。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ arp -a
+
+_gateway (10.129.0.1) at 00:50:56:b9:b9:fc [ether] on ens192
+</code></pre>
+<p>偶尔，我们会在&#x2F;etc&#x2F;passwd文件中直接看到密码散列。该文件对所有用户都是可读的，与&#x2F;etc&#x2F;shadow文件中的哈希一样，这些用户可能会受到离线密码破解攻击。这种配置虽然不常见，但有时可以在嵌入式设备和路由器上看到。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat /etc/passwd | cut -f1 -d:
+
+root
+daemon
+bin
+sys
+</code></pre>
+<p>Linux系统中的每个用户都被分配到一个或多个特定的组，从而获得特殊权限。例如，如果我们有一个名为dev的文件夹仅供开发人员使用，则必须将用户分配到适当的组以访问该文件夹。有关可用组的信息可以在&#x2F;etc&#x2F;group文件中找到，该文件向我们显示了组名和分配的用户名。</p>
+<h4 id="Existing-Groups"><a href="#Existing-Groups" class="headerlink" title="Existing Groups"></a>Existing Groups</h4><pre><code class="shell-session">Tanin@htb[/htb]$ cat /etc/group
+
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+...
+</code></pre>
+<p>&#x2F;etc&#x2F;group文件列出了系统上的所有组。然后，我们可以使用 <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/getent.1.html">getent</a> 命令列出任何感兴趣的组的成员。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ getent group sudo
+
+sudo:x:27:mrb3n
+</code></pre>
+<h4 id="Mounted-File-Systems"><a href="#Mounted-File-Systems" class="headerlink" title="Mounted File Systems"></a>Mounted File Systems</h4><p>卸载文件系统后，系统将无法再访问该文件系统。这可能是由于各种原因造成的，例如删除磁盘或不再需要文件系统时。另一个原因可能是文件、脚本、文档和其他重要信息不能由标准用户装载和查看。因此，如果我们能够将权限扩展到根用户，我们就可以自己装载和读取这些文件系统。可以按如下方式查看未装载的文件系统：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ df -h
+
+Filesystem      Size  Used Avail Use% Mounted on
+udev            1,9G     0  1,9G   0% /dev
+tmpfs           389M  1,8M  388M   1% /run
+/dev/sda5        20G  7,9G   11G  44% /
+</code></pre>
+<h4 id="Unmounted-File-Systems"><a href="#Unmounted-File-Systems" class="headerlink" title="Unmounted File Systems"></a>Unmounted File Systems</h4><pre><code class="shell-session">Tanin@htb[/htb]$ cat /etc/fstab | grep -v &quot;#&quot; | column -t
+
+UUID=5bf16727-fcdf-4205-906c-0620aa4a058f  /          ext4  errors=remount-ro  0  1
+UUID=BE56-AAE0                             /boot/efi  vfat  umask=0077         0  1
+/swapfile                                  none       swap  sw                 0  0
+</code></pre>
+<p>许多文件夹和文件在Linux系统中被隐藏，因此它们不明显，并且可以防止意外编辑。为什么这些文件和文件夹被隐藏起来，原因比迄今为止提到的要多得多。尽管如此，我们需要能够找到所有隐藏的文件和文件夹，因为它们通常包含敏感信息，即使我们拥有只读权限。</p>
+<h4 id="All-Hidden-Files"><a href="#All-Hidden-Files" class="headerlink" title="All Hidden Files"></a>All Hidden Files</h4><pre><code class="shell-session">Tanin@htb[/htb]$ find / -type f -name &quot;.*&quot; -exec ls -l &#123;&#125; \; 2&gt;/dev/null | grep htb-student
+
+-rw-r--r-- 1 htb-student htb-student 3771 Nov 27 11:16 /home/htb-student/.bashrc
+-rw-rw-r-- 1 htb-student htb-student 180 Nov 27 11:36 /home/htb-student/.wget-hsts
+-rw------- 1 htb-student htb-student 387 Nov 27 14:02 /home/htb-student/.bash_history
+</code></pre>
+<blockquote>
+<ul>
+<li><code>&#123;&#125;</code> 表示 <code>find</code> 命令的占位符，用于表示找到的文件。</li>
+<li><code>\;</code> 是 <code>find</code> 命令的结束符号，表示命令结束。</li>
+</ul>
+<p>通过这个命令，<code>find</code> 命令将在当前目录或指定的目录下查找满足条件的文件，并将每个文件的详细信息传递给 <code>ls -l</code> 命令进行输出。</p>
+<p>需要注意的是，这个命令在每找到一个文件时都会执行一次 <code>ls -l</code> 命令，可能会产生大量的输出。如果您只想查看文件的总体信息，可以使用 <code>ls -l</code> 命令来替代。</p>
+</blockquote>
+<p>此外，三个默认文件夹用于临时文件。这些文件夹对所有用户都可见，并且可以读取。此外，可以在那里找到临时日志或脚本输出。&#x2F;tmp和&#x2F;var&#x2F;tmp都用于临时存储数据。然而，关键的区别在于数据在这些文件系统中存储的时间。&#x2F;var&#x2F;tmp的数据保留时间要比&#x2F;tmp目录的数据保持时间长得多。默认情况下，存储在&#x2F;var&#x2F;tmp中的所有文件和数据最多保留30天。另一方面，在&#x2F;tmp中，数据会在十天后自动删除。 此外，当系统重新启动时，存储在&#x2F;tmp目录中的所有临时文件都会立即删除。因此，程序使用&#x2F;var&#x2F;tmp目录来存储在重新启动之间必须临时保存的数据。</p>
+<h4 id="Temporary-Files"><a href="#Temporary-Files" class="headerlink" title="Temporary Files"></a>Temporary Files</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ls -l /tmp /var/tmp /dev/shm
+</code></pre>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>Enumerate the Linux environment and look for interesting files that might contain sensitive data. Submit the flag as the answer.</p>
+</blockquote>
+<p>在查找时发现一个有趣的东西记录一下：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307151702324.png" alt="image-20230715170245465">他把历史记录的文件直接软连接到null中，这样就可以不记录我们的操作。</p>
+<blockquote>
+<p>该输出显示了一个名为 <code>.bash_history</code> 的符号链接文件。下面是对该输出的解释：</p>
+<ul>
+<li><code>lrwxrwxrwx</code>：表示该文件是一个符号链接（即软链接）。第一个字符 <code>l</code> 表示文件类型为符号链接。</li>
+<li><code>1</code>：表示链接计数，即有多少个文件名链接到同一个 inode（索引节点）。</li>
+<li><code>root</code>：表示文件的所有者是 root 用户。</li>
+<li><code>root</code>：表示文件的所属组是 root 组。</li>
+<li><code>9 Jun 14 14:38</code>：表示文件的最后修改时间为 6 月 14 日的 14:38。</li>
+<li><code>.bash_history -&gt; /dev/null</code>：表示 <code>.bash_history</code> 是一个指向 <code>/dev/null</code> 的符号链接。</li>
+</ul>
+<p>符号链接（或软链接）是一种特殊的文件类型，它创建了一个指向另一个文件或目录的引用。在这种情况下，<code>.bash_history</code> 是一个指向 <code>/dev/null</code> 的符号链接。<code>/dev/null</code> 是一个特殊的设备文件，它被用于丢弃所有写入它的数据，即将数据发送到空虚。</p>
+<p>这种设置可能意味着用户的 Bash 历史记录文件被重定向到 <code>/dev/null</code>，这意味着 Bash 历史记录中的所有命令都将被丢弃，不会被保留下来。</p>
+</blockquote>
+<blockquote>
+<p>要创建符号链接（软链接），可以使用 <code>ln</code> 命令。<code>ln</code> 命令用于创建链接，它可以创建硬链接或符号链接。在这种情况下，我们想要创建一个符号链接。</p>
+<p>下面是使用 <code>ln</code> 命令创建符号链接的语法：</p>
+<pre><code class="shell">ln -s &lt;目标文件&gt; &lt;链接名称&gt;
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>&lt;目标文件&gt;</code> 是指向的目标文件或目录的路径。</li>
+<li><code>&lt;链接名称&gt;</code> 是要创建的符号链接的名称和路径。</li>
+</ul>
+<p>例如，要创建一个名为 <code>.bash_history</code> 的符号链接指向 <code>/dev/null</code>，可以使用以下命令：</p>
+<pre><code class="shell">ln -s /dev/null .bash_history
+</code></pre>
+<p>执行此命令后，将在当前目录中创建一个名为 <code>.bash_history</code> 的符号链接，它将指向 <code>/dev/null</code>。这样，当您的系统尝试将 Bash 历史记录写入 <code>.bash_history</code> 文件时，数据实际上会被重定向到 <code>/dev/null</code>，即被丢弃。</p>
+<p>请注意，在创建符号链接时，确保您具有适当的权限来访问目标文件或目录，并且在目标文件或目录存在的情况下才能成功创建链接。</p>
+</blockquote>
+<h1 id="Linux-Services-amp-Internals-Enumeration"><a href="#Linux-Services-amp-Internals-Enumeration" class="headerlink" title="Linux Services &amp; Internals Enumeration"></a>Linux Services &amp; Internals Enumeration</h1><h2 id="Internals"><a href="#Internals" class="headerlink" title="Internals"></a>Internals</h2><p>当我们谈论内部时，我们指的是内部配置和工作方式，包括为完成特定任务而设计的集成流程。因此，我们从我们的目标系统可以通信的接口开始。</p>
+<h4 id="Network-Interfaces"><a href="#Network-Interfaces" class="headerlink" title="Network Interfaces"></a>Network Interfaces</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ip a
+</code></pre>
+<p>&#x2F;etc&#x2F;hosts文件中有什么有趣的内容吗？</p>
+<p>查看每个用户的上次登录时间也很有帮助，以了解用户通常何时登录系统以及登录频率。这可以让我们了解这个系统的使用范围，这可能会导致更多的错误配置或“混乱”的目录或命令历史记录。</p>
+<h4 id="User’s-Last-Login"><a href="#User’s-Last-Login" class="headerlink" title="User’s Last Login"></a>User’s Last Login</h4><pre><code class="shell-session">Tanin@htb[/htb]$ lastlog
+</code></pre>
+<p>此外，让我们看看目前是否有其他人与我们一起使用该系统。有几种方法可以做到这一点，例如who命令。finger命令将在某些Linux系统上显示此信息。我们可以看到cliff.moore用户已经和我们一起登录到了系统。</p>
+<h4 id="Logged-In-Users"><a href="#Logged-In-Users" class="headerlink" title="Logged In Users"></a>Logged In Users</h4><pre><code class="shell-session">Tanin@htb[/htb]$ w
+
+ 12:27:21 up 1 day, 16:55,  1 user,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+cliff.mo pts/0    10.10.14.16      Tue19   40:54m  0.02s  0.02s -bash
+</code></pre>
+<p>检查用户的bash历史记录也很重要，因为他们可能会在命令行上将密码作为参数传递，使用git存储库，设置cron作业等等。查看用户所做的事情可以让您深入了解所登录的服务器类型，并提示权限提升路径。</p>
+<h4 id="Command-History"><a href="#Command-History" class="headerlink" title="Command History"></a>Command History</h4><pre><code class="shell-session">Tanin@htb[/htb]$ history
+
+    1  id
+    2  cd /home/cliff.moore
+    3  exit
+    4  touch backup.sh
+    5  tail /var/log/apache2/error.log
+    6  ssh ec2-user@dmz02.inlanefreight.local
+    7  history
+</code></pre>
+<p>有时我们还可以找到由脚本或程序创建的特殊历史文件。这可以在监视用户的某些活动并检查可疑活动的脚本中找到。</p>
+<h4 id="Finding-History-Files"><a href="#Finding-History-Files" class="headerlink" title="Finding History Files"></a>Finding History Files</h4><pre><code class="shell-session">Tanin@htb[/htb]$ find / -type f \( -name *_hist -o -name *_history \) -exec ls -l &#123;&#125; \; 2&gt;/dev/null
+
+-rw------- 1 htb-student htb-student 387 Nov 27 14:02 /home/htb-student/.bash_history
+</code></pre>
+<p>检查系统上的任何cron作业也是一个好主意。Linux系统上的Cron作业类似于Windows计划任务。它们通常用于执行维护和备份任务。结合其他错误配置（如相对路径或弱权限），它们可以在计划的cron作业运行时利用这些错误配置来提升权限。</p>
+<h4 id="Cron"><a href="#Cron" class="headerlink" title="Cron"></a>Cron</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ls -la /etc/cron.daily/
+</code></pre>
+<p>proc文件系统 <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man5/proc.5.html">proc filesystem</a> （proc&#x2F;procfs）是Linux中的一个特定文件系统，它包含有关系统进程、硬件和其他系统信息的信息。它是访问进程信息的主要方式，可用于查看和修改内核设置。它是虚拟的，不作为真实的文件系统存在，而是由内核动态生成的。它可以用来查找系统信息，例如运行进程的状态、内核参数、系统内存和设备。它还设置某些系统参数，例如进程优先级、调度和内存分配。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ find /proc -name cmdline -exec cat &#123;&#125; \; 2&gt;/dev/null | tr &quot; &quot; &quot;\n&quot;
+
+...SNIP...
+startups/usr/lib/packagekit/packagekitd/usr/lib/packagekit/packagekitd/usr/lib/packagekit/packagekitd/usr/lib/packagekit/packagekitdroot@10.129.14.200sshroot@10.129.14.200sshd:
+htb-student
+[priv]sshd:
+htb-student
+[priv]/usr/bin/ssh-agent-D-a/run/user/1000/keyring/.ssh/usr/bin/ssh-agent-D-a/run/user/1000/keyring/.sshsshd:
+htb-student@pts/2sshd:
+</code></pre>
+<h2 id="Services"><a href="#Services" class="headerlink" title="Services"></a>Services</h2><p>如果是稍旧的Linux系统，我们可能会发现安装的软件包中至少有一个漏洞。然而，当前版本的Linux发行版也可能安装了可能存在此类漏洞的旧包或软件。因此，我们将看到一种方法来帮助我们检测潜在的危险包裹。要做到这一点，我们首先需要创建一个要使用的已安装包的列表。</p>
+<h4 id="Installed-Packages"><a href="#Installed-Packages" class="headerlink" title="Installed Packages"></a>Installed Packages</h4><pre><code class="shell-session">Tanin@htb[/htb]$ apt list --installed | tr &quot;/&quot; &quot; &quot; | cut -d&quot; &quot; -f1,3 | sed &#39;s/[0-9]://g&#39; | tee -a installed_pkgs.list
+
+Listing...                                                 
+accountsservice-ubuntu-schemas 0.0.7+17.10.20170922-0ubuntu1                                                          
+accountsservice 0.6.55-0ubuntu12~20.04.5                   
+acl 2.2.53-6                                               
+acpi-support 0.143                                         
+acpid 2.0.32-1ubuntu1                                      
+adduser 3.118ubuntu2                                       
+adwaita-icon-theme 3.36.1-2ubuntu0.20.04.2                 
+alsa-base 1.0.25+dfsg-0ubuntu5                             
+alsa-topology-conf 1.2.2-1                                                                                            
+alsa-ucm-conf 1.2.2-1ubuntu0.13                            
+alsa-utils 1.2.2-1ubuntu2.1                                                                                           
+amd64-microcode 3.20191218.1ubuntu1
+anacron 2.3-29
+apg 2.2.3.dfsg.1-5
+app-install-data-partner 19.04
+apparmor 2.13.3-7ubuntu5.1
+apport-gtk 2.20.11-0ubuntu27.24
+apport-symptoms 0.23
+apport 2.20.11-0ubuntu27.24
+appstream 0.12.10-2
+apt-config-icons-hidpi 0.12.10-2
+apt-config-icons 0.12.10-2
+apt-utils 2.0.9
+...SNIP...
+</code></pre>
+<p>检查系统上安装的sudo版本是否容易受到任何遗留或最近的漏洞攻击也是一个好主意。</p>
+<h4 id="Sudo-Version"><a href="#Sudo-Version" class="headerlink" title="Sudo Version"></a>Sudo Version</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo -V
+</code></pre>
+<p>偶尔也会发生这样的情况：系统上没有安装直接包，而是以二进制文件的形式编译程序。这些不需要安装，并且可以由系统本身直接执行。</p>
+<h4 id="Binaries"><a href="#Binaries" class="headerlink" title="Binaries"></a>Binaries</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ls -l /bin /usr/bin/ /usr/sbin/
+
+lrwxrwxrwx 1 root root     7 Oct 27 11:14 /bin -&gt; usr/bin
+
+/usr/bin/:
+total 175160
+-rwxr-xr-x 1 root root       31248 May 19  2020  aa-enabled
+-rwxr-xr-x 1 root root       35344 May 19  2020  aa-exec
+-rwxr-xr-x 1 root root       22912 Apr 14  2021  aconnect
+-rwxr-xr-x 1 root root       19016 Nov 28  2019  acpi_listen
+-rwxr-xr-x 1 root root        7415 Oct 26  2021  add-apt-repository
+-rwxr-xr-x 1 root root       30952 Feb  7  2022  addpart
+lrwxrwxrwx 1 root root          26 Oct 20  2021  addr2line -&gt; x86_64-linux-gnu-addr2line
+...SNIP...
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/">GTFObins</a>提供了一个优秀的平台，其中包括一系列二进制文件，这些二进制文件可能被用来提升我们在目标系统上的权限。对于下一个oneliner，我们可以将现有的二进制文件与GTFObins中的二进制文件进行比较，以了解我们稍后应该研究哪些二进制文件。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ for i in $(curl -s https://gtfobins.github.io/ | html2text | cut -d&quot; &quot; -f1 | sed &#39;/^[[:space:]]*$/d&#39;);do if grep -q &quot;$i&quot; installed_pkgs.list;then echo &quot;Check GTFO for: $i&quot;;fi;done
+
+Check GTFO for: ab                                         
+Check GTFO for: apt                                        
+Check GTFO for: ar                                         
+Check GTFO for: as         
+Check GTFO for: ash                                        
+Check GTFO for: aspell                                     
+Check GTFO for: at     
+Check GTFO for: awk      
+Check GTFO for: bash                                       
+Check GTFO for: bridge
+Check GTFO for: busybox
+Check GTFO for: bzip2
+Check GTFO for: cat
+Check GTFO for: comm
+Check GTFO for: cp
+Check GTFO for: cpio
+Check GTFO for: cupsfilter
+Check GTFO for: curl
+Check GTFO for: dash
+Check GTFO for: date
+Check GTFO for: dd
+Check GTFO for: diff
+</code></pre>
+<p>我们可以在基于Linux的操作系统上使用诊断工具strace来跟踪和分析系统调用和信号处理。它使我们能够遵循程序的流程，了解程序如何访问系统资源、处理信号以及从操作系统接收和发送数据。此外，我们还可以使用该工具来监控与安全相关的活动，并识别潜在的攻击载体，例如使用密码或令牌向远程主机发出的特定请求。 strace的输出可以写入一个文件以供以后分析，它提供了丰富的选项，可以详细监控程序的行为。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ strace ping -c1 10.129.112.20
+</code></pre>
+<p>如果管理员保持Linux操作系统上几乎所有的配置文件不变，则用户可以读取这些文件。这些配置文件通常可以揭示服务是如何设置和配置的，以便更好地了解我们如何将其用于我们的目的。此外，这些文件可能包含敏感信息，例如我们看不到的文件夹中文件的密钥和路径。但是，如果该文件对每个人都具有读取权限，即使我们没有读取文件夹的权限，我们仍然可以读取该文件。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ find / -type f \( -name *.conf -o -name *.config \) -exec ls -l &#123;&#125; \; 2&gt;/dev/null
+
+-rw-r--r-- 1 root root 448 Nov 28 12:31 /run/tmpfiles.d/static-nodes.conf
+-rw-r--r-- 1 root root 71 Nov 28 12:31 /run/NetworkManager/resolv.conf
+-rw-r--r-- 1 root root 72 Nov 28 12:31 /run/NetworkManager/no-stub-resolv.conf
+-rw-r--r-- 1 root root 0 Nov 28 12:37 /run/NetworkManager/conf.d/10-globally-managed-devices.conf
+-rw-r--r-- 1 systemd-resolve systemd-resolve 736 Nov 28 12:31 /run/systemd/resolve/stub-resolv.conf
+-rw-r--r-- 1 systemd-resolve systemd-resolve 607 Nov 28 12:31 /run/systemd/resolve/resolv.conf
+...SNIP...
+</code></pre>
+<p>脚本与配置文件类似。管理员往往懒惰，对网络安全深信不疑，忽视了系统的内部安全。在某些情况下，这些脚本具有错误的特权，我们稍后将对此进行处理，但即使没有这些特权，内容也非常重要。因为通过它们，我们可以发现对我们非常有用的内部和个人过程。</p>
+<h4 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h4><pre><code class="shell-session">Tanin@htb[/htb]$ find / -type f -name &quot;*.sh&quot; 2&gt;/dev/null | grep -v &quot;src\|snap\|share&quot;
+
+/home/htb-student/automation.sh
+/etc/wpa_supplicant/action_wpa.sh
+/etc/wpa_supplicant/ifupdown.sh
+/etc/wpa_supplicant/functions.sh
+/etc/init.d/keyboard-setup.sh
+/etc/init.d/console-setup.sh
+/etc/init.d/hwclock.sh
+...SNIP...
+</code></pre>
+<p>此外，如果我们查看进程列表，它可以为我们提供有关哪些脚本或二进制文件正在使用以及由哪个用户使用的信息。因此，例如，如果它是管理员在其路径中创建的脚本，并且其权限没有受到限制，我们可以在不进入根目录的情况下运行它。</p>
+<h4 id="Running-Services-by-User"><a href="#Running-Services-by-User" class="headerlink" title="Running Services by User"></a>Running Services by User</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ps aux | grep root
+
+...SNIP...
+</code></pre>
+<h1 id="Credential-Hunting"><a href="#Credential-Hunting" class="headerlink" title="Credential Hunting"></a>Credential Hunting</h1><p>枚举系统时，记下任何凭据都很重要。这些可以在配置文件（.conf、.config、.xml等）、shell脚本、用户的bash历史文件、备份（.bak）文件、数据库文件甚至文本文件中找到。凭据可能有助于升级到其他用户，甚至root用户，访问环境中的数据库和其他系统。 &#x2F;var&#x2F;目录通常包含主机上运行的任何web服务器的web根目录。web根可以包含数据库凭证或可以用于进一步访问的其他类型的凭证。一个常见的例子是WordPress配置文件中的MySQL数据库凭据：</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ cat wp-config.php | grep &#39;DB_USER\|DB_PASSWORD&#39;
+
+define( &#39;DB_USER&#39;, &#39;wordpressuser&#39; );
+define( &#39;DB_PASSWORD&#39;, &#39;WPadmin123!&#39; );
+</code></pre>
+<p>spool 或 mail 目录（如果可以访问）也可能包含有价值的信息甚至凭据。通常可以在web根目录中找到存储在文件中的凭据（即MySQL连接字符串、WordPress配置文件）。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$  find / ! -path &quot;*/proc/*&quot; -iname &quot;*config*&quot; -type f 2&gt;/dev/null
+</code></pre>
+<p><code>-iname &quot;*config*&quot;</code>：表示忽略文件名大小写，查找包含 “config” 的文件。</p>
+<h2 id="SSH-Keys"><a href="#SSH-Keys" class="headerlink" title="SSH Keys"></a>SSH Keys</h2><p>在系统中搜索可访问的SSH私钥也很有用。我们可能会为另一个更有特权的用户找到一个私钥，我们可以使用该私钥以额外的特权连接回盒子。我们有时还可能找到可以用于访问环境中其他主机的SSH密钥。每当找到SSH密钥时，请检查known_hosts文件以查找目标。此文件包含用户过去连接过的所有主机的公钥列表，可能有助于横向移动或在远程主机上查找可用于对我们的目标执行权限提升的数据。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$  ls ~/.ssh
+
+id_rsa  id_rsa.pub  known_hosts
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

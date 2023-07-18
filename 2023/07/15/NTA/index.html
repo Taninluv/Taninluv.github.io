@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || NTA</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>NTA </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/15
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ff7d73>
+                    base
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tool" style=color:#03a9f4>
+                    tool
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>网络流量分析（NTA）可以被描述为检查网络流量的行为，以表征所使用的公共端口和协议，为我们的环境建立基线，监控和应对威胁，并确保对我们组织的网络有最大可能的了解。</p>
+<span id="more"></span>
+
+<h1 id="备忘单"><a href="#备忘单" class="headerlink" title="备忘单"></a>备忘单</h1><p>请记住，除非您使用 root，否则执行任何需要绑定网络接口或将其设置为混杂模式的应用程序都需要权限。<code>sudo</code></p>
+<h2 id="无机连接信息"><a href="#无机连接信息" class="headerlink" title="无机连接信息"></a>无机连接信息</h2><ul>
+<li>目标 IP &#x3D;&#x3D; 10.129.43.4</li>
+</ul>
+<h2 id="Tcpdump"><a href="#Tcpdump" class="headerlink" title="Tcpdump"></a>Tcpdump</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>tcpdump --version</code></td>
+<td>打印 tcpdump 和 libpcap 版本字符串，然后退出。</td>
+</tr>
+<tr>
+<td><code>tcpdump -h</code></td>
+<td>打印帮助和使用信息。</td>
+</tr>
+<tr>
+<td><code>tcpdump -D</code></td>
+<td>打印 tcpdump 可以从中捕获的可用网络接口的列表。</td>
+</tr>
+<tr>
+<td><code>tcpdump -i (interface name or #)</code></td>
+<td>执行 tcpdump 并利用指定的要捕获的接口。</td>
+</tr>
+<tr>
+<td><code>tcpdump -i (int) -w file.pcap</code></td>
+<td>在指定的接口上运行捕获并将输出写入文件。</td>
+</tr>
+<tr>
+<td><code>tcpdump -r file.pcap</code></td>
+<td>TCPDump 将从指定的文件中读取输出。</td>
+</tr>
+<tr>
+<td><code>tcpdump -r/-w file.pcap -l | grep &#39;string&#39;</code></td>
+<td>TCPDump 将利用来自实时捕获或文件的捕获流量，并将标准输出设置为行缓冲。然后，我们可以利用管道 （|） 将该输出发送到其他工具（如 grep）以查找字符串或特定模式。</td>
+</tr>
+<tr>
+<td><code>tcpdump -i (int) host (ip)</code></td>
+<td>TCPDump 将在 （int） 指定的接口上启动捕获，并且仅捕获源自或发往 之后指定的 IP 地址或主机名的流量。<code>host</code></td>
+</tr>
+<tr>
+<td><code>tcpdump -i (int) port (#)</code></td>
+<td>将筛选捕获中来自或发往端口 （#） 的任何内容，并丢弃其余内容。</td>
+</tr>
+<tr>
+<td><code>tcpdump -i (int) proto (#)</code></td>
+<td>将筛选捕获以查找与 （#） 匹配的任何协议流量。例如，（6） 将过滤任何 TCP 流量并丢弃其余流量。</td>
+</tr>
+<tr>
+<td><code>tcpdump -i (int) (proto name)</code></td>
+<td>将利用协议公用名来过滤捕获的流量。以TCP&#x2F;UDP&#x2F;ICMP为例。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Tcpdump-通用开关和过滤器"><a href="#Tcpdump-通用开关和过滤器" class="headerlink" title="Tcpdump 通用开关和过滤器"></a>Tcpdump 通用开关和过滤器</h2><table>
+<thead>
+<tr>
+<th><strong>开关&#x2F;滤波器</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>D</code></td>
+<td>将显示可从中捕获的任何接口。</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>选择要从中捕获的接口。例如 -i eth0</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>不要解析主机名。</td>
+</tr>
+<tr>
+<td><code>nn</code></td>
+<td>不要解析主机名或已知端口。</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td>将获取以太网标头以及上层数据。</td>
+</tr>
+<tr>
+<td><code>X</code></td>
+<td>以十六进制和 ASCII 显示数据包的内容。</td>
+</tr>
+<tr>
+<td><code>XX</code></td>
+<td>与 X 相同，但也会指定以太网标头。（如使用 Xe）</td>
+</tr>
+<tr>
+<td><code>v, vv, vvv</code></td>
+<td>增加显示和保存的输出的详细程度。</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>获取特定数量的数据包，然后退出程序。</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>定义要抓取的数据包量。</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td>将捕获显示中的相对序列号更改为绝对序列号。（13248765839而不是 101）</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>打印更少的协议信息。</td>
+</tr>
+<tr>
+<td><code>r file.pcap</code></td>
+<td>从文件中读取。</td>
+</tr>
+<tr>
+<td><code>w file.pcap</code></td>
+<td>写入文件</td>
+</tr>
+<tr>
+<td><code>host</code></td>
+<td>主机将过滤可见流量以显示涉及指定主机的任何内容。双向</td>
+</tr>
+<tr>
+<td><code>src / dest</code></td>
+<td><code>src</code>并且是修饰符。我们可以使用它们来指定源或目标主机或端口。<code>dest</code></td>
+</tr>
+<tr>
+<td><code>net</code></td>
+<td><code>net</code>将向我们显示来自或发往指定网络的任何流量。它使用&#x2F;符号。</td>
+</tr>
+<tr>
+<td><code>proto</code></td>
+<td>将筛选特定的协议类型。（以ether，TCP，UDP和ICMP为例）</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>port</code>是双向的。它将显示将指定端口作为源或目标的任何流量。</td>
+</tr>
+<tr>
+<td><code>portrange</code></td>
+<td><code>Portrange</code>允许我们指定端口范围。(0-1024)</td>
+</tr>
+<tr>
+<td><code>less / greater &quot;&lt; &gt;&quot;</code></td>
+<td><code>less</code>并可用于查找特定大小的数据包或协议选项。<code>greater</code></td>
+</tr>
+<tr>
+<td><code>and / &amp;&amp;</code></td>
+<td><code>and</code> <code>&amp;&amp;</code>可用于将两个不同的筛选器连接在一起。例如，SRC 主机和端口。</td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><code>or</code>或者允许在两个条件中的任何一个上进行匹配。它不必同时满足两者。这可能很棘手。</td>
+</tr>
+<tr>
+<td><code>not</code></td>
+<td><code>not</code>是一个修饰符，表示除 x 以外的任何内容。例如，不是 UDP。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="沙克"><a href="#沙克" class="headerlink" title="沙克"></a>沙克</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>tshark -h</code></td>
+<td>打印帮助菜单。</td>
+</tr>
+<tr>
+<td><code>tshark -D</code></td>
+<td>列出要从中捕获的可用接口。</td>
+</tr>
+<tr>
+<td><code>tshark -i (int)</code></td>
+<td>在所选接口上捕获。将 （int） 替换为接口名称或编号。</td>
+</tr>
+<tr>
+<td><code>tshark -i eth0 -f &quot;host (ip)&quot;</code></td>
+<td>使用 tshark 时应用带有 （-f） 的过滤器以查找特定主机</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td>将显示可从中捕获然后退出的任何接口。</td>
+</tr>
+<tr>
+<td><code>L</code></td>
+<td>将列出您可以从中捕获然后退出的链接层介质。（以以太网为例）</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>选择要从中捕获的接口。（-i eth0）</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>libpcap 语法中的数据包过滤器。在捕获期间使用。</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>获取特定数量的数据包，然后退出程序。定义停止条件。</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>定义自动停止条件。它可以是在持续时间、特定文件大小或一定数量的数据包之后。</td>
+</tr>
+<tr>
+<td><code>r (pcap-file)</code></td>
+<td>从文件中读取。</td>
+</tr>
+<tr>
+<td><code>W (pcap-file)</code></td>
+<td>使用 pcapng 格式写入文件。</td>
+</tr>
+<tr>
+<td><code>P</code></td>
+<td>写入文件时将打印数据包摘要 （-W）</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>会将十六进制和 ASCII 输出添加到捕获中。</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td>查看帮助菜单</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="线鲨"><a href="#线鲨" class="headerlink" title="线鲨"></a>线鲨</h2><table>
+<thead>
+<tr>
+<th><strong>捕获筛选器</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host x.x.x.x</code></td>
+<td>仅捕获与特定主机相关的流量</td>
+</tr>
+<tr>
+<td><code>net x.x.x.x/24</code></td>
+<td>捕获进出特定网络的流量（使用斜杠表示法指定掩码）</td>
+</tr>
+<tr>
+<td><code>src/dst net x.x.x.x/24</code></td>
+<td>使用 src 或 dst 网络将仅捕获来自指定网络或发往目标网络的流量来源</td>
+</tr>
+<tr>
+<td><code>port #</code></td>
+<td>将过滤掉除您指定的端口之外的所有流量</td>
+</tr>
+<tr>
+<td><code>not</code></td>
+<td>将捕获除指定变量之外的所有内容。前任。<code>not port 80</code></td>
+</tr>
+<tr>
+<td><code>and</code></td>
+<td>AND 将连接您指定的端口。前任。<code>host 192.168.1.1 and port 80</code></td>
+</tr>
+<tr>
+<td><code>portrange x-x</code></td>
+<td>端口范围将仅从范围内的所有端口获取流量</td>
+</tr>
+<tr>
+<td><code>ip / ether / tcp</code></td>
+<td>这些过滤器将仅从指定的协议标头中获取流量。</td>
+</tr>
+<tr>
+<td><code>broadcast / multicast / unicast</code></td>
+<td>获取特定类型的流量。一对一、一对多或一对全部。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>显示筛选器</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ip.addr == x.x.x.x</code></td>
+<td>仅捕获与特定主机相关的流量。这是一个 OR 语句。</td>
+</tr>
+<tr>
+<td><code>ip.addr == x.x.x.x/24</code></td>
+<td>捕获与特定网络相关的流量。这是一个 OR 语句。</td>
+</tr>
+<tr>
+<td><code>ip.src/dst == x.x.x.x</code></td>
+<td>捕获进出特定主机的流量。</td>
+</tr>
+<tr>
+<td><code>dns / tcp / ftp / arp / ip</code></td>
+<td>按特定协议过滤流量。还有更多选择。</td>
+</tr>
+<tr>
+<td><code>tcp.port == x</code></td>
+<td>按特定 TCP 端口进行筛选。</td>
+</tr>
+<tr>
+<td><code>src.port / dst.port ==x</code></td>
+<td>将捕获除指定端口之外的所有内容。</td>
+</tr>
+<tr>
+<td><code>and / or / not</code></td>
+<td>AND 将连接，OR 将找到两个选项中的任何一个，NOT 将排除您的输入选项。</td>
+</tr>
+<tr>
+<td><code>tcp.stream eq #</code></td>
+<td>允许我们跟踪捕获整个流的 tcp 会话。将 （#） 替换为要重新组合的会话。</td>
+</tr>
+<tr>
+<td><code>http</code></td>
+<td>将过滤与 http 协议匹配的任何流量。</td>
+</tr>
+<tr>
+<td><code>http &amp;&amp; image-jfif</code></td>
+<td>此过滤器将显示带有 jpeg 图像文件的任何数据包。</td>
+</tr>
+<tr>
+<td><code>ftp</code></td>
+<td>FTP 协议的筛选器。</td>
+</tr>
+<tr>
+<td><code>ftp.request.command</code></td>
+<td>将过滤通过 ftp 控制通道发送的任何控制命令。</td>
+</tr>
+<tr>
+<td><code>ftp-data</code></td>
+<td>将显示通过 ftp 传输的任何对象。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="杂项命令"><a href="#杂项命令" class="headerlink" title="杂项命令"></a>杂项命令</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sudo *</code></td>
+<td>Sudo 将运行以提升的权限继续执行的命令。</td>
+</tr>
+<tr>
+<td><code>which (application)</code></td>
+<td>利用 来确定主机上是否安装了（应用程序）。将应用程序替换为您要查找的内容。前任。<code>which tcpdump</code></td>
+</tr>
+<tr>
+<td><code>sudo apt install (application)</code></td>
+<td>使用提升的权限安装应用程序包（如果主机上不存在应用程序包）。前任。<code>sudo apt install wireshark</code></td>
+</tr>
+<tr>
+<td><code>man (application)</code></td>
+<td>显示应用程序的手册页。前任。。<code>man tcpdump</code></td>
+</tr>
+</tbody></table>
+<h4 id="Common-Traffic-Analysis-Tools"><a href="#Common-Traffic-Analysis-Tools" class="headerlink" title="Common Traffic Analysis Tools"></a>Common Traffic Analysis Tools</h4><table>
+<thead>
+<tr>
+<th><strong>Tool</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>tcpdump</code></td>
+<td><a target="_blank" rel="noopener" href="https://www.tcpdump.org/">tcpdump</a> is a command-line utility that, with the aid of LibPcap, captures and interprets network traffic from a network interface or capture file.</td>
+</tr>
+<tr>
+<td><code>Tshark</code></td>
+<td><a target="_blank" rel="noopener" href="https://www.wireshark.org/docs/man-pages/tshark.html">TShark</a> is a network packet analyzer much like TCPDump. It will capture packets from a live network or read and decode from a file. It is the command-line variant of Wireshark.</td>
+</tr>
+<tr>
+<td><code>Wireshark</code></td>
+<td><a target="_blank" rel="noopener" href="https://www.wireshark.org/">Wireshark</a> is a graphical network traffic analyzer. It captures and decodes frames off the wire and allows for an in-depth look into the environment. It can run many different dissectors against the traffic to characterize the protocols and applications and provide insight into what is happening.</td>
+</tr>
+<tr>
+<td><code>NGrep</code></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/jpr5/ngrep">NGrep</a> is a pattern-matching tool built to serve a similar function as grep for Linux distributions. The big difference is that it works with network traffic packets. NGrep understands how to read live traffic or traffic from a PCAP file and utilize regex expressions and BPF syntax. This tool shines best when used to debug traffic from protocols like HTTP and FTP.</td>
+</tr>
+<tr>
+<td><code>tcpick</code></td>
+<td><a target="_blank" rel="noopener" href="http://tcpick.sourceforge.net/index.php?p=home.inc">tcpick</a> is a command-line packet sniffer that specializes in tracking and reassembling TCP streams. The functionality to read a stream and reassemble it back to a file with tcpick is excellent.</td>
+</tr>
+<tr>
+<td><code>Network Taps</code></td>
+<td>Taps (<a target="_blank" rel="noopener" href="https://www.gigamon.com/">Gigamon</a>, <a target="_blank" rel="noopener" href="https://www.niagaranetworks.com/products/network-tap">Niagra-taps</a>) are devices capable of taking copies of network traffic and sending them to another place for analysis. These can be in-line or out of band. They can actively capture and analyze the traffic directly or passively by putting the original packet back on the wire as if nothing had changed.</td>
+</tr>
+<tr>
+<td><code>Networking Span Ports</code></td>
+<td><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Port_mirroring">Span Ports</a> are a way to copy frames from layer two or three networking devices during egress or ingress processing and send them to a collection point. Often a port is mirrored to send those copies to a log server.</td>
+</tr>
+<tr>
+<td><code>Elastic Stack</code></td>
+<td>The <a target="_blank" rel="noopener" href="https://www.elastic.co/elastic-stack">Elastic Stack</a> is a culmination of tools that can take data from many sources, ingest the data, and visualize it, to enable searching and analysis of it.</td>
+</tr>
+<tr>
+<td><code>SIEMS</code></td>
+<td><code>SIEMS</code> (such as <a target="_blank" rel="noopener" href="https://www.splunk.com/en_us">Splunk</a>) are a central point in which data is analyzed and visualized. Alerting, forensic analysis, and day-to-day checks against the traffic are all use cases for a SIEM.</td>
+</tr>
+</tbody></table>
+<h2 id="OSI-x2F-TCP-IP-Models"><a href="#OSI-x2F-TCP-IP-Models" class="headerlink" title="OSI &#x2F; TCP-IP Models"></a>OSI &#x2F; TCP-IP Models</h2><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307151216143.png" alt="image"></p>
+<p>在整个模块中，我们将研究许多不同的协议数据单元（PDU），因此需要对其在理论上和线路上的表现进行功能性理解。PDU是由控制信息和从OSI模型的每一层封装的数据组成的数据包。下面的分组显示两个模型中的层如何与PDU匹配。</p>
+<h4 id="PDU-Example"><a href="#PDU-Example" class="headerlink" title="PDU Example"></a>PDU Example</h4><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307151220699.png" alt="image"></p>
+<p>在检查PDU时，我们需要牢记封装的概念。当我们的数据在协议栈中向下移动时，每一层都会将前一层的数据封装在一个新的气泡中，我们称之为封装。该气泡将该层的必要信息添加到PDU的报头中。这些信息可能因级别而异，但它包括前一层所持有的内容、操作标志、协商通信所需的任何选项、源和目标IP地址、端口、传输以及应用层协议。</p>
+<h4 id="PDU-Packet-Breakdown"><a href="#PDU-Packet-Breakdown" class="headerlink" title="PDU Packet Breakdown"></a>PDU Packet Breakdown</h4><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307151222900.png" alt="image"  />
+
+<p>上图显示了一个PDU的组成，与Wireshark的“数据包详细信息”窗格中的数据包分组并排。请注意，当我们在Wireshark中看到突破时，它的顺序是相反的。Wireshark以相反的方式向我们显示PDU，因为它的顺序是未封装的。</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

