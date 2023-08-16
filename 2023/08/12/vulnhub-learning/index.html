@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/vulnhub" style=color:#03a9f4>
+                <a href="/tags/vulnhub" style=color:#00bcd4>
                     vulnhub
                 </a>
             </span>
@@ -313,6 +313,27 @@
 </ul>
 <p>在日志里发现执行后门代码的记录，命令：vi &#x2F;var&#x2F;log&#x2F;syslog，也查看了定时任务：vim &#x2F;etc&#x2F;crontab</p>
 <p>使用命令：crontab -l可以查看执行后门文件的定时任务</p>
+<h1 id="napping-1-0-1-ova"><a href="#napping-1-0-1-ova" class="headerlink" title="napping-1.0.1.ova."></a>napping-1.0.1.ova.</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sainet/p/15650122.html">Vulnhub 靶场 NAPPING: 1.0.1 - sainet - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/csacs/article/details/104535225">Reverse Tabnabbing钓鱼_SoulCat.的博客-CSDN博客</a></p>
+<p>这个靶机涉及到网络钓鱼，原理和刚学到的XSS差不多，但是Tab好像不需要设置钓鱼表单，在满足漏洞的情况下好像只需要监听端口就能接收到用户表单，这应该涉及到表单的提交和保存方式</p>
+<p>提权部分修改py文件时使用的shell是 &#x2F;usr&#x2F;bin&#x2F;bash 而不是 &#x2F;bin&#x2F;shell执行脚本（在py文件中）,询问GPT一般用户也是可以使用&#x2F;bin&#x2F;bash的，但是这里可能是设置了权限，以后插入py文件应该要先测试相关情况。</p>
+<p>vim提权时使用<code>！</code>可以执行外部shell命令，以此提权</p>
+<h1 id="EMPIRE-BREAKOUT"><a href="#EMPIRE-BREAKOUT" class="headerlink" title="EMPIRE: BREAKOUT"></a>EMPIRE: BREAKOUT</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sainet/p/15682132.html#3-10000-%E7%AB%AF%E5%8F%A3">Vulnhub 靶场 EMPIRE: BREAKOUT - sainet - 博客园 (cnblogs.com)</a></p>
+<p>在web部分需要使用enum4linux工具检测服务器上的smb用户结合找到的密码登录后台，smbmap更适合当作客户端登录</p>
+<p>提权部分需要寻找一些可用文件，一般来说对于网站可以寻找一些配置文件<code>*.conf</code> <code>*.config</code>等文件，对于本地提权则可以寻找一些隐藏文件、有权限的文件、密码文件等</p>
+<p>这里白给了一个tar命令，使用getcap查看发现read&#x3D;ep，可以通过加解压对一些文件越权访问，命令：</p>
+<p><code>./tar -cvf pass.tar /var/backups/.old_pass.bak</code></p>
+<ul>
+<li><code>-c</code>: 表示创建一个新的归档文件。</li>
+<li><code>-v</code>: 表示在执行过程中显示详细的处理信息。</li>
+<li><code>-f</code>: 后面紧跟着要创建的归档文件的名称。</li>
+</ul>
+<p><code>./tar -xvf pass.tar </code></p>
+<ul>
+<li><code>-x</code>: 表示从归档文件中提取（解压缩）文件。</li>
+<li><code>-v</code>: 表示在执行过程中显示详细的处理信息。</li>
+<li><code>-f</code>: 后面紧跟着要提取的归档文件的名称。</li>
+</ul>
 
     </div>
 
