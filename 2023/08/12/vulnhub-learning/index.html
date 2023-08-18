@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/vulnhub" style=color:#00bcd4>
+                <a href="/tags/vulnhub" style=color:#03a9f4>
                     vulnhub
                 </a>
             </span>
@@ -334,6 +334,42 @@
 <li><code>-v</code>: 表示在执行过程中显示详细的处理信息。</li>
 <li><code>-f</code>: 后面紧跟着要提取的归档文件的名称。</li>
 </ul>
+<h1 id="Vulnhub-Empire-LupinOne"><a href="#Vulnhub-Empire-LupinOne" class="headerlink" title="Vulnhub-Empire: LupinOne"></a>Vulnhub-Empire: LupinOne</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/C0ngvv/p/15607026.html">Vulnhub-Empire: LupinOne题解 - C0ngvv - 博客园 (cnblogs.com)</a></p>
+<p>这里挺有意思的，在爬虫文件中找到了一个：</p>
+<p><img src="https://img2020.cnblogs.com/blog/2419541/202111/2419541-20211126115020078-347234152.png" alt="img"></p>
+<p>在而后的扫描中使用<code>~FUZZ</code>查找文件，这实际算得上一个提示hh。</p>
+<p>在ssh密钥登录时，使用ssh -i 指定ssh_key</p>
+<p>这里遇到一个Enter passphrase for key</p>
+<blockquote>
+<p>GPT:<br>在 SSH 连接时，”passphrase” 是指用于保护 SSH 私钥的密码。私钥是 SSH 密钥对中的一部分，用于对连接进行身份验证和加密通信。私钥需要受到保护，以防止未经授权的访问。</p>
+<p>通常情况下，SSH 密钥对由两部分组成：公钥和私钥。公钥存储在远程服务器上，而私钥存储在本地机器上。当您尝试进行 SSH 连接时，您的私钥将用于身份验证。</p>
+<p>如果您的私钥设置了 passphrase（也称为密码短语），则在每次使用私钥进行身份验证时，您都需要输入这个 passphrase。这增加了私钥的安全性，因为即使其他人获得了您的私钥文件，他们也无法在没有知道 passphrase 的情况下使用它。</p>
+</blockquote>
+<p>在提权时给的特权命令制定了非root用户，只能横向移动：</p>
+<p><img src="https://img2022.cnblogs.com/blog/2834847/202210/2834847-20221019211337697-77786398.png" alt="img"></p>
+<p><img src="https://img2022.cnblogs.com/blog/2834847/202210/2834847-20221019215635820-265891080.png" alt="img"></p>
+<p>最后提权部分用到pip，文件给的提权代码：</p>
+<pre><code>TF=$(mktemp -d)
+echo &quot;import os; os.execl(&#39;/bin/sh&#39;, &#39;sh&#39;, &#39;-c&#39;, &#39;sh &lt;$(tty) &gt;$(tty) 2&gt;$(tty)&#39;)&quot; &gt; $TF/setup.py
+pip install $TF
+</code></pre>
+<p>核心部分还有点疑惑，留个引子</p>
+<h1 id="thale"><a href="#thale" class="headerlink" title="thale"></a>thale</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sainet/p/15655638.html">Vulnhub 靶场 THALES: 1 - sainet - 博客园 (cnblogs.com)</a></p>
+<p>这个靶机只能说中规中矩吧，web部分用到了msf 和msfveno，感觉很少用到msfveno但确实挺好用的</p>
+<p>提权部分几个博客园的博主讲得都不算很好，尤其是用backup.sh反弹root shell 时为什么等一会就能连接上，我查看了crontab和ps aux ，没有root是看不到定时任务，只有在ps进程中看到了备份脚本在被root执行：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308181112204.png" alt="image-20230818111232141"></p>
+<p>root:</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308181113859.png" alt="image-20230818111307806"></p>
+<p>这里看到脚本5min执行一次</p>
+<p>我们根据脚本指引来到保存备份文件的地方，发现上一次备份在5分钟前：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308181116917.png" alt="image-20230818111611873"></p>
+<p>（其实这里是写文章的时候刚好过了五分钟被截到），一般而言是可以看到上一次备份在几分钟前从而确证它可以自动执行备份。</p>
+<p>最后有提个挺有意思的是，横向移动的时候发现su提示需要一个终端，而使用pty提权后就可以移动了</p>
+<p>大概查了一下：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sainet/p/15783539.html">Linux 反向 shell 升级为完全可用的 TTY shell - sainet - 博客园 (cnblogs.com)</a></p>
+<p>推测nc得到的shell比较受限，查询了一下TTY：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308181124899.png" alt="image-20230818112416855"></p>
+<p>这里看到一直用的一句话提权实际上是伪终端（那就是说伪终端也算终端咯？）</p>
 
     </div>
 

