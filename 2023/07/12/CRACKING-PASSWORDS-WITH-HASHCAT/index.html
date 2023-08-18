@@ -1,213 +1,37 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>CRACKING PASSWORDS WITH HASHCAT</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="哈希是将某些文本转换为字符串的过程，该字符串对于特定文本是唯一的。通常，散列函数总是返回具有相同长度的散列，而与数据的类型、长度或大小无关。哈希是一个单向过程，这意味着无法从哈希中重建原始明文。
 
-<!DOCTYPE html>
-<html lang="en ">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || CRACKING PASSWORDS WITH HASHCAT</title>
-    <meta name="author" content="TiAmo">
-    <meta name="description" content="Buona notte ">
-    <meta name="keywords" content=" ">
-    <link rel="icon" href="/avatar.png">
-    <link rel="stylesheet" href="/css/antd.min.css">
-    
-    <link rel="stylesheet" href="/css/full-theme.css">
-    
-    <script src="/js/vue.js"></script>
-    <script src="/js/antd.min.js"></script>
-<meta name="generator" content="Hexo 6.3.0"></head>
+备忘单备忘单是此模块的有用命令参考。
 
-<body>
 
-    <div id="loading"
-        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
-        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
-        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
-        <div
-            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
-            <div id="loadcontent"
-                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
-                <div>
-                    <h2>LOADING...</h2>
-                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
-                    <div>
-                        <img src="/dancingkitty.gif" alt="loading">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div id="layout">
-        <transition name="into">
-            <div v-show="show_page" style="display: none;">
-                <div id="menu_show">
-                     
-<nav id="menu">
-    <div class="desktop-menu">
-        <a href="/">
-            <span class="title">Salve</span>
-        </a>
-        
-        <a href="/">
-            <span>
-                <a-icon type="home" theme="filled" />
-            </span>
-            <span>home</span>
-        </a>
-        
-        <a href="/about">
-            <span>
-                <a-icon type="idcard" theme="filled" />
-            </span>
-            <span>about</span>
-        </a>
-        
-        <a href="/archives">
-            <span>
-                <a-icon type="folder" theme="filled" />
-            </span>
-            <span>archives</span>
-        </a>
-        
-        <a href="/categories">
-            <span>
-                <a-icon type="book" theme="filled" />
-            </span>
-            <span>categories</span>
-        </a>
-        
-        <a href="/tags">
-            <span>
-                <a-icon type="tags" theme="filled" />
-            </span>
-            <span>tags</span>
-        </a>
-        
-        <a href="">
-            <span>
-                <a-icon type="compass" theme="filled" />
-            </span>
-            <span>英文博客</span>
-        </a>
-        
-    </div>
+命令
+描述
 
-    <div :class="'phone-menu ' + menu_show" id="phone-menu">
-        <div :class="'title'" @click="menu_show=!menu_show">
-            <span style="margin-right: 10px;">
-                <a-icon type="appstore" theme="filled" />
-            </span>
-            <span>Salve</span>
-        </div>
-        <div class="items" v-show="menu_show">
-            
-            <a href="/">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="home" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
-                </div>
-            </a>
-            
-            <a href="/about">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="idcard" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
-                </div>
-            </a>
-            
-            <a href="/archives">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="folder" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
-                </div>
-            </a>
-            
-            <a href="/categories">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="book" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
-                </div>
-            </a>
-            
-            <a href="/tags">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="tags" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
-                </div>
-            </a>
-            
-            <a href="">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="compass" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
-                </div>
-            </a>
-            
-        </div>
-        <div class="curtain" v-show="menu_show"></div>
-    </div>
 
-</nav>
-                </div>
 
-                <div id="main">
-                     
-<link rel="stylesheet" href="/css/post-body.css">
-<div class="article">
-    <div>
-        <h1>CRACKING PASSWORDS WITH HASHCAT </h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/7/12
-        </span>
+pip install hashid
+安装该工具hashid
 
-        
 
-        
+hashid &amp;lt;hash&amp;gt;或hashid &amp;lt;hashes.txt&amp;gt;
+使用该工具识别哈希hashid
 
-        <span class="tags">
-            <span class="icon">
-                <a-icon type="tags" theme="filled" />
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/base" style=color:#ff7d73>
-                    base
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/tool" style=color:#00a596>
-                    tool
-                </a>
-            </span>
-            
-        </span>
-        
-    </div>
 
-    <div class="content" v-pre>
-        <p>哈希是将某些文本转换为字符串的过程，该字符串对于特定文本是唯一的。通常，散列函数总是返回具有相同长度的散列，而与数据的类型、长度或大小无关。哈希是一个单向过程，这意味着无法从哈希中重建原始明文。</p>
+hashcat --example-hashes
+查看哈希模式和示例哈希的列表Hashcat
+
+
+hashcat -b -m &amp;lt;hash mode&amp;gt;
+执行特定哈希模式的基准测试Hashcat
+
+
+hashcat -b
+执行所有哈希模式的基准测试
+
+.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">CRACKING PASSWORDS WITH HASHCAT</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%87%E5%BF%98%E5%8D%95"><span class="toc-text">备忘单</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hashid"><span class="toc-text">Hashid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Context-is-Important"><span class="toc-text">Context is Important</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hashcat"><span class="toc-text">Hashcat</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Example-Hashes"><span class="toc-text">Hashcat - Example Hashes</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Benchmark"><span class="toc-text">Hashcat - Benchmark</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Optimizations"><span class="toc-text">Hashcat - Optimizations</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Straight-or-Dictionary-Attack"><span class="toc-text">Straight or Dictionary Attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Straight-or-Dictionary-Attack-1"><span class="toc-text">Straight or Dictionary Attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#practice"><span class="toc-text">practice</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Combination-Attack"><span class="toc-text">Combination Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Syntax"><span class="toc-text">Hashcat - Syntax</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#practice-1"><span class="toc-text">practice</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mask-Attack"><span class="toc-text">Mask Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#practice-2"><span class="toc-text">practice</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hybrid-Mode"><span class="toc-text">Hybrid Mode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Hybrid-Attack-using-Wordlists"><span class="toc-text">Hashcat - Hybrid Attack using Wordlists</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#practice-3"><span class="toc-text">practice</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Creating-Custom-Wordlists"><span class="toc-text">Creating Custom Wordlists</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-Wordlists"><span class="toc-text">Creating Wordlists</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crunch"><span class="toc-text">Crunch</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Crunch-Syntax"><span class="toc-text">Crunch - Syntax</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Crunch-Generate-Word-List"><span class="toc-text">Crunch - Generate Word List</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CUPP"><span class="toc-text">CUPP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KWPROCESSOR"><span class="toc-text">KWPROCESSOR</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Kwprocessor-Example"><span class="toc-text">Kwprocessor - Example</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CeWL"><span class="toc-text">CeWL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CeWL-Syntax"><span class="toc-text">CeWL - Syntax</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hashcat-utils"><span class="toc-text">Hashcat-utils</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Working-with-Rules"><span class="toc-text">Working with Rules</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Create-a-Rule-File"><span class="toc-text">Create a Rule File</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Default-Rules"><span class="toc-text">Hashcat - Default Rules</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#practice-4"><span class="toc-text">practice</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cracking-Common-Hashes"><span class="toc-text">Cracking Common Hashes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-1-Database-Dumps"><span class="toc-text">Example 1 - Database Dumps</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SHA1-Hashes-List"><span class="toc-text">SHA1 Hashes List</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-2-Linux-Shadow-File"><span class="toc-text">Example 2 - Linux Shadow File</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Root-Password-in-Ubuntu-Linux"><span class="toc-text">Root Password in Ubuntu Linux</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-3-Common-Active-Directory-Password-Hash-Types"><span class="toc-text">Example 3 - Common Active Directory Password Hash Types</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NTLM"><span class="toc-text">NTLM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Python3-Hashlib"><span class="toc-text">Python3 - Hashlib</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Cracking-NTLM-Hashes"><span class="toc-text">Hashcat - Cracking NTLM Hashes</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NetNTLMv2"><span class="toc-text">NetNTLMv2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Responder-NTLMv2"><span class="toc-text">Responder - NTLMv2</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cracking-Miscellaneous-Files-amp-Hashes"><span class="toc-text">Cracking Miscellaneous Files &amp; Hashes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tools"><span class="toc-text">Tools</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JohnTheRipper-Installation"><span class="toc-text">JohnTheRipper - Installation</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-1-Cracking-Password-Protected-Microsoft-Office-Documents"><span class="toc-text">Example 1 - Cracking Password Protected Microsoft Office Documents</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Extract-Hash"><span class="toc-text">Extract Hash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Cracking-MS-Office-Passwords"><span class="toc-text">Hashcat - Cracking MS Office Passwords</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-2-Cracking-Password-Protected-Zip-Files"><span class="toc-text">Example 2 - Cracking Password Protected Zip Files</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Set-Password-for-a-ZIP-File"><span class="toc-text">Set Password for a ZIP File</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Extract-Hash-1"><span class="toc-text">Extract Hash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Cracking-ZIP-Files"><span class="toc-text">Hashcat - Cracking ZIP Files</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-4-Cracking-Protected-PDF-Files"><span class="toc-text">Example 4 - Cracking Protected PDF Files</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cracking-Wireless-WPA-x2F-WPA2-Handshakes-with-Hashcat"><span class="toc-text">Cracking Wireless (WPA&#x2F;WPA2) Handshakes with Hashcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cracking-MIC"><span class="toc-text">Cracking MIC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat-Utils-Installation"><span class="toc-text">Hashcat-Utils - Installation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cap2hccapx-Syntax"><span class="toc-text">Cap2hccapx - Syntax</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cap2hccapx-Convert-To-Crackable-File"><span class="toc-text">Cap2hccapx - Convert To Crackable File</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cracking-PMKID"><span class="toc-text">Cracking PMKID</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Extract-PMKID-Using-Hcxpcaptool"><span class="toc-text">Extract PMKID - Using Hcxpcaptool</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hcxtools-Installation"><span class="toc-text">Hcxtools - Installation</span></a></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/tool"><i class="tag post-item-tag">tool</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">CRACKING PASSWORDS WITH HASHCAT</h1><time class="has-text-grey" datetime="2023-07-12T02:00:49.000Z">2023-07-12</time><article class="mt-2 post-content"><p>哈希是将某些文本转换为字符串的过程，该字符串对于特定文本是唯一的。通常，散列函数总是返回具有相同长度的散列，而与数据的类型、长度或大小无关。哈希是一个单向过程，这意味着无法从哈希中重建原始明文。</p>
 <span id="more"></span>
 
 <h5 id="备忘单"><a href="#备忘单" class="headerlink" title="备忘单"></a>备忘单</h5><p>备忘单是此模块的有用命令参考。</p>
@@ -1001,96 +825,4 @@ Tanin@htb[/htb]$ make &amp;&amp; make install
 </code></pre>
 <pre><code class="shell-session">Tanin@htb[/htb]$ hcxpcapngtool cracking_pmkid.cap -o pmkidhash_corp2
 </code></pre>
-
-    </div>
-
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <div id="comment">
-        <div id="gitalk-container">
-        </div>
-    </div>
-    
-</div>
-                     
-<footer id="footer">
-    <div class="footer-wrap">
-        <div>
-            © 2018 - 2023 Salve
-            <span class="footer-icon">
-                <a-icon type="flag" theme="filled" /></span>
-            @TiAmo
-        </div>
-        <div></div>
-        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
-                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
-        
-    </div>
-
-</footer>
-
-<script src="/js/highlight.min.js"></script>
-<script src="/js/particle.js"></script>
-                </div>
-            </div>
-        </transition>
-    </div>
-
-    <script>
-    new Vue({
-        el: "#layout",
-        data: {
-            show_page: false,
-            onload_menu: false,
-            menu_show: false,
-            card_top: 100
-        },
-        created: function () {
-            var that = this
-            window.onload = function () {
-                that.show_page = true
-                document.getElementById("loadcontent").style.opacity = 0
-                setTimeout(function () {
-                    document.getElementById("loadleft").style.width = 0
-                    document.getElementById("loadright").style.width = 0
-                }, 300)
-                setTimeout(function () {
-                    document.getElementById("loading").style = "display:none"
-                }, 600)
-            }
-        },
-        mounted: function () {
-            var that = this
-            window.addEventListener('scroll', function (e) {
-                that.menu_show = false
-            })
-        },
-        methods: {
-            home_click: function () {
-                window.scrollTo({
-                    top: window.innerHeight - 80,
-                    behavior: "smooth",
-                });
-            }
-        }
-    })
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script>
-    const gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: 'hexo-theme-particle',      // The repository of store comments,
-        owner: 'korilin',
-        admin: ['korilin'],
-        language: 'en',
-        id: location.pathname,      // Ensure uniqueness and length less than 50
-        distractionFreeMode: true  // Facebook-like distraction free mode
-    })
-    gitalk.render('gitalk-container')
-</script>
-
-</body>
-
-</html>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/07/14/sqlmap/" title="sqlmap"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: sqlmap</span></a><a class="button is-default" href="/2023/07/10/brute-forcing/" title="brute forcing-hydra"><span class="has-text-weight-semibold">Next: brute forcing-hydra</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

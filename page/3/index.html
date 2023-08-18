@@ -1,1139 +1,215 @@
-
-<!DOCTYPE html>
-<html lang="en ">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salve || </title>
-    <meta name="author" content="TiAmo">
-    <meta name="description" content="Buona notte ">
-    <meta name="keywords" content=" ">
-    <link rel="icon" href="/avatar.png">
-    <link rel="stylesheet" href="/css/antd.min.css">
-    
-    <link rel="stylesheet" href="/css/full-theme.css">
-    
-    <script src="/js/vue.js"></script>
-    <script src="/js/antd.min.js"></script>
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-<body>
-
-    <div id="loading"
-        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
-        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
-        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
-        <div
-            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
-            <div id="loadcontent"
-                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
-                <div>
-                    <h2>LOADING...</h2>
-                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
-                    <div>
-                        <img src="/dancingkitty.gif" alt="loading">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="layout">
-        <transition name="into">
-            <div v-show="show_page" style="display: none;">
-                <div id="menu_show">
-                     
-<nav id="menu">
-    <div class="desktop-menu">
-        <a href="/">
-            <span class="title">Salve</span>
-        </a>
-        
-        <a href="/">
-            <span>
-                <a-icon type="home" theme="filled" />
-            </span>
-            <span>home</span>
-        </a>
-        
-        <a href="/about">
-            <span>
-                <a-icon type="idcard" theme="filled" />
-            </span>
-            <span>about</span>
-        </a>
-        
-        <a href="/archives">
-            <span>
-                <a-icon type="folder" theme="filled" />
-            </span>
-            <span>archives</span>
-        </a>
-        
-        <a href="/categories">
-            <span>
-                <a-icon type="book" theme="filled" />
-            </span>
-            <span>categories</span>
-        </a>
-        
-        <a href="/tags">
-            <span>
-                <a-icon type="tags" theme="filled" />
-            </span>
-            <span>tags</span>
-        </a>
-        
-        <a href="">
-            <span>
-                <a-icon type="compass" theme="filled" />
-            </span>
-            <span>英文博客</span>
-        </a>
-        
-    </div>
-
-    <div :class="'phone-menu ' + menu_show" id="phone-menu">
-        <div :class="'title'" @click="menu_show=!menu_show">
-            <span style="margin-right: 10px;">
-                <a-icon type="appstore" theme="filled" />
-            </span>
-            <span>Salve</span>
-        </div>
-        <div class="items" v-show="menu_show">
-            
-            <a href="/">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="home" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
-                </div>
-            </a>
-            
-            <a href="/about">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="idcard" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
-                </div>
-            </a>
-            
-            <a href="/archives">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="folder" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
-                </div>
-            </a>
-            
-            <a href="/categories">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="book" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
-                </div>
-            </a>
-            
-            <a href="/tags">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="tags" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
-                </div>
-            </a>
-            
-            <a href="">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="compass" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">英文博客</div>
-                </div>
-            </a>
-            
-        </div>
-        <div class="curtain" v-show="menu_show"></div>
-    </div>
-
-</nav>
-                </div>
-
-                <div id="main">
-                    <div id="home-head" style=background-image:url('home.jpg')>
-    <script>
-        var menu = document.getElementById("menu")
-        menu.className += " menu-color"
-    </script>
-     
-    <div id="home-info" class="home-info" @click="home_click">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>Salve</h1>
-                <h3></h3>
-                <h5>Buona notte</h5>
-            </div>
-        </span>
-    </div>
-     
-</div>
-
-
-
-<div id="home-posts-wrap" class=>
-    <div id="home-posts">
-
-        <div id="posts">
-            
-
-<div class="post">
-
-    <a href="/2023/06/18/Buffer-Overflows-part-1/">
-        <h2>
-            Buffer Overflows:part-1
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/18
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p>简而言之，缓冲区溢出是由不正确的程序代码引起的，CPU无法正确处理过多的数据，因此可能会操纵CPU的处理。例如，假设有太多数据被写入到不受限制的保留内存缓冲区或堆栈中。在这种情况下，特定的寄存器将被覆盖，这可能允许代码被执行。<br>缓冲区溢出可能导致程序崩溃、损坏数据或损坏程序运行时的数据结构。最后一种可以用任意数据覆盖特定程序的返回地址，使攻击者能够以易受缓冲区溢出影响的进程的权限执行命令，从而通过传递任意机器代码。此代码通常旨在让我们更方便地访问系统，以便将其用于自己的目的。这种缓冲区在普通服务器中溢出，互联网蠕虫也会利用客户端软件。<br>Unix系统上一个特别流行的目标是root访问，它赋予我们所有人访问系统的权限。然而，正如人们经常误解的那样，这并不意味着“仅”导致标准用户权限的缓冲区溢出是无害的。如果您已经拥有用户权限，那么获得令人垂涎的root访问权限通常会容易得多。<br>缓冲区溢出，除了编程疏忽之外，主要是由基于冯·诺依曼体系结构的计算机系统造成的。<br>缓冲区溢出的最重要原因是使用的编程语言不会自动监控内存缓冲区或堆栈的限制，以防止（基于堆栈的）缓冲区溢出。其中包括C和C++语言，它们强调性能，不需要监控。<br>由于这个原因，开发人员被迫在编程代码中自己定义这些区域，这会多次增加漏洞。出于测试目的或由于疏忽，这些区域通常未定义。即使它们用于测试目的，在开发过程结束时也可能被忽略。<br>但是，并不是每个应用程序环境都可能出现缓冲区溢出的情况。例如，由于Java处理内存管理的方式，独立的Java应用程序与其他应用程序相比不太可能。Java使用“垃圾收集”技术来管理内存，这有助于防止缓冲区溢出的情况。</p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#03a9f4>
-                base
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/hackthebox" style=color:#ff7d73>
-                hackthebox
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/18/Buffer-Overflows-part-1/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/17/File-inclusion-Automation-and-Prevention/">
-        <h2>
-            File_inclusion:Automation and Prevention
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/17
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="Automated-Scanning"><a href="#Automated-Scanning" class="headerlink" title="Automated Scanning"></a>Automated Scanning</h1><p>了解文件包含攻击是如何工作的，以及我们如何手动制作高级有效载荷并使用自定义技术来实现远程代码执行，这一点至关重要。这是因为在许多情况下，我们要利用该漏洞，可能需要与其特定配置相匹配的自定义负载。此外，在处理WAF或防火墙等安全措施时，我们必须运用我们的理解来了解特定的有效负载&#x2F;角色是如何被阻止的，并试图制定一个自定义的有效负载来绕过它。<br>在许多琐碎的情况下，我们可能不需要手动利用LFI漏洞。有许多自动化方法可以帮助我们快速识别和利用微不足道的LFI漏洞。我们可以使用模糊化工具来测试大量常见的LFI有效载荷，看看其中是否有任何一个有效，或者我们可以使用专门的LFI工具来测试这些漏洞。</p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#ff7d73>
-                base
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/practice" style=color:#00bcd4>
-                practice
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/hackthebox" style=color:#ffa2c4>
-                hackthebox
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/17/File-inclusion-Automation-and-Prevention/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/15/file-inclusion-RCE/">
-        <h2>
-            File-inclusion:RCE
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/15
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="PHP-Wrappers"><a href="#PHP-Wrappers" class="headerlink" title="PHP Wrappers"></a>PHP Wrappers</h1><p>到目前为止，在本模块中，我们一直在利用文件包含漏洞，通过各种方法披露本地文件。从本节中，我们将开始学习如何使用文件包含漏洞在后端服务器上执行代码并获得对它们的控制。<br>我们可以使用许多方法来执行远程命令，每种方法都有特定的用例，因为它们取决于后端语言&#x2F;框架和易受攻击的函数的功能。获得对后端服务器控制的一种简单而常见的方法是枚举用户凭据和SSH密钥，然后使用它们通过SSH或任何其他远程会话登录到后端服务器。例如，我们可能会在config.php这样的文件中找到数据库密码，如果用户重复使用相同的密码，该密码可能会与用户的密码相匹配。或者，我们可以检查每个用户主目录中的.ssh目录，如果读取权限设置不正确，那么我们可以获取他们的私钥（id_rsa），并使用它将ssh连接到系统中。<br>除了这些琐碎的方法之外，还有一些方法可以直接通过易受攻击的函数实现远程代码执行，而不依赖于数据枚举或本地文件权限。在本节中，我们将从PHP web应用程序上的远程代码执行开始。我们将在上一节学习的基础上进行构建，并将利用不同的PHP包装器来获得远程代码执行。然后，在接下来的部分中，我们将学习其他方法来获得远程代码执行，这些方法也可以与PHP和其他语言一起使用。</p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#ffa2c4>
-                base
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/practice" style=color:#ffa2c4>
-                practice
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/hackthebox" style=color:#03a9f4>
-                hackthebox
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/15/file-inclusion-RCE/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/15/file-inclusion/">
-        <h2>
-            File inclusion:File Disclosure
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/15
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h1><p>让我们看一些易受文件包含攻击的代码示例，以了解此类漏洞是如何发生的。如前所述，文件包含漏洞可能出现在许多最流行的web服务器和开发框架中，如PHP、NodeJS、Java、.Net等。它们中的每一个都有一种稍微不同的方法来包含本地文件，但它们都有一个共同点：从指定的路径加载文件。<br>这样的文件可以是动态头或基于用户指定语言的不同内容。例如，页面可能有一个？language GET参数，如果用户从下拉菜单中更改语言，则会返回相同的页面，但使用不同的语言参数（例如？language&#x3D;es）。在这种情况下，更改语言可能会更改web应用程序加载页面的目录（例如&#x2F;en&#x2F;或&#x2F;es&#x2F;）。如果我们能够控制正在加载的路径，那么我们可能能够利用此漏洞读取其他文件，并可能实现远程代码执行。</p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#ffa2c4>
-                base
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/practice" style=color:#00a596>
-                practice
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/hackthebox" style=color:#ffa2c4>
-                hackthebox
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/15/file-inclusion/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/14/Fuzzing/">
-        <h2>
-            Fuzzing
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/14
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h3 id="子域模糊-Sub-domain-Fuzzing"><a href="#子域模糊-Sub-domain-Fuzzing" class="headerlink" title="子域模糊 (Sub-domain Fuzzing)"></a>子域模糊 (Sub-domain Fuzzing)</h3><pre><code>target: HackTheBox有一个在线Swag商店。试着在“hacktebox.eu”上运行子域模糊测试来找到它。它的完整域是什么？
-</code></pre>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#ffa2c4>
-                base
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/tool" style=color:#03a9f4>
-                tool
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/hackthebox" style=color:#ff7d73>
-                hackthebox
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/ffuf" style=color:#00a596>
-                ffuf
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/14/Fuzzing/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/13/ffuf/">
-        <h2>
-            ffuf:Basic Fuzzing
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/13
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h4 id="模糊-Fuzzing"><a href="#模糊-Fuzzing" class="headerlink" title="模糊(Fuzzing)"></a>模糊(Fuzzing)</h4><p>​	术语模糊化是指一种测试技术，它将各种类型的用户输入发送到某个接口，以研究其反应。如果我们对SQL注入漏洞进行模糊处理，我们将发送随机的特殊字符，并查看服务器的反应。如果我们对缓冲区溢出进行模糊处理，我们将发送长字符串并增加它们的长度，以查看二进制文件是否以及何时会中断。<br>​	我们通常会为每种类型的网络模糊测试使用预定义的常用术语词汇表，看看网络服务器是否会接受它们。这样做是因为web服务器通常不会提供所有可用链接和域的目录（除非进行了严格的配置），因此我们必须检查各种链接，并查看哪些链接返回页面。</p>
-<p>一些最常用的单词列表可以在GitHub  <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists">SecLists</a> 存储库中找到，该存储库将单词列表分类为各种类型的模糊，甚至包括常用的密码，这些密码稍后将用于密码强制。</p>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#ff7d73>
-                base
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/tool" style=color:#00bcd4>
-                tool
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/hackthebox" style=color:#03a9f4>
-                hackthebox
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/ffuf" style=color:#03a9f4>
-                ffuf
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/13/ffuf/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/13/MSF-LEARN/">
-        <h2>
-            MSF_LEARN_1
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/13
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h4 id="MSF-转储哈希"><a href="#MSF-转储哈希" class="headerlink" title="MSF - 转储哈希"></a>MSF - 转储哈希</h4><p>  MSF - 转储哈希</p>
-<pre><code>meterpreter &gt; hashdump
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Taninluv's blog</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/buffer_overflow_1.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/06/18/Buffer-Overflows-part-1/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/buffer_overflow_1.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/hackthebox"><i class="tag post-item-tag">hackthebox</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/18/Buffer-Overflows-part-1/">Buffer Overflows:part-1</a></h2><time class="has-text-grey" datetime="2023-06-18T01:38:12.000Z">2023-06-18</time><p class="is-flex-grow-2 mt-2">Overview简而言之，缓冲区溢出是由不正确的程序代码引起的，CPU无法正确处理过多的数据，因此可能会操纵CPU的处理。例如，假设有太多数据被写入到不受限制的保留内存缓冲区或堆栈中。在这种情况下，特定的寄存器将被覆盖，这可能允许代码被执行。缓冲区溢出可能导致程序崩溃、损坏数据或损坏程序运行时的数据结构。最后一种可以用任意数据覆盖特定程序的返回地址，使攻击者能够以易受缓冲区溢出影响的进程的权限执行命令，从而通过传递任意机器代码。此代码通常旨在让我们更方便地访问系统，以便将其用于自己的目的。这种缓冲区在普通服务器中溢出，互联网蠕虫也会利用客户端软件。Unix系统上一个特别流行的目标是root访问，它赋予我们所有人访问系统的权限。然而，正如人们经常误解的那样，这并不意味着“仅”导致标准用户权限的缓冲区溢出是无害..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/18/Buffer-Overflows-part-1/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/practice"><i class="tag post-item-tag">practice</i></a><a href="/tags/hackthebox"><i class="tag post-item-tag">hackthebox</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/17/File-inclusion-Automation-and-Prevention/">File_inclusion:Automation and Prevention</a></h2><time class="has-text-grey" datetime="2023-06-17T06:44:16.000Z">2023-06-17</time><p class="is-flex-grow-2 mt-2">Automated Scanning了解文件包含攻击是如何工作的，以及我们如何手动制作高级有效载荷并使用自定义技术来实现远程代码执行，这一点至关重要。这是因为在许多情况下，我们要利用该漏洞，可能需要与其特定配置相匹配的自定义负载。此外，在处理WAF或防火墙等安全措施时，我们必须运用我们的理解来了解特定的有效负载&amp;#x2F;角色是如何被阻止的，并试图制定一个自定义的有效负载来绕过它。在许多琐碎的情况下，我们可能不需要手动利用LFI漏洞。有许多自动化方法可以帮助我们快速识别和利用微不足道的LFI漏洞。我们可以使用模糊化工具来测试大量常见的LFI有效载荷，看看其中是否有任何一个有效，或者我们可以使用专门的LFI工具来测试这些漏洞。</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/17/File-inclusion-Automation-and-Prevention/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/practice"><i class="tag post-item-tag">practice</i></a><a href="/tags/hackthebox"><i class="tag post-item-tag">hackthebox</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/15/file-inclusion-RCE/">File-inclusion:RCE</a></h2><time class="has-text-grey" datetime="2023-06-15T07:55:42.000Z">2023-06-15</time><p class="is-flex-grow-2 mt-2">PHP Wrappers到目前为止，在本模块中，我们一直在利用文件包含漏洞，通过各种方法披露本地文件。从本节中，我们将开始学习如何使用文件包含漏洞在后端服务器上执行代码并获得对它们的控制。我们可以使用许多方法来执行远程命令，每种方法都有特定的用例，因为它们取决于后端语言&amp;#x2F;框架和易受攻击的函数的功能。获得对后端服务器控制的一种简单而常见的方法是枚举用户凭据和SSH密钥，然后使用它们通过SSH或任何其他远程会话登录到后端服务器。例如，我们可能会在config.php这样的文件中找到数据库密码，如果用户重复使用相同的密码，该密码可能会与用户的密码相匹配。或者，我们可以检查每个用户主目录中的.ssh目录，如果读取权限设置不正确，那么我们可以获取他们的私钥（id_rsa），并使用它将ssh连接到系统中。除了..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/15/file-inclusion-RCE/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/img/File_inclusion_1.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/06/15/file-inclusion/"><img class="post-cover-img js-img-fadeIn" src="/img/File_inclusion_1.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/practice"><i class="tag post-item-tag">practice</i></a><a href="/tags/hackthebox"><i class="tag post-item-tag">hackthebox</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/15/file-inclusion/">File inclusion:File Disclosure</a></h2><time class="has-text-grey" datetime="2023-06-15T02:00:17.000Z">2023-06-15</time><p class="is-flex-grow-2 mt-2">理论让我们看一些易受文件包含攻击的代码示例，以了解此类漏洞是如何发生的。如前所述，文件包含漏洞可能出现在许多最流行的web服务器和开发框架中，如PHP、NodeJS、Java、.Net等。它们中的每一个都有一种稍微不同的方法来包含本地文件，但它们都有一个共同点：从指定的路径加载文件。这样的文件可以是动态头或基于用户指定语言的不同内容。例如，页面可能有一个？language GET参数，如果用户从下拉菜单中更改语言，则会返回相同的页面，但使用不同的语言参数（例如？language&amp;#x3D;es）。在这种情况下，更改语言可能会更改web应用程序加载页面的目录（例如&amp;#x2F;en&amp;#x2F;或&amp;#x2F;es&amp;#x2F;）。如果我们能够控制正在加载的路径，那么我们可能能够利用此漏洞读取其他文件，并可能实现远程..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/15/file-inclusion/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/tool"><i class="tag post-item-tag">tool</i></a><a href="/tags/hackthebox"><i class="tag post-item-tag">hackthebox</i></a><a href="/tags/ffuf"><i class="tag post-item-tag">ffuf</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/14/Fuzzing/">Fuzzing</a></h2><time class="has-text-grey" datetime="2023-06-14T08:33:54.000Z">2023-06-14</time><p class="is-flex-grow-2 mt-2">子域模糊 (Sub-domain Fuzzing)target: HackTheBox有一个在线Swag商店。试着在“hacktebox.eu”上运行子域模糊测试来找到它。它的完整域是什么？
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/14/Fuzzing/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/tool"><i class="tag post-item-tag">tool</i></a><a href="/tags/hackthebox"><i class="tag post-item-tag">hackthebox</i></a><a href="/tags/ffuf"><i class="tag post-item-tag">ffuf</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/13/ffuf/">ffuf:Basic Fuzzing</a></h2><time class="has-text-grey" datetime="2023-06-13T15:18:06.000Z">2023-06-13</time><p class="is-flex-grow-2 mt-2">模糊(Fuzzing)​	术语模糊化是指一种测试技术，它将各种类型的用户输入发送到某个接口，以研究其反应。如果我们对SQL注入漏洞进行模糊处理，我们将发送随机的特殊字符，并查看服务器的反应。如果我们对缓冲区溢出进行模糊处理，我们将发送长字符串并增加它们的长度，以查看二进制文件是否以及何时会中断。​	我们通常会为每种类型的网络模糊测试使用预定义的常用术语词汇表，看看网络服务器是否会接受它们。这样做是因为web服务器通常不会提供所有可用链接和域的目录（除非进行了严格的配置），因此我们必须检查各种链接，并查看哪些链接返回页面。
+一些最常用的单词列表可以在GitHub  SecLists 存储库中找到，该存储库将单词列表分类为各种类型的模糊，甚至包括常用的密码，这些密码稍后将用于密码强制。</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/13/ffuf/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/practice"><i class="tag post-item-tag">practice</i></a><a href="/tags/hackthebox"><i class="tag post-item-tag">hackthebox</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/13/MSF-LEARN/">MSF_LEARN_1</a></h2><time class="has-text-grey" datetime="2023-06-13T08:13:04.000Z">2023-06-13</time><p class="is-flex-grow-2 mt-2">MSF - 转储哈希  MSF - 转储哈希
+meterpreter &amp;gt; hashdump
 
 Administrator:500:c74761604a24f0dfd0a9ba2c30e462cf:d6908f022af0373e9e21b8a241c86dca:::
 ASPNET:1007:3f71d62ec68a06a39721cb3f54f04a3b:edc0d5506804653f58964a2376bbd769:::
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
-IUSR_GRANPA:1003:a274b4532c9ca5cdf684351fab962e86:6a981cb5e038b2d8b713743a50d89c88:::
-IWAM_GRANPA:1004:95d112c4da2348b599183ac6b1d67840:a97f39734c21b3f6155ded7821d04d16:::
-Lakis:1009:f927b0679b3cc0e192410d9b0b40873c:3064b6fc432033870c6730228af7867c:::
-SUPPORT_388945a0:1001:aad3b435b51404eeaad3b435b51404ee:8ed3993efb4e6476e4f75caebeca93e6:::
+IUSR_GRANPA:1003:a274b4532c9ca5cdf684351fab962e86:6a981cb5e03..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/13/MSF-LEARN/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/12/bash/">bash</a></h2><time class="has-text-grey" datetime="2023-06-12T15:35:14.000Z">2023-06-12</time><p class="is-flex-grow-2 mt-2">bash参数变量:
 
 
-meterpreter &gt; lsa_dump_sam
-
-[+] Running as SYSTEM
-[*] Dumping SAM
-Domain : GRANNY
-SysKey : 11b5033b62a3d2d6bb80a0d45ea88bfb
-Local SID : S-1-5-21-1709780765-3897210020-3926566182
-
-SAMKey : 37ceb48682ea1b0197c7ab294ec405fe
-
-RID  : 000001f4 (500)
-User : Administrator
-  Hash LM  : c74761604a24f0dfd0a9ba2c30e462cf
-  Hash NTLM: d6908f022af0373e9e21b8a241c86dca
-
-RID  : 000001f5 (501)
-User : Guest
-
-RID  : 000003e9 (1001)
-User : SUPPORT_388945a0
-  Hash NTLM: 8ed3993efb4e6476e4f75caebeca93e6
-
-RID  : 000003eb (1003)
-User : IUSR_GRANPA
-  Hash LM  : a274b4532c9ca5cdf684351fab962e86
-  Hash NTLM: 6a981cb5e038b2d8b713743a50d89c88
-
-RID  : 000003ec (1004)
-User : IWAM_GRANPA
-  Hash LM  : 95d112c4da2348b599183ac6b1d67840
-  Hash NTLM: a97f39734c21b3f6155ded7821d04d16
-
-RID  : 000003ef (1007)
-User : ASPNET
-  Hash LM  : 3f71d62ec68a06a39721cb3f54f04a3b
-  Hash NTLM: edc0d5506804653f58964a2376bbd769
-
-RID  : 000003f1 (1009)
-User : Lakis
-  Hash LM  : f927b0679b3cc0e192410d9b0b40873c
-  Hash NTLM: 3064b6fc432033870c6730228af7867c
-</code></pre>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#03a9f4>
-                base
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/practice" style=color:#ff7d73>
-                practice
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/hackthebox" style=color:#00a596>
-                hackthebox
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/13/MSF-LEARN/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/12/bash/">
-        <h2>
-            bash
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/12
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h2 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h2><h3 id="参数变量"><a href="#参数变量" class="headerlink" title="参数变量:"></a>参数变量:</h3><table>
-<thead>
-<tr>
-<th><code>$#</code></th>
-<th>此变量保存传递给脚本的参数数。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>$@</code></td>
-<td>此变量可用于检索命令行参数列表。</td>
-</tr>
-<tr>
-<td><code>$n</code></td>
-<td>可以使用其位置有选择地检索每个命令行参数。例如，第一个参数位于 。<code>$1</code></td>
-</tr>
-<tr>
-<td><code>$$</code></td>
-<td>当前正在执行的进程的进程 ID。</td>
-</tr>
-<tr>
-<td><code>$?</code></td>
-<td>脚本的退出状态。此变量可用于确定命令是否成功。值 0 表示成功执行，而值 1 表示失败的结果。</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th><code>$#</code></th>
-<th>在这种情况下，我们只需要一个需要分配给该变量的变量。此变量用于指定我们要使用的目标。如果我们只提供一个 FQDN 作为参数，则该变量的值为 .<code>domain``$#``1</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>$0</code></td>
-<td>此特殊变量被分配执行脚本的名称，然后在 “” 示例中显示。<code>Usage:</code></td>
-</tr>
-<tr>
-<td><code>$1</code></td>
-<td>用空格分隔，第一个参数分配给该特殊变量。</td>
-</tr>
-</tbody></table>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/base" style=color:#03a9f4>
-                base
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/12/bash/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/Apache Mod CGI/">
-        <h2>
-            Apache Mod CGI
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="Apache-Mod-CGI"><a href="#Apache-Mod-CGI" class="headerlink" title="Apache Mod CGI"></a>Apache Mod CGI</h1><h4 id="知识储备："><a href="#知识储备：" class="headerlink" title="知识储备："></a>知识储备：</h4><p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62078839/article/details/125691017?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167152297616800182178110%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=167152297616800182178110&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-125691017-null-null.142%5Ev68%5Epc_new_rank,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v2&utm_term=%20Apache%20Mod%20CGI&spm=1018.2226.3001.4187">CTFHUB-Apache Mod CGI(PHP学习)</a></p>
-<p><strong>原理简述</strong></p>
-<blockquote>
-<p>早期的Web服务器，只能响应浏览器发来的HTTP静态资源的请求，并将存储在服务器中的静态资源返回给浏览器。随着Web技术的发展，逐渐出现了动态技术，但是Web服务器并不能够直接运行动态脚本，为了解决Web服务器与外部应用程序（CGI程序）之间数据互通，于是出现了CGI（Common Gateway Interface）通用网关接口。简单理解，可以认为CGI是Web服务器和运行其上的应用程序进行“交流”的一种约定。</p>
-<p>当遇到动态脚本请求时，Web服务器主进程就会<code>Fork</code>创建出一个新的进程来启动CGI程序，运行外部C程序或Perl、PHP脚本等，也就是将动态脚本交给CGI程序来处理。这样，每次用户请求动态脚本，Web服务器都要重新Fork创建一个新进程去启动CGI程序，由CGI程序来处理动态脚本，处理完成后进程随之关闭，其效率是非常低下的。</p>
-<p>而对于Mod CGI，Web服务器可以内置Perl解释器或PHP解释器。也就是说将这些解释器做成模块的方式，Web服务器会在启动的时候就启动这些解释器。当有新的动态请求进来时，Web服务器就是&#x3D;&#x3D;自己解析这些动态脚本&#x3D;&#x3D;，省得重新Fork一个进程，效率提高了。<br>​	</p>
-</blockquote>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/靶场学习" style=color:#ff7d73>
-                靶场学习
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/Apache Mod CGI/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2023/06/11/Regular_operations/">
-        <h2>
-            正则运算
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2023/6/11
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <h1 id="正则运算"><a href="#正则运算" class="headerlink" title="正则运算"></a>正则运算</h1><h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>修饰符用于执行区分大小写和全局匹配:</p>
-<table>
-<thead>
-<tr>
-<th>修饰符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://www.runoob.com/js/jsref-regexp-i.html">i</a></td>
-<td>执行对大小写不敏感的匹配。</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.runoob.com/js/jsref-regexp-g.html">g</a></td>
-<td>执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。</td>
-</tr>
-<tr>
-<td>m</td>
-<td>执行多行匹配。</td>
-</tr>
-</tbody></table>
-            
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/others" style=color:#00a596>
-                others
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2023/06/11/Regular_operations/ " class="go-post">
-        阅读全文
-    </a>
-</div>
+$#
+此变量保存传递给脚本的参数数。
 
 
-             
-<div class="page-current">
 
-    <div class="prev">
-        
-        <a href="/page/2/">
-            <span class="page-num">
-                <a-icon type="caret-left" theme="filled" />
-            </span>
-        </a>
-        
-    </div>
+$@
+此变量可用于检索命令行参数列表。
 
-    <div class="page-index">
 
-        
-        <span>
+$n
+可以使用其位置有选择地检索每个命令行参数。例如，第一个参数位于 。$1
 
-            
 
-            
+$$
+当前正在执行的进程的进程 ID。
 
-            
-            <a href="/">
-                <span class="page-num">1</span>
-            </a>
-            
 
-            
+$?
+脚本的退出状态。此变量可用于确定命令是否成功。值 0 表示成功执行，而值 1 表示失败的结果。
 
-            
-            <a href="/page/2/">
-                <span class="page-num">
-                    2
-                </span>
-            </a>
-        </span>
-        
 
-        <span class="current">
-            3
-        </span>
 
-        
-        <span>
-            <a href="/page/4/">
-                <span class="page-num">
-                    4
-                </span>
-            </a>
-            
-            <a href="/page/5">
-                <span class="page-num">
-                    5
-                </span>
-            </a>
-            
 
-            
 
-        </span>
-        
+$#
+在这种情况下，我们只需要一个需要分配给该变量的变量。此变量用于指定我们要使用的目标。如果我们只提供一个 FQDN 作为参数，则该变量的值为 .domain``$#``1
 
-    </div>
 
-    <div class="next">
-        
-        <a href="/page/4/ ">
-            <span class="page-num">
-                <a-icon type="caret-right" theme="filled" />
-            </span>
-        </a>
-        
-    </div>
 
-</div>
+$0
+此特殊变量被分配执行脚本的名称，然后在 “” 示例中显示。Usage:
 
-        </div>
-    </div>
-    
-    <div id="home-card">
-        <a-affix :offset-top="card_top">
-    <a-card class="card-style" style="width: 300px">
-        <div class="avatar">
-            <img src="avatar.png " alt="头像">
-        </div>
-        <div class="name">
-            TiAmo
-        </div>
-        <div class="descriptions">
-            
-            <div class="description">
-                鲍鱼兰芷，不同箧而藏。
-            </div>
-            
-        </div>
-        <div class="icon-links">
-            
-            <span class="icon-link">
-                <a target="_blank" rel="noopener" href="https://github.com/Taninluv">
 
-                    
-                    <a-icon type="github"
-                        theme="filled" />
-                    
-                </a>
-            </span>
-            
-            <span class="icon-link">
-                <a href="">
+$1
+用空格分隔，第一个参数分配给该特殊变量。
 
-                    
-                    <a-icon type="twitter"
-                        theme="" />
-                    
-                </a>
-            </span>
-            
-        </div>
-        <div class="friend-links">
-            
-            <div class="friend-link">
-                <a href="">
-                    英文技术博客
-                </a>
-            </div>
-            
-            <div class="friend-link">
-                <a href="">
-                    日语记录博客
-                </a>
-            </div>
-            
-        </div>
-    </a-card>
-</a-affix>
-    </div>
-    
-</div>
-                     
-<footer id="footer">
-    <div class="footer-wrap">
-        <div>
-            © 2018 - 2023 Salve
-            <span class="footer-icon">
-                <a-icon type="flag" theme="filled" /></span>
-            @TiAmo
-        </div>
-        <div></div>
-        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
-                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
-        
-    </div>
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/12/bash/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0"><i class="tag post-item-tag">靶场学习</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/Apache%20Mod%20CGI/">Apache Mod CGI</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">Apache Mod CGI知识储备：参考文章：CTFHUB-Apache Mod CGI(PHP学习)
+原理简述
 
-</footer>
+早期的Web服务器，只能响应浏览器发来的HTTP静态资源的请求，并将存储在服务器中的静态资源返回给浏览器。随着Web技术的发展，逐渐出现了动态技术，但是Web服务器并不能够直接运行动态脚本，为了解决Web服务器与外部应用程序（CGI程序）之间数据互通，于是出现了CGI（Common Gateway Interface）通用网关接口。简单理解，可以认为CGI是Web服务器和运行其上的应用程序进行“交流”的一种约定。
+当遇到动态脚本请求时，Web服务器主进程就会Fork创建出一个新的进程来启动CGI程序，运行外部C程序或Perl、PHP脚本等，也就是将动态脚本交给CGI程序来处理。这样，每次用户..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/Apache%20Mod%20CGI/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/others"><i class="tag post-item-tag">others</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/Regular_operations/">正则运算</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">正则运算修饰符修饰符用于执行区分大小写和全局匹配:
 
-<script src="/js/highlight.min.js"></script>
-<script src="/js/particle.js"></script>
-                </div>
-            </div>
-        </transition>
-    </div>
 
-    <script>
-    new Vue({
-        el: "#layout",
-        data: {
-            show_page: false,
-            onload_menu: false,
-            menu_show: false,
-            card_top: 100
-        },
-        created: function () {
-            var that = this
-            window.onload = function () {
-                that.show_page = true
-                document.getElementById("loadcontent").style.opacity = 0
-                setTimeout(function () {
-                    document.getElementById("loadleft").style.width = 0
-                    document.getElementById("loadright").style.width = 0
-                }, 300)
-                setTimeout(function () {
-                    document.getElementById("loading").style = "display:none"
-                }, 600)
+
+修饰符
+描述
+
+
+
+i
+执行对大小写不敏感的匹配。
+
+
+g
+执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
+
+
+m
+执行多行匹配。
+
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/Regular_operations/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/page/2/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><style>.search-widget .search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--second-text-color);
+}
+.search-widget .search-content {
+    position: absolute;
+    left: 0;
+    top: calc(100% - 3px);
+    z-index: 2;
+
+    width: 100%;
+    height: 0;
+    max-height: 550px;
+
+    overflow: auto;
+    box-sizing: border-box;
+
+    background: var(--top-bar-bg-color);
+    backdrop-filter: blur(var(--backdropFilter));
+    -webkit-backdrop-filter: blur(var(--backdropFilter));
+
+    border-bottom-left-radius: var(--borderRadius);
+    border-bottom-right-radius: var(--borderRadius);
+    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.08);
+}
+
+.search-widget .search-content a:hover h5 {
+    color: #3273dc!important;
+}
+</style><main class="aside-card-container search-widget is-relative"><label for="searchInput"><div class="is-flex px-4" id="searchButton"><i class="iconfont icon--search1 mr-1"></i><input class="search-input is-flex-grow-1" id="searchInput" placeholder="Search everything.."></div></label><section class="search-content content" id="searchContent"></section></main><script>var searchDatabase = []
+var searchInputEl = document.getElementById('searchInput')
+var searchButtonEl = document.getElementById('searchButton')
+var searchResultEl = document.getElementById('searchContent')
+
+searchInputEl.oninput = function (evt) {
+    var searchValue = evt.srcElement.value
+    var haveSearchValue = Boolean(searchValue.trim())
+    if (!haveSearchValue) {
+        searchResultEl.style.height = 0
+        searchResultEl.innerHTML = null
+        return
+    }
+
+    var searchResults = searching(searchValue)
+
+    if (searchResults.length > 0) {
+        renderSearchResults(searchResults)
+    }
+}
+
+function renderSearchResults(results) {
+    searchResultEl.innerHTML = null
+    var fragment = document.createDocumentFragment()
+
+    results.forEach(function (item) {
+        var link = document.createElement('a')
+        var title = document.createElement('h5')
+        var content = document.createElement('p')
+
+        title.className = 'mb-1'
+        title.innerText = item.title
+        content.innerText = item.content
+
+        link.href = item.link
+        link.appendChild(title)
+        link.appendChild(content)
+        link.className = 'p-4 is-block'
+
+        fragment.appendChild(link)
+    })
+
+    searchResultEl.appendChild(fragment)
+    searchResultEl.style.height = 'auto'
+}
+
+function searching(inputText) {
+    var inputTexts = inputText.split(' ')
+    var searchResults = []
+    inputTexts.forEach(function (searchKey) {
+        var haveSearchValue = Boolean(searchKey.trim())
+        if (!haveSearchValue) return
+
+        var key = searchKey.toLowerCase()
+
+        for (var entry of searchDatabase) {
+            var title = entry.getElementsByTagName('title')[0].textContent
+            var link = entry.getElementsByTagName('link')[0].getAttribute('href')
+            var contentWithTags = entry.getElementsByTagName('content')[0].textContent
+            var rawContent = contentWithTags.trim().replace(/<[^>]+>/g, '').toLowerCase()
+
+            var LENGTH = 80
+            var finalContent = ''
+            var contentLength = rawContent.length
+            var searchResultIdx = rawContent.indexOf(key)
+
+            var startIdx = searchResultIdx - 20,
+                endIdx = startIdx + LENGTH
+
+            if (startIdx < 0) {
+                startIdx = 0
+                endIdx = 100
             }
-        },
-        mounted: function () {
-            var that = this
-            window.addEventListener('scroll', function (e) {
-                that.menu_show = false
-            })
-        },
-        methods: {
-            home_click: function () {
-                window.scrollTo({
-                    top: window.innerHeight - 80,
-                    behavior: "smooth",
-                });
+
+            endIdx > contentLength && (endIdx = contentLength)
+
+            finalContent = rawContent.substring(startIdx, endIdx)
+
+            if (title.indexOf(key) > -1 || searchResultIdx > -1) {
+                searchResults.push({
+                    link: link,
+                    title: title,
+                    content: finalContent
+                })
             }
         }
     })
-</script>
+    return searchResults
+}
 
-</body>
+searchButtonEl.onclick = function () {
+    if (searchDatabase.length > 0) return;
 
-</html>
+    fetch(window.location.href + '/search.xml').then(res => res.text()).then(res => {
+        var domparser = new DOMParser
+        var doc = domparser.parseFromString(res, 'application/xml')
+        searchDatabase = doc.getElementsByTagName('search')[0].children
+    })
+}</script><main class="aside-card-container profile-widget"><!-- todo: 使用取色工具动态阴影--><section class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center"><section class="is-flex is-justify-content-center avatar is-clipped"><div class="avatar-placeholder"></div></section><h3 class="user-name">Taninluv</h3><blockquote class="has-text-centered is-relative"><span style="margin-bottom: 5px;">Buona notte</span></blockquote></section><section class="sns-container is-flex is-justify-content-center is-align-items-center"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section></main><main class="aside-card-container recent-widget"><h3>Recent</h3><ul><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/buffer_overflow_1.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2023/06/18/Buffer-Overflows-part-1/">Buffer Overflows:part-1</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2023-06-18T01:38:12.000Z">2023-06-18</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=Fi" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2023/06/17/File-inclusion-Automation-and-Prevention/">File_inclusion:Automation and Prevention</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2023-06-17T06:44:16.000Z">2023-06-17</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=Fi" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2023/06/15/file-inclusion-RCE/">File-inclusion:RCE</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2023-06-15T07:55:42.000Z">2023-06-15</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="/img/File_inclusion_1.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2023/06/15/file-inclusion/">File inclusion:File Disclosure</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2023-06-15T02:00:17.000Z">2023-06-15</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=Fu" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2023/06/14/Fuzzing/">Fuzzing</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2023-06-14T08:33:54.000Z">2023-06-14</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=ff" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2023/06/13/ffuf/">ffuf:Basic Fuzzing</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2023-06-13T15:18:06.000Z">2023-06-13</time></section></li></ul></main><main class="aside-card-container archives-widget"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">31</span></li></ul></section></main><main class="aside-card-container tag-widget"><h3>Tags</h3><section><a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0"><span class="tag post-item-tag" style="margin-bottom: 5px;">靶场学习</span></a><a href="/tags/base"><span class="tag post-item-tag" style="margin-bottom: 5px;">base</span></a><a href="/tags/others"><span class="tag post-item-tag" style="margin-bottom: 5px;">others</span></a><a href="/tags/other"><span class="tag post-item-tag" style="margin-bottom: 5px;">other</span></a><a href="/tags/%E5%A4%87%E5%BF%98%E5%BD%95"><span class="tag post-item-tag" style="margin-bottom: 5px;">备忘录</span></a><a href="/tags/tool"><span class="tag post-item-tag" style="margin-bottom: 5px;">tool</span></a><a href="/tags/practice"><span class="tag post-item-tag" style="margin-bottom: 5px;">practice</span></a><a href="/tags/hackthebox"><span class="tag post-item-tag" style="margin-bottom: 5px;">hackthebox</span></a><a href="/tags/ffuf"><span class="tag post-item-tag" style="margin-bottom: 5px;">ffuf</span></a><a href="/tags/vulnhub"><span class="tag post-item-tag" style="margin-bottom: 5px;">vulnhub</span></a></section></main><main class="aside-card-container friend-widget"><h3>Friends</h3><section><a target="_blank" rel="noopener" href="https://www.google.com/"><span class="tag post-item-tag" style="margin-bottom: 5px;">Google</span></a><a target="_blank" rel="noopener" href="https://www.github.com/"><span class="tag post-item-tag" style="margin-bottom: 5px;">Github</span></a><a target="_blank" rel="noopener" href="https://v2ex.com/"><span class="tag post-item-tag" style="margin-bottom: 5px;">V2EX</span></a><a target="_blank" rel="noopener" href="https://twitter.com/"><span class="tag post-item-tag" style="margin-bottom: 5px;">Twitter</span></a></section></main></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+
+window.addEventListener('resize', $claudia.throttle(function () {
+    var images = document.querySelectorAll('.js-img-fadeIn')
+
+    images.forEach($claudia.blurBackdropImg)
+}, 150))</script></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+
+window.addEventListener('resize', $claudia.throttle(function () {
+    var images = document.querySelectorAll('.js-img-fadeIn')
+
+    images.forEach($claudia.blurBackdropImg)
+}, 150))</script></body></html>
