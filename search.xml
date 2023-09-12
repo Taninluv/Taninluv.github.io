@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>web attacks-XXE</title>
+      <link href="/2023/09/11/web-attacks-XXE/"/>
+      <url>/2023/09/11/web-attacks-XXE/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Intro-to-XXE"><a href="#Intro-to-XXE" class="headerlink" title="Intro to XXE"></a>Intro to XXE</h1><p>XML外部实体（XXE）注入漏洞发生在从用户控制的输入中获取XML数据时，而没有对其进行适当的清理或安全解析，这可能使我们能够使用XML功能执行恶意操作。XXE漏洞会对web应用程序及其后端服务器造成相当大的损害，从泄露敏感文件到关闭后端服务器，这就是为什么它被OWASP认为是十大web安全风险之一。</p><span id="more"></span><p>XML文档的一些关键元素，如：</p><table><thead><tr><th>Key</th><th>Definition</th><th>Example</th></tr></thead><tbody><tr><td><code>Tag</code></td><td>The keys of an XML document, usually wrapped with (<code>&lt;</code>&#x2F;<code>&gt;</code>) characters.</td><td><code>&lt;date&gt;</code></td></tr><tr><td><code>Entity</code></td><td>XML variables, usually wrapped with (<code>&amp;</code>&#x2F;<code>;</code>) characters.</td><td><code>&lt;</code></td></tr><tr><td><code>Element</code></td><td>The root element or any of its child elements, and its value is stored in between a start-tag and an end-tag.</td><td><code>&lt;date&gt;01-01-2022&lt;/date&gt;</code></td></tr><tr><td><code>Attribute</code></td><td>Optional specifications for any element that are stored in the tags, which may be used by the XML parser.</td><td><code>version=&quot;1.0&quot;</code>&#x2F;<code>encoding=&quot;UTF-8&quot;</code></td></tr><tr><td><code>Declaration</code></td><td>Usually the first line of an XML document, and defines the XML version and encoding to use when parsing it.</td><td><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</code></td></tr></tbody></table><p>此外，一些字符被用作XML文档结构的一部分，如&lt;、&gt;、&amp;或“。因此，如果我们需要在XML文档中使用它们，我们应该将它们替换为相应的实体引用（例如&amp;lt；、&amp;gt；、&amp;amp；、&amp;quot；）。最后，我们可以在&lt;！–和–&gt;之间的XML文档中编写注释，类似于HTML文档。</p><h2 id="XML-DTD"><a href="#XML-DTD" class="headerlink" title="XML DTD"></a>XML DTD</h2><p>XML文档类型定义（DTD）允许根据预定义的文档结构验证XML文档。预定义的文档结构可以在文档本身或外部文件中定义。下面是我们前面看到的XML文档的DTD示例：</p><pre><code class="xml">&lt;!DOCTYPE email [  &lt;!ELEMENT email (date, time, sender, recipients, body)&gt;  &lt;!ELEMENT recipients (to, cc?)&gt;  &lt;!ELEMENT cc (to*)&gt;  &lt;!ELEMENT date (#PCDATA)&gt;  &lt;!ELEMENT time (#PCDATA)&gt;  &lt;!ELEMENT sender (#PCDATA)&gt;  &lt;!ELEMENT to  (#PCDATA)&gt;  &lt;!ELEMENT body (#PCDATA)&gt;]&gt;</code></pre><p>正如我们所看到的，DTD使用element类型声明来声明根电子邮件元素，然后表示其子元素。之后，每个子元素也被声明，其中一些子元素也具有子元素，而其他子元素可能仅包含原始数据（如PCDATA所示）。 上面的DTD可以放在XML文档本身中，就在第一行的XML声明之后。否则，它可以存储在一个外部文件（例如email.dtd）中，然后在XML文档中使用SYSTEM关键字引用，如下所示：</p><pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE email SYSTEM &quot;email.dtd&quot;&gt;</code></pre><p>也可以通过URL引用DTD，如下所示：</p><pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE email SYSTEM &quot;http://inlanefreight.com/email.dtd&quot;&gt;</code></pre><p>这与HTML文档定义和引用JavaScript和CSS脚本的方式相对类似。</p><h2 id="XML-Entities"><a href="#XML-Entities" class="headerlink" title="XML Entities"></a>XML Entities</h2><p>我们还可以在XML DTD中定义自定义实体（即XML变量），以允许重构变量并减少重复数据。这可以通过使用ENTITY关键字来完成，该关键字后面跟着实体名称及其值，如下所示：</p><pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE email [  &lt;!ENTITY company &quot;Inlane Freight&quot;&gt;]&gt;</code></pre><p>一旦我们定义了一个实体，它就可以在XML文档中用&amp;和分号引用；（例如&amp;company；）。每当引用实体时，XML解析器都会将其替换为其值。然而，最有趣的是，我们可以使用SYSTEM关键字引用外部XML实体，该关键字后面跟着外部实体的路径，如下所示：</p><pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE email [  &lt;!ENTITY company SYSTEM &quot;http://localhost/company.txt&quot;&gt;  &lt;!ENTITY signature SYSTEM &quot;file:///var/www/html/signature.txt&quot;&gt;]&gt;</code></pre><p>注意：我们也可以使用PUBLIC关键字而不是SYSTEM来加载外部资源，后者用于公开声明的实体和标准，例如语言代码（lang&#x3D;“en”）。</p><p>这与文档中定义的内部XML实体类似。当我们引用外部实体（例如&amp;signature；）时，解析器会用存储在外部文件中的值（例如signature.txt）替换该实体。当在服务器端解析XML文件时，在SOAP（XML）API或web表单等情况下，实体可以引用存储在后端服务器上的文件，当我们引用该实体时，最终可能会向我们披露该文件。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> base </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Web Attacks-IDOR</title>
       <link href="/2023/09/06/Web-Attacks-IDOR/"/>
       <url>/2023/09/06/Web-Attacks-IDOR/</url>
