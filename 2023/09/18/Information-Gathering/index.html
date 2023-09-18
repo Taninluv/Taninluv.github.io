@@ -1,0 +1,401 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Information Gathering</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="Information Gathering信息收集阶段是每次渗透测试的第一步，我们需要在没有目标组织内部信息的情况下模拟外部攻击者。
+
+
+
+例如，我们可以将其视为在基于SSL证书的渗透测试中偶然发现新子域。然而，如果我们仔细观察这些子域，我们经常会看到与主要公司网站不同的技术在使用。子域和vhosts用于呈现其他信息，并执行与主页分离的其他任务。因此，必须了解使用了哪些技术，它们有什么用途，以及它们是如何工作的。在此过程中，我们的目标是从以下领域尽可能多地识别信息：
+
+域和子域
+IP范围
+基础设施
+虚拟主机
+
+WHOIS WHOIS域查找允许我们检索已注册域的域名信息。互联网名称与数字地址分配机构（ICANN）要求经认证的注册商在注册域名后立即在Whois数据库中输入持有人的联系信息、域名的创建和有效期以及.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Information Gathering</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Information-Gathering"><span class="toc-text">Information Gathering</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WHOIS"><span class="toc-text">WHOIS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS"><span class="toc-text">DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nslookup-amp-DIG"><span class="toc-text">Nslookup &amp; DIG</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Querying-A-Records-for-a-Subdomain"><span class="toc-text">Querying: A Records for a Subdomain</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Querying-PTR-Records-for-an-IP-Address"><span class="toc-text">Querying: PTR Records for an IP Address</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Querying-ANY-Existing-Records"><span class="toc-text">Querying: ANY Existing Records</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Querying-TXT-Records"><span class="toc-text">Querying: TXT Records</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Querying-MX-Records"><span class="toc-text">Querying: MX Records</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Passive-Subdomain-Enumeration"><span class="toc-text">Passive Subdomain Enumeration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VirusTotal"><span class="toc-text">VirusTotal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Certificates"><span class="toc-text">Certificates</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Automating-Passive-Subdomain-Enumeration"><span class="toc-text">Automating Passive Subdomain Enumeration</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TheHarvester"><span class="toc-text">TheHarvester</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Passive-Infrastructure-Identification"><span class="toc-text">Passive Infrastructure Identification</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wayback-Machine"><span class="toc-text">Wayback Machine</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Information Gathering</h1><time class="has-text-grey" datetime="2023-09-18T08:11:47.000Z">2023-09-18</time><article class="mt-2 post-content"><h1 id="Information-Gathering"><a href="#Information-Gathering" class="headerlink" title="Information Gathering"></a>Information Gathering</h1><p>信息收集阶段是每次渗透测试的第一步，我们需要在没有目标组织内部信息的情况下模拟外部攻击者。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309181613272.png" alt="img"></p>
+<span id="more"></span>
+
+<p>例如，我们可以将其视为在基于SSL证书的渗透测试中偶然发现新子域。然而，如果我们仔细观察这些子域，我们经常会看到与主要公司网站不同的技术在使用。子域和vhosts用于呈现其他信息，并执行与主页分离的其他任务。因此，必须了解使用了哪些技术，它们有什么用途，以及它们是如何工作的。在此过程中，我们的目标是从以下领域尽可能多地识别信息：</p>
+<ul>
+<li>域和子域</li>
+<li>IP范围</li>
+<li>基础设施</li>
+<li>虚拟主机</li>
+</ul>
+<h1 id="WHOIS"><a href="#WHOIS" class="headerlink" title="WHOIS"></a>WHOIS</h1><p> <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/WHOIS">WHOIS</a>域查找允许我们检索已注册域的域名信息。互联网名称与数字地址分配机构（ICANN）要求经认证的注册商在注册域名后立即在Whois数据库中输入持有人的联系信息、域名的创建和有效期以及其他信息。简单地说，Whois数据库是目前全球注册的所有域名的可搜索列表。 WHOIS查找最初是使用命令行工具执行的。如今，存在许多基于web的工具，但命令行选项通常使我们能够最大限度地控制查询，并帮助过滤和排序结果输出。Sysinternals WHOIS for Windows或Linux WHOIS命令行实用程序是我们收集信息的首选工具。然而，我们也可以使用一些在线版本，如 <a target="_blank" rel="noopener" href="https://whois.domaintools.com/">whois.domaintools.com</a>。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ whois $TARGET
+</code></pre>
+<p>从这个输出中，我们收集了以下信息：</p>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><h2 id="Nslookup-amp-DIG"><a href="#Nslookup-amp-DIG" class="headerlink" title="Nslookup &amp; DIG"></a>Nslookup &amp; DIG</h2><p>我们来看看Nslookup命令行实用程序。让我们假设一位客户要求我们进行外部渗透测试。因此，我们首先需要熟悉它们的基础设施，并确定哪些主机是可以公开访问的。我们可以使用不同类型的DNS请求来找到这一点。使用Nslokup，我们可以在互联网上搜索域名服务器，并向他们询问有关主机和域的信息。尽管该工具有两种模式，交互式和非交互式，但我们将主要关注非交互式模块。 我们只需提交域名就可以查询A记录。但是我们也可以使用-query参数来搜索特定的资源记录。例如：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ nslookup $TARGET
+
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+Non-authoritative answer:
+Name:	facebook.com
+Address: 31.13.92.36
+Name:	facebook.com
+Address: 2a03:2880:f11c:8083:face:b00c:0:25de
+</code></pre>
+<p>如果需要，我们还可以通过在命令中添加@&lt;nameserver&#x2F;IP&gt;来指定名称服务器。与nslookup不同，DIG向我们展示了一些更重要的信息。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ dig facebook.com @1.1.1.1
+
+; &lt;&lt;&gt;&gt; DiG 9.16.1-Ubuntu &lt;&lt;&gt;&gt; facebook.com @1.1.1.1
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 58899
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;facebook.com.                  IN      A
+
+;; ANSWER SECTION:
+facebook.com.           169     IN      A       31.13.92.36
+
+;; Query time: 20 msec
+;; SERVER: 1.1.1.1#53(1.1.1.1)
+;; WHEN: Mo Okt 18 16:03:17 CEST 2021
+;; MSG SIZE  rcvd: 57
+</code></pre>
+<p>条目以完整的域名开始，包括最后一个点。在必须再次请求信息之前，该条目可以在高速缓存中保持169秒</p>
+<h4 id="Querying-A-Records-for-a-Subdomain"><a href="#Querying-A-Records-for-a-Subdomain" class="headerlink" title="Querying: A Records for a Subdomain"></a>Querying: A Records for a Subdomain</h4><pre><code class="shell-session">Tanin@htb[/htb]$ export TARGET=www.facebook.com
+Tanin@htb[/htb]$ nslookup -query=A $TARGET
+
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+Non-authoritative answer:
+www.facebook.com	canonical name = star-mini.c10r.facebook.com.
+Name:	star-mini.c10r.facebook.com
+Address: 31.13.92.36
+</code></pre>
+<p>Querying: A Records for a Subdomain</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ dig a www.facebook.com @1.1.1.1
+
+; &lt;&lt;&gt;&gt; DiG 9.16.1-Ubuntu &lt;&lt;&gt;&gt; a www.facebook.com @1.1.1.1
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 15596
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;www.facebook.com.              IN      A
+
+;; ANSWER SECTION:
+www.facebook.com.       3585    IN      CNAME   star-mini.c10r.facebook.com.
+star-mini.c10r.facebook.com. 45 IN      A       31.13.92.36
+
+;; Query time: 16 msec
+;; SERVER: 1.1.1.1#53(1.1.1.1)
+;; WHEN: Mo Okt 18 16:11:48 CEST 2021
+;; MSG SIZE  rcvd: 90
+</code></pre>
+<h4 id="Querying-PTR-Records-for-an-IP-Address"><a href="#Querying-PTR-Records-for-an-IP-Address" class="headerlink" title="Querying: PTR Records for an IP Address"></a>Querying: PTR Records for an IP Address</h4><pre><code class="shell-session">Tanin@htb[/htb]$ nslookup -query=PTR 31.13.92.36
+
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+Non-authoritative answer:
+36.92.13.31.in-addr.arpa	name = edge-star-mini-shv-01-frt3.facebook.com.
+
+Authoritative answers can be found from:
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ dig -x 31.13.92.36 @1.1.1.1
+
+; &lt;&lt;&gt;&gt; DiG 9.16.1-Ubuntu &lt;&lt;&gt;&gt; -x 31.13.92.36 @1.1.1.1
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 51730
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;36.92.13.31.in-addr.arpa.      IN      PTR
+
+;; ANSWER SECTION:
+36.92.13.31.in-addr.arpa. 1028  IN      PTR     edge-star-mini-shv-01-frt3.facebook.com.
+
+;; Query time: 16 msec
+;; SERVER: 1.1.1.1#53(1.1.1.1)
+;; WHEN: Mo Okt 18 16:14:20 CEST 2021
+;; MSG SIZE  rcvd: 106
+</code></pre>
+<h4 id="Querying-ANY-Existing-Records"><a href="#Querying-ANY-Existing-Records" class="headerlink" title="Querying: ANY Existing Records"></a>Querying: ANY Existing Records</h4><pre><code class="shell-session">Tanin@htb[/htb]$ export TARGET=&quot;google.com&quot;
+Tanin@htb[/htb]$ nslookup -query=ANY $TARGET
+
+Server:		10.100.0.1
+Address:	10.100.0.1#53
+
+Non-authoritative answer:
+Name:	google.com
+Address: 172.217.16.142
+Name:	google.com
+Address: 2a00:1450:4001:808::200e
+google.com	text = &quot;docusign=05958488-4752-4ef2-95eb-aa7ba8a3bd0e&quot;
+google.com	text = &quot;docusign=1b0a6754-49b1-4db5-8540-d2c12664b289&quot;
+google.com	text = &quot;v=spf1 include:_spf.google.com ~all&quot;
+google.com	text = &quot;MS=E4A68B9AB2BB9670BCE15412F62916164C0B20BB&quot;
+google.com	text = &quot;globalsign-smime-dv=CDYX+XFHUw2wml6/Gb8+59BsH31KzUr6c1l2BPvqKX8=&quot;
+google.com	text = &quot;apple-domain-verification=30afIBcvSuDV2PLX&quot;
+google.com	text = &quot;google-site-verification=wD8N7i1JTNTkezJ49swvWW48f8_9xveREV4oB-0Hf5o&quot;
+google.com	text = &quot;facebook-domain-verification=22rm551cu4k0ab0bxsw536tlds4h95&quot;
+google.com	text = &quot;google-site-verification=TV9-DBe4R80X4v0M4U_bd_J9cpOJM0nikft0jAgjmsQ&quot;
+google.com	nameserver = ns3.google.com.
+google.com	nameserver = ns2.google.com.
+google.com	nameserver = ns1.google.com.
+google.com	nameserver = ns4.google.com.
+google.com	mail exchanger = 10 aspmx.l.google.com.
+google.com	mail exchanger = 40 alt3.aspmx.l.google.com.
+google.com	mail exchanger = 20 alt1.aspmx.l.google.com.
+google.com	mail exchanger = 30 alt2.aspmx.l.google.com.
+google.com	mail exchanger = 50 alt4.aspmx.l.google.com.
+google.com
+    origin = ns1.google.com
+    mail addr = dns-admin.google.com
+    serial = 398195569
+    refresh = 900
+    retry = 900
+    expire = 1800
+    minimum = 60
+google.com	rdata_257 = 0 issue &quot;pki.goog&quot;
+
+Authoritative answers can be found from:
+</code></pre>
+<h4 id="Querying-TXT-Records"><a href="#Querying-TXT-Records" class="headerlink" title="Querying: TXT Records"></a>Querying: TXT Records</h4><pre><code class="shell-session">Tanin@htb[/htb]$ export TARGET=&quot;facebook.com&quot;
+Tanin@htb[/htb]$ nslookup -query=TXT $TARGET
+
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+Non-authoritative answer:
+facebook.com	text = &quot;v=spf1 redirect=_spf.facebook.com&quot;
+facebook.com	text = &quot;google-site-verification=A2WZWCNQHrGV_TWwKh6KHY90tY0SHZo_RnyMJoDaG0s&quot;
+facebook.com	text = &quot;google-site-verification=wdH5DTJTc9AYNwVunSVFeK0hYDGUIEOGb-RReU6pJlY&quot;
+
+Authoritative answers can be found from:
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ dig txt facebook.com @1.1.1.1
+
+; &lt;&lt;&gt;&gt; DiG 9.16.1-Ubuntu &lt;&lt;&gt;&gt; txt facebook.com @1.1.1.1
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 63771
+;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;facebook.com.                  IN      TXT
+
+;; ANSWER SECTION:
+facebook.com.           86400   IN      TXT     &quot;v=spf1 redirect=_spf.facebook.com&quot;
+facebook.com.           7200    IN      TXT     &quot;google-site-verification=A2WZWCNQHrGV_TWwKh6KHY90tY0SHZo_RnyMJoDaG0s&quot;
+facebook.com.           7200    IN      TXT     &quot;google-site-verification=wdH5DTJTc9AYNwVunSVFeK0hYDGUIEOGb-RReU6pJlY&quot;
+
+;; Query time: 24 msec
+;; SERVER: 1.1.1.1#53(1.1.1.1)
+;; WHEN: Mo Okt 18 16:17:46 CEST 2021
+;; MSG SIZE  rcvd: 249
+</code></pre>
+<h4 id="Querying-MX-Records"><a href="#Querying-MX-Records" class="headerlink" title="Querying: MX Records"></a>Querying: MX Records</h4><pre><code class="shell-session">Tanin@htb[/htb]$ export TARGET=&quot;facebook.com&quot;
+Tanin@htb[/htb]$ nslookup -query=MX $TARGET
+
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+Non-authoritative answer:
+facebook.com	mail exchanger = 10 smtpin.vvv.facebook.com.
+
+Authoritative answers can be found from:
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ dig mx facebook.com @1.1.1.1
+
+; &lt;&lt;&gt;&gt; DiG 9.16.1-Ubuntu &lt;&lt;&gt;&gt; mx facebook.com @1.1.1.1
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 9392
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;facebook.com.                  IN      MX
+
+;; ANSWER SECTION:
+facebook.com.           3600    IN      MX      10 smtpin.vvv.facebook.com.
+
+;; Query time: 40 msec
+;; SERVER: 1.1.1.1#53(1.1.1.1)
+;; WHEN: Mo Okt 18 16:18:22 CEST 2021
+;; MSG SIZE  rcvd: 68
+</code></pre>
+<h1 id="Passive-Subdomain-Enumeration"><a href="#Passive-Subdomain-Enumeration" class="headerlink" title="Passive Subdomain Enumeration"></a>Passive Subdomain Enumeration</h1><h2 id="VirusTotal"><a href="#VirusTotal" class="headerlink" title="VirusTotal"></a>VirusTotal</h2><p>VirusTotal维护其DNS复制服务，该服务是通过保留用户访问其提供的URL时所做的DNS解析来开发的。要接收有关域的信息，请在搜索栏中键入域名，然后单击“关系”选项卡。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309181654870.png" alt="image"></p>
+<h2 id="Certificates"><a href="#Certificates" class="headerlink" title="Certificates"></a>Certificates</h2><p>我们可以用来提取子域的另一个有趣的信息来源是SSL&#x2F;TLS证书。主要原因是证书透明度（CT），该项目要求证书颁发机构（CA）颁发的每个SSL&#x2F;TLS证书都发布在可公开访问的日志中。 我们将学习如何使用两种主要资源检查CT日志，以发现目标组织的其他域名和子域： </p>
+<p><a target="_blank" rel="noopener" href="https://censys.io/">https://censys.io</a> </p>
+<p><a target="_blank" rel="noopener" href="https://crt.sh/">https://crt.sh</a> </p>
+<p>我们可以导航到<a target="_blank" rel="noopener" href="https://search.censys.io/certificates%E6%88%96https://crt.sh%E5%B9%B6%E4%BB%8B%E7%BB%8D%E6%88%91%E4%BB%AC%E7%9B%AE%E6%A0%87%E7%BB%84%E7%BB%87%E7%9A%84%E5%9F%9F%E5%90%8D%EF%BC%8C%E5%BC%80%E5%A7%8B%E5%8F%91%E7%8E%B0%E6%96%B0%E7%9A%84%E5%AD%90%E5%9F%9F%E3%80%82">https://search.censys.io/certificates或https://crt.sh并介绍我们目标组织的域名，开始发现新的子域。</a></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309181659020.png" alt="image"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309181659612.png" alt="img"></p>
+<p>尽管该网站非常优秀，但我们希望将这些信息组织起来，并能够将其与整个信息收集过程中发现的其他来源相结合。让我们向目标网站执行一个curl请求，请求JSON输出，因为这对我们来说更易于处理。我们可以通过以下命令执行此操作：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ export TARGET=&quot;facebook.com&quot;
+Tanin@htb[/htb]$ curl -s &quot;https://crt.sh/?q=$&#123;TARGET&#125;&amp;output=json&quot; | jq -r &#39;.[] | &quot;\(.name_value)\n\(.common_name)&quot;&#39; | sort -u &gt; &quot;$&#123;TARGET&#125;_crt.sh.txt&quot;
+</code></pre>
+<pre><code class="shell-session">Tanin@htb[/htb]$ head -n20 facebook.com_crt.sh.txt
+
+*.adtools.facebook.com
+*.ak.facebook.com
+*.ak.fbcdn.net
+*.alpha.facebook.com
+*.assistant.facebook.com
+*.beta.facebook.com
+*.channel.facebook.com
+*.cinyour.facebook.com
+*.cinyourrc.facebook.com
+*.connect.facebook.com
+*.cstools.facebook.com
+*.ctscan.facebook.com
+*.dev.facebook.com
+*.dns.facebook.com
+*.extern.facebook.com
+*.extools.facebook.com
+*.f--facebook.com
+*.facebook.com
+*.facebookcorewwwi.onion
+*.facebookmail.com
+</code></pre>
+<table>
+<thead>
+<tr>
+<th><code>curl -s</code></th>
+<th>Issue the request with minimal output.</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>https://crt.sh/?q=&lt;DOMAIN&gt;&amp;output=json</code></td>
+<td>Ask for the json output.</td>
+</tr>
+<tr>
+<td><code>jq -r &#39;.[]&#39; &quot;\(.name_value)\n\(.common_name)&quot;&#39;</code></td>
+<td>Process the json output and print certificate’s name value and common name one per line.</td>
+</tr>
+<tr>
+<td><code>sort -u</code></td>
+<td>Sort alphabetically the output provided and removes duplicates.</td>
+</tr>
+</tbody></table>
+<p>我们还可以通过以下方式使用OpenSSL对目标手动执行此操作：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ export TARGET=&quot;facebook.com&quot;
+Tanin@htb[/htb]$ export PORT=&quot;443&quot;
+Tanin@htb[/htb]$ openssl s_client -ign_eof 2&gt;/dev/null &lt;&lt;&lt;$&#39;HEAD / HTTP/1.0\r\n\r&#39; -connect &quot;$&#123;TARGET&#125;:$&#123;PORT&#125;&quot; | openssl x509 -noout -text -in - | grep &#39;DNS&#39; | sed -e &#39;s|DNS:|\n|g&#39; -e &#39;s|^\*.*||g&#39; | tr -d &#39;,&#39; | sort -u
+
+*.facebook.com
+*.facebook.net
+*.fbcdn.net
+*.fbsbx.com
+*.m.facebook.com
+*.messenger.com
+*.xx.fbcdn.net
+*.xy.fbcdn.net
+*.xz.fbcdn.net
+facebook.com
+messenger.com
+</code></pre>
+<h2 id="Automating-Passive-Subdomain-Enumeration"><a href="#Automating-Passive-Subdomain-Enumeration" class="headerlink" title="Automating Passive Subdomain Enumeration"></a>Automating Passive Subdomain Enumeration</h2><p>我们已经学会了如何使用第三方服务从目标组织获取有用的信息，如子域、命名模式、备用TLD、IP范围等，而无需直接与其基础设施交互或依赖自动化工具。现在，我们将学习如何使用工具和以前获得的信息枚举子域。</p>
+<h4 id="TheHarvester"><a href="#TheHarvester" class="headerlink" title="TheHarvester"></a>TheHarvester</h4><p><a target="_blank" rel="noopener" href="https://github.com/laramies/theHarvester">TheHarvester</a> </p>
+<p>Harvester是一个简单易用但功能强大且有效的工具，用于早期渗透测试和红队参与。我们可以使用它来收集信息，以帮助识别公司的攻击面。该工具从各种公共数据源收集电子邮件、名称、子域、IP地址和URL，用于被动信息收集。目前，我们将使用以下模块：</p>
+<p>为了实现自动化，我们将创建一个名为sources.txt的文件，其中包含以下内容。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat sources.txt
+
+baidu
+bufferoverun
+crtsh
+hackertarget
+otx
+projecdiscovery
+rapiddns
+sublist3r
+threatcrowd
+trello
+urlscan
+vhost
+virustotal
+zoomeye
+</code></pre>
+<p>创建文件后，我们将执行以下命令从这些来源收集信息。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ export TARGET=&quot;facebook.com&quot;
+Tanin@htb[/htb]$ cat sources.txt | while read source; do theHarvester -d &quot;$&#123;TARGET&#125;&quot; -b $source -f &quot;$&#123;source&#125;_$&#123;TARGET&#125;&quot;;done
+
+&lt;SNIP&gt;
+*******************************************************************
+*  _   _                                            _             *
+* | |_| |__   ___    /\  /\__ _ _ ____   _____  ___| |_ ___ _ __  *
+* | __|  _ \ / _ \  / /_/ / _` | &#39;__\ \ / / _ \/ __| __/ _ \ &#39;__| *
+* | |_| | | |  __/ / __  / (_| | |   \ V /  __/\__ \ ||  __/ |    *
+*  \__|_| |_|\___| \/ /_/ \__,_|_|    \_/ \___||___/\__\___|_|    *
+*                                                                 *
+* theHarvester 4.0.0                                              *
+* Coded by Christian Martorella                                   *
+* Edge-Security Research                                          *
+* cmartorella@edge-security.com                                   *
+*                                                                 *
+*******************************************************************
+
+
+[*] Target: facebook.com
+
+[*] Searching Urlscan.
+
+[*] ASNS found: 29
+--------------------
+AS12578
+AS13335
+AS13535
+AS136023
+AS14061
+AS14618
+AS15169
+AS15817
+
+&lt;SNIP&gt;
+</code></pre>
+<p>过程结束后，我们可以提取找到的所有子域，并通过以下命令对其进行排序：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat *.json | jq -r &#39;.hosts[]&#39; 2&gt;/dev/null | cut -d&#39;:&#39; -f 1 | sort -u &gt; &quot;$&#123;TARGET&#125;_theHarvester.txt&quot;
+</code></pre>
+<p>现在我们可以通过以下方式合并所有被动侦察文件：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ cat facebook.com_*.txt | sort -u &gt; facebook.com_subdomains_passive.txt
+Tanin@htb[/htb]$ cat facebook.com_subdomains_passive.txt | wc -l
+
+11947
+</code></pre>
+<h1 id="Passive-Infrastructure-Identification"><a href="#Passive-Infrastructure-Identification" class="headerlink" title="Passive Infrastructure Identification"></a>Passive Infrastructure Identification</h1><p><a target="_blank" rel="noopener" href="https://www.netcraft.com/">Netcraft</a>甚至可以在不与服务器交互的情况下向我们提供有关服务器的信息，从被动信息收集的角度来看，这是有价值的。我们可以通过访问使用该服务<a target="_blank" rel="noopener" href="https://sitereport.netcraft.com并进入目标域./">https://sitereport.netcraft.com并进入目标域。</a></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309181743827.png" alt="img"></p>
+<p>我们需要特别注意使用的最新IP。有时，我们可以在网络服务器被放置在负载均衡器、网络应用程序防火墙或IDS后面之前，从中发现实际的IP地址，从而允许我们在配置允许的情况下直接连接到它。这种技术可能会干扰或改变我们未来的测试活动。</p>
+<h2 id="Wayback-Machine"><a href="#Wayback-Machine" class="headerlink" title="Wayback Machine"></a>Wayback Machine</h2><p>我们可以使用 <a target="_blank" rel="noopener" href="http://web.archive.org/">Wayback Machine</a> 访问这些网站的几个版本，以查找在源代码或文件中可能有有趣注释的旧版本，而这些注释不应该存在。此工具可用于在某个时间点查找网站的旧版本。以一个运行WordPress的网站为例。在使用手动方法和自动化工具评估它时，我们可能找不到任何有趣的东西，所以我们使用Wayback Machine搜索它，并找到一个使用特定（现在很脆弱）插件的版本。回到网站的当前版本，我们发现插件没有被正确删除，仍然可以通过wp内容目录访问。然后我们可以利用它在主机上获得远程代码执行和丰厚的奖励。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309181746630.png" alt="image"></p>
+<p>我们还可以使用工具waybackurls来检查Wayback Machine保存的URL，并查找特定的关键字。如果我们在主机上正确设置了Go，我们可以按如下方式安装该工具：</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/tomnomnom/waybackurls">waybackurls</a></p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ go install github.com/tomnomnom/waybackurls@latest
+</code></pre>
+<p>要从域中获取带有获取日期的已爬网URL列表，我们可以在命令中添加-dates开关，如下所示：</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ waybackurls -dates https://facebook.com &gt; waybackurls.txt
+Tanin@htb[/htb]$ cat waybackurls.txt
+
+2018-05-20T09:46:07Z http://www.facebook.com./
+2018-05-20T10:07:12Z https://www.facebook.com/
+2018-05-20T10:18:51Z http://www.facebook.com/#!/pages/Welcome-Baby/143392015698061?ref=tsrobots.txt
+2018-05-20T10:19:19Z http://www.facebook.com/
+2018-05-20T16:00:13Z http://facebook.com
+2018-05-21T22:12:55Z https://www.facebook.com
+2018-05-22T15:14:09Z http://www.facebook.com
+2018-05-22T17:34:48Z http://www.facebook.com/#!/Syerah?v=info&amp;ref=profile/robots.txt
+2018-05-23T11:03:47Z http://www.facebook.com/#!/Bin595
+</code></pre>
+<p>如果我们想访问特定的资源，我们需要将URL放在搜索菜单中，并导航到创建快照的日期。如前所述，Wayback Machine是一种方便的工具，不应被忽视。它很可能导致我们发现被遗忘的资产、页面等，从而发现缺陷。</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/09/11/web-attacks-XXE/" title="web attacks-XXE"><span class="has-text-weight-semibold">Next: web attacks-XXE</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

