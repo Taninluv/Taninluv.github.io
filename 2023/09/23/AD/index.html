@@ -1,0 +1,326 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>AD</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="
+Sniffing out a Foothold
+Initial Enumeration
+Sniffing out a Foothold
+
+
+
+External Information Gathering (Passive Checks)外部信息收集被授权证明与可以从互联网上收集的有关公司的信息相关的风险。
+Internal Testing内部评估部分旨在通过尝试模拟Inlanefreight运营区域内的攻击向量来证明与内部主机和服务（特别是Active Directory）上的漏洞相关的风险。这一结果将使Inlanefright能够评估内部漏洞的风险以及成功利用漏洞的潜在影响。 
+Password Testing从Inlanefreight设备捕获或由组织提供的密码文件可以加载到离线工作站上进行解密，并用.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">AD</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#External-Information-Gathering-Passive-Checks"><span class="toc-text">External Information Gathering (Passive Checks)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Internal-Testing"><span class="toc-text">Internal Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Password-Testing"><span class="toc-text">Password Testing</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Initial-Enumeration"><span class="toc-text">Initial Enumeration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Are-We-Looking-For"><span class="toc-text">What Are We Looking For?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Public-Data"><span class="toc-text">Public Data</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hunting-For-Files"><span class="toc-text">Hunting For Files</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hunting-E-mail-Addresses"><span class="toc-text">Hunting E-mail Addresses</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#E-mail-Dork-Results"><span class="toc-text">E-mail Dork Results</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Username-Harvesting"><span class="toc-text">Username Harvesting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Credential-Hunting"><span class="toc-text">Credential Hunting</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Initial-Enumeration-of-the-Domain"><span class="toc-text">Initial Enumeration of the Domain</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Key-Data-Points"><span class="toc-text">Key Data Points</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TTPs"><span class="toc-text">TTPs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Identifying-Hosts"><span class="toc-text">Identifying Hosts</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Start-Wireshark-on-ea-attack01"><span class="toc-text">Start Wireshark on ea-attack01</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-Responder"><span class="toc-text">Starting Responder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FPing-Active-Checks"><span class="toc-text">FPing Active Checks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nmap-Scanning"><span class="toc-text">Nmap Scanning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NMAP-Result-Highlights"><span class="toc-text">NMAP Result Highlights</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Users"><span class="toc-text">Identifying Users</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Users-1"><span class="toc-text">Identifying Users</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cloning-Kerbrute-GitHub-Repo"><span class="toc-text">Cloning Kerbrute GitHub Repo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Testing-the-kerbrute-linux-amd64-Binary"><span class="toc-text">Testing the kerbrute_linux_amd64 Binary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Adding-the-Tool-to-our-Path"><span class="toc-text">Adding the Tool to our Path</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Moving-the-Binary"><span class="toc-text">Moving the Binary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Enumerating-Users-with-Kerbrute"><span class="toc-text">Enumerating Users with Kerbrute</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Potential-Vulnerabilities"><span class="toc-text">Identifying Potential Vulnerabilities</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sniffing-out-a-Foothold"><span class="toc-text">Sniffing out a Foothold</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LLMNR-x2F-NBT-NS-Poisoning-from-Linux"><span class="toc-text">LLMNR&#x2F;NBT-NS Poisoning - from Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#LLMNR-amp-NBT-NS-Primer"><span class="toc-text">LLMNR &amp; NBT-NS Primer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Example-LLMNR-x2F-NBT-NS-Poisoning"><span class="toc-text">Quick Example - LLMNR&#x2F;NBT-NS Poisoning *</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Responder-In-Action"><span class="toc-text">Responder In Action *</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Responder-Logs"><span class="toc-text">Responder Logs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-Responder-with-Default-Settings"><span class="toc-text">Starting Responder with Default Settings</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LLMNR-x2F-NBT-NS-Poisoning-from-Windows"><span class="toc-text">LLMNR&#x2F;NBT-NS Poisoning - from Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Inveigh-Overview"><span class="toc-text">Inveigh - Overview</span></a></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/AD"><i class="tag post-item-tag">AD</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">AD</h1><time class="has-text-grey" datetime="2023-09-23T03:54:00.000Z">2023-09-23</time><article class="mt-2 post-content"><ul>
+<li>Sniffing out a Foothold</li>
+<li>Initial Enumeration</li>
+<li>Sniffing out a Foothold</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="External-Information-Gathering-Passive-Checks"><a href="#External-Information-Gathering-Passive-Checks" class="headerlink" title="External Information Gathering (Passive Checks)"></a>External Information Gathering (Passive Checks)</h3><p>外部信息收集被授权证明与可以从互联网上收集的有关公司的信息相关的风险。</p>
+<h3 id="Internal-Testing"><a href="#Internal-Testing" class="headerlink" title="Internal Testing"></a>Internal Testing</h3><p>内部评估部分旨在通过尝试模拟Inlanefreight运营区域内的攻击向量来证明与内部主机和服务（特别是Active Directory）上的漏洞相关的风险。这一结果将使Inlanefright能够评估内部漏洞的风险以及成功利用漏洞的潜在影响。 </p>
+<h3 id="Password-Testing"><a href="#Password-Testing" class="headerlink" title="Password Testing"></a>Password Testing</h3><p>从Inlanefreight设备捕获或由组织提供的密码文件可以加载到离线工作站上进行解密，并用于获得进一步的访问权限和实现评估目标。</p>
+<h1 id="Initial-Enumeration"><a href="#Initial-Enumeration" class="headerlink" title="Initial Enumeration"></a>Initial Enumeration</h1><h2 id="What-Are-We-Looking-For"><a href="#What-Are-We-Looking-For" class="headerlink" title="What Are We Looking For?"></a>What Are We Looking For?</h2><p>在进行外部侦察时，我们应该寻找几个关键项目。这些信息可能并不总是公开的，但谨慎的做法是看看有什么。如果我们在渗透测试中陷入困境，回顾通过被动侦察可以获得的信息可以给我们前进所需的推动力，例如可以用于访问VPN或其他面向外部的服务的密码泄露数据。下表强调了我们在参与的这一阶段将寻找的“内容”。</p>
+<table>
+<thead>
+<tr>
+<th><strong>Data Point</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>IP Space</code></td>
+<td>Valid ASN for our target, netblocks in use for the organization’s public-facing infrastructure, cloud presence and the hosting providers, DNS record entries, etc.</td>
+</tr>
+<tr>
+<td><code>Domain Information</code></td>
+<td>Based on IP data, DNS, and site registrations. Who administers the domain? Are there any subdomains tied to our target? Are there any publicly accessible domain services present? (Mailservers, DNS, Websites, VPN portals, etc.) Can we determine what kind of defenses are in place? (SIEM, AV, IPS&#x2F;IDS in use, etc.)</td>
+</tr>
+<tr>
+<td><code>Schema Format</code></td>
+<td>Can we discover the organization’s email accounts, AD usernames, and even password policies? Anything that will give us information we can use to build a valid username list to test external-facing services for password spraying, credential stuffing, brute forcing, etc.</td>
+</tr>
+<tr>
+<td><code>Data Disclosures</code></td>
+<td>For data disclosures we will be looking for publicly accessible files ( .pdf, .ppt, .docx, .xlsx, etc. ) for any information that helps shed light on the target. For example, any published files that contain <code>intranet</code> site listings, user metadata, shares, or other critical software or hardware in the environment (credentials pushed to a public GitHub repo, the internal AD username format in the metadata of a PDF, for example.)</td>
+</tr>
+<tr>
+<td><code>Breach Data</code></td>
+<td>Any publicly released usernames, passwords, or other critical information that can help an attacker gain a foothold.</td>
+</tr>
+</tbody></table>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>DNS是验证我们的范围并了解客户在其范围界定文档中未披露的可访问主机的好方法。像 <a target="_blank" rel="noopener" href="https://whois.domaintools.com/">domaintools</a>,和 <a target="_blank" rel="noopener" href="https://viewdns.info/">viewdns.info</a>这样的网站是很好的起点。我们可以取回许多记录和其他数据，从DNS解析到DNSSEC测试，以及该网站是否可以在更受限制的国家&#x2F;地区访问。有时我们可能会发现超出范围的其他主机，但看起来很有趣。在这种情况下，我们可以将此列表带给我们的客户，看看是否确实应该将其中任何一个包含在范围内。我们可能还会发现一些有趣的子域，它们没有在范围界定文档中列出，但位于范围内的IP地址上，因此是公平的。</p>
+<h3 id="Public-Data"><a href="#Public-Data" class="headerlink" title="Public Data"></a>Public Data</h3><p>社交媒体可能是一个有趣数据的宝库，这些数据可以为我们提供组织结构、运营何种设备、潜在的软件和安全实施、架构等方面的线索。排名第一的是与工作相关的网站，如LinkedIn、Indeed.com和Glassdoor。简单的招聘信息往往能揭示一家公司的很多情况。</p>
+<p>现在让我们尝试另一种方法来验证结果中的两个名称服务器。</p>
+<pre><code class="shell-session">[!bash!]$ nslookup ns1.inlanefreight.com
+
+Server:		192.168.186.1
+Address:	192.168.186.1#53
+
+Non-authoritative answer:
+Name:	ns1.inlanefreight.com
+Address: 178.128.39.165
+
+nslookup ns2.inlanefreight.com
+Server:		192.168.86.1
+Address:	192.168.86.1#53
+
+Non-authoritative answer:
+Name:	ns2.inlanefreight.com
+Address: 206.189.119.186 
+</code></pre>
+<p><code>#53</code>是指DNS查询的默认端口</p>
+<p>我们现在有两个新的IP地址要添加到我们的列表中进行验证和测试。在对他们采取任何进一步行动之前，请确保他们在您的测试范围内。出于我们的目的，实际的IP地址不在扫描范围内，但我们可以被动地浏览任何网站来寻找有趣的数据。目前，这就是从DNS中枚举域信息的方法。让我们来看看公开的信息。 Inlanefreight是一家虚构的公司，我们正在使用该模块，因此没有真正的社交媒体存在。然而，如果它是真实的，我们会查看LinkedIn、Twitter、Instagram和Facebook等网站，以获取有用的信息。相反，我们将继续查看inlanefreight.com网站。 我们进行的第一次检查是查找任何文档。使用filetype:pdf-inurl:inlanefreight.com作为搜索，我们正在寻找pdf。</p>
+<h4 id="Hunting-For-Files"><a href="#Hunting-For-Files" class="headerlink" title="Hunting For Files"></a>Hunting For Files</h4><p><img src="https://academy.hackthebox.com/storage/modules/143/google-dorks.png" alt="image"></p>
+<p>弹出了一个文档，所以我们需要确保记下该文档及其位置，并在本地下载一份副本进行挖掘。当我们遇到或生成文件时，最好保存文件、屏幕截图、扫描输出、工具输出等。这有助于我们保持尽可能全面的记录，而不会忘记我们在哪里看到的东西或丢失关键数据。接下来，让我们查找我们能找到的任何电子邮件地址。</p>
+<h4 id="Hunting-E-mail-Addresses"><a href="#Hunting-E-mail-Addresses" class="headerlink" title="Hunting E-mail Addresses"></a>Hunting E-mail Addresses</h4><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309231609116.png" alt="image"></p>
+<p>使用dork</p>
+<p> intext：“@inlanefreight.com”inurl:inlanefreightcom，我们正在寻找任何与网站上电子邮件地址结尾相似的实例。一个很有希望的结果出现了一个联系人页面。当我们查看页面（如下图所示）时，我们可以看到一个庞大的员工列表和他们的联系信息。这些信息可能会有所帮助，因为我们可以确定这些人至少很可能是活跃的，并且仍在公司工作。</p>
+<h4 id="E-mail-Dork-Results"><a href="#E-mail-Dork-Results" class="headerlink" title="E-mail Dork Results"></a>E-mail Dork Results</h4><p>浏览联系人页面 <a target="_blank" rel="noopener" href="https://www.inlanefreight.com/index.php/contact/">contact page</a>，我们可以看到全球不同办公室员工的几封电子邮件。我们现在已经了解了他们的电子邮件命名约定（first.last）以及一些人在组织中的工作地点。这可能在以后的密码喷射攻击中很方便，或者如果社会工程&#x2F;网络钓鱼是我们参与范围的一部分。</p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309231611087.png" alt="image-20230923161131052"></p>
+<h4 id="Username-Harvesting"><a href="#Username-Harvesting" class="headerlink" title="Username Harvesting"></a>Username Harvesting</h4><p>我们可以使用 <a target="_blank" rel="noopener" href="https://github.com/initstring/linkedin2username">linkedin2username</a>等工具从公司的LinkedIn页面中抓取数据，并创建各种用户名的混搭（flast、first.last、f.last等），这些用户名可以添加到我们的潜在密码喷洒目标列表中。</p>
+<h4 id="Credential-Hunting"><a href="#Credential-Hunting" class="headerlink" title="Credential Hunting"></a>Credential Hunting</h4><p><a target="_blank" rel="noopener" href="http://dehashed.com/">Dehashed</a> </p>
+<p>凭证搜寻 Dehashed是一个很好的工具，可以在漏洞数据中查找明文凭据和密码哈希。我们可以在网站上搜索，也可以使用通过API执行查询的脚本。通常，我们会为那些不在使用AD auth（或内部）的面向外部的门户网站上工作的用户找到许多旧密码，但我们可能会很幸运！这是另一个可用于创建外部或内部密码喷涂用户列表的工具。 注：出于我们的目的，下面的示例数据是虚构的。</p>
+<h1 id="Initial-Enumeration-of-the-Domain"><a href="#Initial-Enumeration-of-the-Domain" class="headerlink" title="Initial Enumeration of the Domain"></a>Initial Enumeration of the Domain</h1><p>以下是我们此时应该寻找的一些关键数据点，并记在我们选择的笔记工具中，并尽可能将扫描&#x2F;工具输出保存到文件中。</p>
+<h4 id="Key-Data-Points"><a href="#Key-Data-Points" class="headerlink" title="Key Data Points"></a>Key Data Points</h4><table>
+<thead>
+<tr>
+<th><strong>Data Point</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>AD Users</code></td>
+<td>We are trying to enumerate valid user accounts we can target for password spraying.</td>
+</tr>
+<tr>
+<td><code>AD Joined Computers</code></td>
+<td>Key Computers include Domain Controllers, file servers, SQL servers, web servers, Exchange mail servers, database servers, etc.</td>
+</tr>
+<tr>
+<td><code>Key Services</code></td>
+<td>Kerberos, NetBIOS, LDAP, DNS</td>
+</tr>
+<tr>
+<td><code>Vulnerable Hosts and Services</code></td>
+<td>Anything that can be a quick win. ( a.k.a an easy host to exploit and gain a foothold)</td>
+</tr>
+</tbody></table>
+<h2 id="TTPs"><a href="#TTPs" class="headerlink" title="TTPs"></a>TTPs</h2><h3 id="Identifying-Hosts"><a href="#Identifying-Hosts" class="headerlink" title="Identifying Hosts"></a>Identifying Hosts</h3><p>花点时间侦听网络，看看发生了什么。我们可以使用Wireshark和TCPDump来“密切关注”网络，看看我们可以捕获哪些主机和类型的网络流量。如果评估方法是“黑匣子”，这尤其有用。我们注意到一些ARP请求和回复、MDNS和其他基本的第二层数据包（由于我们在交换网络上，我们仅限于当前的广播域），其中一些我们可以在下面看到。这是一个很好的开始，它为我们提供了一些关于客户网络设置的信息。</p>
+<h4 id="Start-Wireshark-on-ea-attack01"><a href="#Start-Wireshark-on-ea-attack01" class="headerlink" title="Start Wireshark on ea-attack01"></a>Start Wireshark on ea-attack01</h4><pre><code class="shell-session"> $sudo -E wireshark
+</code></pre>
+<p>使用<code>sudo -E</code>的主要目的是允许在切换用户的同时继续使用原始用户的环境配置。这在某些情况下非常有用，特别是当你需要使用原始用户的路径、别名、设置或其他环境变量来运行特定命令时。</p>
+<p>如果我们在没有GUI的主机上（这是典型的），我们可以使用tcpdump、netcreds和NetMiner等来执行相同的功能。我们还可以使用tcpdump将捕获保存到.pcap文件，将其传输到另一个主机，然后在Wireshark中打开它。</p>
+<pre><code class="shell-session">sudo tcpdump -i ens224 
+</code></pre>
+<p>Responder是一种用于侦听、分析和毒害LLMNR、NBT-NS和MDNS请求和响应的工具。它有更多的功能，但目前，我们所使用的只是处于分析模式的工具。这将被动地侦听网络，而不会发送任何中毒的数据包。我们将在后面的章节中更深入地介绍这个工具。</p>
+<h4 id="Starting-Responder"><a href="#Starting-Responder" class="headerlink" title="Starting Responder"></a>Starting Responder</h4><pre><code class="bash">sudo responder -I ens224 -A 
+</code></pre>
+<h4 id="FPing-Active-Checks"><a href="#FPing-Active-Checks" class="headerlink" title="FPing Active Checks"></a>FPing Active Checks</h4><p><a target="_blank" rel="noopener" href="https://fping.org/">Fping</a> </p>
+<p>在这里，我们将从几个标志开始fping：a显示活动的目标，s在扫描结束时打印统计数据，g从CIDR网络生成目标列表，q不显示每个目标的结果。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ fping -asgq 172.16.5.0/23
+
+172.16.5.5
+172.16.5.25
+172.16.5.50
+172.16.5.100
+172.16.5.125
+172.16.5.200
+172.16.5.225
+172.16.5.238
+172.16.5.240
+
+     510 targets
+       9 alive
+     501 unreachable
+       0 unknown addresses
+
+    2004 timeouts (waiting for response)
+    2013 ICMP Echos sent
+       9 ICMP Echo Replies received
+    2004 other ICMP received
+
+ 0.029 ms (min round trip time)
+ 0.396 ms (avg round trip time)
+ 0.799 ms (max round trip time)
+       15.366 sec (elapsed real time)
+</code></pre>
+<h4 id="Nmap-Scanning"><a href="#Nmap-Scanning" class="headerlink" title="Nmap Scanning"></a>Nmap Scanning</h4><p>现在我们有了网络中活动主机的列表，我们可以进一步枚举这些主机。我们希望确定每个主机正在运行的服务，确定域控制器和web服务器等关键主机，并确定以后要探测的潜在易受攻击的主机。随着我们对AD的关注，在进行了广泛的扫描后，我们最好关注通常伴随AD服务出现的标准协议，如DNS、SMB、LDAP和Kerberos等。下面是一个简单的Nmap扫描的快速示例。</p>
+<pre><code class="bash">sudo nmap -v -A -iL hosts.txt -oN /home/htb-student/Documents/host-enum
+</code></pre>
+<ul>
+<li><code>-v</code>: 启用详细输出，显示更多的信息。</li>
+<li><code>-A</code>: 启用操作系统检测、版本检测、脚本扫描等一系列高级扫描技术。</li>
+<li><code>-iL hosts.txt</code>: 从名为<code>hosts.txt</code>的文件中读取主机列表进行扫描。<code>hosts.txt</code>应该是一个包含要扫描的主机IP地址或主机名的文本文件。</li>
+<li><code>-oN /home/htb-student/Documents/host-enum</code>: 将扫描结果以正常格式保存到<code>/home/htb-student/Documents/host-enum</code>文件中。</li>
+</ul>
+<h4 id="NMAP-Result-Highlights"><a href="#NMAP-Result-Highlights" class="headerlink" title="NMAP Result Highlights"></a>NMAP Result Highlights</h4><pre><code class="shell-session">Nmap scan report for inlanefreight.local (172.16.5.5)
+Host is up (0.069s latency).
+Not shown: 987 closed tcp ports (conn-refused)
+PORT     STATE SERVICE       VERSION
+53/tcp   open  domain        Simple DNS Plus
+88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-04-04 15:12:06Z)
+135/tcp  open  msrpc         Microsoft Windows RPC
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: INLANEFREIGHT.LOCAL0., Site: Default-First-Site-Name)
+|_ssl-date: 2022-04-04T15:12:53+00:00; -1s from scanner time.
+| ssl-cert: Subject:
+| Subject Alternative Name: DNS:ACADEMY-EA-DC01.INLANEFREIGHT.LOCAL
+| Issuer: commonName=INLANEFREIGHT-CA
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2022-03-30T22:40:24
+| Not valid after:  2023-03-30T22:40:24
+| MD5:   3a09 d87a 9ccb 5498 2533 e339 ebe3 443f
+|_SHA-1: 9731 d8ec b219 4301 c231 793e f913 6868 d39f 7920
+445/tcp  open  microsoft-ds?
+464/tcp  open  kpasswd5?
+593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp  open  ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: INLANEFREIGHT.LOCAL0., Site: Default-First-Site-Name)
+&lt;SNIP&gt;  
+3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: INLANEFREIGHT.LOCAL0., Site: Default-First-Site-Name)
+3269/tcp open  ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: INLANEFREIGHT.LOCAL0., Site: Default-First-Site-Name)
+3389/tcp open  ms-wbt-server Microsoft Terminal Services
+| rdp-ntlm-info:
+|   Target_Name: INLANEFREIGHT
+|   NetBIOS_Domain_Name: INLANEFREIGHT
+|   NetBIOS_Computer_Name: ACADEMY-EA-DC01
+|   DNS_Domain_Name: INLANEFREIGHT.LOCAL
+|   DNS_Computer_Name: ACADEMY-EA-DC01.INLANEFREIGHT.LOCAL
+|   DNS_Tree_Name: INLANEFREIGHT.LOCAL
+|   Product_Version: 10.0.17763
+|_  System_Time: 2022-04-04T15:12:45+00:00
+&lt;SNIP&gt;
+5357/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Service Unavailable
+|_http-server-header: Microsoft-HTTPAPI/2.0
+Service Info: Host: ACADEMY-EA-DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
+</code></pre>
+<p>我们的扫描为我们提供了NetBIOS和DNS使用的命名标准，我们可以看到一些主机打开了RDP，它们为我们指明了INLANEFREIGHT的主域控制器的方向。LOCAL域（ACADEMY-EA-DC01.INLANEFREIGHT.LOCAL）。</p>
+<h2 id="Identifying-Users"><a href="#Identifying-Users" class="headerlink" title="Identifying Users"></a>Identifying Users</h2><h2 id="Identifying-Users-1"><a href="#Identifying-Users-1" class="headerlink" title="Identifying Users"></a>Identifying Users</h2><p><a target="_blank" rel="noopener" href="https://github.com/ropnop/kerbrute">Kerbrute</a> 可以是域帐户枚举的一个更隐蔽的选项。它利用了这样一个事实，即Kerberos预身份验证失败通常不会触发日志或警报。我们将把Kerbrute与Insidetrust的jsmith.txt或jsmith2.txt用户列表结合使用。此存储库包含许多不同的用户列表，当从未经身份验证的角度开始枚举用户时，这些列表非常有用。我们可以将Kerbrute指向我们之前找到的DC，并为其提供一个单词列表。该工具很快，我们将收到结果，让我们知道找到的账户是否有效，这是发起密码喷涂等攻击的一个很好的起点，我们将在本模块稍后深入介绍。 为了开始使用Kerbrute，我们可以从Linux、Windows和Mac下载用于测试工具的预编译二进制文件，也可以自己编译。这通常是我们在客户端环境中引入的任何工具的最佳实践。要编译二进制文件以在我们选择的系统上使用，我们首先克隆repo：</p>
+<h4 id="Cloning-Kerbrute-GitHub-Repo"><a href="#Cloning-Kerbrute-GitHub-Repo" class="headerlink" title="Cloning Kerbrute GitHub Repo"></a>Cloning Kerbrute GitHub Repo</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo git clone https://github.com/ropnop/kerbrute.git
+</code></pre>
+<p>键入make help将向我们显示可用的编译选项。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ make help
+
+help:            Show this help.
+windows:  Make Windows x86 and x64 Binaries
+linux:  Make Linux x86 and x64 Binaries
+mac:  Make Darwin (Mac) x86 and x64 Binaries
+clean:  Delete any binaries
+all:  Make Windows, Linux and Mac x86/x64 Binaries
+</code></pre>
+<p>我们可以选择只编译一个二进制文件或类型make all，并分别编译一个用于Linux、Windows和Mac系统（每个系统都有x86和x64版本）。</p>
+<p>新创建的dist目录将包含我们编译的二进制文件。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ ls dist/
+
+kerbrute_darwin_amd64  kerbrute_linux_386  kerbrute_linux_amd64  kerbrute_windows_386.exe  kerbrute_windows_amd64.exe
+</code></pre>
+<h4 id="Testing-the-kerbrute-linux-amd64-Binary"><a href="#Testing-the-kerbrute-linux-amd64-Binary" class="headerlink" title="Testing the kerbrute_linux_amd64 Binary"></a>Testing the kerbrute_linux_amd64 Binary</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ./kerbrute_linux_amd64 
+
+    __             __               __     
+   / /_____  _____/ /_  _______  __/ /____ 
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        
+
+Version: dev (9cfb81e) - 02/17/22 - Ronnie Flathers @ropnop
+
+This tool is designed to assist in quickly bruteforcing valid Active Directory accounts through Kerberos Pre-Authentication.
+It is designed to be used on an internal Windows domain with access to one of the Domain Controllers.
+Warning: failed Kerberos Pre-Auth counts as a failed login and WILL lock out accounts
+
+Usage:
+  kerbrute [command]
+  
+  &lt;SNIP&gt;
+</code></pre>
+<p>我们可以将该工具添加到我们的PATH中，使其可以从主机上的任何位置轻松访问。</p>
+<h4 id="Adding-the-Tool-to-our-Path"><a href="#Adding-the-Tool-to-our-Path" class="headerlink" title="Adding the Tool to our Path"></a>Adding the Tool to our Path</h4><pre><code class="shell-session">Tanin@htb[/htb]$ echo $PATH
+/home/htb-student/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/snap/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/htb-student/.dotnet/tools
+</code></pre>
+<h4 id="Moving-the-Binary"><a href="#Moving-the-Binary" class="headerlink" title="Moving the Binary"></a>Moving the Binary</h4><pre><code class="shell-session">sudo mv kerbrute_linux_amd64 /usr/local/bin/kerbrute
+</code></pre>
+<h4 id="Enumerating-Users-with-Kerbrute"><a href="#Enumerating-Users-with-Kerbrute" class="headerlink" title="Enumerating Users with Kerbrute"></a>Enumerating Users with Kerbrute</h4><pre><code class="shell-session">Tanin@htb[/htb]$ kerbrute userenum -d INLANEFREIGHT.LOCAL --dc 172.16.5.5 jsmith.txt -o valid_ad_users
+
+2021/11/17 23:01:46 &gt;  Using KDC(s):
+2021/11/17 23:01:46 &gt;   172.16.5.5:88
+2021/11/17 23:01:46 &gt;  [+] VALID USERNAME:       jjones@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:46 &gt;  [+] VALID USERNAME:       sbrown@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:46 &gt;  [+] VALID USERNAME:       tjohnson@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:50 &gt;  [+] VALID USERNAME:       evalentin@INLANEFREIGHT.LOCAL
+
+ &lt;SNIP&gt;
+ 
+2021/11/17 23:01:51 &gt;  [+] VALID USERNAME:       sgage@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:51 &gt;  [+] VALID USERNAME:       jshay@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:51 &gt;  [+] VALID USERNAME:       jhermann@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:51 &gt;  [+] VALID USERNAME:       whouse@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:51 &gt;  [+] VALID USERNAME:       emercer@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:52 &gt;  [+] VALID USERNAME:       wshepherd@INLANEFREIGHT.LOCAL
+2021/11/17 23:01:56 &gt;  Done! Tested 48705 usernames (56 valid) in 9.940 seconds
+</code></pre>
+<h2 id="Identifying-Potential-Vulnerabilities"><a href="#Identifying-Potential-Vulnerabilities" class="headerlink" title="Identifying Potential Vulnerabilities"></a>Identifying Potential Vulnerabilities</h2><p>本地系统帐户NT AUTHORITY\system是Windows操作系统中的内置帐户。它在操作系统中具有最高级别的访问权限，用于运行大多数Windows服务。默认情况下，第三方服务在该帐户的上下文中运行也是非常常见的。加入域的主机上的SYSTEM帐户将能够通过模拟计算机帐户来枚举Active Directory，而计算机帐户本质上只是另一种用户帐户。在域环境中拥有SYSTEM级别的访问权限几乎相当于拥有域用户帐户。 有几种方法可以在主机上获得SYSTEM级别的访问权限，包括但不限于： 远程Windows漏洞利用，如MS08-067、EternalBlue或BlueKeep。 滥用在SYSTEM帐户上下文中运行的服务，或使用<a target="_blank" rel="noopener" href="https://github.com/ohpe/juicy-potato">Juicy Potato</a>滥用服务帐户SeImpersonate权限。这种类型的攻击在旧的Windows操作系统上是可能的，但在Windows Server 2019上并不总是可能的。 Windows操作系统中的本地权限提升缺陷，如Windows 10任务计划程序0天。 使用本地帐户在加入域的主机上获得管理员访问权限，并使用Psexec启动SYSTEM cmd窗口 通过在加入域的主机上获得SYSTEM级别的访问权限，您将能够执行以下操作，但不限于： 使用内置工具或攻击性工具（如BloodHound和PowerView）枚举域。 在同一域内执行Kerberoasting&#x2F;ASREPRoasting攻击。 运行Inveigh等工具来收集Net-NTLMv2哈希或执行SMB中继攻击。 执行令牌模拟以劫持特权域用户帐户。 执行ACL攻击。</p>
+<h1 id="Sniffing-out-a-Foothold"><a href="#Sniffing-out-a-Foothold" class="headerlink" title="Sniffing out a Foothold"></a>Sniffing out a Foothold</h1><h1 id="LLMNR-x2F-NBT-NS-Poisoning-from-Linux"><a href="#LLMNR-x2F-NBT-NS-Poisoning-from-Linux" class="headerlink" title="LLMNR&#x2F;NBT-NS Poisoning - from Linux"></a>LLMNR&#x2F;NBT-NS Poisoning - from Linux</h1><p>在这个阶段，我们将同时使用两种不同的技术：网络中毒和密码喷洒。我们将执行这些操作，目的是为域用户帐户获取有效的明文凭据，从而使我们在域中有一个立足点，从认证的角度开始下一阶段的枚举。</p>
+<p>收集凭据并在评估过程中获得初步立足点的常见方法：对链路本地多播名称解析（LLMNR）和NetBIOS名称服务（NBT-NS）广播的中间人攻击。根据网络的不同，此攻击可能提供低特权或管理级别的密码哈希，这些哈希可以离线破解，甚至可以是明文凭据。这些哈希有时也可用于执行SMB中继攻击，以向具有管理权限的域中的一台或多台主机进行身份验证，而无需离线破解密码哈希。</p>
+<h2 id="LLMNR-amp-NBT-NS-Primer"><a href="#LLMNR-amp-NBT-NS-Primer" class="headerlink" title="LLMNR &amp; NBT-NS Primer"></a>LLMNR &amp; NBT-NS Primer</h2><p>链路本地多播名称解析（LLMNR）和NetBIOS名称服务（NBT-NS）是Microsoft Windows组件，用作DNS失败时可以使用的主机标识的替代方法。如果一台机器试图解析主机，但DNS解析失败，通常情况下，该机器会尝试通过LLMNR向本地网络上的所有其他机器询问正确的主机地址。LLMNR基于域名系统（DNS）格式，并允许同一本地链路上的主机为其他主机执行名称解析。它本机使用UDP上的端口&#x3D;&#x3D;5355&#x3D;&#x3D;。如果LLMNR失败，将使用NBT-NS。NBT-NS通过其NetBIOS名称识别本地网络上的系统。&#x3D;&#x3D;NBT-NS通过UDP利用端口137&#x3D;&#x3D;。 这里的关键是，当LLMNR&#x2F;NBT-NS用于名称解析时，网络上的任何主机都可以回复。这就是我们使用Responder来毒害这些请求的地方。通过网络访问，我们可以通过响应LLMNR和NBT-NS流量来欺骗广播域中的权威名称解析源（在这种情况下，是指应该属于网段的主机），就好像它们有请求主机的答案一样。这种中毒行为是为了让受害者通过假装我们的流氓系统知道请求主机的位置来与我们的系统通信。如果请求的主机需要名称解析或身份验证操作，我们可以捕获NetNTLM哈希，并对其进行离线暴力攻击，试图检索明文密码。捕获的身份验证请求也可以被中继以访问另一台主机，或者针对同一台主机上的不同协议（如LDAP）使用。LLMNR&#x2F;NBNS欺骗加上缺乏SMB签名，通常会导致对域内主机的管理访问。SMB中继攻击将在稍后的关于横向移动的模块中介绍。</p>
+<h2 id="Quick-Example-LLMNR-x2F-NBT-NS-Poisoning"><a href="#Quick-Example-LLMNR-x2F-NBT-NS-Poisoning" class="headerlink" title="Quick Example - LLMNR&#x2F;NBT-NS Poisoning *"></a>Quick Example - LLMNR&#x2F;NBT-NS Poisoning *</h2><p>让我们从一个非常高的层面来简要介绍一下攻击流程的示例： 主机试图连接到位于\print01.inlanefreight.local的打印服务器，但意外键入\printer01.inlanefleight.local。 DNS服务器响应，声明此主机未知。 然后，主机向整个本地网络广播，询问是否有人知道\printer01.inlanefreight.local的位置。 攻击者（我们运行的是Responder）响应主机，指出主机正在查找\printer01.inlanefreight.local。 主机相信此回复，并使用用户名和NTLMv2密码哈希向攻击者发送身份验证请求。 如果存在正确的条件，则可以脱机破解此哈希，或将其用于SMB中继攻击。</p>
+<table>
+<thead>
+<tr>
+<th><strong>Tool</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/lgandx/Responder">Responder</a></td>
+<td>Responder is a purpose-built tool to poison LLMNR, NBT-NS, and MDNS, with many different functions.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/Kevin-Robertson/Inveigh">Inveigh</a></td>
+<td>Inveigh is a cross-platform MITM platform that can be used for spoofing and poisoning attacks.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.metasploit.com/">Metasploit</a></td>
+<td>Metasploit has several built-in scanners and spoofing modules made to deal with poisoning attacks.</td>
+</tr>
+</tbody></table>
+<p>我们通常使用Linux攻击主机从客户端内部网络上的匿名位置开始进行内部渗透测试。像Responder这样的工具非常适合建立一个立足点，我们稍后可以通过进一步的枚举和攻击来扩展它。Responder是用Python编写的，通常用于Linux攻击主机，但也有适用于Windows的.exe版本。Inveigh同时使用C#和PowerShell编写（被认为是遗留版本）。这两种工具都可以用来攻击以下协议：</p>
+<ul>
+<li>LLMNR</li>
+<li>DNS</li>
+<li>MDNS</li>
+<li>NBNS</li>
+<li>DHCP</li>
+<li>ICMP</li>
+<li>HTTP</li>
+<li>HTTPS</li>
+<li>SMB</li>
+<li>LDAP</li>
+<li>WebDAV</li>
+<li>Proxy Auth</li>
+</ul>
+<p>Responder also has support for:</p>
+<ul>
+<li>MSSQL</li>
+<li>DCE-RPC</li>
+<li>FTP, POP3, IMAP, and SMTP auth</li>
+</ul>
+<h3 id="Responder-In-Action"><a href="#Responder-In-Action" class="headerlink" title="Responder In Action *"></a>Responder In Action *</h3><p>让我们通过在控制台中键入responser-h来查看一些可用的选项。</p>
+<p>如模块前面所示，-A标志使我们进入分析模式，使我们能够在环境中查看NBT-NS、BROWSER和LLMNR请求，而不会破坏任何响应。我们必须始终提供接口或IP。我们通常想要使用的一些常见选项是-wf；这将启动WPAD rogue代理服务器，而-f将尝试对远程主机操作系统和版本进行指纹识别。如果遇到问题，我们可以使用-v标志来增加详细程度，但这将导致大量额外的数据打印到控制台。其他选项（如-F和-P）可用于强制NTLM或基本身份验证和强制代理身份验证，但可能会导致登录提示，因此应谨慎使用。-w标志的使用利用了内置的WPAD代理服务器。这可能非常有效，尤其是在大型组织中，因为如果浏览器启用了“自动检测”设置，它将捕获启动Internet Explorer的任何用户的所有HTTP请求。</p>
+<p>使用上面显示的配置，响应程序将侦听并回答它在线路上看到的任何请求。如果成功并成功捕获了哈希，Responder将在屏幕上打印出来，并将其写入&#x2F;usr&#x2F;share&#x2F;resporter&#x2F;logs目录中的每个主机的日志文件中。哈希以（MODULE_NAME）-（HASH_TYPE）-（CLIENT_IP）.txt格式保存，除非启用-v模式，否则一个哈希将打印到控制台并存储在其关联的日志文件中。例如，日志文件可能类似于SMB-NTLMv2-SP-172.16.5.25。哈希也存储在SQLite数据库中，该数据库可以在Responder.conf配置文件中配置，通常位于&#x2F;usr&#x2F;share&#x2F;resporter中，除非我们直接从GitHub克隆Responder repo。 我们必须以sudo权限或root身份运行该工具，并确保攻击主机上有以下端口可用，使其发挥最佳功能：</p>
+<pre><code class="shell-session">UDP 137, UDP 138, UDP 53, UDP/TCP 389,TCP 1433, UDP 1434, TCP 80, TCP 135, TCP 139, TCP 445, TCP 21, TCP 3141,TCP 25, TCP 110, TCP 587, TCP 3128, Multicast UDP 5355 and 5353
+</code></pre>
+<h4 id="Responder-Logs"><a href="#Responder-Logs" class="headerlink" title="Responder Logs"></a>Responder Logs</h4><pre><code class="shell-session">Tanin@htb[/htb]$ ls
+
+Analyzer-Session.log                Responder-Session.log
+Config-Responder.log                SMB-NTLMv2-SSP-172.16.5.200.txt
+HTTP-NTLMv2-172.16.5.200.txt        SMB-NTLMv2-SSP-172.16.5.25.txt
+Poisoners-Session.log               SMB-NTLMv2-SSP-172.16.5.50.txt
+Proxy-Auth-NTLMv2-172.16.5.200.txt
+</code></pre>
+<h4 id="Starting-Responder-with-Default-Settings"><a href="#Starting-Responder-with-Default-Settings" class="headerlink" title="Starting Responder with Default Settings"></a>Starting Responder with Default Settings</h4><pre><code class="bash">sudo responder -I ens224 
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309232006463.png" alt="image"></p>
+<h1 id="LLMNR-x2F-NBT-NS-Poisoning-from-Windows"><a href="#LLMNR-x2F-NBT-NS-Poisoning-from-Windows" class="headerlink" title="LLMNR&#x2F;NBT-NS Poisoning - from Windows"></a>LLMNR&#x2F;NBT-NS Poisoning - from Windows</h1><p>本节将探讨 <a target="_blank" rel="noopener" href="https://github.com/Kevin-Robertson/Inveigh">Inveigh</a>工具，并尝试捕获另一组凭据。</p>
+<h2 id="Inveigh-Overview"><a href="#Inveigh-Overview" class="headerlink" title="Inveigh - Overview"></a>Inveigh - Overview</h2></article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/09/23/AD-Cheat-Sheet/" title="AD_Cheat_Sheet"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: AD_Cheat_Sheet</span></a><a class="button is-default" href="/2023/09/18/Information-Gathering/" title="Information Gathering"><span class="has-text-weight-semibold">Next: Information Gathering</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
