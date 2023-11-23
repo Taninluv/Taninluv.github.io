@@ -1,6 +1,47 @@
 <!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Taninluv's blog</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · All</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/others"><i class="tag post-item-tag">others</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/other_2/">杂记</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">杂记学习过程中的遇到的一些工具或指令
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · All</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/linux/">linux</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">linux文件结构
+
+
+/
+顶级目录是根文件系统，包含在挂载其他文件系统之前引导操作系统所需的所有文件，以及引导其他文件系统所需的文件。引导后，所有其他文件系统都作为根目录挂载在标准挂载点。
+
+
+
+/bin
+包含基本的命令二进制文件。
+
+
+/boot
+由静态引导加载程序、内核可执行文件和引导 Linux 操作系统所需的文件组成。
+
+
+/dev
+包含设备文件，以便于访问连接到系统的每个硬件设备。
+
+
+/etc
+本地系统配置文件。已安装应用程序的配置文件也可以保存在此处。
+
+
+/home
+系统上的每个用户都有一个用于存储的子目录。
+
+
+/lib
+系统引导所需的共享库文件。
+
+
+/media
+外部可移动媒体设备（如 USB 驱动器）安装在此处。
+
+
+/mnt
+常规文件系统的临时挂载点。
+
+
+/opt
+可选文件（如..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/linux/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/others"><i class="tag post-item-tag">others</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/other_2/">杂记</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">杂记学习过程中的遇到的一些工具或指令
 ###http-enum&amp;#x3D;&amp;#x3D;脚本枚举
 nmap使用&amp;#x3D;&amp;#x3D;http-enum&amp;#x3D;&amp;#x3D;脚本枚举，该脚本可用于枚举常见的 Web 应用程序目录。
 -oA 保存扫描结果到指定文件
@@ -126,7 +167,7 @@ this is a test
 
 env可以创建临时环境变量.
 bash -c可以运行一个shell命令.
-当shell返回“vulnerable”时说明函数申明后的echo函数被执行（漏洞是因为Bash初始化时调用了builtins/evalstring.c里的parse_and_execute//类似于eval..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/shellshock/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/archives/page/6/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><span class="page-number current">7</span></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">31</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+当shell返回“vulnerable”时说明函数申明后的echo函数被执行（漏洞是因为Bash初始化时调用了builtins/evalstring.c里的parse_and_execute//类似于eval..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/shellshock/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/archives/page/6/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><span class="page-number current">7</span></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">31</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')
