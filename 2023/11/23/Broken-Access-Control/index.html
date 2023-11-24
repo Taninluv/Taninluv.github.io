@@ -1,0 +1,90 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>WebGoat-Broken Access Control</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="IDOR-2
+许多访问控制问题容易受到经过身份验证但未经授权的用户的攻击。因此，让我们从合法身份验证开始。然后，我们将寻找绕过或滥用授权的方法。
+
+这里只是输入tom或者cat进行登录，进入下一题进行IDOR审查
+IDOR-3
+抓包看一看没有显示的属性
+
+看一下源码：
+
+我们发现他把不相关的信息一并返回了，实际 用的信息只有其中三个，而关于判定答案部分：
+
+以，为分隔，检测答案是否为userid和role
+IDOR-4在另一个接口查看自己的profile
+根据描述：
+
+就概要文件而言，我们正在使用的应用程序似乎遵循RESTful模式。许多应用程序都具有提升用户可以访问另一用户内容的角色。在这种情况下，just&amp;#x2F;profile将不起作用，因为自己用户的会话&amp;#x2F;身份验证数据不会告诉我们他们想要.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">WebGoat-Broken Access Control</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDOR-2"><span class="toc-text">IDOR-2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IDOR-3"><span class="toc-text">IDOR-3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IDOR-4"><span class="toc-text">IDOR-4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IDOR-5"><span class="toc-text">IDOR-5</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Missing-Function-Level-Access-Control"><span class="toc-text">Missing Function Level Access Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2"><span class="toc-text">2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3"><span class="toc-text">3</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/WebGoat"><i class="tag post-item-tag">WebGoat</i></a><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><i class="tag post-item-tag">代码审计</i></a><a href="/tags/IDOR"><i class="tag post-item-tag">IDOR</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">WebGoat-Broken Access Control</h1><time class="has-text-grey" datetime="2023-11-23T07:33:49.000Z">2023-11-23</time><article class="mt-2 post-content"><h1 id="IDOR-2"><a href="#IDOR-2" class="headerlink" title="IDOR-2"></a>IDOR-2</h1><blockquote>
+<p>许多访问控制问题容易受到经过身份验证但未经授权的用户的攻击。因此，让我们从合法身份验证开始。然后，我们将寻找绕过或滥用授权的方法。</p>
+</blockquote>
+<p>这里只是输入tom或者cat进行登录，进入下一题进行IDOR审查</p>
+<h1 id="IDOR-3"><a href="#IDOR-3" class="headerlink" title="IDOR-3"></a>IDOR-3</h1><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123154028096.png" alt="image-20231123154028096"></p>
+<p>抓包看一看没有显示的属性</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123154145613.png" alt="image-20231123154145613"></p>
+<p>看一下源码：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123155050326.png" alt="image-20231123155050326"></p>
+<p>我们发现他把不相关的信息一并返回了，实际 用的信息只有其中三个，而关于判定答案部分：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123155217458.png" alt="image-20231123155217458"></p>
+<p>以<code>，</code>为分隔，检测答案是否为userid和role</p>
+<h1 id="IDOR-4"><a href="#IDOR-4" class="headerlink" title="IDOR-4"></a>IDOR-4</h1><p>在另一个接口查看自己的profile</p>
+<p>根据描述：</p>
+<blockquote>
+<p>就概要文件而言，我们正在使用的应用程序似乎遵循RESTful模式。许多应用程序都具有提升用户可以访问另一用户内容的角色。在这种情况下，just&#x2F;profile将不起作用，因为自己用户的会话&#x2F;身份验证数据不会告诉我们他们想要查看谁的配置文件。那么，您认为使用直接对象引用显式查看您自己的配置文件的可能模式是什么？</p>
+</blockquote>
+<p>这样的话想起之前我们得到了自己的userid，这里应该是通过userid确定我们需要查看的概要文件，这样的模式在实际情况中也很常见</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123160321880.png" alt="image-20231123160321880"></p>
+<p>看一下源码：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123160435656.png" alt="image-20231123160435656"></p>
+<p>他这里对userid其实没有添加更多的验证和防护，很大程度上我们可以通过爆破或者猜测或者其他方法得到别人的userid就可以得到别人的profile信息</p>
+<h1 id="IDOR-5"><a href="#IDOR-5" class="headerlink" title="IDOR-5"></a>IDOR-5</h1><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123163038524.png" alt="image-20231123163038524"></p>
+<p>这里访问别人的profile，爆破一下，跟之前说的一样，这里主要做代码审计，就不爆破了：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123163321558.png" alt="image-20231123163321558"></p>
+<p>这个板块的源码给我的感觉有一点刻意了，这里第二个if就该截断才对，可能是单纯为了让我们感受一下吧…</p>
+<h1 id="Missing-Function-Level-Access-Control"><a href="#Missing-Function-Level-Access-Control" class="headerlink" title="Missing Function Level Access Control"></a>Missing Function Level Access Control</h1><p>缺少功能级别访问控制</p>
+<blockquote>
+<p>事实上，许多人（包括本课的作者）会将功能级别的访问控制和IDOR归入“访问控制”。为了OWASP，前10名和这些教训，我们将进行区分。大多数人的区别在于，IDOR更多的是一个“水平”或“横向”访问控制问题，而缺少功能级别的访问控制“暴露了功能”。尽管这里的IDOR课程演示了功能是如何公开的（至少对同一角色的另一个用户），但我们将研究功能公开的其他方式。</p>
+</blockquote>
+<h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123163858625.png" alt="image-20231123163858625"></p>
+<p>在这里找到两个隐藏的表单</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123165225364.png" alt="image-20231123165225364"></p>
+<p>个人感觉不是很好找这种表单，尤其是在页面元素很多的时候，这道题大概猜测在Accout板块或者Messages板块。其实也看得眼花。。</p>
+<h1 id="3"><a href="#3" class="headerlink" title="3"></a>3</h1><p>根据题目，我们可以利用上提找到的信息，也就是两个接口，访问一下&#x2F;users：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123172002806.png" alt="image-20231123172002806"></p>
+<p>返回500，有点夸张，看一下源码：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123173705160.png" alt="image-20231123173705160"></p>
+<p>看来要设置Content-Type,这里的GET请求方法的视图函数返回了所有user</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123172546905.png" alt="image-20231123172546905"></p>
+<p>挺离谱的，好像意料之外又情理之中</p>
+<p>看一下hint里的复杂思路：</p>
+<p>If the request to view users, were a ‘service’ or ‘RESTful’ endpoint, what would be different about it?</p>
+<p>You will want to add WEBGOAT_ADMIN for the user’s role. Yes, you’d have to guess&#x2F;fuzz this in a real-world setting.</p>
+<p>OK, here it is. First, create an admin user … Change the method to POST, change the content-type to “application&#x2F;json”. And your payload should look something like: {“username”:”newUser2”,”password”:”newUser12”,”matchingPassword”:”newUser12”,”role”:”WEBGOAT_ADMIN”}</p>
+<p>也就是用post新创建一个admin用户，但是需要post的数据又是需要猜测一下的，按照hint就是需要猜测或者fuzz一下。看看源码怎么回事：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123174112906.png" alt="image-20231123174112906"></p>
+<ul>
+<li><code>consumes = &quot;application/json&quot;</code>：表示这个方法处理的请求内容类型是JSON格式。</li>
+<li><code>produces = &quot;application/json&quot;</code>：表示这个方法返回的响应内容类型是JSON格式。</li>
+</ul>
+<p>这里看起来user类把RequestBody数据进行了一个类型转换然后保存新生成的user，那么只要知道user类有哪些属性就可以新建一个user对象，而user的属性按照我们之前的到的信息似乎只能创建一个普通用户：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123175903217.png" alt="image-20231123175903217"></p>
+<p>但是到了这里，是不是发现了另一个IDOR？也就是这个role：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123180034526.png" alt="image-20231123180034526"></p>
+<p>这就很nice了，终于把这条思路走通了</p>
+<p>这里还要再深挖一下为什么是这样？</p>
+<p>通过关键字role全局搜索一下，然后找到了这个</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123181632640.png" alt="image-20231123181632640"></p>
+<p>可以看到，它并不是lesson中的javabean</p>
+<p>我们回想一下，我们访问的是根目录下的user页面而不是子目录的某个lesson的页面，因此这里的user可能不是这个org.owasp.webgoat.lessons.missingac.User.java</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123181421895.png" alt="image-20231123181421895"></p>
+<p>此时我们再看</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123182427749.png" alt="image-20231123182427749"></p>
+<p>这个userrepo：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123182712982.png" alt="image-20231123182712982"></p>
+<p>继续跟进去</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123182854157.png" alt="image-20231123182854157"></p>
+<p>发现它是从数据库动态查询用户数据</p>
+<p>但是这个数据库是这个题目的独立数据库还是整个项目用来储存实际用户比如我（water3666）？继续跟进发现有点过于复杂了，但是这里已经说明了数据是来自哪里了：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231123183252707.png" alt="image-20231123183252707"></p>
+<p>当时没反应过来，如果是题目的数据库，应该是tom或者jerry，或者根本没有独立的数据库，至于如何封装到题目的user的，就先不挖了</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/11/24/WebGoat-XSS/" title="WebGoat-XSS"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: WebGoat-XSS</span></a><a class="button is-default" href="/2023/11/23/WebGoat-XXE/" title="WebGoat-XXE"><span class="has-text-weight-semibold">Next: WebGoat-XXE</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
