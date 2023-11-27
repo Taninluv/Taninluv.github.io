@@ -1,0 +1,120 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>java反序列化前瞻</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="前言给java反序列化上个引子，顺带把webgoat代码审计结束了
+本来要开始学链子了，但是网警和技侦要开始考试了，打算突击一下ctf和代码审计，下个月在正式学习java反序列化
+Java 流(Stream)、文件(File)和IO | 菜鸟教程 (runoob.com)
+序列化和反序列化
+Java 序列化是一种将对象转换为字节流的过程，以便可以将对象保存到磁盘上，将其传输到网络上，或者将其存储在内存中，以后再进行反序列化，将字节流重新转换为对象。
+序列化在 Java 中是通过 java.io.Serializable 接口来实现的，该接口没有任何方法，只是一个标记接口，用于标识类可以被序列化。
+当你序列化对象时，你把它包装成一个特殊文件，可以保存、传输或存储。反序列化则是打开这个文件，读取序列化的数据，然.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">java反序列化前瞻</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">序列化和反序列化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-%E6%B5%81-Stream-%E3%80%81%E6%96%87%E4%BB%B6-File-%E5%92%8CIO"><span class="toc-text">Java 流(Stream)、文件(File)和IO</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#java-%E5%8F%8D%E5%B0%84"><span class="toc-text">java 反射</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96%E8%BF%87%E7%A8%8B%E7%AE%80%E5%8D%95%E6%BC%94%E7%A4%BA"><span class="toc-text">序列化过程简单演示</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">反序列化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Webgoat-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">Webgoat 反序列化</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/java"><i class="tag post-item-tag">java</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">java反序列化前瞻</h1><time class="has-text-grey" datetime="2023-11-27T02:06:38.000Z">2023-11-27</time><article class="mt-2 post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>给java反序列化上个引子，顺带把webgoat代码审计结束了</p>
+<p>本来要开始学链子了，但是网警和技侦要开始考试了，打算突击一下ctf和代码审计，下个月在正式学习java反序列化</p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-files-io.html">Java 流(Stream)、文件(File)和IO | 菜鸟教程 (runoob.com)</a></p>
+<h1 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h1><blockquote>
+<p>Java 序列化是一种将对象转换为字节流的过程，以便可以将对象保存到磁盘上，将其传输到网络上，或者将其存储在内存中，以后再进行反序列化，将字节流重新转换为对象。</p>
+<p>序列化在 Java 中是通过 <strong>java.io.Serializable</strong> 接口来实现的，该接口没有任何方法，只是一个标记接口，用于标识类可以被序列化。</p>
+<p>当你序列化对象时，你把它包装成一个特殊文件，可以保存、传输或存储。反序列化则是打开这个文件，读取序列化的数据，然后将其还原为对象，以便在程序中使用。</p>
+<p>序列化是一种用于保存、传输和还原对象的方法，它使得对象可以在不同的计算机之间移动和共享，这对于分布式系统、数据存储和跨平台通信非常有用。</p>
+</blockquote>
+<h1 id="Java-流-Stream-、文件-File-和IO"><a href="#Java-流-Stream-、文件-File-和IO" class="headerlink" title="Java 流(Stream)、文件(File)和IO"></a>Java 流(Stream)、文件(File)和IO</h1><blockquote>
+<p>Java.io 包几乎包含了所有操作输入、输出需要的类。所有这些流类代表了输入源和输出目标。</p>
+<p>Java.io 包中的流支持很多种格式，比如：基本类型、对象、本地化字符集等等。</p>
+<p>一个流可以理解为一个数据的序列。输入流表示从一个源读取数据，输出流表示向一个目标写数据。</p>
+<p>Java 为 I&#x2F;O 提供了强大的而灵活的支持，使其更广泛地应用到文件传输和网络编程中。</p>
+</blockquote>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/iostream2xx.png" alt="img"></p>
+<h1 id="java-反射"><a href="#java-反射" class="headerlink" title="java 反射"></a>java 反射</h1><p><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/java/java-reflex.html">java反射机制深入理解剖析_w3cschool</a></p>
+<blockquote>
+<p>在java开发中有一个非常重要的概念就是java反射机制，也是java的重要特征之一。反射的概念是由Smith在1982年首次提出的，主要是指程序可以访问、检测和修改它本身状态或行为的一种能力，通过反射可以调用私有方法和私有属性，大部分框架也都是运用反射原理的。java通常是先有类再有对象，有对象就可以调用方法或者属性，java中的反射其实是通过Class对象来调用类里面的方法。掌握了反射的知识，才能更好的学习java高级课程。</p>
+</blockquote>
+<p>一个类有多个组成部分，例如:成员变量、方法、构造方法等，反射就是加载类,并解剖出类的各个组成部分。</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231127110009212.png" alt="image-20231127110009212"></p>
+<h1 id="序列化过程简单演示"><a href="#序列化过程简单演示" class="headerlink" title="序列化过程简单演示"></a>序列化过程简单演示</h1><p>先创建一个类Person.java</p>
+<pre><code>package test;
+
+import java.io.Serializable;
+
+public class Person implements Serializable &#123;
+    private String username;
+    public int age;
+
+    public Person(String username, int age) &#123;
+        this.username = username;
+        this.age = age;
+    &#125;
+
+    @Override
+    public String toString() &#123;
+        return &quot;person&#123;&quot; +
+                &quot;username=&#39;&quot; + username + &#39;\&#39;&#39; +
+                &quot;, age=&quot; + age +
+                &#39;&#125;&#39;;
+    &#125;
+&#125;
+</code></pre>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231127151420206.png" alt="image-20231127151420206"></p>
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><p>序列化文件 SerializationTest.java</p>
+<pre><code>package test;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+public class SerializationTest &#123;
+    public static void serialize(Object object) throws IOException&#123;
+        ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(&quot;ser.bin&quot;));
+        objectOutputStream.writeObject(object);
+    &#125;
+
+    public static void main(String[] args) throws Exception&#123;
+        Person person = new Person(&quot;water3&quot;,23);
+        serialize(person);
+        System.out.println(&quot;serialize:&quot;+person);
+    &#125;
+&#125;
+</code></pre>
+<p><strong>序列化对象：</strong> 使用 ObjectOutputStream 类来将对象序列化为字节流</p>
+<p>这里新创建了一个FileOutputStream类来接受序列化对象，该类用来创建一个文件并向文件中写数据。</p>
+<p>如果该流在打开文件进行输出前，目标文件不存在，那么该流会创建该文件。</p>
+<p>有两个构造方法可以用来创建 FileOutputStream 对象。</p>
+<p>使用字符串类型的文件名来创建一个输出流对象：</p>
+<pre><code>OutputStream f = new FileOutputStream(&quot;C:/java/hello&quot;)
+</code></pre>
+<p>也可以使用一个文件对象来创建一个输出流来写文件。我们首先得使用File()方法来创建一个文件对象：</p>
+<pre><code>File f = new File(&quot;C:/java/hello&quot;); OutputStream fOut = new FileOutputStream(f);
+</code></pre>
+<h2 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h2><pre><code>package test;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+
+public class UnserializationTest &#123;
+    public static Object unserialize(String filename) throws IOException, ClassNotFoundException &#123;
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(&quot;ser.bin&quot;));
+        Object object = objectInputStream.readObject();
+        return object;
+    &#125;
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException &#123;
+        Person person = (Person) unserialize(&quot;ser.bin&quot;);
+        System.out.println(&quot;unserialize&quot;+person);
+    &#125;
+&#125;
+</code></pre>
+<p>这里也可以提前创建个空person对象来接收反序列化后的person对象</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231127151513258.png" alt="image-20231127151513258"></p>
+<h1 id="Webgoat-反序列化"><a href="#Webgoat-反序列化" class="headerlink" title="Webgoat 反序列化"></a>Webgoat 反序列化</h1><p>这道题一直不成功，但还是审计一下：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231127163148626.png" alt="image-20231127163148626"></p>
+<p>首先对传入的字符串进行解码，然后进行反序列化，用o接受反序列化之后的对象，最后判断是否为VulnerableTaskHolder的实例</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231127163335284.png" alt="image-20231127163335284"></p>
+<p>最下面是判断执行时间是否在3到7秒</p>
+<p>我们再看一看这个危险类：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231127163555555.png" alt="image-20231127163555555"></p>
+<p>这里和例题一样，使用taskAction来rce</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231127163838608.png" alt="image-20231127163838608"></p>
+<p>从自定义的序列化过程来看，对象必须是十分钟之内创建的，然后rce必须以ping或者sleep开头</p>
+<p>payload应该是这样：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231127165418906.png" alt="image-20231127165418906"></p>
+<p>但是根据回显在时间判断出了点问题，后来想起来在之前做题的时候发现docker的时间和我的系统时间是对不上的</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/11/24/WebGoat-CSRF/" title="WebGoat-CSRF"><span class="has-text-weight-semibold">Next: WebGoat-CSRF</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
