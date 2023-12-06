@@ -197,13 +197,13 @@ generateSessionToken();
 <p>预处理语句中的占位符通常使用问号 <code>?</code> 或命名占位符，例如 <code>:user</code>。这些占位符允许程序在执行 SQL 语句之前，将实际的值绑定到占位符位置，避免了直接在 SQL 查询中嵌入变量值，从而提高了安全性和效率。</p>
 <p>在这个例子中，<code>(:user)</code> 可能代表一个命名占位符，表示在执行预处理语句时，将会把真正的用户名绑定到这个占位符位置。在实际执行查询之前，程序会通过绑定操作将实际的值填充到占位符中。</p>
 </blockquote>
-<h2 id="简单审计"><a href="#简单审计" class="headerlink" title="简单审计"></a>简单审计</h2><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128142725575.png" alt="image-20231128142725575"></p>
+<h2 id="简单审计"><a href="#简单审计" class="headerlink" title="简单审计"></a>简单审计</h2><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126585.png" alt="image-20231128142725575"></p>
 <p>这里先对token进行检测，防止csrf攻击，这里我们抓一个包看看：</p>
-<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128143308585.png" alt="image-20231128143308585"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126586.png" alt="image-20231128143308585"></p>
 <p>他应该是把session和user token有一个绑定以防止csrf</p>
-<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128144047550.png" alt="image-20231128144047550"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126587.png" alt="image-20231128144047550"></p>
 <p>这里添加了PDO防护，sql注入应该用不了</p>
-<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128144446252.png" alt="image-20231128144446252"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126588.png" alt="image-20231128144446252"></p>
 <p>这里如果登录失败三次会被锁住15分钟</p>
 <p>其他的话就是登陆成功和不成功，sql加了pdo，注不了，只能慢慢爆破</p>
 <h3 id="high"><a href="#high" class="headerlink" title="high:"></a>high:</h3><p>这里爆破的话：</p>
@@ -379,17 +379,17 @@ print_r (explode(&quot; &quot;,$str));
 <li><code>&#39;v&#39;</code>：版本信息。操作系统之间有很大的不同。</li>
 <li><code>&#39;m&#39;</code>：机器类型。例如：<code>i386</code>。</li>
 </ul>
-<h2 id="简单审计-1"><a href="#简单审计-1" class="headerlink" title="简单审计"></a>简单审计</h2><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128153521652.png" alt="image-20231128153521652"></p>
+<h2 id="简单审计-1"><a href="#简单审计-1" class="headerlink" title="简单审计"></a>简单审计</h2><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126589.png" alt="image-20231128153521652"></p>
 <p>这里先对输入的ip进行分段检测然后再拼贴</p>
-<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128154222514.png" alt="image-20231128154222514"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126590.png" alt="image-20231128154222514"></p>
 <p>使用加工后的ip执行ping，这里ip必须为数字并且长度只能为4段，限制得很死</p>
-<h3 id="high-1"><a href="#high-1" class="headerlink" title="high"></a>high</h3><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128155233024.png" alt="image-20231128155233024"></p>
+<h3 id="high-1"><a href="#high-1" class="headerlink" title="high"></a>high</h3><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126591.png" alt="image-20231128155233024"></p>
 <p>这里进行了一个黑名单过滤，但是黑名单有了一些意义不明的空格~</p>
 <p>其实能用的方法基本上都被过滤了，剩下的可能是一些异或等方法了</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_61778128/article/details/127063407">无数字字母rce总结（取反、异或、自增、临时文件）_MUNG东隅的博客-CSDN博客</a></p>
 <p>好像还是不行hh~</p>
 <h1 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h1><p>csrf主要是前端的问题，简单审计一下</p>
-<h2 id="high-2"><a href="#high-2" class="headerlink" title="high"></a>high</h2><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128160129804.png" alt="image-20231128160129804"></p>
+<h2 id="high-2"><a href="#high-2" class="headerlink" title="high"></a>high</h2><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126592.png" alt="image-20231128160129804"></p>
 <p>这里注入点被md5编码了，那么应该也无法使用报错注入。。</p>
 <p>回到漏洞本身，我们通常使用的csrf检测手段是删除referer，如果请求依然成功判定为存在csrf漏洞，csrf token的防御是在每个会话上加一个token确保会话和用户身份的绑定，我们再看一眼中等难度，他没有使用csrf token，所以我们随便制作一个链接就可以进行csrf攻击，而这里可能需要借助一些xss来获取其他用户的token</p>
 <p>这里补充一下：frames[0].document.getElementsByName(‘user_token’)使读取cookie的xsspayload</p>
@@ -397,7 +397,7 @@ print_r (explode(&quot; &quot;,$str));
 <p>frames[0].document.getElementsByName(‘user_token’)<br>在前端开发中，<code>frames</code> 是一个 JavaScript 对象，表示当前窗口或文档中包含的所有 <code>&lt;frame&gt;</code> 或 <code>&lt;iframe&gt;</code> 元素的集合。它提供了对嵌套框架（即内嵌页面）的访问和控制。</p>
 <p>在这种情况下，<code>frames[0]</code> 表示当前文档中第一个 frame 或 iframe 元素，<code>.document</code> 属性用于访问该 frame 或 iframe 的文档对象，<code>getElementsByName(&#39;user_token&#39;)</code> 则是在该文档中根据名称获取元素的方法。</p>
 </blockquote>
-<h1 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h1><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128162032027.png" alt="image-20231128162032027"></p>
+<h1 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h1><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126593.png" alt="image-20231128162032027"></p>
 <h3 id="fnmatch"><a href="#fnmatch" class="headerlink" title="fnmatch()"></a>fnmatch()</h3><p><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_filesystem_fnmatch.asp">PHP fnmatch() 函数 (w3school.com.cn)</a></p>
 <p>fnmatch() 函数根据指定的模式来匹配文件名或字符串。</p>
 <h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><pre><code>fnmatch(pattern,string,flags)
@@ -424,7 +424,7 @@ print_r (explode(&quot; &quot;,$str));
 </tbody></table>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>此函数对于文件名尤其有用，但也可以用于普通的字符串。普通用户可能习惯于 shell 模式或者至少其中最简单的形式 ‘?’ 和 ‘*’ 通配符，因此使用 fnmatch() 来代替 ereg() 或者 preg_match() 来进行前端搜索表达式输入对于非程序员用户更加方便。</p>
 <p>这道题的话写个file就可以进行目录穿越了：</p>
-<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128193808682.png" alt="image-20231128193808682"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311291126594.png" alt="image-20231128193808682"></p>
 <p>直接file协议读取也可以。</p>
 <p>先写到这里，等考完之后再写</p>
-</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/11/27/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%89%8D%E7%9E%BB/" title="java反序列化前瞻"><span class="has-text-weight-semibold">Next: java反序列化前瞻</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/11/28/MISC-NTA/" title="MISC-NTA"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: MISC-NTA</span></a><a class="button is-default" href="/2023/11/27/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%89%8D%E7%9E%BB/" title="java反序列化前瞻"><span class="has-text-weight-semibold">Next: java反序列化前瞻</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

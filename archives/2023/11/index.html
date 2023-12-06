@@ -1,6 +1,14 @@
 <!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Taninluv's blog</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · 2023</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="\" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/11/28/DVWA/"><img class="post-cover-img js-img-fadeIn" src="\" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><i class="tag post-item-tag">代码审计</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/11/28/DVWA/">DVWA</a></h2><time class="has-text-grey" datetime="2023-11-28T01:41:29.000Z">2023-11-28</time><p class="is-flex-grow-2 mt-2">前言都只尝试审计一下高难度，顺带练习一下代码审计工具,这里impassible难度是已经防御好的，high是高难度，我们主要关注这两个部分的源码
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · 2023</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128201404021.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/11/28/MISC-NTA/"><img class="post-cover-img js-img-fadeIn" src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128201404021.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/MISC"><i class="tag post-item-tag">MISC</i></a><a href="/tags/NTA"><i class="tag post-item-tag">NTA</i></a><a href="/tags/HTB"><i class="tag post-item-tag">HTB</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/11/28/MISC-NTA/">MISC-NTA</a></h2><time class="has-text-grey" datetime="2023-11-28T12:12:13.000Z">2023-11-28</time><p class="is-flex-grow-2 mt-2">Intro to Network Traffic Analysis (hackthebox.com)
+基础介绍OSI
+协议数据单元（PDU）
+TCP三路握手TCP确保数据从服务器传递到客户端的方法之一是会话的利用率。这些会话是通过所谓的三方握手建立的。为了实现这一点，TCP在TCP标头中使用了一个名为flags的选项。我们现在不会深入研究TCP标志；要知道，我们将在三方握手中看到的常见标志是同步（SYN）和确认（ACK）。当主机请求通过TCP与服务器进行对话时；
+
+客户端发送SYN标志设置为开启的数据包，以及TCP报头中的其他可协商选项。
+
+这是一个同步数据包。它将只在来自主机和服务器的第一个数据包中设置，并通过允许两端就开始通信的序列号达成一致来建立会话。
+这对于数据包的跟踪至关重要。除了序列号同步，在这..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/11/28/MISC-NTA/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="\" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/11/28/DVWA/"><img class="post-cover-img js-img-fadeIn" src="\" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><i class="tag post-item-tag">代码审计</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/11/28/DVWA/">DVWA</a></h2><time class="has-text-grey" datetime="2023-11-28T01:41:29.000Z">2023-11-28</time><p class="is-flex-grow-2 mt-2">前言都只尝试审计一下高难度，顺带练习一下代码审计工具,这里impassible难度是已经防御好的，high是高难度，我们主要关注这两个部分的源码
 Brute Force暴力破解，感觉没什么好审的，还是看看源码：
 
 prepare( 'SELECT failed_login, last_login FROM users WHERE user = (:user) LIMIT 1;' );
@@ -19,7 +27,39 @@ Java 流(Stream)、文件(File)和IO | 菜鸟教程 (runoob.com)
 序列化和反序列化
 Java 序列化是一种将对象转换为字节流的过程，以便可以将对象保存到磁盘上，将其传输到网络上，或者将其存储在内存中，以后再进行反序列化，将字节流重新转换为对象。
 序列化在 Java 中是通过 java.io.Serializable 接口来实现的，该接口没有任何方法，只是一个标记接口，用于标识类可以被序列化。
-当你序列化对象时，你把它包装成一个特殊文件，可以保存、传输或存储。反序列化则是打开这个文件，读取序列化的数据，然..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/11/27/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%89%8D%E7%9E%BB/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311251619320.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/11/24/WebGoat-CSRF/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311251619320.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/WebGoat"><i class="tag post-item-tag">WebGoat</i></a><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><i class="tag post-item-tag">代码审计</i></a><a href="/tags/CSRF"><i class="tag post-item-tag">CSRF</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/11/24/WebGoat-CSRF/">WebGoat-CSRF</a></h2><time class="has-text-grey" datetime="2023-11-24T09:21:39.000Z">2023-11-24</time><p class="is-flex-grow-2 mt-2">3这题模拟一个简单的csrf，从外源触发这个表单就可以得到flag：
+当你序列化对象时，你把它包装成一个特殊文件，可以保存、传输或存储。反序列化则是打开这个文件，读取序列化的数据，然..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/11/27/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%89%8D%E7%9E%BB/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231126151612390.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/11/26/%E7%88%AC%E8%99%AB/"><img class="post-cover-img js-img-fadeIn" src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231126151612390.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E7%88%AC%E8%99%AB"><i class="tag post-item-tag">爬虫</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/11/26/%E7%88%AC%E8%99%AB/">爬虫</a></h2><time class="has-text-grey" datetime="2023-11-26T06:54:21.000Z">2023-11-26</time><p class="is-flex-grow-2 mt-2">概要这是大数据隐私保护课程的实验-自动化新闻采集，只是简单的实验和记录，不作深入研究
+反爬虫机制
+robots.txt
+IP封锁和频率限制
+验证码
+User-Agent检测
+动态内容生成
+Honypot技术
+反反爬虫技术
+
+rss谷歌新闻提供的rss，也就是xml的数据非常方便于信息采集：
+
+半结构化的数据，但是谷歌有被反爬的风险
+百度新闻
+https://www.baidu.com/s?rtt=1&amp;amp;bsst=1&amp;amp;cl=2&amp;amp;tn=news&amp;amp;ie=utf-8&amp;amp;word=%E6%BB%91%E5%9D%A1
+这里我们关注一下url的传参：
+
+rtt
+
+bsst
+
+cl
+
+tn
+
+ie
+
+word
+
+
+
+找到返回的报文观察我们需要爬取的字段特征
+beautifulsoupf..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/11/26/%E7%88%AC%E8%99%AB/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311251619320.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/11/24/WebGoat-CSRF/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311251619320.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/WebGoat"><i class="tag post-item-tag">WebGoat</i></a><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><i class="tag post-item-tag">代码审计</i></a><a href="/tags/CSRF"><i class="tag post-item-tag">CSRF</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/11/24/WebGoat-CSRF/">WebGoat-CSRF</a></h2><time class="has-text-grey" datetime="2023-11-24T09:21:39.000Z">2023-11-24</time><p class="is-flex-grow-2 mt-2">3这题模拟一个简单的csrf，从外源触发这个表单就可以得到flag：
 
 抓包，然后使用插件制作一个payload，简单看一下：
 
@@ -74,26 +114,7 @@ XXE-4
 这里比较扯，他说这个名字存在，但其实应该是注入生效返回了True
 
 对密码进行测试的时候直接创建了，然而我两次输入的密码明明是不一样的，这里把握搞晕了。后来查看了一下博客发现我跑偏题了，username这里能进行注入，那么通过这个地方要么查询要么修改Tom的密码然后登陆
-然后到了bool盲注的阶段，这里不再赘述了，只是个人经验不是很足，对这个回显..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/11/18/WebGoat-Sql/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311141654641.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/11/13/SSTI/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202311141654641.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/CTF"><i class="tag post-item-tag">CTF</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/11/13/SSTI/">关于SSTI的简单研究</a></h2><time class="has-text-grey" datetime="2023-11-13T12:24:54.000Z">2023-11-13</time><p class="is-flex-grow-2 mt-2">1. SSTI（模板注入）漏洞（入门篇） - bmjoker - 博客园 (cnblogs.com)
-SSTI payload记录 | 郁涛丶’s Blog (ghostasky.github.io)
-大纲参考：
-1. SSTI（模板注入）漏洞（入门篇） - bmjoker - 博客园 (cnblogs.com)
-SSTI payload记录 | 郁涛丶’s Blog (ghostasky.github.io)
-这里只是了解一下模板的大致原理，不对如何构造payload过多强求
-对于绕过黑名单的一些方法等后续遇到一个学一个，这里也不过多耗费精力，因为根本记不住hh
-PHP ssticomposerComposer 安装与使用 | 菜鸟教程 (runoob.com)
-箭头函数箭头函数 - JavaScript..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/11/13/SSTI/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://drun1baby.top/2022/12/29/JavaScript-%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/replace.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/11/07/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/"><img class="post-cover-img js-img-fadeIn" src="https://drun1baby.top/2022/12/29/JavaScript-%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/replace.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/ctf"><i class="tag post-item-tag">ctf</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/11/07/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">原型链污染</a></h2><time class="has-text-grey" datetime="2023-11-07T08:27:38.000Z">2023-11-07</time><p class="is-flex-grow-2 mt-2">原型链污染继承与原型链 - JavaScript | MDN (mozilla.org)
-JavaScript 原型链污染 | Drunkbaby’s Blog (drun1baby.top)
-简单来说就是：
-
-prototype 是 newClass 类的一个属性
-newClass 类实例化的对象 newObj 不能访问 prototype，但可以通过.__proto__ 来访问 newClass 类的 prototype
-newClass 实例化的对象 newObj 的 .__proto__ 指向 newClass 类的 prototype
-
-哪些情况下原型链会被污染找能够控制数组（对象）的“键名”的操作即可：
-
-对象 merge
-对象 clone（其实内核就是将待操作的对象 merge 到一个空对象中..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/11/07/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><span class="page-number current">1</span><a class="page-number" href="/archives/2023/11/page/2/">2</a><a class="extend next" rel="next" href="/archives/2023/11/page/2/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">31</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+然后到了bool盲注的阶段，这里不再赘述了，只是个人经验不是很足，对这个回显..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/11/18/WebGoat-Sql/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><span class="page-number current">1</span><a class="page-number" href="/archives/2023/11/page/2/">2</a><a class="extend next" rel="next" href="/archives/2023/11/page/2/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">31</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')

