@@ -1,6 +1,36 @@
 <!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Taninluv's blog</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · All</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/06/11/PHP_FPM/"><img class="post-cover-img js-img-fadeIn" src="/" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0"><i class="tag post-item-tag">靶场学习</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/PHP_FPM/">PHP_FPM</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">##PHP_FPM
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · All</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/others"><i class="tag post-item-tag">others</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/Regular_operations/">正则运算</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">正则运算修饰符修饰符用于执行区分大小写和全局匹配:
+
+
+
+修饰符
+描述
+
+
+
+i
+执行对大小写不敏感的匹配。
+
+
+g
+执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
+
+
+m
+执行多行匹配。
+
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/Regular_operations/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0"><i class="tag post-item-tag">靶场学习</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/Function_hijacking_experiments/">函数劫持实验</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">函数劫持实验知识Linux 编译动态链接库（.so）参考文章：
+ GCC 生成动态链接库 .so 文件 (-shared 和 -fPIC 选项)
+gcc -shared -fpic
+
+-fPIC 选项作用于编译阶段，告诉编译器产生与位置无关代码 (Position-Independent Code),这样一来，产生的代码中就没有绝对地址了，全部使用相对地址，所以代码可以被加载器加载到内存的任意位置，都可以正确的执行。这正是共享库所要求的，共享库被加载时，在内存的位置不是固定的。
+
+
+如果想创建一个动态链接库，可以使用 GCC 的 -shared 选项。输入文件可以是源文件、汇编文件或者目标文件。
+
+一般的编译链接命令行为：
+gcc -fPIC -shared func.c -o libfunc.so</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/Function_hijacking_experiments/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/06/11/PHP_FPM/"><img class="post-cover-img js-img-fadeIn" src="/" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0"><i class="tag post-item-tag">靶场学习</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/PHP_FPM/">PHP_FPM</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">##PHP_FPM
 
 关于FPM参考文章：Nginx+Php-fpm 运行原理详解</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/PHP_FPM/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/Windows%20Services%20&amp;%20Process/">RDP</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">远程桌面协议 （RDP）RDP 使用客户端&amp;#x2F;服务器体系结构，其中客户端应用程序用于通过启用了 RDP 访问的网络指定计算机的目标 IP 地址或主机名。启用了 RDP 远程访问的目标计算机被视为服务器。请务必注意，RDP 默认侦听逻辑端口。请记住，IP 地址用作网络上计算机的逻辑标识符，逻辑端口是分配给应用程序的标识符。简单来说，我们可以将网络子网视为城镇中的街道（公司网络），该子网中的 IP 地址分配给主机作为该街道上的房屋，逻辑端口视为可用于访问房屋的窗口&amp;#x2F;门。3389</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/Windows%20Services%20&amp;%20Process/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/cURL/">cURL</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">cURL####将内容输出到文件中： -O   -o
 我们看到cURL不像web浏览器那样呈现HTML&amp;#x2F;JavaScript&amp;#x2F;CSS代码，而是以原始格式打印它。然而，作为渗透测试人员，我们主要对请求和响应上下文感兴趣，它通常比web浏览器更快、更方便。我们也可以使用cURL下载页面或文件，并使用-O标志将内容输出到文件中。如果我们想指定输出文件名，我们可以使用-o标志并指定名称。否则，我们可以使用-O，cURL将使用远程文件名，如下所示：
@@ -83,57 +113,7 @@ Priv
 Incognito (pre-installed)
 Darkoperator’s
 
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/msf_plugins/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/base"><i class="tag post-item-tag">base</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/linux/">linux</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">linux文件结构
-
-
-/
-顶级目录是根文件系统，包含在挂载其他文件系统之前引导操作系统所需的所有文件，以及引导其他文件系统所需的文件。引导后，所有其他文件系统都作为根目录挂载在标准挂载点。
-
-
-
-/bin
-包含基本的命令二进制文件。
-
-
-/boot
-由静态引导加载程序、内核可执行文件和引导 Linux 操作系统所需的文件组成。
-
-
-/dev
-包含设备文件，以便于访问连接到系统的每个硬件设备。
-
-
-/etc
-本地系统配置文件。已安装应用程序的配置文件也可以保存在此处。
-
-
-/home
-系统上的每个用户都有一个用于存储的子目录。
-
-
-/lib
-系统引导所需的共享库文件。
-
-
-/media
-外部可移动媒体设备（如 USB 驱动器）安装在此处。
-
-
-/mnt
-常规文件系统的临时挂载点。
-
-
-/opt
-可选文件（如..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/linux/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/others"><i class="tag post-item-tag">others</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/06/11/other_2/">杂记</a></h2><time class="has-text-grey" datetime="2023-06-11T15:32:02.000Z">2023-06-11</time><p class="is-flex-grow-2 mt-2">杂记学习过程中的遇到的一些工具或指令
-###http-enum&amp;#x3D;&amp;#x3D;脚本枚举
-nmap使用&amp;#x3D;&amp;#x3D;http-enum&amp;#x3D;&amp;#x3D;脚本枚举，该脚本可用于枚举常见的 Web 应用程序目录。
--oA 保存扫描结果到指定文件
-Tanin@htb[/htb]$ nmap -sV --script=http-enum -oA nibbles_nmap_http_enum 10.129.42.190 
-
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-12-16 23:41 EST
-Nmap scan report for 10.129.42.190
-Host is up (0.11s latency).
-Not shown: ..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/other_2/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/archives/page/6/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/archives/page/8/">8</a><a class="extend next" rel="next" href="/archives/page/8/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">31</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/06/11/msf_plugins/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/archives/page/6/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/archives/page/8/">8</a><a class="extend next" rel="next" href="/archives/page/8/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">31</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')
